@@ -6,9 +6,7 @@ class LandingPage extends React.Component {
         return (
             <div className="App">
                 <header className="App-header">
-                    <p>
-                        Her kommer SocialCoffee!
-                    </p>
+                    <img src="https://www.calfac.org/sites/main/files/imagecache/lightbox/main-images/coffee-wallpaper-1306-1433-hd-wallpapers.jpg" alt="coffee"/>
                     <a
                         className="App-link"
                         href="https://reactjs.org"
