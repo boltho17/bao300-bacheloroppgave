@@ -7,8 +7,8 @@ import TopNavbar from './components/TopNavbar'
 const App = () => {
     return (
         <Router>
-            <TopNavbar/>
-            <LandingPage/>
+            <TopNavbar />
+            <LandingPage />
         </Router>
     );
 };
