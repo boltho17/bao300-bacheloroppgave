@@ -7,7 +7,6 @@ import {
 import * as ROUTES from './constants/routes';
 import './styles/Main.sass'
 
-
 import Navigation from './components/Navigation'
 import LandingPage from "./pages/LandingPage";
 import SignUpPage from './pages/SignUpPage';
