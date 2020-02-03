@@ -3,7 +3,9 @@ import {Navbar, Image} from 'react-bootstrap';
 import Nav from "react-bootstrap/Nav";
 import {Link} from 'react-router-dom';
 
-class MyNavbar extends React.Component {
+import * as ROUTES from '../constants/routes'
+
+class Navigation extends React.Component {
     render() {
         return (
             <div>
@@ -22,11 +24,10 @@ class MyNavbar extends React.Component {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse className="justify-content-end">
                         <Nav className="mr-auto">
-                            <Link className="links" to="/business">Thomas</Link>
-                            <Link className="links" to="/entertainment">Olav</Link>
-                            <Link className="links" to="/sports">Tobias</Link>
-                            <Link className="links" to="/health">Julie</Link>
-                            <Link className="links" to="/technology">Aleksandra</Link>
+                            <Link className="links" to={ROUTES.SIGN_IN}>Sign In</Link>
+                            <Link className="links" to={ROUTES.SIGN_UP}>Sign Up</Link>
+                            <Link className="links" to={ROUTES.ACCOUNT}>Account</Link>
+                            <Link className="links" to={ROUTES.ADMIN}>Admin</Link>
                             <Link className="links new" to="/newsposts/new">Create new</Link>
                         </Nav>
 
@@ -42,4 +43,4 @@ class MyNavbar extends React.Component {
     }
 }
 
-export default MyNavbar;
+export default Navigation;

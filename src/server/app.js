@@ -4,6 +4,7 @@ const { ApolloServer, graphiqlExpress} = require('apollo-server-express');
 
 const resolvers = require('./resolvers');
 const typeDefs =  require('./schema');
+require('dotenv').config();
 
 /*
     We still are going to use Express... Apollo will just add to it a
