@@ -28,6 +28,7 @@ class Navigation extends React.Component {
                             <Link className="links" to={ROUTES.SIGN_UP}>Sign Up</Link>
                             <Link className="links" to={ROUTES.ACCOUNT}>Account</Link>
                             <Link className="links" to={ROUTES.ADMIN}>Admin</Link>
+                            <Link className="links" to="/deliverycost">DeliveryCost</Link>
                             <Link className="links new" to="/newsposts/new">Create new</Link>
                         </Nav>
 
