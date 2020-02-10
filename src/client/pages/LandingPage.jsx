@@ -1,5 +1,6 @@
 import React from 'react';
 import SearchBar from '../components/SearchBar';
+import RecommendedProducts from '../components/RecommendedProducts';
  
 
 class LandingPage extends React.Component {
@@ -15,6 +16,7 @@ class LandingPage extends React.Component {
                 <div className="image-container" >
                     <SearchBar />
                 </div>
+                <RecommendedProducts />
             </div>
         )
     }
