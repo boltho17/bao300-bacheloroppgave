@@ -9,7 +9,7 @@ import {ApolloProvider} from '@apollo/react-hooks';
 import ApolloClient from 'apollo-boost';
 
 const client = new ApolloClient({
-    uri: 'https://powerful-depths-31715.herokuapp.com/Prisma/dev',
+    uri: 'https://socialcoffee-heroku-ef34f637c9.herokuapp.com/socialcoffee-prisma-heroku/dev',
 });
 
 ReactDOM.render(

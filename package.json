@@ -28,8 +28,7 @@
   },
   "scripts": {
     "start-js": "react-scripts start",
-    "backend-start": "NODE_ENV=production node src/server/server.js",
-    "start": "concurrently \"npm-run-all -p backend-start start-js\"",
+    "start": "react-scripts start",
     "build": "npm-run-all build-css && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
