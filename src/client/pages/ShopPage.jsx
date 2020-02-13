@@ -1,24 +1,30 @@
 import React from 'react';
-
+import ProductCard from "../components/ProductCard";
 import {useQuery} from '@apollo/react-hooks';
-import {GET_PRODUCTS} from "../components/GraphQL/query";
+import {GET_PRODUCTS} from "../components/GraphQL/product/queries";
 
 
-const ListProducts = () => {
-    const {loading, error, data} = useQuery(GET_PRODUCTS);
+const {loading, error, data} = useQuery(GET_PRODUCTS);
 
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
-    console.log(data);
+if (loading) return 'Loading...';
+if (error) return `Error! ${error.message}`;
+console.log(data);
+
+const ShopPage = () => {
+
 
     return (
+        <ProductCard />
+
+        /*
         <div>
             {data.products.map(product => (
                 <div key={product.id} value={product.title}>
                     <h3>{product.vendor.displayName}</h3>
+                    <h5>{product.title}</h5>
                     <ul>
                         <li>
-                            {product.title}
+                            {product.description}
                         </li>
                         <li>
                             {product.flavorProfile}
@@ -27,7 +33,8 @@ const ListProducts = () => {
                 </div>
             ))}
         </div>
+         */
     );
-}
+};
 
-export default ListProducts
+export default ShopPage

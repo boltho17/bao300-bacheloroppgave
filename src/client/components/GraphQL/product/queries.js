@@ -12,7 +12,7 @@ export const GET_PRODUCTS = gql`
             description
             info
             productImages {
-                id
+                image
             }
             country {
                 name
