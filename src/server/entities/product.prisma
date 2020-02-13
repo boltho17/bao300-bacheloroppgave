@@ -13,5 +13,6 @@ type Product implements Node {
   country: Country @relation(link:INLINE)
   productImages: [ProductImage!]!
   categories: [Category!]!
+  skus: [SKU]
 
 }
