@@ -1,0 +1,10 @@
+interface Node {
+  id: ID!
+}
+
+type Country implements Node {
+  id: ID! @id
+  name: String! @unique
+  region: Region @relation(link: INLINE)
+  products: [Product!]
+}

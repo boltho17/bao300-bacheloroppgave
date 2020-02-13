@@ -1,0 +1,17 @@
+interface Node {
+  id: ID!
+}
+
+type Product implements Node {
+  id: ID! @id
+  title: String!
+  flavorProfile: String
+  description: String!
+  info: String
+  published: Boolean! @default(value: false)
+  vendor: Vendor @relation(link: INLINE)
+  country: Country @relation(link:INLINE)
+  productImages: [ProductImage!]!
+  categories: [Category!]!
+
+}

@@ -1,0 +1,11 @@
+interface Node {
+  id: ID!
+}
+
+type ContentText implements Node {
+  id: ID! @id @unique
+  vendor: Vendor! @relation(link: INLINE)
+  contentArea: ContentArea!  @relation(link: INLINE)
+  content: String! 
+  publishedStatus: Boolean! @default(value: false)
+}

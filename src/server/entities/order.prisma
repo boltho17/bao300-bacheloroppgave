@@ -1,0 +1,14 @@
+interface Node {
+  id: ID!
+}
+
+type Order implements Node {
+  id: ID! @id @unique
+  customer: Customer! @relation(link: INLINE)
+  vendor: Vendor! @relation(link: INLINE)
+  deliveryStatus: String
+  orderData: DateTime!
+  orderNote: String
+  deliveryAddress: String!
+  orderLines: [OrderLine!]!
+  }
