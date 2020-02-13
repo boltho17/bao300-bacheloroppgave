@@ -1,39 +1,26 @@
 import React from 'react';
-import ProductCard from "../components/ProductCard";
-import {useQuery} from '@apollo/react-hooks';
-import {GET_PRODUCTS} from "../components/GraphQL/product/queries";
+import ProductList from "../components/ProductList";
+import {Container, Row, Col} from "react-bootstrap";
+import ShopFilter from "../components/ShopFilter";
+import ShopHeader from "../components/ShopHeader";
 
-
-const {loading, error, data} = useQuery(GET_PRODUCTS);
-
-if (loading) return 'Loading...';
-if (error) return `Error! ${error.message}`;
-console.log(data);
 
 const ShopPage = () => {
 
-
     return (
-        <ProductCard />
-
-        /*
-        <div>
-            {data.products.map(product => (
-                <div key={product.id} value={product.title}>
-                    <h3>{product.vendor.displayName}</h3>
-                    <h5>{product.title}</h5>
-                    <ul>
-                        <li>
-                            {product.description}
-                        </li>
-                        <li>
-                            {product.flavorProfile}
-                        </li>
-                    </ul>
-                </div>
-            ))}
-        </div>
-         */
+        <Container>
+            <Row>
+                <Col sm={12} className="pl-0">
+                    <ShopHeader/>
+                </Col>
+                <Col sm={3} className="p-0">
+                    <ShopFilter/>
+                </Col>
+                <Col>
+                    <ProductList/>
+                </Col>
+            </Row>
+        </Container>
     );
 };
 

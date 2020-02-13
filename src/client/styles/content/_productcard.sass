@@ -1,0 +1,60 @@
+.product-card
+  height: 20rem
+  width: 105%
+  margin-bottom: 2rem
+  cursor: pointer
+
+.card-image
+  left: 10%
+  top: 10%
+  height: 200px
+  width: 150px !important
+  position: relative
+  animation: highlight-revert 170ms linear forwards
+  &:hover
+    visibility: visible
+    animation: highlight 170ms linear forwards
+    transition-delay: 0s
+
+
+
+.product-title
+  font-size: 14px !important
+
+.vendor
+  font-size: 10px !important
+
+.price
+  font-size: 10px !important
+
+
+
+// ANIMATION KEYFRAMES
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes highlight
+  0%
+    top: 10%
+  100%
+    top: 7%
+
+/* Standard syntax */
+@keyframes highlight
+  0%
+    top: 10%
+  100%
+    top: 7%
+
+
+// REVERT ANIMATION
+@-webkit-keyframes highlight-revert
+  0%
+    top: 7%
+  100%
+    top: 10%
+
+/* Standard syntax */
+@keyframes highlight-revert
+  0%
+    top: 7%
+  100%
+    top: 10%

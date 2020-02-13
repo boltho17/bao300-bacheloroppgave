@@ -1,23 +1,41 @@
 import React from 'react';
-import {Button, Card} from "react-bootstrap";
+import {Card} from "react-bootstrap";
 
-class ProductCard extends React.Component {
+const ProductCard = ({product}) => {
+    // console.log(product);
 
-    render() {
-        return(
-            <Card style={{ width: '18rem' }}>
-                <Card.Img variant="top" src="holder.js/100px180" />
+    return (
+        <div className="col-12 col-md-6 col-lg-4 col-xl-3">
+            <Card className="product-card">
+                <Card.Img className="card-image" variant="top"
+                          src="https://cdn4.mystore4.no/thumb/401_600/stavangerkaff/72805_Kenya_AA_Mount_Kenya_Selection_LYSBRENT__1kg_1.png"/>
                 <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                        Some quick example text to build on the card title and make up the bulk of
-                        the card's content.
+                    <Card.Subtitle className="vendor mb-2 text-muted">{product.vendor.displayName}</Card.Subtitle>
+                    <Card.Title className="product-title">{product.title}</Card.Title>
+                    <Card.Text className="price">
+                        Pris: product.SKU[0].price
                     </Card.Text>
-                    <Button variant="primary">Go somewhere</Button>
+
                 </Card.Body>
             </Card>
-        )
-    }
-}
+        </div>
+    )
+};
 
 export default ProductCard
+
+/*
+<div key={product.id} value={product.title}>
+<h3>{product.vendor.displayName}</h3>
+<h5>{product.title}</h5>
+<ul>
+<li>
+{product.description}
+</li>
+<li>
+{product.flavorProfile}
+</li>
+</ul>
+</div>
+*
+ */
