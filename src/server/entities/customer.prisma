@@ -1,0 +1,11 @@
+interface Node {
+  id: ID!
+}
+
+type Customer implements Node {
+  id: ID! @id
+  firstName: String!
+  lastName: String!
+  address: String!
+  user: User!
+}

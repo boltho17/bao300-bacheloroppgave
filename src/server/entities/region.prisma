@@ -1,0 +1,8 @@
+interface Node {
+  id: ID!
+}
+type Region implements Node {
+  id: ID! @id
+  name: String! @unique
+  countries: [Country!]!
+}
