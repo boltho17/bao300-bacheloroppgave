@@ -1,0 +1,9 @@
+interface Node {
+  id: ID!
+}
+
+type SubCategory implements Node {
+  id: ID! @id
+  category: Category! @relation(link: INLINE)
+  subCategory: String!
+}
