@@ -1,0 +1,9 @@
+interface Node {
+  id: ID!
+}
+
+type Grind implements Node {
+  id: ID! @id @unique
+  grindOption: String!
+  grindOptions: Grind!
+}

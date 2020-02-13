@@ -1,0 +1,13 @@
+endpoint: https://socialcoffee-heroku-ef34f637c9.herokuapp.com/socialcoffee-prisma-heroku/dev
+datamodel: 
+  - datamodel.prisma # Denne fjernes etter migrasjon
+  - entities/category.prisma
+  - entities/grind.prisma
+  - entities/grindOption.prisma
+  - entities/review.prisma
+  - entities/sku.prisma
+  - entities/subCategory.prisma
+
+generate:
+  - generator: javascript-client
+    output: ./generated/prisma-client/

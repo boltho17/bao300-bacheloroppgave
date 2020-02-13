@@ -11,6 +11,7 @@ import Navigation from './components/Navigation';
 import LandingPage from "./pages/LandingPage";
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
+import ListProducts from './pages/ListProducts'
 import DeliveryCost from "./components/BringAPI/DeliveryCost";
 import Footer from './components/Footer';
 
@@ -31,6 +32,7 @@ const App = () => {
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route path="/deliverycost" component={DeliveryCost} />
+                <Route path={ROUTES.PRODUCTS} component={ListProducts} />
             </div>
 
             

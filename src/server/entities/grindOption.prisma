@@ -1,0 +1,9 @@
+interface Node {
+  id: ID!
+}
+
+type GrindOption implements Node {
+  id: ID! @id @unique
+  product: Product! @relation(link: INLINE)
+  grind: Grind! @relation(link: INLINE)
+}
