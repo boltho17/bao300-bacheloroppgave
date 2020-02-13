@@ -5,23 +5,25 @@ import ShopFilter from "../components/ShopFilter";
 import ShopHeader from "../components/ShopHeader";
 
 
-const ShopPage = () => {
+class ShopPage extends React.Component {
 
-    return (
-        <Container>
-            <Row>
-                <Col sm={12} className="pl-0">
-                    <ShopHeader/>
-                </Col>
-                <Col sm={3} className="p-0">
-                    <ShopFilter/>
-                </Col>
-                <Col>
-                    <ProductList/>
-                </Col>
-            </Row>
-        </Container>
-    );
+    render() {
+            return (
+                <Container>
+                    <Row>
+                        <Col sm={12} className="pl-0">
+                            <ShopHeader />
+                        </Col>
+                        <Col sm={3} className="p-0">
+                            <ShopFilter/>
+                        </Col>
+                        <Col>
+                            <ProductList />
+                        </Col>
+                    </Row>
+                </Container>
+            );
+        }
 };
 
 export default ShopPage

@@ -12,6 +12,7 @@
     "apollo-server-express": "^2.9.16",
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
+    "bootstrap-icons": "^1.0.0-alpha2",
     "concurrently": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

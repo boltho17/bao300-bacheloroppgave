@@ -4,7 +4,8 @@ import {ListGroup} from "react-bootstrap";
 const ShopFilter = () => {
     return (
         <div>
-            <ListGroup>
+            <p style={{fontSize: '12px'}}>Filter</p>
+            <ListGroup className="mt-2">
                 <ListGroup.Item>Filter 1</ListGroup.Item>
                 <ListGroup.Item>Filter 2</ListGroup.Item>
                 <ListGroup.Item>Filter 3</ListGroup.Item>
