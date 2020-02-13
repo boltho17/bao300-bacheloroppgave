@@ -36,10 +36,12 @@ type Product implements Node {
   flavorProfile: String
   description: String!
   info: String
-  published: Boolean!
+  published: Boolean! @default(value: false)
   vendor: Vendor @relation(link: INLINE)
   country: Country @relation(link:INLINE)
   productImages: [ProductImage!]!
+  categories: [Category!]!
+
 }
 
 type ProductImage implements Node {
