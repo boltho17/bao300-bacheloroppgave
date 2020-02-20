@@ -1,11 +1,11 @@
 import React from 'react';
-import {Card} from "react-bootstrap";
+import {Card, Col} from "react-bootstrap";
 
 const ProductCard = ({product}) => {
     // console.log(product);
 
     return (
-        <div className="col-12 col-md-6 col-lg-4 col-xl-3">
+        <Col className="col-12 col-md-6 col-lg-4 col-xl-3">
             <Card className="product-card">
                 <Card.Img className="card-image" variant="top"
                           src="https://cdn4.mystore4.no/thumb/401_600/stavangerkaff/72805_Kenya_AA_Mount_Kenya_Selection_LYSBRENT__1kg_1.png"/>
@@ -18,7 +18,7 @@ const ProductCard = ({product}) => {
 
                 </Card.Body>
             </Card>
-        </div>
+        </Col>
     )
 };
 
