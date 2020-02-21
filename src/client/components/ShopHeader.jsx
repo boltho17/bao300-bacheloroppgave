@@ -6,28 +6,27 @@ const ShopHeader = ({totalProducts}) => {
 
     return (
         <div>
-            <div className="mt-4 ml-4 p-0">
+            <div className="mt-4 p-0">
                 <h1 style={{fontSize: '4rem'}}>
-                    Hele Bønner
+                    All Coffee
                 </h1>
-                <p style={{fontSize: '10px'}}>Savor these clear, authentic expressions of unique regions around the
-                    world.</p>
+                <p className="pl-0 col-4" style={{fontSize: '10px'}}>Our 400+ specialty coffees come from the best in the nation and are roasted fresh only when you place your order! So whether you take it whole or ground, decaf or full throttle, your top-rated coffee is guaranteed a winner.</p>
             </div>
 
             <Row className="mt-5">
-                <Col sm={2}>
-                    <p className="ml-4" style={{fontSize: '12px'}}>Filter</p>
+                <Col sm={3}>
+                    <p className="ml-2" style={{fontSize: '12px'}}>Filter</p>
                 </Col>
-                <Col sm={6}>
+                <Col sm={7}>
                     {totalProducts > 0 ? (
-                        <p className="mb-0" style={{fontSize: '12px'}}>{totalProducts} produkter</p>
+                        <p style={{fontSize: '10px'}}>{totalProducts} produkter</p>
                     ) : (
                         <div></div>
                     )}
                 </Col>
 
                 <Col>
-                    <div className="sort-btn m-0 p-0">
+                    <div className="sort-btn">
                         <DropdownButton variant="secondary-outline" id="dropdown-basic-button" title="Sorter" size="sm">
                             <Dropdown.Item href="#/action-1">Mest populare</Dropdown.Item>
                             <Dropdown.Item href="#/action-2">Høyest pris</Dropdown.Item>

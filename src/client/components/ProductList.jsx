@@ -25,14 +25,19 @@ const ProductList = () => {
     }
 
     return (
-        <div className="mt-4 mb-4 ml-0 mr-5">
+        <div className="container">
             <ShopHeader totalProducts={totalProducts}/>
             <Row>
-                <Col sm={2}>
+                <Col sm={3}>
                     <ProductFilter totalProducts={totalProducts}/>
                 </Col>
                 <Col>
                     <Row>{productList}</Row>
+            <div className="text-center">
+                <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
+            </div>
+            <br/>
+            <div className="text-center">FOOTER</div>
                 </Col>
             </Row>
         </div>
