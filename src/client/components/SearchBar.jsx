@@ -8,7 +8,8 @@ export default class SearchBar extends React.Component {
             'Lillestrøm',
             'Drammen',
             'Sarpsborg',
-            'Sørumsand'
+            'Sørumsand',
+            'Thomas'
         ]
         this.state = {
             suggestions: [],
