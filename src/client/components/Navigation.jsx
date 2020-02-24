@@ -10,7 +10,10 @@ import {FiSearch, FaRegUserCircle, TiShoppingCart} from "react-icons/all";
 import firebase from "firebase/app";
 
 class Navigation extends React.Component {
-    state = {isSignedIn: false};
+    state = {
+        customerSignedIn: false,
+        vendorSignedIn: false
+    };
 
     logoutUser = () => {
         firebase.auth().signOut().then(function() {
@@ -18,6 +21,7 @@ class Navigation extends React.Component {
         }).catch(function(error) {
             console.log(error)
         });
+        this.setState({customerSignedIn: false, vendorSignedIn: false})
     };
 
     componentDidMount() {
@@ -55,19 +59,24 @@ class Navigation extends React.Component {
                         <Link className="links" to={ROUTES.ADMIN}>Bli selger</Link>
                         <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
                         <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
-                        {!this.state.isSignedIn && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
+                        {!this.state.customerSignedIn && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
                     </Nav>
 
-                    { !this.state.isSignedIn &&
+                    { !this.state.customerSignedIn &&
                     <Link className="links" to={ROUTES.SIGN_UP}>
                         <button type="button" className="btn btn-outline-dark btn-sm" style={{fontSize: '11px'}}>Registrer</button>
+                    </Link> }
+
+                    { this.state.vendorSignedIn &&
+                    <Link className="links" to={ROUTES.ADD_PRODUCT}>
+                        <button type="button" className="btn btn-primary btn-sm" style={{fontSize: '11px'}}>Nytt produkt</button>
                     </Link> }
 
                     <IconContext.Provider value={{color: "black", size: "1.5em"}}>
                         <div className="icon-group">
                             <FiSearch />
                             <TiShoppingCart />
-                            { this.state.isSignedIn && <button className="btn" onClick={() => this.logoutUser()} type="button"><FaRegUserCircle /></button> }
+                            { this.state.customerSignedIn && <button className="btn" onClick={() => this.logoutUser()} type="button"><FaRegUserCircle /></button> }
                         </div>
                     </IconContext.Provider>
                 </Navbar.Collapse>
