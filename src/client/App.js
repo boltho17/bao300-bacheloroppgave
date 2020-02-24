@@ -7,13 +7,13 @@ import {
 import * as ROUTES from './constants/routes';
 import './styles/Main.sass'
 
-import Navigation from './components/Navigation';
+import Navigation from './components/Navigation'
 import LandingPage from "./pages/LandingPage";
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
-import ListProducts from './pages/ListProducts'
-import DeliveryCost from "./components/BringAPI/DeliveryCost";
-import Footer from './components/Footer';
+import ShopPage from './pages/ShopPage'
+import AddProduct from "./pages/AddProduct";
+import Footer from "./components/Footer"
 
 /* TODO Pages to implement:
 import PasswordForgetPage from '../PasswordForget';
@@ -27,12 +27,11 @@ const App = () => {
         <Router>
             <div>
                 <Navigation />
-
                 <Route exact path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
-                <Route path="/deliverycost" component={DeliveryCost} />
-                <Route path={ROUTES.PRODUCTS} component={ListProducts} />
+                <Route path={ROUTES.PRODUCTS} component={ShopPage} />
+                <Route path={ROUTES.ADD_PRODUCT} component={AddProduct} />
             </div>
 
             

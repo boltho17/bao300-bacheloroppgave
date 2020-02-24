@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {useQuery} from '@apollo/react-hooks';
-import {GET_PRODUCTS} from "../components/GraphQL/query";
+import {GET_PRODUCTS} from "../components/GraphQL/product/queries";
 
 
 const ListProducts = () => {

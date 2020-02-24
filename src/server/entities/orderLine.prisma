@@ -1,0 +1,13 @@
+interface Node {
+  id: ID!
+}
+
+type OrderLine implements Node {
+  id: ID! @id
+  order: Order! @relation(link: INLINE)
+  sku: SKU! @relation(link: INLINE)
+  productName: String!
+  grindOption: String!
+  quantity: Int!
+  orderPrice: Float!
+}
