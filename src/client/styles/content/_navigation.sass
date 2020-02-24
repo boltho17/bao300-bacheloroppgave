@@ -2,27 +2,38 @@
   padding-left: 0
   padding-right: 0
 
-.myNavbar
-  background-color: $light-blue
+.top-navbar
+  height: 40px
+  margin-bottom: -40px
+  background-color: transparent
+  padding-top: 0 !important
+  padding-bottom: 0 !important
+  font-family: Gill Sans
+  font-size: 12px
+  display: flex !important
+  &:hover
+    background-color: white
+
 
 .navbar-brand
   cursor: pointer
 
 .links
   color: $black !important
+
 .new
-  color: $white !important
+  color: $black !important
 
 // Bestemmer avstanden mellom linkene
 a
   margin-right: 1.2rem
 
 .user-name
-  color: $white !important
+  color: $black !important
   cursor: default
 
 .nav-link:hover
-  border-bottom: 1px outset white
+  border-bottom: 1px outset black
 
 .avatar
   width: 30px

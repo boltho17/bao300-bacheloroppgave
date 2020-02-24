@@ -5,8 +5,7 @@ import { SignUpLink } from '../pages/SignUpPage';
 import { withFirebase } from '../components/Firebase';
 import * as ROUTES from '../constants/routes';
 const SignInPage = () => (
-    <div>
-        <h1>SignIn</h1>
+    <div className="sign-in-container">
         <SignInForm />
         <SignUpLink />
     </div>
@@ -41,26 +40,28 @@ class SignInFormBase extends Component {
         const { email, password, error } = this.state;
         const isInvalid = password === '' || email === '';
         return (
-            <form onSubmit={this.onSubmit}>
-                <input
-                    name="email"
-                    value={email}
-                    onChange={this.onChange}
-                    type="text"
-                    placeholder="Email Address"
-                />
-                <input
-                    name="password"
-                    value={password}
-                    onChange={this.onChange}
-                    type="password"
-                    placeholder="Password"
-                />
-                <button disabled={isInvalid} type="submit">
-                    Sign In
-                </button>
-                {error && <p>{error.message}</p>}
-            </form>
+            <div className="sign-in-container">
+                <form onSubmit={this.onSubmit}>
+                    <input
+                        name="email"
+                        value={email}
+                        onChange={this.onChange}
+                        type="text"
+                        placeholder="Email Address"
+                    />
+                    <input
+                        name="password"
+                        value={password}
+                        onChange={this.onChange}
+                        type="password"
+                        placeholder="Password"
+                    />
+                    <button disabled={isInvalid} type="submit">
+                        Sign In
+                    </button>
+                    {error && <p>{error.message}</p>}
+                </form>
+            </div>
         );
     }
 }

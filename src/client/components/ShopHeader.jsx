@@ -18,11 +18,9 @@ const ShopHeader = ({totalProducts}) => {
                     <p className="ml-2" style={{fontSize: '12px'}}>Filter</p>
                 </Col>
                 <Col sm={7}>
-                    {totalProducts > 0 ? (
-                        <p style={{fontSize: '10px'}}>{totalProducts} produkter</p>
-                    ) : (
-                        <div></div>
-                    )}
+                    {totalProducts > 0 ?
+                        <p style={{fontSize: '10px'}}>{totalProducts} produkter</p> : <div></div>
+                    }
                 </Col>
 
                 <Col>
