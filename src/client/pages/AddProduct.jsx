@@ -1,12 +1,12 @@
 import React from 'react';
+import PrivateRoute from "../components/Firebase/PrivateRoute";
 
 
 const AddProduct = () => {
 
-
     return (
         <div>
-            HEI
+            <PrivateRoute/>
         </div>
     );
 };

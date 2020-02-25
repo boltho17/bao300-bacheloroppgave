@@ -1,15 +1,22 @@
 import gql from 'graphql-tag';
 
-export const GET_USER = gql`
-    {
-        query {
-            post(where: {
-                id: "cixnen24p33lo0143bexvr52n"
+export const GET_USER_WITH_EMAIL = gql`    
+        query ($userEmail: String!) {
+            user(where: {
+                email: $userEmail,
             }) {
                 id
-                title
-                published
+                email
+                customer {
+                    firstName
+                    lastName
+                }
+                vendor {
+                    displayName
+                }
             }
         }
-    }
 `;
+
+
+
