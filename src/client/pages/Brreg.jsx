@@ -23,7 +23,7 @@ const Brreg = () => {
   const cleanUp = (navn, organisasjonsform) => {
     if (navn.includes(organisasjonsform.kode) && organisasjonsform.kode === 'AS') {
       //console.log(navn)
-      var rm = navn.replace('AS', '')
+      var rm = navn.replace(' AS', '')
       return rm.toLowerCase()
     } else return navn.toLowerCase();
   }

@@ -15,6 +15,9 @@ import ShopPage from './pages/ShopPage'
 import BrregPage from './pages/Brreg'
 import DeliveryCost from "./components/BringAPI/DeliveryCost";
 import AddProduct from "./pages/AddProduct";
+import SignUpVendorPage from "./pages/SignUpVendorPage";
+
+
 
 /* TODO Pages to implement:
 import PasswordForgetPage from '../PasswordForget';
@@ -29,9 +32,10 @@ const App = () => {
                 <Navigation />
                 <Route exact path={ROUTES.LANDING} component={LandingPage} />
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
+                 <Route path={ROUTES.SIGN_UP_VENDOR} component={SignUpVendorPage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route path="/deliverycost" component={DeliveryCost} />
-          <Route path={ROUTES.BRREG} component={BrregPage} />
+                <Route path={ROUTES.BRREG} component={BrregPage} />
                 <Route path={ROUTES.PRODUCTS} component={ShopPage} />
                 <Route path={ROUTES.ADD_PRODUCT} component={AddProduct} />
             </div>
