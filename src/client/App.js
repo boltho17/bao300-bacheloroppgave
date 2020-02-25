@@ -12,6 +12,7 @@ import LandingPage from "./pages/LandingPage";
 import SignUpPage from './pages/SignUpPage';
 import SignInPage from './pages/SignInPage';
 import ShopPage from './pages/ShopPage'
+import BrregPage from './pages/Brreg'
 import DeliveryCost from "./components/BringAPI/DeliveryCost";
 
 /* TODO Pages to implement:
@@ -30,7 +31,8 @@ const App = () => {
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
                 <Route path={ROUTES.SIGN_IN} component={SignInPage} />
                 <Route path="/deliverycost" component={DeliveryCost} />
-                <Route path={ROUTES.PRODUCTS} component={ShopPage} />
+          <Route path={ROUTES.PRODUCTS} component={ShopPage} />
+          <Route path={ROUTES.BRREG} component={BrregPage} />
             </div>
         </Router>
     );

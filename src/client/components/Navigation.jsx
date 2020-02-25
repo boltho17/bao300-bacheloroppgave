@@ -30,6 +30,7 @@ class Navigation extends React.Component {
                             <Link className="links" to={ROUTES.ADMIN}>Admin</Link>
                             <Link className="links" to="/deliverycost">DeliveryCost</Link>
                             <Link className="links new" to={ROUTES.PRODUCTS}>Butikk</Link>
+                            <Link className="links" to={ROUTES.BRREG}>BRREG</Link>
                         </Nav>
 
                         <Navbar.Text style={{fontSize: '10px', color: 'white'}}>
