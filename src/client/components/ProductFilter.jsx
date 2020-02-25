@@ -1,7 +1,7 @@
 import React from 'react';
 import {ListGroup} from "react-bootstrap";
 
-const ShopFilter = () => {
+const ProductFilter = () => {
     return (
         <div>
             <ListGroup>
@@ -19,4 +19,4 @@ const ShopFilter = () => {
     )
 };
 
-export default ShopFilter
+export default ProductFilter

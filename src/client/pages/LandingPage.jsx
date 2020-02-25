@@ -1,6 +1,4 @@
 import React from 'react';
-import SearchBar from '../components/SearchBar';
- 
 
 class LandingPage extends React.Component {
 
@@ -13,7 +11,7 @@ class LandingPage extends React.Component {
                 </header>
 
                 <div className="image-container" >
-                    <SearchBar />
+
                 </div>
             </div>
         )

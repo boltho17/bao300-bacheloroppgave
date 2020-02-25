@@ -6,3 +6,4 @@ export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
 export const PRODUCTS = '/products';
 export const BRREG = '/brreg';
+export const ADD_PRODUCT = '/new-product';
