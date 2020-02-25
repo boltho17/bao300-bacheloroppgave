@@ -6,7 +6,7 @@ const AddProduct = () => {
 
     return (
         <div>
-
+            HEI
         </div>
     );
 };

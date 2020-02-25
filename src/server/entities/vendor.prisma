@@ -1,0 +1,15 @@
+interface Node {
+  id: ID!
+}
+
+type Vendor implements Node {
+  id: ID! @id
+  displayName: String!
+  organizationNumber: Int! @unique
+  bankAccount: String! @unique
+  logoImage: String!
+  facebookPageURL: String
+  address: String!
+  user: User!
+  products: [Product!]
+}

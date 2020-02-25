@@ -1,0 +1,147 @@
+CREATE USER:
+
+mutation CreateUser {
+    createUser(data: {
+      email: "aleksandra@example.com"
+      phone: 98872522
+    }) {
+      id
+    	email
+    	phone
+    }
+  }
+
+
+CREATE CUSTOMER:
+
+  mutation CreateCustomer ($firstname: String!, $lastname: String!, $address: String!, $userId: ID!) {
+      createCustomer(data: {
+        firstName: $firstname,
+        lastName: $lastname,
+        address: $address,
+        user: {
+          connect: {
+            id: $userId
+          }
+        }
+      }) {
+        id
+      	firstName
+      	lastName
+      }
+    }
+
+  QUERY:
+    {
+      "firstname": "Thomas",
+      "lastname": "Nordmann",
+      "address": "Gjøkeredet 1, 3044 Drammen",
+      "userId": "ck6i1knun006g0726kpk1mge0"
+    }
+
+
+CREATE VENDOR:
+
+mutation CreateVendor ($displayName: String!, $orgnr: Int!, $bankAccount: String!, $logoImage: String!, $address: String!, $userId: ID!) {
+    createVendor(data: {
+      displayName: $displayName,
+      organizationNumber: $orgnr,
+      bankAccount: $bankAccount,
+      logoImage: $logoImage,
+      facebookPageURL: "facebookpage.com",
+      address: $address,
+      user: {
+        connect: {
+          id: $userId
+        }
+      },
+      products: {
+
+      }
+    }) {
+      id
+    	displayName
+    }
+  }
+
+  QUERY:
+
+  {
+    "displayName": "Kaffebryggeriet AS",
+    "orgnr": 123456789,
+    "bankAccount": "1234.12.12345",
+    "logoImage": "logo_img01",
+    "address": "Hyggenveien 12, 0000 Postnummer",
+    "userId": "ck6i1kfd100650726yvpzkypa"
+  }
+
+
+CREATE PRODUCT:
+
+mutation CreateProduct ($title: String!, $flavorProfile: String!, $description: String!, $info: String!, $vendorId: ID!, $countryId: ID!) {
+    createProduct(data: {
+      title: $title,
+      flavorProfile: $flavorProfile,
+      description: $description,
+      info: $info,
+      published: true,
+      vendor: {
+        connect: {
+          id: $vendorId
+        }
+      },
+      country: {
+        connect: {
+          id: $countryId
+        }
+      }
+      productImages: {
+        create: [
+          {image: "img_01.jpg"},
+          {image: "img_02.jpg"},
+          {image: "img_03.jpg"},
+          {image: "img_04.jpg"},
+          {image: "img_05.jpg"},
+        ]
+      }
+    }) {
+      id
+    	title
+    }
+  }
+
+  QUERY:
+
+  {
+    "title": "Jaava Supreme",
+    "flavorProfile": "Søt og rundt med hint av jordbær",
+    "description": "Fantastisk kaffe med bla bla bbla bla bla bla bla",
+    "info": "Bryggeguide for fantastisk smak jada jada",
+    "vendorId": "ck6i1ll4m007h0726n3cujwit",
+    "countryId": "ck6i1tdej008y0726fkxxygqo"
+  }
+
+
+CREATE REGION WITH COUNTRIES:
+
+mutation CreateRegion($name: String!) {
+    createRegion(data: {
+      name: $name,
+    	countries: {
+        create: [
+          {name: "Finland"},
+          {name: "Danmark"},
+          {name: "Sverige"},
+        ]
+      },
+    }) {
+      id
+    	name
+    }
+  }
+
+  QUERY:
+
+  {
+    "name": "Europpa"
+  }
