@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
-import { compose } from 'recompose';
+import React, { useState } from 'react';
+import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
-import { withFirebase } from '../components/Firebase'
-import { Form, InputGroup, Container, Row, Button, Col } from 'react-bootstrap';
+import { compose } from 'recompose';
+import { withFirebase } from '../components/Firebase';
 
 const SignUpVendorPage = (props) => {
-
+  // 913571398
   const initialState = {
     vendor:
     {
       orgNr: '', // Organisasjonsnummer
       vendorName: '', // Selskapsnavn
+      displayName: '', // Visiningsnavn for selskap
       address: '', // (Firma-)adresse
       contactEmail: '', // Kontakt-e-postadresse, blir også usnername
       contactPerson: '', //Kontaktperson
@@ -22,33 +23,54 @@ const SignUpVendorPage = (props) => {
       iban: '',
       vendorLogo: '',
       postalCode: '',
+      city: '',
       country: '',
       phoneNumber: '',
       facebookPageUrl: '',
       instagramUsername: '',
+      website: '',
       vendorDescription: ''
-
     },
     brreg: {}
   }
   const [state, setState] = useState(initialState)
   const [orgNr, setOrgNr] = useState("")
+  const [vendor, setVendor] = useState(initialState)
   const [currentStep, setCurrentStep] = useState(1)
-  console.log("props", props)
-  console.log("state", state)
-// TODO: Implement required fields
+  //console.log("props", props)
+  //console.log("state", state)
+  // TODO: Implement required fields
+
   const onSubmit = e => {
     e.preventDefault()
-    const fields = Array.prototype.slice.call(e.target)
-    const field = fields.forEach((field) => 
-    console.log("field",field?.value))
+    //const fields = Array.prototype.slice.call(e.target)
+    //const field = fields.forEach((field) => 
+    //console.log("field",field?.value))
     //console.log("fields",fields)
     //const { email, username, password } = state
-    const { name, value } = e.target  
+    const {
+      orgNr,
+      vendorName,
+      displayName,
+      address,
+      contactEmail,
+      contactPerson,
+      bankAccount,
+      iban,
+      vendorLogo,
+      postalCode,
+      country,
+      vity,
+      phoneNumber,
+      facebookPageUrl,
+      instagramUsername,
+      website,
+      vendorDescription
+    } = e.target;
     setState((prevState) =>
       ({
-        ...prevState, vendor: ""
-          
+        ...prevState, vendor: ''
+
       }))
 
     /*
@@ -57,21 +79,33 @@ const SignUpVendorPage = (props) => {
       [name]: value
     })
     */
-    console.log(state.vendor)
+    //console.log(state.vendor)
   }
 
   const handleChange = e => {
     e.preventDefault()
-    const { name, value } = e.target
-    setState({
-      [name]: value
-    })    
+    const target = e.target
+    const value = target.value
+    const name = target.name
+
+    //const { name, value } = e.target
+    /* setState((prevState) =>
+      ({
+      ...prevState, vendor: {name:value}
+    }))    */
+    /* setVendor(prevValue =>
+    ({ ...prevValue,[name]: value })) */
+
+    setVendor(prevValue =>
+      ({ ...prevValue, [name]: value }))
+    
+    console.log(vendor)
   }
 
 
   const checkOrgNr = e => {
     e.preventDefault()
-    console.log(orgNr)
+    //console.log(orgNr)
     if (orgNr && orgNr.length === 9) {
       fetchData()
     } else console.log('orgnr empty or in a wrong format')
@@ -95,7 +129,7 @@ const SignUpVendorPage = (props) => {
       string[i] = string[i].charAt(0).toUpperCase() + string[i].substring(1);
     }
     // Directly return the joined string
-    return string.join(' '); 
+    return string.join(' ');
     //return string ? string.charAt(0).toUpperCase() + string.slice(1) : ''
   }
 
@@ -119,12 +153,12 @@ const SignUpVendorPage = (props) => {
   const prev = () => {
     let step = currentStep
     // If the current step is 2 or 3, then subtract one on "previous" button click
-    step = currentStep <= 1 ? 3 : step - 1
+    step = currentStep <= 1 ? 1 : step - 1
     setCurrentStep(step)
   }
 
 
-  const NextButton = () =>{ // TODO: Implement this
+  const NextButton = () => { // TODO: Implement this
     //let currentStep = state.currentStep;
     // If the current step is not 3, then render the "next" button
     if (currentStep < 3) {
@@ -140,7 +174,7 @@ const SignUpVendorPage = (props) => {
     return null;
   }
 
-   const PreviousButton = () => {
+  const PreviousButton = () => {
     //let step = state.currentStep;
     // If the current step is not 1, then render the "previous" button
     if (currentStep !== 1) {
@@ -157,22 +191,38 @@ const SignUpVendorPage = (props) => {
   //const PreviousButtonComponent = PreviousButton() // Remove?
 
   const SignUpVendorBase = () => {
-    return ( 
+    return (
       <Form onSubmit={onSubmit}>
         <StepOne
-          currentStep={currentStep}
+      //    currentStep={currentStep}
           handleChange={handleChange}
-          email={state.email}
+          orgNr={vendor.orgNr}
+        //  vendorName={state.vendor?.vendorName}
+        //  address={state.vendor?.address}
+        //  postalCode={state.vendor?.postalCode}
+       //   country={state.vendor?.country}
+        //  city={state.vendor?.city}
         />
         <StepTwo
           currentStep={currentStep}
           handleChange={handleChange}
-          email={state.email}
+          contactEmail={vendor?.contactEmail}
+          contactPerson={vendor?.contactPerson}
+        // username/email
+        // password
         />
         <StepThree
           currentStep={currentStep}
           handleChange={handleChange}
-          email={state.email}
+          bankAccount={vendor?.bankAccount}
+          iban={vendor?.iban}
+          vendorLogo={vendor?.vendorLogo}
+          phoneNumber={vendor?.phoneNumber}
+          displayName={vendor?.displayName}
+          facebookPageUrl={state.vendor?.displayName}
+          instagramUsername={state.vendor?.instagramUsername}
+          website={state.vendor?.website}
+          vendorDescription={state.vendor?.vendorDescription}
         />
 
       </Form>
@@ -184,7 +234,7 @@ const SignUpVendorPage = (props) => {
     withRouter,
     withFirebase
   )(SignUpVendorBase)
-  
+
   const StepOne = () => {
     if (currentStep !== 1) { // Prop: The current step
       return null
@@ -201,106 +251,125 @@ const SignUpVendorPage = (props) => {
           <Form.Control
             type="number"
             name="orgNr"
-            defaultValue={orgNr}
-            onChange={e => setOrgNr(e.target.value.replace(/\s+/g, ''))}
+            value={vendor.orgNr}
+           // defaultValue={state.vendor.orgNr}
+            onChange={/*e => setOrgNr(e.target.value.replace(/\s+/g, '')),*/ handleChange}
             placeholder="Organisasjonsnummer"
           />
-          <Form.Text
+         {/*  <Form.Text
             htmlFor="check">
             {orgNr &&
               !!!Object.keys(state.brreg).length ?
               "Organisasjonsnummeret er ikke gyldig. Forsøk igjen."
               : "Organisasjonsnummeret sjekkes mot Brønnøysundsregisteret."
-              /* TODO: Flytte errormelding til fetch */
-            }</Form.Text>
+              // TODO: Flytte errormelding til fetch 
+            }</Form.Text> */}
         </Form.Group>
 
         <Form.Group>
           <Button
             type="button"
-            value="Check"
+            // value="Check"
             name="Check"
             id="check"
-            onClick={checkOrgNr}
+          //onClick={checkOrgNr}
           >Sjekk organisasjonsnummer</Button>
         </Form.Group>
 
         {/* TODO: Autopopulates based on orgnr */}
         {!!Object.keys(state.brreg).length &&
           <>
-          <Form.Group>
-            {/* 
+            <Form.Group>
+              {/* 
             TODO: Save vendorName in correct format
             */}
               <Form.Control
                 type="text"
                 name="vendorName"
-                defaultValue={cleanUp(state.brreg.navn, state.brreg.organisasjonsform?.kode)}
-                //onChange={state.brreg.navn}
-              placeholder="Selskapsnavn"
-              disabled
+                //defaultValue={cleanUp(state.brreg.navn, state.brreg.organisasjonsform?.kode)}
+                value={state.vendor?.vendorName}
+               // defaultValue={state.vendor.vendorName}
+                onChange={handleChange}
+                placeholder="Selskapsnavn"
+                disabled
               />
             </Form.Group>
             <Form.Group>
               <Form.Control
                 type="text"
-                name="address"
-                defaultValue={state.brreg.forretningsadresse?.adresse}
-                //onChange=""
-              placeholder="Adresse"
-              disabled
+                name="displayName"
+                value={state.vendor?.displayName}
+                //defaultValue={state.vendor.displayName}
+                onChange={handleChange}
+                placeholder="Visningsnavn for selger-profilen."
               />
-          </Form.Group>
-          
-          {/*
+              <Form.Text>Dette er hva som vil bli synlig for kunder.</Form.Text>
+            </Form.Group>
+            <Form.Group>
+              <Form.Control
+                type="text"
+              name="address"
+              value={state.vendor?.address}
+               // defaultValue={state.brreg.forretningsadresse?.adresse}
+                onChange={handleChange}
+                placeholder="Adresse"
+                disabled
+              />
+            </Form.Group>
+
+            {/*
         TODO: Validate pattern
         TODO: Check if valid
         TODO: Autopopulate poststed
         TODO: Move to step 1?
          */}
-          <Form.Group>
-            <Form.Control
-              type="text"
+            <Form.Group>
+              <Form.Control
+                type="text"
               name="postalCode"
-              defaultValue={state.brreg.forretningsadresse?.postnummer}
-              //onChange=""
-              placeholder="Postnummer"
-              disabled
-            />
-          </Form.Group>
+              value={state.vendor?.postalCode}
+                //defaultValue={state.brreg.forretningsadresse?.postnummer}
+                onChange={handleChange}
+                placeholder="Postnummer"
+                disabled
+              />
+            </Form.Group>
 
-          <Form.Group>
-            <Form.Control
-              type="text"
+            <Form.Group>
+              <Form.Control
+                type="text"
               name="city"
-              defaultValue={state.brreg.forretningsadresse?.kommune}
-              //onChange=""
-              placeholder="By"
-              disabled
-            />
-          </Form.Group>
+              value={state.vendor?.city}
+                //defaultValue={state.brreg.forretningsadresse?.kommune}
+                onChange={handleChange}
+                placeholder="By"
+                disabled
+              />
+            </Form.Group>
 
-
-          <Form.Group>
-            <Form.Label htmlFor="country">
-              Land</Form.Label>
-            <Form.Control
-              as="select"
+            <Form.Group>
+              <Form.Label htmlFor="country">
+                Land</Form.Label>
+              <Form.Control
+                as="select"
               id="country"
-            >
-              <option disabled >-- velg land --</option>
-              <option value="" disabled selected>Norge</option>
-            </Form.Control>
-          </Form.Group>
+              value="Norge"
+                //defaultValue="Norge"
+                onChange={handleChange}
+              >
+                <option disabled>-- velg land --</option>
+                <option disabled value="Norge">Norge</option>
+              </Form.Control>
+            </Form.Group>
 
           </>
         }
-       
+
         <Form.Group>
           <NextButton />
         </Form.Group>
       </>
-     )
+    )
   }
 
   const StepTwo = () => {
@@ -314,10 +383,10 @@ const SignUpVendorPage = (props) => {
         */}
         <Form.Group>
           <Form.Control
-            type="email"
+            //type="email"
             name="contactEmail"
-            //value={}
-            //onChange=""
+            value={vendor?.contactEmail}
+            onChange={handleChange}
             placeholder="E-post"
           />
         </Form.Group>
@@ -326,8 +395,8 @@ const SignUpVendorPage = (props) => {
           <Form.Control
             type="text"
             name="contactPerson"
-            //value={}
-            //onChange=""
+            value={vendor?.contactPerson}
+            onChange={handleChange}
             placeholder="Kontaktperson (Fullt navn)"
           />
         </Form.Group>
@@ -341,7 +410,7 @@ const SignUpVendorPage = (props) => {
             type="password"
             name="password"
             //value={}
-            //onChange=""
+            //onChange={handleChange}
             placeholder="Passord"
           />
         </Form.Group>
@@ -351,14 +420,13 @@ const SignUpVendorPage = (props) => {
             type="password"
             name="password"
             //value={}
-            //onChange=""
+           // onChange={handleChange}
             placeholder="Gjenta passord"
           />
         </Form.Group>
 
         <Form.Group>
           <PreviousButton />
-  
           <NextButton />
         </Form.Group>
 
@@ -378,8 +446,8 @@ const SignUpVendorPage = (props) => {
           <Form.Control
             type="text"
             name="bankAccount"
-            //value={}
-            //onChange=""
+            value={state.vendor?.bankAccount}
+            onChange={handleChange}
             placeholder="Bankontonummer"
 
           />
@@ -389,20 +457,23 @@ const SignUpVendorPage = (props) => {
           <Form.Control
             type="text"
             name="iban"
-            //value={}
-            //onChange=""
+            value={state.vendor?.iban}
+            onChange={handleChange}
             placeholder="IBAN"
           />
         </Form.Group>
 
         {/* TODO: implement file size limit */}
         <Form.Group>
+          <Form.Label>
+            Last opp firma-logo
+          </Form.Label>
           <Form.Control
             type="file"
             name="vendorLogo"
             accept="image/x-png,image/jpeg"
-          //value={}
-          //onChange=""
+            value={state.vendor?.vendorLogo}
+            onChange={handleChange}
           />
         </Form.Group>
 
@@ -415,22 +486,22 @@ const SignUpVendorPage = (props) => {
           <Form.Control
             type="tel"
             name="phoneNumber"
-            //value={}
-            //onChange=""
+            value={state.vendor?.phoneNumber}
+            onChange={handleChange}
             placeholder="Telefonnummer"
           />
         </Form.Group>
 
 
         {/*
-        TODO: Sanitize
+        TODO: Sanitize / js inject
          */}
         <Form.Group>
           <Form.Control
             type="url"
             name="facebookPageUrl"
-            //value={}
-            //onChange=""
+            value={state.vendor?.facebookPageUrl}
+            onChange={handleChange}
             placeholder="Lenke til bedriftens Facebook-side"
           />
         </Form.Group>
@@ -442,8 +513,8 @@ const SignUpVendorPage = (props) => {
           <Form.Control
             type="text"
             name="instagramUsername"
-            //value={}
-            //onChange=""
+            value={state.vendor?.instagramUsername}
+            onChange={handleChange}
             placeholder="Instragram-brukernavn"
           />
         </InputGroup>
@@ -460,8 +531,8 @@ const SignUpVendorPage = (props) => {
             id="vendorDescription"
             name="vendorDescription"
             as="textarea"
-            //value={}
-            //onChange=""
+            value={state.vendor?.vendorDescription}
+            onChange={handleChange}
             placeholder="Skriv en kort presentasjon om firmaet"
             rows="4" cols="50"
           />
@@ -480,7 +551,7 @@ const SignUpVendorPage = (props) => {
       </>
     )
   }
-  const Steps = compose()(StepOne,StepTwo,StepThree)
+  const Steps = compose()(StepOne, StepTwo, StepThree)
 
   return (
     <div className="signUpVendorPage">
