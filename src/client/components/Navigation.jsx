@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {Navbar} from 'react-bootstrap';
 import Nav from "react-bootstrap/Nav";
 import {Link} from 'react-router-dom';
@@ -8,24 +8,37 @@ import * as ROUTES from '../constants/routes'
 import {IconContext} from "react-icons";
 import {FaRegUserCircle, FiSearch, TiShoppingCart} from "react-icons/all";
 import firebase from "firebase/app";
+import {AuthContext} from "./Firebase/AuthContext";
 
 
-const Navigation = ({userTypeString}) => {
-    // Declare new state variables:
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-    if(userTypeString !== "" && !isLoggedIn) {
-        setIsLoggedIn(true)
-    }
+const Navigation = () => {
 
-    // LOG OUT USER
+    console.log(firebase.auth().currentUser?.email);
+
+    // Access the user type globally from AuthContext (Customer or Vendor):
+    let userType = useContext(AuthContext)?.userType;
+    console.log("Navigation.js: " + userType);
+
+    // LOG OUT USER:
     const logoutUser = () => {
         firebase.auth().signOut().then(function () {
             console.log("Logout successful!")
         }).catch(function (error) {
             console.log(error)
         });
-        userTypeString = "";
-        setIsLoggedIn(false)
+    };
+
+    // TOGGLE BETWEEN CUSTOMER AND VENDOR TYPE:
+    const toggleUserType = () => {
+        // console.log(userType);
+        if(userType === "customer") {
+            userType = "vendor";
+            console.log("Switched to vendor")
+        }
+        else if (userType === "vendor") {
+            userType = "customer";
+            console.log("Switched to customer")
+        }
     };
 
     return (
@@ -47,17 +60,17 @@ const Navigation = ({userTypeString}) => {
                     <Link className="links" to={ROUTES.ADMIN}>Bli selger</Link>
                     <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
                     <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
-                    {!isLoggedIn && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
+                    {!userType && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
                 </Nav>
 
-                {!isLoggedIn &&
+                {!userType &&
                 <Link className="links" to={ROUTES.SIGN_UP}>
                     <button type="button" className="register-btn btn btn-outline btn-sm"
                             style={{fontSize: '11px'}}>Registrer
                     </button>
                 </Link>}
 
-                {isLoggedIn && userTypeString === "vendor" &&
+                {userType === "vendor" &&
                 <Link className="links" to={ROUTES.ADD_PRODUCT}>
                     <button type="button" className="btn btn-primary btn-sm" style={{fontSize: '11px'}}>Nytt
                         produkt
@@ -67,15 +80,19 @@ const Navigation = ({userTypeString}) => {
                 <IconContext.Provider value={{color: "coral", size: "1.5em"}}>
                     <div className="icon-group">
                         <FiSearch/>
-                        <TiShoppingCart/>
 
-                        <button className="btn" onClick={() => logoutUser()} type="button"><FaRegUserCircle/>
+                        <button className="btn" onClick={() => toggleUserType()} type="button">
+                            <TiShoppingCart/>
+                        </button>
+
+                        <button className="btn" onClick={() => logoutUser()} type="button">
+                            <FaRegUserCircle/>
                         </button>
                     </div>
                 </IconContext.Provider>
             </Navbar.Collapse>
         </Navbar>
     );
-}
+};
 
 export default Navigation;

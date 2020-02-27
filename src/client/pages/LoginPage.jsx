@@ -2,7 +2,6 @@ import React, {useCallback, useContext} from "react";
 import {Redirect, withRouter} from "react-router";
 import app from "../components/Firebase/firebase";
 import {AuthContext} from "../components/Firebase/AuthContext";
-import GetUser from "../components/GetUser";
 
 const LoginPage = ({history}) => {
 
@@ -16,14 +15,8 @@ const LoginPage = ({history}) => {
                     .signInWithEmailAndPassword(email.value, password.value);
                 history.push("/");
 
-                //console.log(app.auth().currentUser.email);
-
-                // DENNE LINJEN KJØRER IKKE:
-                // GetUser(app.auth().currentUser.email)
-
-
             } catch (error) {
-                alert(error);
+                console.log(error);
             }
         },
         [history],
