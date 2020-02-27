@@ -83,7 +83,7 @@ const SignUpVendorPage = (props) => {
   }
 
   const handleChange = e => {
-    e.preventDefault()
+    //e.preventDefault()
     const target = e.target
     const value = target.value
     const name = target.name
@@ -96,8 +96,7 @@ const SignUpVendorPage = (props) => {
     /* setVendor(prevValue =>
     ({ ...prevValue,[name]: value })) */
 
-    setVendor(prevValue =>
-      ({ ...prevValue, [name]: value }))
+    setVendor({[name]: value })
     
     console.log(vendor)
   }

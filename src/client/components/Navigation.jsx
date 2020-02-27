@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Navbar} from 'react-bootstrap';
 import Nav from "react-bootstrap/Nav";
 import {Link} from 'react-router-dom';
@@ -6,83 +6,93 @@ import {Link} from 'react-router-dom';
 import * as ROUTES from '../constants/routes'
 
 import {IconContext} from "react-icons";
-import {FiSearch, FaRegUserCircle, TiShoppingCart} from "react-icons/all";
+import {FaRegUserCircle, FiSearch, TiShoppingCart} from "react-icons/all";
 import firebase from "firebase/app";
+import {AuthContext} from "./Firebase/AuthContext";
 
-class Navigation extends React.Component {
-    state = {
-        customerSignedIn: false,
-        vendorSignedIn: false
-    };
 
-    logoutUser = () => {
-        firebase.auth().signOut().then(function() {
+const Navigation = () => {
+
+    console.log(firebase.auth().currentUser?.email);
+
+    // Access the user type globally from AuthContext (Customer or Vendor):
+    let userType = useContext(AuthContext)?.userType;
+    console.log("Navigation.js: " + userType);
+
+    // LOG OUT USER:
+    const logoutUser = () => {
+        firebase.auth().signOut().then(function () {
             console.log("Logout successful!")
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.log(error)
         });
-        this.setState({customerSignedIn: false, vendorSignedIn: false})
     };
 
-    componentDidMount() {
-        firebase.auth().onAuthStateChanged(user => {
+    // TOGGLE BETWEEN CUSTOMER AND VENDOR TYPE:
+    const toggleUserType = () => {
+        // console.log(userType);
+        if(userType === "customer") {
+            userType = "vendor";
+            console.log("Switched to vendor")
+        }
+        else if (userType === "vendor") {
+            userType = "customer";
+            console.log("Switched to customer")
+        }
+    };
 
-            if (user) {
-                this.setState({
-                    isSignedIn: true
-                });
-            } else {
-                this.setState({
-                    isSignedIn: false
-                });
-            }
-        })
-    }
+    return (
+        <Navbar className="top-navbar" expand="md">
+            <Navbar.Brand href="/">
+                <img
+                    alt=""
+                    src="logo512.png"
+                    width="30"
+                    height="30"
+                    className="d-inline-block align-top"
+                />
+                {'SocialCoffee'}
+            </Navbar.Brand>
 
-    render() {
-        return (
-            <Navbar className="top-navbar" expand="md">
-                <Navbar.Brand href="/">
-                    <img
-                        alt=""
-                        src="logo512.png"
-                        width="30"
-                        height="30"
-                        className="d-inline-block align-top"
-                    />
-                    {'SocialCoffee'}
-                </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav"/>
+            <Navbar.Collapse className="justify-content-end">
+                <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
+                    <Link className="links" to={ROUTES.ADMIN}>Bli selger</Link>
+                    <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
+                    <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
+                    {!userType && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
+                </Nav>
 
-                <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-                <Navbar.Collapse className="justify-content-end">
-                    <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
-                        <Link className="links" to={ROUTES.ADMIN}>Bli selger</Link>
-                        <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
-                        <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
-                        {!this.state.customerSignedIn && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
-                    </Nav>
+                {!userType &&
+                <Link className="links" to={ROUTES.SIGN_UP}>
+                    <button type="button" className="register-btn btn btn-outline btn-sm"
+                            style={{fontSize: '11px'}}>Registrer
+                    </button>
+                </Link>}
 
-                    { !this.state.customerSignedIn &&
-                    <Link className="links" to={ROUTES.SIGN_UP}>
-                        <button type="button" className="btn btn-outline-dark btn-sm" style={{fontSize: '11px'}}>Registrer</button>
-                    </Link> }
+                {userType === "vendor" &&
+                <Link className="links" to={ROUTES.ADD_PRODUCT}>
+                    <button type="button" className="btn btn-primary btn-sm" style={{fontSize: '11px'}}>Nytt
+                        produkt
+                    </button>
+                </Link>}
 
-                    { this.state.vendorSignedIn &&
-                    <Link className="links" to={ROUTES.ADD_PRODUCT}>
-                        <button type="button" className="btn btn-primary btn-sm" style={{fontSize: '11px'}}>Nytt produkt</button>
-                    </Link> }
+                <IconContext.Provider value={{color: "coral", size: "1.5em"}}>
+                    <div className="icon-group">
+                        <FiSearch/>
 
-                    <IconContext.Provider value={{color: "black", size: "1.5em"}}>
-                        <div className="icon-group">
-                            <FiSearch />
-                            <TiShoppingCart />
-                            { this.state.customerSignedIn && <button className="btn" onClick={() => this.logoutUser()} type="button"><FaRegUserCircle /></button> }
-                        </div>
-                    </IconContext.Provider>
-                </Navbar.Collapse>
-            </Navbar>
-        )
-    }
-}
+                        <button className="btn" onClick={() => toggleUserType()} type="button">
+                            <TiShoppingCart/>
+                        </button>
+
+                        <button className="btn" onClick={() => logoutUser()} type="button">
+                            <FaRegUserCircle/>
+                        </button>
+                    </div>
+                </IconContext.Provider>
+            </Navbar.Collapse>
+        </Navbar>
+    );
+};
 
 export default Navigation;
