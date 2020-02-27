@@ -9,11 +9,8 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from './pages/LoginPage';
 import ShopPage from './pages/ShopPage'
 import AddProduct from "./pages/AddProduct";
-<<<<<<< HEAD
 import Footer from "./components/Footer"
-=======
 import SignUpPage from "./pages/SignUpPage";
->>>>>>> master
 
 
 
