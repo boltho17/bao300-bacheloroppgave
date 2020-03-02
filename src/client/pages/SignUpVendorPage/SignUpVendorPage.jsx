@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../components/Firebase';
+import { withFirebase } from '../../components/Firebase';
 
 const SignUpVendorPage = (props) => {
   // 913571398
@@ -96,8 +96,8 @@ const SignUpVendorPage = (props) => {
     /* setVendor(prevValue =>
     ({ ...prevValue,[name]: value })) */
 
-    setVendor({[name]: value })
-    
+    setVendor({ [name]: value })
+
     console.log(vendor)
   }
 
@@ -193,13 +193,13 @@ const SignUpVendorPage = (props) => {
     return (
       <form onSubmit={onSubmit}>
         <StepOne
-      //    currentStep={currentStep}
+          //    currentStep={currentStep}
           handleChange={handleChange}
           orgNr={vendor.orgNr}
         //  vendorName={state.vendor?.vendorName}
         //  address={state.vendor?.address}
         //  postalCode={state.vendor?.postalCode}
-       //   country={state.vendor?.country}
+        //   country={state.vendor?.country}
         //  city={state.vendor?.city}
         />
         <StepTwo
@@ -251,11 +251,11 @@ const SignUpVendorPage = (props) => {
             type="number"
             name="orgNr"
             value={vendor.orgNr}
-           // defaultValue={state.vendor.orgNr}
+            // defaultValue={state.vendor.orgNr}
             onChange={/*e => setOrgNr(e.target.value.replace(/\s+/g, '')),*/ handleChange}
             placeholder="Organisasjonsnummer"
           />
-         {/*  <Form.Text
+          {/*  <Form.Text
             htmlFor="check">
             {orgNr &&
               !!!Object.keys(state.brreg).length ?
@@ -267,10 +267,10 @@ const SignUpVendorPage = (props) => {
 
 
         <input type="text" name="" />
-        <input type="number" name=""/>
-        <input type="email" name=""/>
-        <input type="url" name=""/>
-        <input type="password" name=""/>
+        <input type="number" name="" />
+        <input type="email" name="" />
+        <input type="url" name="" />
+        <input type="password" name="" />
 
 
 
@@ -299,7 +299,7 @@ const SignUpVendorPage = (props) => {
                 name="vendorName"
                 //defaultValue={cleanUp(state.brreg.navn, state.brreg.organisasjonsform?.kode)}
                 value={state.vendor?.vendorName}
-               // defaultValue={state.vendor.vendorName}
+                // defaultValue={state.vendor.vendorName}
                 onChange={handleChange}
                 placeholder="Selskapsnavn"
                 disabled
@@ -319,9 +319,9 @@ const SignUpVendorPage = (props) => {
             <Form.Group>
               <Form.Control
                 type="text"
-              name="address"
-              value={state.vendor?.address}
-               // defaultValue={state.brreg.forretningsadresse?.adresse}
+                name="address"
+                value={state.vendor?.address}
+                // defaultValue={state.brreg.forretningsadresse?.adresse}
                 onChange={handleChange}
                 placeholder="Adresse"
                 disabled
@@ -337,8 +337,8 @@ const SignUpVendorPage = (props) => {
             <Form.Group>
               <Form.Control
                 type="text"
-              name="postalCode"
-              value={state.vendor?.postalCode}
+                name="postalCode"
+                value={state.vendor?.postalCode}
                 //defaultValue={state.brreg.forretningsadresse?.postnummer}
                 onChange={handleChange}
                 placeholder="Postnummer"
@@ -349,8 +349,8 @@ const SignUpVendorPage = (props) => {
             <Form.Group>
               <Form.Control
                 type="text"
-              name="city"
-              value={state.vendor?.city}
+                name="city"
+                value={state.vendor?.city}
                 //defaultValue={state.brreg.forretningsadresse?.kommune}
                 onChange={handleChange}
                 placeholder="By"
@@ -363,8 +363,8 @@ const SignUpVendorPage = (props) => {
                 Land</Form.Label>
               <Form.Control
                 as="select"
-              id="country"
-              value="Norge"
+                id="country"
+                value="Norge"
                 //defaultValue="Norge"
                 onChange={handleChange}
               >
@@ -431,7 +431,7 @@ const SignUpVendorPage = (props) => {
             type="password"
             name="password"
             //value={}
-           // onChange={handleChange}
+            // onChange={handleChange}
             placeholder="Gjenta passord"
           />
         </Form.Group>

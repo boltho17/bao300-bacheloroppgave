@@ -11,7 +11,7 @@ import ShopPage from './pages/ShopPage'
 import BrregPage from './pages/Brreg'
 import DeliveryCost from "./components/BringAPI/DeliveryCost";
 import AddProduct from "./pages/AddProduct";
-import SignUpVendorPage from "./pages/SignUpVendorPage";
+import SignUpVendorPage from "./pages/SignUpVendorPage/SignUpVendorPage";
 
 import Footer from "./components/Footer"
 import SignUpPage from "./pages/SignUpPage";
