@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
-import { withFirebase } from '../../components/Firebase';
+//import {AuthContext, withFirebase } from '../../components/Firebase';
 
 const SignUpVendorPage = (props) => {
   // 913571398
@@ -231,7 +231,7 @@ const SignUpVendorPage = (props) => {
 
   const SignUpVendorForm = compose(
     withRouter,
-    withFirebase
+   // withFirebase
   )(SignUpVendorBase)
 
   const StepOne = () => {
