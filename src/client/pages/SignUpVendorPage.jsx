@@ -191,7 +191,7 @@ const SignUpVendorPage = (props) => {
 
   const SignUpVendorBase = () => {
     return (
-      <Form onSubmit={onSubmit}>
+      <form onSubmit={onSubmit}>
         <StepOne
       //    currentStep={currentStep}
           handleChange={handleChange}
@@ -224,7 +224,7 @@ const SignUpVendorPage = (props) => {
           vendorDescription={state.vendor?.vendorDescription}
         />
 
-      </Form>
+      </form>
     )
 
   }
@@ -242,12 +242,12 @@ const SignUpVendorPage = (props) => {
       <>
         {/* TODO: Fjern whitespace slik at gyldig nummer med mellomrom ikke feiler 
         TODO: Auto-søk orgnr */}
-        <Form.Group controlId="organization">
-          <Form.Label>Organisasjonsnummer</Form.Label>
+        <div controlId="organization">
+          <label>Organisasjonsnummer</label>
           {/* 
           TODO: Fix focus/unfocus on input
            */}
-          <Form.Control
+          <input
             type="number"
             name="orgNr"
             value={vendor.orgNr}
@@ -263,7 +263,19 @@ const SignUpVendorPage = (props) => {
               : "Organisasjonsnummeret sjekkes mot Brønnøysundsregisteret."
               // TODO: Flytte errormelding til fetch 
             }</Form.Text> */}
-        </Form.Group>
+        </div>
+
+
+        <input type="text" name="" />
+        <input type="number" name=""/>
+        <input type="email" name=""/>
+        <input type="url" name=""/>
+        <input type="password" name=""/>
+
+
+
+
+
 
         <Form.Group>
           <Button
