@@ -8,7 +8,8 @@ import Navigation from './components/Navigation'
 import LandingPage from "./pages/LandingPage";
 import LoginPage from './pages/LoginPage';
 import ShopPage from './pages/ShopPage'
-import AddProduct from "./pages/AddProduct";
+// import AddProduct from "./pages/AddProduct";
+import VendorSignUp from "./pages/VendorSignUp";
 import Footer from "./components/Footer"
 import SignUpPage from "./pages/SignUpPage";
 import SignUpVendorPage from "./pages/SignUpVendorPage/SignUpVendorPage";
@@ -26,8 +27,8 @@ const App = () => {
         <Route path={ROUTES.SIGN_UP} component={SignUpPage} />
         <Route path={ROUTES.SIGN_IN} component={LoginPage} />
         <Route path={ROUTES.PRODUCTS} component={ShopPage} />
-        <Route path={ROUTES.ADD_PRODUCT} component={AddProduct} />
         <Route path={ROUTES.SIGN_UP_VENDOR} component={SignUpVendorPage} />
+        <Route path={ROUTES.SIGN_UP_VENDOR2} component={VendorSignUp} />
       </div>
 
 
@@ -35,6 +36,22 @@ const App = () => {
 
     </Router>
   );
+    return (
+        <Router>
+            <div>
+                <Navigation />
+                <Route exact path={ROUTES.LANDING} component={LandingPage}/>
+                <Route path={ROUTES.SIGN_UP} component={SignUpPage}/>
+                <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
+                <Route path={ROUTES.PRODUCTS} component={ShopPage}/>
+                <Route path={ROUTES.ADD_PRODUCT} component={VendorSignUp}/>
+            </div>
+
+            
+            <Footer />
+
+        </Router>
+    );
 };
 
 export default App;
