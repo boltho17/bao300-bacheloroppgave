@@ -12,11 +12,12 @@ const VendorSignUp = () => {
 
             { step === 1  && <FormOrgNumber/> }
             { step === 2  && <FormCompanyInfo /> }
-            { step === 3  && <FormOrgNumber/> }
+            { step === 3  && <div>Her kommer steg 3 component</div> }
 
             <div className="row">
                 { step > 1 && <button onClick={() => setStep(prevState => prevState - 1)}>Forrige</button> }
-                <button onClick={() => setStep(2)}>Neste</button>
+                { step < 3 && <button onClick={() => setStep(prevState => prevState + 1)}>Neste</button> }
+                { step === 3 && <button onClick={() => console.log("Ferdig")}>Ferdig</button> }
             </div>
         </div>
     )
