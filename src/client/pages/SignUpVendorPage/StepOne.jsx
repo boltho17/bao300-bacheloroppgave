@@ -8,12 +8,12 @@ export const StepOne = props => {
   const watchYes = watch("orgNr", false);
   const orgNrInput = watch("orgNr",0);
   //console.log("orgNrInput", orgNrInput, "orgNrInput.length", orgNrInput.length)
- if (typeof orgNrInput !== "undefined" && orgNrInput.length && orgNrInput.length >= 9){
+  if ( orgNrInput.length && orgNrInput.length >= 9){
     console.log(orgNrInput)
     props.checkOrgNr(orgNrInput)
-  } else {console.log('')} 
+  } 
 
- 
+ const brreg = props.state?.brreg
     
         
   if (props.currentStep !== 1) { // Prop: The current step
@@ -29,16 +29,11 @@ export const StepOne = props => {
           TODO: Fix focus/unfocus on input
            */}
         <input
-          type="number"
+          type="text"
           name="orgNr"
-          
-          ref={
-            register({
-              validate: value => value.length === 9 && console.log("y")
-            })
-          }
-          //value={props.orgNr}
-          
+          ref={register}
+          //value={newName}
+          //onChange={event => setNewName(event.target.value)}
           //defaultValue={props.vendor?.orgNr}
           //onChange={/*e => setOrgNr(e.target.value.replace(/\s+/g, '')),*/  SignUpVendorPage.handleChange}
           placeholder="Organisasjonsnummer"
@@ -71,7 +66,7 @@ export const StepOne = props => {
    
 
       {/* TODO: Autopopulates based on orgnr */}
-      {!!Object.keys(props.brreg).length &&
+      {props.state?.vendor?.test && props.state?.vendor?.test.length && 
         <>
           <div>
             {/* 
@@ -79,10 +74,11 @@ export const StepOne = props => {
             */}
             <input
               type="text"
-              name="vendorName"
+            name="vendorName"
+            defaultValue={props.state?.brreg?.navn}
               //defaultValue={cleanUp(state.brreg.navn, state.brreg.organisasjonsform?.kode)}
            // value={props.vendor?.vendorName}
-            ref={register}
+            //ref={register}
               // defaultValue={state.vendor.vendorName}
               //onChange={handleChange}
               placeholder="Selskapsnavn"
@@ -94,7 +90,7 @@ export const StepOne = props => {
               type="text"
               name="displayName"
             //value={props.vendor?.displayName}
-            ref={register}
+            //ref={register}
               //defaultValue={state.vendor.displayName}
               //onChange={handleChange}
               placeholder="Visningsnavn for selger-profilen."
@@ -106,7 +102,7 @@ export const StepOne = props => {
               type="text"
               name="address"
             //value={props.vendor?.address}
-            ref={register}
+            //ref={register}
               // defaultValue={state.brreg.forretningsadresse?.adresse}
              // onChange={handleChange}
               placeholder="Adresse"
@@ -125,7 +121,7 @@ export const StepOne = props => {
               type="text"
               name="postalCode"
             //value={props.vendor?.postalCode}
-            ref={register}
+           // ref={register}
               //defaultValue={state.brreg.forretningsadresse?.postnummer}
               //onChange={handleChange}
               placeholder="Postnummer"
@@ -141,7 +137,7 @@ export const StepOne = props => {
               //defaultValue={state.brreg.forretningsadresse?.kommune}
               //onChange={handleChange}
             placeholder="By"
-            ref={register}
+          //  ref={register}
               disabled
             />
           </div>
@@ -153,7 +149,7 @@ export const StepOne = props => {
               as="select"
               id="country"
             value="Norge"
-            ref={register}
+           // ref={register}
               //defaultValue="Norge"
               //onChange={handleChange}
             >

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Col, Container, Form, InputGroup, Row } from 'react-bootstrap';
 import { withRouter } from 'react-router-dom';
 import { compose } from 'recompose';
@@ -32,13 +32,16 @@ const SignUpVendorPage = (props) => {
       facebookPageUrl: '',
       instagramUsername: '',
       website: '',
-      vendorDescription: ''
+      vendorDescription: '',
+      
     },
-    brreg: {}
+    brreg: {
+
+    }
   }
   const [state, setState] = useState(initialState)
-  const [orgNr, setOrgNr] = useState("")
-  const [vendor, setVendor] = useState(initialState)
+ // const [orgNr, setOrgNr] = useState("")
+ // const [vendor, setVendor] = useState(initialState)
   const [currentStep, setCurrentStep] = useState(1)
   //console.log("props", props)
   //console.log("state", state)
@@ -93,20 +96,15 @@ const SignUpVendorPage = (props) => {
     /* setVendor(prevValue =>
     ({ ...prevValue,[name]: value })) */
 
-    setVendor({ [name]: value })
+    //setVendor({ [name]: value })
 
-    console.log(vendor)
+    
   }
 
 
-  const setOrgNrFunc = async str => {
-    console.log('str',str)
-     state.vendor['orgNr'] = await str
-    console.log('state.vendor.orgNr', state.vendor.orgNr)
-   // return str
-  }
 
-  const checkOrgNr = e => {
+  
+  const checkOrgNr =  e => {
     //e.preventDefault()
     //console.log(orgNr)
     console.log("ceckornr")
@@ -125,7 +123,9 @@ const SignUpVendorPage = (props) => {
    
     if (orgNr && orgNr.length === 9) {
       //setOrgNr(orgNr)
-      setState(setOrgNrFunc(orgNr))
+     
+      
+      
       fetchData()
     } else console.log('orgnr is empty or in a wrong format')
 
@@ -133,11 +133,12 @@ const SignUpVendorPage = (props) => {
   }
 
   const fetchData = async () => {
+    //console.log("fetch", state)
     const res = await fetch(`https://data.brreg.no/enhetsregisteret/api/enheter/${state?.vendor?.orgNr}`)
     res
       .json()
-      .then(res => setState((prevState) => ({ ...prevState, brreg: res }, console.log( 'res',res))))
-      .catch(err => console.log('fetcherr',err))
+      .then(res => setState((prevState) => ({ ...prevState, brreg: res })))
+      .catch(err => console.log(err))
 
   }
   const upperFirst = (string) => { // TODO: Refactor
@@ -218,11 +219,12 @@ const SignUpVendorPage = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <StepOne {...props}
           currentStep={currentStep}
-          brreg={state?.brreg}
-          vendor={state?.vendor}
+          //brreg={state?.brreg}
+         //vendor={state?.vendor}
+          state={state}
           checkOrgNr={checkOrgNr}
           //nextButton={NextButton}
-          handleChange={handleChange}
+         // handleChange={handleChange}
          // ref={register}
           //orgNr={state.vendor?.orgNr}
           //brreg={state.brreg}
@@ -250,11 +252,11 @@ const SignUpVendorPage = (props) => {
           //previousButton={PreviousButton}
 
           handleChange={handleChange}
-          bankAccount={vendor?.bankAccount}
-          iban={vendor?.iban}
-          vendorLogo={vendor?.vendorLogo}
-          phoneNumber={vendor?.phoneNumber}
-          displayName={vendor?.displayName}
+          bankAccount={state?.vendor?.bankAccount}
+          iban={state?.vendor?.iban}
+          vendorLogo={state?.vendor?.vendorLogo}
+          phoneNumber={state?.vendor?.phoneNumber}
+          displayName={state?.vendor?.displayName}
           facebookPageUrl={state?.vendor?.displayName}
           instagramUsername={state?.vendor?.instagramUsername}
           website={state?.vendor?.website}
