@@ -4,6 +4,7 @@ const FormInput = props => {
 
     return (
         <div>
+            <label htmlFor={props.label}>{props.label}</label>
             <input
                 className="form-input"
                 id={props.name}
@@ -12,6 +13,7 @@ const FormInput = props => {
                 value={props.value}
                 onChange={props.handleChange}
                 placeholder={props.placeholder}
+                disabled={props.disabled}
             />
         </div>
     )
