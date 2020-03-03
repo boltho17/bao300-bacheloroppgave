@@ -126,7 +126,7 @@ const SignUpVendorPage = (props) => {
     const res = await fetch(`https://data.brreg.no/enhetsregisteret/api/enheter/${orgNr}`)
     res
       .json()
-      .then(res => setState((prevState) => ({ ...prevState, brreg: res })))
+      .then(res => setState((prevState) => ({ ...prevState, brreg: res }, console.log(state.brreg))))
       .catch(err => console.log(err))
 
   }
@@ -208,7 +208,7 @@ const SignUpVendorPage = (props) => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <StepOne {...props}
           currentStep={currentStep}
-          brreg={state.brreg}
+          brreg={state?.brreg}
           vendor={state?.vendor}
           checkOrgNr={checkOrgNr}
           //nextButton={NextButton}
@@ -224,7 +224,7 @@ const SignUpVendorPage = (props) => {
         />
         <StepTwo {...props}
           currentStep={currentStep}
-          vendor={state.vendor}
+          vendor={state?.vendor}
           //nextButton={NextButton}
           //previousButton={PreviousButton}
           //handleChange={handleChange}
@@ -235,7 +235,7 @@ const SignUpVendorPage = (props) => {
         />
         <StepThree {...props}
           currentStep={currentStep}
-          vendor={state.vendor}
+          vendor={state?.vendor}
           nextButton={NextButton}
           //previousButton={PreviousButton}
 
@@ -245,10 +245,10 @@ const SignUpVendorPage = (props) => {
           vendorLogo={vendor?.vendorLogo}
           phoneNumber={vendor?.phoneNumber}
           displayName={vendor?.displayName}
-          facebookPageUrl={state.vendor?.displayName}
-          instagramUsername={state.vendor?.instagramUsername}
-          website={state.vendor?.website}
-          vendorDescription={state.vendor?.vendorDescription}
+          facebookPageUrl={state?.vendor?.displayName}
+          instagramUsername={state?.vendor?.instagramUsername}
+          website={state?.vendor?.website}
+          vendorDescription={state?.vendor?.vendorDescription}
         /> 
         <NextButton />
         <PreviousButton/>
