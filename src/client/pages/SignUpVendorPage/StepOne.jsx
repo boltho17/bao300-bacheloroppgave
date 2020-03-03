@@ -31,6 +31,7 @@ export const StepOne = props => {
         <input
           type="number"
           name="orgNr"
+          
           ref={
             register({
               validate: value => value.length === 9 && console.log("y")

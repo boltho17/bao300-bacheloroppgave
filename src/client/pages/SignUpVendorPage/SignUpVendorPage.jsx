@@ -14,7 +14,7 @@ const SignUpVendorPage = (props) => {
   const initialState = {
     vendor:
     {
-      orgNr: '', // Organisasjonsnummer
+      orgNr: '913571398', // Organisasjonsnummer
       vendorName: '', // Selskapsnavn
       displayName: '', // Visiningsnavn for selskap
       address: '', // (Firma-)adresse
@@ -99,6 +99,13 @@ const SignUpVendorPage = (props) => {
   }
 
 
+  const setOrgNrFunc = async str => {
+    console.log('str',str)
+     state.vendor['orgNr'] = await str
+    console.log('state.vendor.orgNr', state.vendor.orgNr)
+   // return str
+  }
+
   const checkOrgNr = e => {
     //e.preventDefault()
     //console.log(orgNr)
@@ -109,13 +116,16 @@ const SignUpVendorPage = (props) => {
       
       if (!e.target) {
         orgNr = e.replace(/\s+/g, '')
+       // setOrgNr(orgNr)
       } else {
         orgNr = e.target.value.replace(/\s+/g, '')
+       // setOrgNr(orgNr)
       }
   
    
     if (orgNr && orgNr.length === 9) {
-      setOrgNr(orgNr)
+      //setOrgNr(orgNr)
+      setState(setOrgNrFunc(orgNr))
       fetchData()
     } else console.log('orgnr is empty or in a wrong format')
 
@@ -123,11 +133,11 @@ const SignUpVendorPage = (props) => {
   }
 
   const fetchData = async () => {
-    const res = await fetch(`https://data.brreg.no/enhetsregisteret/api/enheter/${orgNr}`)
+    const res = await fetch(`https://data.brreg.no/enhetsregisteret/api/enheter/${state?.vendor?.orgNr}`)
     res
       .json()
-      .then(res => setState((prevState) => ({ ...prevState, brreg: res }, console.log(state.brreg))))
-      .catch(err => console.log(err))
+      .then(res => setState((prevState) => ({ ...prevState, brreg: res }, console.log( 'res',res))))
+      .catch(err => console.log('fetcherr',err))
 
   }
   const upperFirst = (string) => { // TODO: Refactor
