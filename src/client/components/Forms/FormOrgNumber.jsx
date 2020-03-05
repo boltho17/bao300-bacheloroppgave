@@ -37,7 +37,7 @@ const FormOrgNumber = props => {
             <form className="container">
 
                 <Row>
-                    <FormInput label="Org nummer" value={orgNumber} handleChange={handleChange} placeholder={"Org.nummer"} /> {/* Org Number */}
+                    <FormInput label="F.eks 913571398" value={orgNumber} handleChange={handleChange} placeholder={"Org.nummer"} /> {/* Org Number */}
                     <button onClick={handleFormSubmit}>Søk</button>
                 </Row>
                     { props.vendor?.navn && <FormInput label="Firmanavn" placeholder={props.vendor.navn} disabled={true} /> /* Org Number */}

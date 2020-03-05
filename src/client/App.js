@@ -25,6 +25,7 @@ const App = () => {
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage}/>
                 <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
                 <Route path={ROUTES.PRODUCTS} component={ShopPage}/>
+                <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
                 <Route path={ROUTES.ADD_PRODUCT} component={VendorSignUp}/>
             </div>
 

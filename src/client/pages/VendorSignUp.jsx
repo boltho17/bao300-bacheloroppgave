@@ -1,7 +1,9 @@
 import React, {useCallback, useState} from 'react';
+import app from "../components/Firebase/firebase";
 import FormOrgNumber from "../components/Forms/FormOrgNumber";
 import FormCompanyInfo from "../components/Forms/FormCompanyInfo";
-import app from "../components/Firebase/firebase";
+import {useMutation} from "@apollo/react-hooks";
+import {ADD_VENDOR} from "../components/GraphQL/vendor/mutations";
 
 const VendorSignUp = ({history}) => {
 
@@ -19,7 +21,6 @@ const VendorSignUp = ({history}) => {
         setVendor({})
     };
 
-
     const submitVendorSignUp = useCallback(async event => {
         event.preventDefault();
         // const { email, password } = event.target.elements;
@@ -29,10 +30,34 @@ const VendorSignUp = ({history}) => {
                 .auth()
                 .createUserWithEmailAndPassword(vendorInfo.email, vendorInfo.password);
             history.push("/");
+
+            await console.log("GraphQL Mutation goes here?");
+
+            // vendor inneholder hele objektet fra Brreg.
+            // vendorInfo inneholder resten
+
         } catch (error) {
             alert(error);
         }
     }, [history, vendorInfo.email, vendorInfo.password]);
+
+
+
+    function CreateVendor() {
+
+        const [addVendor, { data }] = useMutation(ADD_VENDOR);
+
+            addVendor({
+                variables: {
+                    displayName: vendorInfo.displayName,
+                    organizationNumber: Number(vendor.organisasjonsnummer),
+                    address: vendor.forretningsadresse.adresse[1],
+                    userEmail: vendorInfo.email
+                }
+            });
+
+            console.log(data)
+    }
 
     return (
         <div className="container">

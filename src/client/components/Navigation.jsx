@@ -57,7 +57,7 @@ const Navigation = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
                 <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
-                    <Link className="links" to={ROUTES.ADMIN}>Bli selger</Link>
+                    <Link className="links" to={ROUTES.VENDOR_SIGNUP}>Bli selger</Link>
                     <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
                     <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
                     {!userType && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}

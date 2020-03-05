@@ -3,11 +3,39 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateCountry {
+/* GraphQL */ `type AggregateCategory {
+  count: Int!
+}
+
+type AggregateContentArea {
+  count: Int!
+}
+
+type AggregateContentText {
+  count: Int!
+}
+
+type AggregateCountry {
   count: Int!
 }
 
 type AggregateCustomer {
+  count: Int!
+}
+
+type AggregateGrind {
+  count: Int!
+}
+
+type AggregateGrindOption {
+  count: Int!
+}
+
+type AggregateOrder {
+  count: Int!
+}
+
+type AggregateOrderLine {
   count: Int!
 }
 
@@ -23,6 +51,18 @@ type AggregateRegion {
   count: Int!
 }
 
+type AggregateReview {
+  count: Int!
+}
+
+type AggregateSKU {
+  count: Int!
+}
+
+type AggregateSubCategory {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -33,6 +73,442 @@ type AggregateVendor {
 
 type BatchPayload {
   count: Long!
+}
+
+type Category {
+  id: ID!
+  products: Product!
+  category: String!
+}
+
+type CategoryConnection {
+  pageInfo: PageInfo!
+  edges: [CategoryEdge]!
+  aggregate: AggregateCategory!
+}
+
+input CategoryCreateInput {
+  id: ID
+  products: ProductCreateOneWithoutCategoriesInput!
+  category: String!
+}
+
+input CategoryCreateManyWithoutProductsInput {
+  create: [CategoryCreateWithoutProductsInput!]
+  connect: [CategoryWhereUniqueInput!]
+}
+
+input CategoryCreateOneInput {
+  create: CategoryCreateInput
+  connect: CategoryWhereUniqueInput
+}
+
+input CategoryCreateWithoutProductsInput {
+  id: ID
+  category: String!
+}
+
+type CategoryEdge {
+  node: Category!
+  cursor: String!
+}
+
+enum CategoryOrderByInput {
+  id_ASC
+  id_DESC
+  category_ASC
+  category_DESC
+}
+
+type CategoryPreviousValues {
+  id: ID!
+  category: String!
+}
+
+input CategoryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  AND: [CategoryScalarWhereInput!]
+  OR: [CategoryScalarWhereInput!]
+  NOT: [CategoryScalarWhereInput!]
+}
+
+type CategorySubscriptionPayload {
+  mutation: MutationType!
+  node: Category
+  updatedFields: [String!]
+  previousValues: CategoryPreviousValues
+}
+
+input CategorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: CategoryWhereInput
+  AND: [CategorySubscriptionWhereInput!]
+  OR: [CategorySubscriptionWhereInput!]
+  NOT: [CategorySubscriptionWhereInput!]
+}
+
+input CategoryUpdateDataInput {
+  products: ProductUpdateOneRequiredWithoutCategoriesInput
+  category: String
+}
+
+input CategoryUpdateInput {
+  products: ProductUpdateOneRequiredWithoutCategoriesInput
+  category: String
+}
+
+input CategoryUpdateManyDataInput {
+  category: String
+}
+
+input CategoryUpdateManyMutationInput {
+  category: String
+}
+
+input CategoryUpdateManyWithoutProductsInput {
+  create: [CategoryCreateWithoutProductsInput!]
+  delete: [CategoryWhereUniqueInput!]
+  connect: [CategoryWhereUniqueInput!]
+  set: [CategoryWhereUniqueInput!]
+  disconnect: [CategoryWhereUniqueInput!]
+  update: [CategoryUpdateWithWhereUniqueWithoutProductsInput!]
+  upsert: [CategoryUpsertWithWhereUniqueWithoutProductsInput!]
+  deleteMany: [CategoryScalarWhereInput!]
+  updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+}
+
+input CategoryUpdateManyWithWhereNestedInput {
+  where: CategoryScalarWhereInput!
+  data: CategoryUpdateManyDataInput!
+}
+
+input CategoryUpdateOneRequiredInput {
+  create: CategoryCreateInput
+  update: CategoryUpdateDataInput
+  upsert: CategoryUpsertNestedInput
+  connect: CategoryWhereUniqueInput
+}
+
+input CategoryUpdateWithoutProductsDataInput {
+  category: String
+}
+
+input CategoryUpdateWithWhereUniqueWithoutProductsInput {
+  where: CategoryWhereUniqueInput!
+  data: CategoryUpdateWithoutProductsDataInput!
+}
+
+input CategoryUpsertNestedInput {
+  update: CategoryUpdateDataInput!
+  create: CategoryCreateInput!
+}
+
+input CategoryUpsertWithWhereUniqueWithoutProductsInput {
+  where: CategoryWhereUniqueInput!
+  update: CategoryUpdateWithoutProductsDataInput!
+  create: CategoryCreateWithoutProductsInput!
+}
+
+input CategoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  products: ProductWhereInput
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  AND: [CategoryWhereInput!]
+  OR: [CategoryWhereInput!]
+  NOT: [CategoryWhereInput!]
+}
+
+input CategoryWhereUniqueInput {
+  id: ID
+  category: String
+}
+
+type ContentArea {
+  id: ID!
+  name: String!
+}
+
+type ContentAreaConnection {
+  pageInfo: PageInfo!
+  edges: [ContentAreaEdge]!
+  aggregate: AggregateContentArea!
+}
+
+input ContentAreaCreateInput {
+  id: ID
+  name: String!
+}
+
+input ContentAreaCreateOneInput {
+  create: ContentAreaCreateInput
+  connect: ContentAreaWhereUniqueInput
+}
+
+type ContentAreaEdge {
+  node: ContentArea!
+  cursor: String!
+}
+
+enum ContentAreaOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type ContentAreaPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type ContentAreaSubscriptionPayload {
+  mutation: MutationType!
+  node: ContentArea
+  updatedFields: [String!]
+  previousValues: ContentAreaPreviousValues
+}
+
+input ContentAreaSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ContentAreaWhereInput
+  AND: [ContentAreaSubscriptionWhereInput!]
+  OR: [ContentAreaSubscriptionWhereInput!]
+  NOT: [ContentAreaSubscriptionWhereInput!]
+}
+
+input ContentAreaUpdateDataInput {
+  name: String
+}
+
+input ContentAreaUpdateInput {
+  name: String
+}
+
+input ContentAreaUpdateManyMutationInput {
+  name: String
+}
+
+input ContentAreaUpdateOneRequiredInput {
+  create: ContentAreaCreateInput
+  update: ContentAreaUpdateDataInput
+  upsert: ContentAreaUpsertNestedInput
+  connect: ContentAreaWhereUniqueInput
+}
+
+input ContentAreaUpsertNestedInput {
+  update: ContentAreaUpdateDataInput!
+  create: ContentAreaCreateInput!
+}
+
+input ContentAreaWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [ContentAreaWhereInput!]
+  OR: [ContentAreaWhereInput!]
+  NOT: [ContentAreaWhereInput!]
+}
+
+input ContentAreaWhereUniqueInput {
+  id: ID
+}
+
+type ContentText {
+  id: ID!
+  vendor: Vendor!
+  contentArea: ContentArea!
+  content: String!
+  publishedStatus: Boolean!
+}
+
+type ContentTextConnection {
+  pageInfo: PageInfo!
+  edges: [ContentTextEdge]!
+  aggregate: AggregateContentText!
+}
+
+input ContentTextCreateInput {
+  id: ID
+  vendor: VendorCreateOneInput!
+  contentArea: ContentAreaCreateOneInput!
+  content: String!
+  publishedStatus: Boolean
+}
+
+type ContentTextEdge {
+  node: ContentText!
+  cursor: String!
+}
+
+enum ContentTextOrderByInput {
+  id_ASC
+  id_DESC
+  content_ASC
+  content_DESC
+  publishedStatus_ASC
+  publishedStatus_DESC
+}
+
+type ContentTextPreviousValues {
+  id: ID!
+  content: String!
+  publishedStatus: Boolean!
+}
+
+type ContentTextSubscriptionPayload {
+  mutation: MutationType!
+  node: ContentText
+  updatedFields: [String!]
+  previousValues: ContentTextPreviousValues
+}
+
+input ContentTextSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ContentTextWhereInput
+  AND: [ContentTextSubscriptionWhereInput!]
+  OR: [ContentTextSubscriptionWhereInput!]
+  NOT: [ContentTextSubscriptionWhereInput!]
+}
+
+input ContentTextUpdateInput {
+  vendor: VendorUpdateOneRequiredInput
+  contentArea: ContentAreaUpdateOneRequiredInput
+  content: String
+  publishedStatus: Boolean
+}
+
+input ContentTextUpdateManyMutationInput {
+  content: String
+  publishedStatus: Boolean
+}
+
+input ContentTextWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  vendor: VendorWhereInput
+  contentArea: ContentAreaWhereInput
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  publishedStatus: Boolean
+  publishedStatus_not: Boolean
+  AND: [ContentTextWhereInput!]
+  OR: [ContentTextWhereInput!]
+  NOT: [ContentTextWhereInput!]
+}
+
+input ContentTextWhereUniqueInput {
+  id: ID
 }
 
 type Country {
@@ -277,6 +753,11 @@ input CustomerCreateInput {
   user: UserCreateOneWithoutCustomerInput!
 }
 
+input CustomerCreateOneInput {
+  create: CustomerCreateInput
+  connect: CustomerWhereUniqueInput
+}
+
 input CustomerCreateOneWithoutUserInput {
   create: CustomerCreateWithoutUserInput
   connect: CustomerWhereUniqueInput
@@ -330,6 +811,13 @@ input CustomerSubscriptionWhereInput {
   NOT: [CustomerSubscriptionWhereInput!]
 }
 
+input CustomerUpdateDataInput {
+  firstName: String
+  lastName: String
+  address: String
+  user: UserUpdateOneRequiredWithoutCustomerInput
+}
+
 input CustomerUpdateInput {
   firstName: String
   lastName: String
@@ -341,6 +829,13 @@ input CustomerUpdateManyMutationInput {
   firstName: String
   lastName: String
   address: String
+}
+
+input CustomerUpdateOneRequiredInput {
+  create: CustomerCreateInput
+  update: CustomerUpdateDataInput
+  upsert: CustomerUpsertNestedInput
+  connect: CustomerWhereUniqueInput
 }
 
 input CustomerUpdateOneWithoutUserInput {
@@ -356,6 +851,11 @@ input CustomerUpdateWithoutUserDataInput {
   firstName: String
   lastName: String
   address: String
+}
+
+input CustomerUpsertNestedInput {
+  update: CustomerUpdateDataInput!
+  create: CustomerCreateInput!
 }
 
 input CustomerUpsertWithoutUserInput {
@@ -430,9 +930,233 @@ input CustomerWhereUniqueInput {
   id: ID
 }
 
+scalar DateTime
+
+type Grind {
+  id: ID!
+  grindOption: String!
+  grindOptions: Grind!
+}
+
+type GrindConnection {
+  pageInfo: PageInfo!
+  edges: [GrindEdge]!
+  aggregate: AggregateGrind!
+}
+
+input GrindCreateInput {
+  id: ID
+  grindOption: String!
+  grindOptions: GrindCreateOneInput!
+}
+
+input GrindCreateOneInput {
+  create: GrindCreateInput
+  connect: GrindWhereUniqueInput
+}
+
+type GrindEdge {
+  node: Grind!
+  cursor: String!
+}
+
+type GrindOption {
+  id: ID!
+  product: Product!
+  grind: Grind!
+}
+
+type GrindOptionConnection {
+  pageInfo: PageInfo!
+  edges: [GrindOptionEdge]!
+  aggregate: AggregateGrindOption!
+}
+
+input GrindOptionCreateInput {
+  id: ID
+  product: ProductCreateOneInput!
+  grind: GrindCreateOneInput!
+}
+
+type GrindOptionEdge {
+  node: GrindOption!
+  cursor: String!
+}
+
+enum GrindOptionOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type GrindOptionPreviousValues {
+  id: ID!
+}
+
+type GrindOptionSubscriptionPayload {
+  mutation: MutationType!
+  node: GrindOption
+  updatedFields: [String!]
+  previousValues: GrindOptionPreviousValues
+}
+
+input GrindOptionSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GrindOptionWhereInput
+  AND: [GrindOptionSubscriptionWhereInput!]
+  OR: [GrindOptionSubscriptionWhereInput!]
+  NOT: [GrindOptionSubscriptionWhereInput!]
+}
+
+input GrindOptionUpdateInput {
+  product: ProductUpdateOneRequiredInput
+  grind: GrindUpdateOneRequiredInput
+}
+
+input GrindOptionWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  product: ProductWhereInput
+  grind: GrindWhereInput
+  AND: [GrindOptionWhereInput!]
+  OR: [GrindOptionWhereInput!]
+  NOT: [GrindOptionWhereInput!]
+}
+
+input GrindOptionWhereUniqueInput {
+  id: ID
+}
+
+enum GrindOrderByInput {
+  id_ASC
+  id_DESC
+  grindOption_ASC
+  grindOption_DESC
+}
+
+type GrindPreviousValues {
+  id: ID!
+  grindOption: String!
+}
+
+type GrindSubscriptionPayload {
+  mutation: MutationType!
+  node: Grind
+  updatedFields: [String!]
+  previousValues: GrindPreviousValues
+}
+
+input GrindSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GrindWhereInput
+  AND: [GrindSubscriptionWhereInput!]
+  OR: [GrindSubscriptionWhereInput!]
+  NOT: [GrindSubscriptionWhereInput!]
+}
+
+input GrindUpdateDataInput {
+  grindOption: String
+  grindOptions: GrindUpdateOneRequiredInput
+}
+
+input GrindUpdateInput {
+  grindOption: String
+  grindOptions: GrindUpdateOneRequiredInput
+}
+
+input GrindUpdateManyMutationInput {
+  grindOption: String
+}
+
+input GrindUpdateOneRequiredInput {
+  create: GrindCreateInput
+  update: GrindUpdateDataInput
+  upsert: GrindUpsertNestedInput
+  connect: GrindWhereUniqueInput
+}
+
+input GrindUpsertNestedInput {
+  update: GrindUpdateDataInput!
+  create: GrindCreateInput!
+}
+
+input GrindWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  grindOption: String
+  grindOption_not: String
+  grindOption_in: [String!]
+  grindOption_not_in: [String!]
+  grindOption_lt: String
+  grindOption_lte: String
+  grindOption_gt: String
+  grindOption_gte: String
+  grindOption_contains: String
+  grindOption_not_contains: String
+  grindOption_starts_with: String
+  grindOption_not_starts_with: String
+  grindOption_ends_with: String
+  grindOption_not_ends_with: String
+  grindOptions: GrindWhereInput
+  AND: [GrindWhereInput!]
+  OR: [GrindWhereInput!]
+  NOT: [GrindWhereInput!]
+}
+
+input GrindWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createCategory(data: CategoryCreateInput!): Category!
+  updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
+  updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
+  upsertCategory(where: CategoryWhereUniqueInput!, create: CategoryCreateInput!, update: CategoryUpdateInput!): Category!
+  deleteCategory(where: CategoryWhereUniqueInput!): Category
+  deleteManyCategories(where: CategoryWhereInput): BatchPayload!
+  createContentArea(data: ContentAreaCreateInput!): ContentArea!
+  updateContentArea(data: ContentAreaUpdateInput!, where: ContentAreaWhereUniqueInput!): ContentArea
+  updateManyContentAreas(data: ContentAreaUpdateManyMutationInput!, where: ContentAreaWhereInput): BatchPayload!
+  upsertContentArea(where: ContentAreaWhereUniqueInput!, create: ContentAreaCreateInput!, update: ContentAreaUpdateInput!): ContentArea!
+  deleteContentArea(where: ContentAreaWhereUniqueInput!): ContentArea
+  deleteManyContentAreas(where: ContentAreaWhereInput): BatchPayload!
+  createContentText(data: ContentTextCreateInput!): ContentText!
+  updateContentText(data: ContentTextUpdateInput!, where: ContentTextWhereUniqueInput!): ContentText
+  updateManyContentTexts(data: ContentTextUpdateManyMutationInput!, where: ContentTextWhereInput): BatchPayload!
+  upsertContentText(where: ContentTextWhereUniqueInput!, create: ContentTextCreateInput!, update: ContentTextUpdateInput!): ContentText!
+  deleteContentText(where: ContentTextWhereUniqueInput!): ContentText
+  deleteManyContentTexts(where: ContentTextWhereInput): BatchPayload!
   createCountry(data: CountryCreateInput!): Country!
   updateCountry(data: CountryUpdateInput!, where: CountryWhereUniqueInput!): Country
   updateManyCountries(data: CountryUpdateManyMutationInput!, where: CountryWhereInput): BatchPayload!
@@ -445,6 +1169,29 @@ type Mutation {
   upsertCustomer(where: CustomerWhereUniqueInput!, create: CustomerCreateInput!, update: CustomerUpdateInput!): Customer!
   deleteCustomer(where: CustomerWhereUniqueInput!): Customer
   deleteManyCustomers(where: CustomerWhereInput): BatchPayload!
+  createGrind(data: GrindCreateInput!): Grind!
+  updateGrind(data: GrindUpdateInput!, where: GrindWhereUniqueInput!): Grind
+  updateManyGrinds(data: GrindUpdateManyMutationInput!, where: GrindWhereInput): BatchPayload!
+  upsertGrind(where: GrindWhereUniqueInput!, create: GrindCreateInput!, update: GrindUpdateInput!): Grind!
+  deleteGrind(where: GrindWhereUniqueInput!): Grind
+  deleteManyGrinds(where: GrindWhereInput): BatchPayload!
+  createGrindOption(data: GrindOptionCreateInput!): GrindOption!
+  updateGrindOption(data: GrindOptionUpdateInput!, where: GrindOptionWhereUniqueInput!): GrindOption
+  upsertGrindOption(where: GrindOptionWhereUniqueInput!, create: GrindOptionCreateInput!, update: GrindOptionUpdateInput!): GrindOption!
+  deleteGrindOption(where: GrindOptionWhereUniqueInput!): GrindOption
+  deleteManyGrindOptions(where: GrindOptionWhereInput): BatchPayload!
+  createOrder(data: OrderCreateInput!): Order!
+  updateOrder(data: OrderUpdateInput!, where: OrderWhereUniqueInput!): Order
+  updateManyOrders(data: OrderUpdateManyMutationInput!, where: OrderWhereInput): BatchPayload!
+  upsertOrder(where: OrderWhereUniqueInput!, create: OrderCreateInput!, update: OrderUpdateInput!): Order!
+  deleteOrder(where: OrderWhereUniqueInput!): Order
+  deleteManyOrders(where: OrderWhereInput): BatchPayload!
+  createOrderLine(data: OrderLineCreateInput!): OrderLine!
+  updateOrderLine(data: OrderLineUpdateInput!, where: OrderLineWhereUniqueInput!): OrderLine
+  updateManyOrderLines(data: OrderLineUpdateManyMutationInput!, where: OrderLineWhereInput): BatchPayload!
+  upsertOrderLine(where: OrderLineWhereUniqueInput!, create: OrderLineCreateInput!, update: OrderLineUpdateInput!): OrderLine!
+  deleteOrderLine(where: OrderLineWhereUniqueInput!): OrderLine
+  deleteManyOrderLines(where: OrderLineWhereInput): BatchPayload!
   createProduct(data: ProductCreateInput!): Product!
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
@@ -463,6 +1210,24 @@ type Mutation {
   upsertRegion(where: RegionWhereUniqueInput!, create: RegionCreateInput!, update: RegionUpdateInput!): Region!
   deleteRegion(where: RegionWhereUniqueInput!): Region
   deleteManyRegions(where: RegionWhereInput): BatchPayload!
+  createReview(data: ReviewCreateInput!): Review!
+  updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
+  updateManyReviews(data: ReviewUpdateManyMutationInput!, where: ReviewWhereInput): BatchPayload!
+  upsertReview(where: ReviewWhereUniqueInput!, create: ReviewCreateInput!, update: ReviewUpdateInput!): Review!
+  deleteReview(where: ReviewWhereUniqueInput!): Review
+  deleteManyReviews(where: ReviewWhereInput): BatchPayload!
+  createSKU(data: SKUCreateInput!): SKU!
+  updateSKU(data: SKUUpdateInput!, where: SKUWhereUniqueInput!): SKU
+  updateManySKUs(data: SKUUpdateManyMutationInput!, where: SKUWhereInput): BatchPayload!
+  upsertSKU(where: SKUWhereUniqueInput!, create: SKUCreateInput!, update: SKUUpdateInput!): SKU!
+  deleteSKU(where: SKUWhereUniqueInput!): SKU
+  deleteManySKUs(where: SKUWhereInput): BatchPayload!
+  createSubCategory(data: SubCategoryCreateInput!): SubCategory!
+  updateSubCategory(data: SubCategoryUpdateInput!, where: SubCategoryWhereUniqueInput!): SubCategory
+  updateManySubCategories(data: SubCategoryUpdateManyMutationInput!, where: SubCategoryWhereInput): BatchPayload!
+  upsertSubCategory(where: SubCategoryWhereUniqueInput!, create: SubCategoryCreateInput!, update: SubCategoryUpdateInput!): SubCategory!
+  deleteSubCategory(where: SubCategoryWhereUniqueInput!): SubCategory
+  deleteManySubCategories(where: SubCategoryWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -487,6 +1252,487 @@ interface Node {
   id: ID!
 }
 
+type Order {
+  id: ID!
+  customer: Customer!
+  vendor: Vendor!
+  deliveryStatus: String
+  orderData: DateTime!
+  orderNote: String
+  deliveryAddress: String!
+  orderLines(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLine!]
+}
+
+type OrderConnection {
+  pageInfo: PageInfo!
+  edges: [OrderEdge]!
+  aggregate: AggregateOrder!
+}
+
+input OrderCreateInput {
+  id: ID
+  customer: CustomerCreateOneInput!
+  vendor: VendorCreateOneInput!
+  deliveryStatus: String
+  orderData: DateTime!
+  orderNote: String
+  deliveryAddress: String!
+  orderLines: OrderLineCreateManyWithoutOrderInput
+}
+
+input OrderCreateOneWithoutOrderLinesInput {
+  create: OrderCreateWithoutOrderLinesInput
+  connect: OrderWhereUniqueInput
+}
+
+input OrderCreateWithoutOrderLinesInput {
+  id: ID
+  customer: CustomerCreateOneInput!
+  vendor: VendorCreateOneInput!
+  deliveryStatus: String
+  orderData: DateTime!
+  orderNote: String
+  deliveryAddress: String!
+}
+
+type OrderEdge {
+  node: Order!
+  cursor: String!
+}
+
+type OrderLine {
+  id: ID!
+  order: Order!
+  sku: SKU!
+  productName: String!
+  grindOption: String!
+  quantity: Int!
+  orderPrice: Float!
+}
+
+type OrderLineConnection {
+  pageInfo: PageInfo!
+  edges: [OrderLineEdge]!
+  aggregate: AggregateOrderLine!
+}
+
+input OrderLineCreateInput {
+  id: ID
+  order: OrderCreateOneWithoutOrderLinesInput!
+  sku: SKUCreateOneInput!
+  productName: String!
+  grindOption: String!
+  quantity: Int!
+  orderPrice: Float!
+}
+
+input OrderLineCreateManyWithoutOrderInput {
+  create: [OrderLineCreateWithoutOrderInput!]
+  connect: [OrderLineWhereUniqueInput!]
+}
+
+input OrderLineCreateWithoutOrderInput {
+  id: ID
+  sku: SKUCreateOneInput!
+  productName: String!
+  grindOption: String!
+  quantity: Int!
+  orderPrice: Float!
+}
+
+type OrderLineEdge {
+  node: OrderLine!
+  cursor: String!
+}
+
+enum OrderLineOrderByInput {
+  id_ASC
+  id_DESC
+  productName_ASC
+  productName_DESC
+  grindOption_ASC
+  grindOption_DESC
+  quantity_ASC
+  quantity_DESC
+  orderPrice_ASC
+  orderPrice_DESC
+}
+
+type OrderLinePreviousValues {
+  id: ID!
+  productName: String!
+  grindOption: String!
+  quantity: Int!
+  orderPrice: Float!
+}
+
+input OrderLineScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  productName: String
+  productName_not: String
+  productName_in: [String!]
+  productName_not_in: [String!]
+  productName_lt: String
+  productName_lte: String
+  productName_gt: String
+  productName_gte: String
+  productName_contains: String
+  productName_not_contains: String
+  productName_starts_with: String
+  productName_not_starts_with: String
+  productName_ends_with: String
+  productName_not_ends_with: String
+  grindOption: String
+  grindOption_not: String
+  grindOption_in: [String!]
+  grindOption_not_in: [String!]
+  grindOption_lt: String
+  grindOption_lte: String
+  grindOption_gt: String
+  grindOption_gte: String
+  grindOption_contains: String
+  grindOption_not_contains: String
+  grindOption_starts_with: String
+  grindOption_not_starts_with: String
+  grindOption_ends_with: String
+  grindOption_not_ends_with: String
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  orderPrice: Float
+  orderPrice_not: Float
+  orderPrice_in: [Float!]
+  orderPrice_not_in: [Float!]
+  orderPrice_lt: Float
+  orderPrice_lte: Float
+  orderPrice_gt: Float
+  orderPrice_gte: Float
+  AND: [OrderLineScalarWhereInput!]
+  OR: [OrderLineScalarWhereInput!]
+  NOT: [OrderLineScalarWhereInput!]
+}
+
+type OrderLineSubscriptionPayload {
+  mutation: MutationType!
+  node: OrderLine
+  updatedFields: [String!]
+  previousValues: OrderLinePreviousValues
+}
+
+input OrderLineSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OrderLineWhereInput
+  AND: [OrderLineSubscriptionWhereInput!]
+  OR: [OrderLineSubscriptionWhereInput!]
+  NOT: [OrderLineSubscriptionWhereInput!]
+}
+
+input OrderLineUpdateInput {
+  order: OrderUpdateOneRequiredWithoutOrderLinesInput
+  sku: SKUUpdateOneRequiredInput
+  productName: String
+  grindOption: String
+  quantity: Int
+  orderPrice: Float
+}
+
+input OrderLineUpdateManyDataInput {
+  productName: String
+  grindOption: String
+  quantity: Int
+  orderPrice: Float
+}
+
+input OrderLineUpdateManyMutationInput {
+  productName: String
+  grindOption: String
+  quantity: Int
+  orderPrice: Float
+}
+
+input OrderLineUpdateManyWithoutOrderInput {
+  create: [OrderLineCreateWithoutOrderInput!]
+  delete: [OrderLineWhereUniqueInput!]
+  connect: [OrderLineWhereUniqueInput!]
+  set: [OrderLineWhereUniqueInput!]
+  disconnect: [OrderLineWhereUniqueInput!]
+  update: [OrderLineUpdateWithWhereUniqueWithoutOrderInput!]
+  upsert: [OrderLineUpsertWithWhereUniqueWithoutOrderInput!]
+  deleteMany: [OrderLineScalarWhereInput!]
+  updateMany: [OrderLineUpdateManyWithWhereNestedInput!]
+}
+
+input OrderLineUpdateManyWithWhereNestedInput {
+  where: OrderLineScalarWhereInput!
+  data: OrderLineUpdateManyDataInput!
+}
+
+input OrderLineUpdateWithoutOrderDataInput {
+  sku: SKUUpdateOneRequiredInput
+  productName: String
+  grindOption: String
+  quantity: Int
+  orderPrice: Float
+}
+
+input OrderLineUpdateWithWhereUniqueWithoutOrderInput {
+  where: OrderLineWhereUniqueInput!
+  data: OrderLineUpdateWithoutOrderDataInput!
+}
+
+input OrderLineUpsertWithWhereUniqueWithoutOrderInput {
+  where: OrderLineWhereUniqueInput!
+  update: OrderLineUpdateWithoutOrderDataInput!
+  create: OrderLineCreateWithoutOrderInput!
+}
+
+input OrderLineWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  order: OrderWhereInput
+  sku: SKUWhereInput
+  productName: String
+  productName_not: String
+  productName_in: [String!]
+  productName_not_in: [String!]
+  productName_lt: String
+  productName_lte: String
+  productName_gt: String
+  productName_gte: String
+  productName_contains: String
+  productName_not_contains: String
+  productName_starts_with: String
+  productName_not_starts_with: String
+  productName_ends_with: String
+  productName_not_ends_with: String
+  grindOption: String
+  grindOption_not: String
+  grindOption_in: [String!]
+  grindOption_not_in: [String!]
+  grindOption_lt: String
+  grindOption_lte: String
+  grindOption_gt: String
+  grindOption_gte: String
+  grindOption_contains: String
+  grindOption_not_contains: String
+  grindOption_starts_with: String
+  grindOption_not_starts_with: String
+  grindOption_ends_with: String
+  grindOption_not_ends_with: String
+  quantity: Int
+  quantity_not: Int
+  quantity_in: [Int!]
+  quantity_not_in: [Int!]
+  quantity_lt: Int
+  quantity_lte: Int
+  quantity_gt: Int
+  quantity_gte: Int
+  orderPrice: Float
+  orderPrice_not: Float
+  orderPrice_in: [Float!]
+  orderPrice_not_in: [Float!]
+  orderPrice_lt: Float
+  orderPrice_lte: Float
+  orderPrice_gt: Float
+  orderPrice_gte: Float
+  AND: [OrderLineWhereInput!]
+  OR: [OrderLineWhereInput!]
+  NOT: [OrderLineWhereInput!]
+}
+
+input OrderLineWhereUniqueInput {
+  id: ID
+}
+
+enum OrderOrderByInput {
+  id_ASC
+  id_DESC
+  deliveryStatus_ASC
+  deliveryStatus_DESC
+  orderData_ASC
+  orderData_DESC
+  orderNote_ASC
+  orderNote_DESC
+  deliveryAddress_ASC
+  deliveryAddress_DESC
+}
+
+type OrderPreviousValues {
+  id: ID!
+  deliveryStatus: String
+  orderData: DateTime!
+  orderNote: String
+  deliveryAddress: String!
+}
+
+type OrderSubscriptionPayload {
+  mutation: MutationType!
+  node: Order
+  updatedFields: [String!]
+  previousValues: OrderPreviousValues
+}
+
+input OrderSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OrderWhereInput
+  AND: [OrderSubscriptionWhereInput!]
+  OR: [OrderSubscriptionWhereInput!]
+  NOT: [OrderSubscriptionWhereInput!]
+}
+
+input OrderUpdateInput {
+  customer: CustomerUpdateOneRequiredInput
+  vendor: VendorUpdateOneRequiredInput
+  deliveryStatus: String
+  orderData: DateTime
+  orderNote: String
+  deliveryAddress: String
+  orderLines: OrderLineUpdateManyWithoutOrderInput
+}
+
+input OrderUpdateManyMutationInput {
+  deliveryStatus: String
+  orderData: DateTime
+  orderNote: String
+  deliveryAddress: String
+}
+
+input OrderUpdateOneRequiredWithoutOrderLinesInput {
+  create: OrderCreateWithoutOrderLinesInput
+  update: OrderUpdateWithoutOrderLinesDataInput
+  upsert: OrderUpsertWithoutOrderLinesInput
+  connect: OrderWhereUniqueInput
+}
+
+input OrderUpdateWithoutOrderLinesDataInput {
+  customer: CustomerUpdateOneRequiredInput
+  vendor: VendorUpdateOneRequiredInput
+  deliveryStatus: String
+  orderData: DateTime
+  orderNote: String
+  deliveryAddress: String
+}
+
+input OrderUpsertWithoutOrderLinesInput {
+  update: OrderUpdateWithoutOrderLinesDataInput!
+  create: OrderCreateWithoutOrderLinesInput!
+}
+
+input OrderWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  customer: CustomerWhereInput
+  vendor: VendorWhereInput
+  deliveryStatus: String
+  deliveryStatus_not: String
+  deliveryStatus_in: [String!]
+  deliveryStatus_not_in: [String!]
+  deliveryStatus_lt: String
+  deliveryStatus_lte: String
+  deliveryStatus_gt: String
+  deliveryStatus_gte: String
+  deliveryStatus_contains: String
+  deliveryStatus_not_contains: String
+  deliveryStatus_starts_with: String
+  deliveryStatus_not_starts_with: String
+  deliveryStatus_ends_with: String
+  deliveryStatus_not_ends_with: String
+  orderData: DateTime
+  orderData_not: DateTime
+  orderData_in: [DateTime!]
+  orderData_not_in: [DateTime!]
+  orderData_lt: DateTime
+  orderData_lte: DateTime
+  orderData_gt: DateTime
+  orderData_gte: DateTime
+  orderNote: String
+  orderNote_not: String
+  orderNote_in: [String!]
+  orderNote_not_in: [String!]
+  orderNote_lt: String
+  orderNote_lte: String
+  orderNote_gt: String
+  orderNote_gte: String
+  orderNote_contains: String
+  orderNote_not_contains: String
+  orderNote_starts_with: String
+  orderNote_not_starts_with: String
+  orderNote_ends_with: String
+  orderNote_not_ends_with: String
+  deliveryAddress: String
+  deliveryAddress_not: String
+  deliveryAddress_in: [String!]
+  deliveryAddress_not_in: [String!]
+  deliveryAddress_lt: String
+  deliveryAddress_lte: String
+  deliveryAddress_gt: String
+  deliveryAddress_gte: String
+  deliveryAddress_contains: String
+  deliveryAddress_not_contains: String
+  deliveryAddress_starts_with: String
+  deliveryAddress_not_starts_with: String
+  deliveryAddress_ends_with: String
+  deliveryAddress_not_ends_with: String
+  orderLines_every: OrderLineWhereInput
+  orderLines_some: OrderLineWhereInput
+  orderLines_none: OrderLineWhereInput
+  AND: [OrderWhereInput!]
+  OR: [OrderWhereInput!]
+  NOT: [OrderWhereInput!]
+}
+
+input OrderWhereUniqueInput {
+  id: ID
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -504,6 +1750,8 @@ type Product {
   vendor: Vendor
   country: Country
   productImages(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductImage!]
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
+  skus(where: SKUWhereInput, orderBy: SKUOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SKU!]
 }
 
 type ProductConnection {
@@ -518,10 +1766,12 @@ input ProductCreateInput {
   flavorProfile: String
   description: String!
   info: String
-  published: Boolean!
+  published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
+  categories: CategoryCreateManyWithoutProductsInput
+  skus: SKUCreateManyWithoutProductInput
 }
 
 input ProductCreateManyWithoutCountryInput {
@@ -534,9 +1784,37 @@ input ProductCreateManyWithoutVendorInput {
   connect: [ProductWhereUniqueInput!]
 }
 
+input ProductCreateOneInput {
+  create: ProductCreateInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductCreateOneWithoutCategoriesInput {
+  create: ProductCreateWithoutCategoriesInput
+  connect: ProductWhereUniqueInput
+}
+
 input ProductCreateOneWithoutProductImagesInput {
   create: ProductCreateWithoutProductImagesInput
   connect: ProductWhereUniqueInput
+}
+
+input ProductCreateOneWithoutSkusInput {
+  create: ProductCreateWithoutSkusInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductCreateWithoutCategoriesInput {
+  id: ID
+  title: String!
+  flavorProfile: String
+  description: String!
+  info: String
+  published: Boolean
+  vendor: VendorCreateOneWithoutProductsInput
+  country: CountryCreateOneWithoutProductsInput
+  productImages: ProductImageCreateManyWithoutProductInput
+  skus: SKUCreateManyWithoutProductInput
 }
 
 input ProductCreateWithoutCountryInput {
@@ -545,9 +1823,11 @@ input ProductCreateWithoutCountryInput {
   flavorProfile: String
   description: String!
   info: String
-  published: Boolean!
+  published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
+  categories: CategoryCreateManyWithoutProductsInput
+  skus: SKUCreateManyWithoutProductInput
 }
 
 input ProductCreateWithoutProductImagesInput {
@@ -556,9 +1836,24 @@ input ProductCreateWithoutProductImagesInput {
   flavorProfile: String
   description: String!
   info: String
-  published: Boolean!
+  published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
+  categories: CategoryCreateManyWithoutProductsInput
+  skus: SKUCreateManyWithoutProductInput
+}
+
+input ProductCreateWithoutSkusInput {
+  id: ID
+  title: String!
+  flavorProfile: String
+  description: String!
+  info: String
+  published: Boolean
+  vendor: VendorCreateOneWithoutProductsInput
+  country: CountryCreateOneWithoutProductsInput
+  productImages: ProductImageCreateManyWithoutProductInput
+  categories: CategoryCreateManyWithoutProductsInput
 }
 
 input ProductCreateWithoutVendorInput {
@@ -567,9 +1862,11 @@ input ProductCreateWithoutVendorInput {
   flavorProfile: String
   description: String!
   info: String
-  published: Boolean!
+  published: Boolean
   country: CountryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
+  categories: CategoryCreateManyWithoutProductsInput
+  skus: SKUCreateManyWithoutProductInput
 }
 
 type ProductEdge {
@@ -878,6 +2175,19 @@ input ProductSubscriptionWhereInput {
   NOT: [ProductSubscriptionWhereInput!]
 }
 
+input ProductUpdateDataInput {
+  title: String
+  flavorProfile: String
+  description: String
+  info: String
+  published: Boolean
+  vendor: VendorUpdateOneWithoutProductsInput
+  country: CountryUpdateOneWithoutProductsInput
+  productImages: ProductImageUpdateManyWithoutProductInput
+  categories: CategoryUpdateManyWithoutProductsInput
+  skus: SKUUpdateManyWithoutProductInput
+}
+
 input ProductUpdateInput {
   title: String
   flavorProfile: String
@@ -887,6 +2197,8 @@ input ProductUpdateInput {
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
+  categories: CategoryUpdateManyWithoutProductsInput
+  skus: SKUUpdateManyWithoutProductInput
 }
 
 input ProductUpdateManyDataInput {
@@ -934,6 +2246,27 @@ input ProductUpdateManyWithWhereNestedInput {
   data: ProductUpdateManyDataInput!
 }
 
+input ProductUpdateOneRequiredInput {
+  create: ProductCreateInput
+  update: ProductUpdateDataInput
+  upsert: ProductUpsertNestedInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductUpdateOneRequiredWithoutCategoriesInput {
+  create: ProductCreateWithoutCategoriesInput
+  update: ProductUpdateWithoutCategoriesDataInput
+  upsert: ProductUpsertWithoutCategoriesInput
+  connect: ProductWhereUniqueInput
+}
+
+input ProductUpdateOneRequiredWithoutSkusInput {
+  create: ProductCreateWithoutSkusInput
+  update: ProductUpdateWithoutSkusDataInput
+  upsert: ProductUpsertWithoutSkusInput
+  connect: ProductWhereUniqueInput
+}
+
 input ProductUpdateOneWithoutProductImagesInput {
   create: ProductCreateWithoutProductImagesInput
   update: ProductUpdateWithoutProductImagesDataInput
@@ -941,6 +2274,18 @@ input ProductUpdateOneWithoutProductImagesInput {
   delete: Boolean
   disconnect: Boolean
   connect: ProductWhereUniqueInput
+}
+
+input ProductUpdateWithoutCategoriesDataInput {
+  title: String
+  flavorProfile: String
+  description: String
+  info: String
+  published: Boolean
+  vendor: VendorUpdateOneWithoutProductsInput
+  country: CountryUpdateOneWithoutProductsInput
+  productImages: ProductImageUpdateManyWithoutProductInput
+  skus: SKUUpdateManyWithoutProductInput
 }
 
 input ProductUpdateWithoutCountryDataInput {
@@ -951,6 +2296,8 @@ input ProductUpdateWithoutCountryDataInput {
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
+  categories: CategoryUpdateManyWithoutProductsInput
+  skus: SKUUpdateManyWithoutProductInput
 }
 
 input ProductUpdateWithoutProductImagesDataInput {
@@ -961,6 +2308,20 @@ input ProductUpdateWithoutProductImagesDataInput {
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
+  categories: CategoryUpdateManyWithoutProductsInput
+  skus: SKUUpdateManyWithoutProductInput
+}
+
+input ProductUpdateWithoutSkusDataInput {
+  title: String
+  flavorProfile: String
+  description: String
+  info: String
+  published: Boolean
+  vendor: VendorUpdateOneWithoutProductsInput
+  country: CountryUpdateOneWithoutProductsInput
+  productImages: ProductImageUpdateManyWithoutProductInput
+  categories: CategoryUpdateManyWithoutProductsInput
 }
 
 input ProductUpdateWithoutVendorDataInput {
@@ -971,6 +2332,8 @@ input ProductUpdateWithoutVendorDataInput {
   published: Boolean
   country: CountryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
+  categories: CategoryUpdateManyWithoutProductsInput
+  skus: SKUUpdateManyWithoutProductInput
 }
 
 input ProductUpdateWithWhereUniqueWithoutCountryInput {
@@ -983,9 +2346,24 @@ input ProductUpdateWithWhereUniqueWithoutVendorInput {
   data: ProductUpdateWithoutVendorDataInput!
 }
 
+input ProductUpsertNestedInput {
+  update: ProductUpdateDataInput!
+  create: ProductCreateInput!
+}
+
+input ProductUpsertWithoutCategoriesInput {
+  update: ProductUpdateWithoutCategoriesDataInput!
+  create: ProductCreateWithoutCategoriesInput!
+}
+
 input ProductUpsertWithoutProductImagesInput {
   update: ProductUpdateWithoutProductImagesDataInput!
   create: ProductCreateWithoutProductImagesInput!
+}
+
+input ProductUpsertWithoutSkusInput {
+  update: ProductUpdateWithoutSkusDataInput!
+  create: ProductCreateWithoutSkusInput!
 }
 
 input ProductUpsertWithWhereUniqueWithoutCountryInput {
@@ -1078,6 +2456,12 @@ input ProductWhereInput {
   productImages_every: ProductImageWhereInput
   productImages_some: ProductImageWhereInput
   productImages_none: ProductImageWhereInput
+  categories_every: CategoryWhereInput
+  categories_some: CategoryWhereInput
+  categories_none: CategoryWhereInput
+  skus_every: SKUWhereInput
+  skus_some: SKUWhereInput
+  skus_none: SKUWhereInput
   AND: [ProductWhereInput!]
   OR: [ProductWhereInput!]
   NOT: [ProductWhereInput!]
@@ -1088,12 +2472,33 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
+  category(where: CategoryWhereUniqueInput!): Category
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
+  categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
+  contentArea(where: ContentAreaWhereUniqueInput!): ContentArea
+  contentAreas(where: ContentAreaWhereInput, orderBy: ContentAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ContentArea]!
+  contentAreasConnection(where: ContentAreaWhereInput, orderBy: ContentAreaOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContentAreaConnection!
+  contentText(where: ContentTextWhereUniqueInput!): ContentText
+  contentTexts(where: ContentTextWhereInput, orderBy: ContentTextOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ContentText]!
+  contentTextsConnection(where: ContentTextWhereInput, orderBy: ContentTextOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ContentTextConnection!
   country(where: CountryWhereUniqueInput!): Country
   countries(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Country]!
   countriesConnection(where: CountryWhereInput, orderBy: CountryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CountryConnection!
   customer(where: CustomerWhereUniqueInput!): Customer
   customers(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Customer]!
   customersConnection(where: CustomerWhereInput, orderBy: CustomerOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CustomerConnection!
+  grind(where: GrindWhereUniqueInput!): Grind
+  grinds(where: GrindWhereInput, orderBy: GrindOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Grind]!
+  grindsConnection(where: GrindWhereInput, orderBy: GrindOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GrindConnection!
+  grindOption(where: GrindOptionWhereUniqueInput!): GrindOption
+  grindOptions(where: GrindOptionWhereInput, orderBy: GrindOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GrindOption]!
+  grindOptionsConnection(where: GrindOptionWhereInput, orderBy: GrindOptionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GrindOptionConnection!
+  order(where: OrderWhereUniqueInput!): Order
+  orders(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Order]!
+  ordersConnection(where: OrderWhereInput, orderBy: OrderOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderConnection!
+  orderLine(where: OrderLineWhereUniqueInput!): OrderLine
+  orderLines(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLine]!
+  orderLinesConnection(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderLineConnection!
   product(where: ProductWhereUniqueInput!): Product
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
@@ -1103,6 +2508,15 @@ type Query {
   region(where: RegionWhereUniqueInput!): Region
   regions(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region]!
   regionsConnection(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RegionConnection!
+  review(where: ReviewWhereUniqueInput!): Review
+  reviews(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Review]!
+  reviewsConnection(where: ReviewWhereInput, orderBy: ReviewOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ReviewConnection!
+  sKU(where: SKUWhereUniqueInput!): SKU
+  sKUs(where: SKUWhereInput, orderBy: SKUOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SKU]!
+  sKUsConnection(where: SKUWhereInput, orderBy: SKUOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SKUConnection!
+  subCategory(where: SubCategoryWhereUniqueInput!): SubCategory
+  subCategories(where: SubCategoryWhereInput, orderBy: SubCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SubCategory]!
+  subCategoriesConnection(where: SubCategoryWhereInput, orderBy: SubCategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SubCategoryConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -1244,12 +2658,506 @@ input RegionWhereUniqueInput {
   name: String
 }
 
+type Review {
+  id: ID!
+  customer: Customer!
+  product: Product!
+  rating: Int!
+  title: String
+  content: String
+  publishedStatus: Boolean!
+}
+
+type ReviewConnection {
+  pageInfo: PageInfo!
+  edges: [ReviewEdge]!
+  aggregate: AggregateReview!
+}
+
+input ReviewCreateInput {
+  id: ID
+  customer: CustomerCreateOneInput!
+  product: ProductCreateOneInput!
+  rating: Int!
+  title: String
+  content: String
+  publishedStatus: Boolean
+}
+
+type ReviewEdge {
+  node: Review!
+  cursor: String!
+}
+
+enum ReviewOrderByInput {
+  id_ASC
+  id_DESC
+  rating_ASC
+  rating_DESC
+  title_ASC
+  title_DESC
+  content_ASC
+  content_DESC
+  publishedStatus_ASC
+  publishedStatus_DESC
+}
+
+type ReviewPreviousValues {
+  id: ID!
+  rating: Int!
+  title: String
+  content: String
+  publishedStatus: Boolean!
+}
+
+type ReviewSubscriptionPayload {
+  mutation: MutationType!
+  node: Review
+  updatedFields: [String!]
+  previousValues: ReviewPreviousValues
+}
+
+input ReviewSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ReviewWhereInput
+  AND: [ReviewSubscriptionWhereInput!]
+  OR: [ReviewSubscriptionWhereInput!]
+  NOT: [ReviewSubscriptionWhereInput!]
+}
+
+input ReviewUpdateInput {
+  customer: CustomerUpdateOneRequiredInput
+  product: ProductUpdateOneRequiredInput
+  rating: Int
+  title: String
+  content: String
+  publishedStatus: Boolean
+}
+
+input ReviewUpdateManyMutationInput {
+  rating: Int
+  title: String
+  content: String
+  publishedStatus: Boolean
+}
+
+input ReviewWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  customer: CustomerWhereInput
+  product: ProductWhereInput
+  rating: Int
+  rating_not: Int
+  rating_in: [Int!]
+  rating_not_in: [Int!]
+  rating_lt: Int
+  rating_lte: Int
+  rating_gt: Int
+  rating_gte: Int
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  content: String
+  content_not: String
+  content_in: [String!]
+  content_not_in: [String!]
+  content_lt: String
+  content_lte: String
+  content_gt: String
+  content_gte: String
+  content_contains: String
+  content_not_contains: String
+  content_starts_with: String
+  content_not_starts_with: String
+  content_ends_with: String
+  content_not_ends_with: String
+  publishedStatus: Boolean
+  publishedStatus_not: Boolean
+  AND: [ReviewWhereInput!]
+  OR: [ReviewWhereInput!]
+  NOT: [ReviewWhereInput!]
+}
+
+input ReviewWhereUniqueInput {
+  id: ID
+}
+
+type SKU {
+  id: ID!
+  product: Product!
+  grinded: Boolean!
+  weight: Int!
+  Price: Float!
+}
+
+type SKUConnection {
+  pageInfo: PageInfo!
+  edges: [SKUEdge]!
+  aggregate: AggregateSKU!
+}
+
+input SKUCreateInput {
+  id: ID
+  product: ProductCreateOneWithoutSkusInput!
+  grinded: Boolean
+  weight: Int!
+  Price: Float!
+}
+
+input SKUCreateManyWithoutProductInput {
+  create: [SKUCreateWithoutProductInput!]
+  connect: [SKUWhereUniqueInput!]
+}
+
+input SKUCreateOneInput {
+  create: SKUCreateInput
+  connect: SKUWhereUniqueInput
+}
+
+input SKUCreateWithoutProductInput {
+  id: ID
+  grinded: Boolean
+  weight: Int!
+  Price: Float!
+}
+
+type SKUEdge {
+  node: SKU!
+  cursor: String!
+}
+
+enum SKUOrderByInput {
+  id_ASC
+  id_DESC
+  grinded_ASC
+  grinded_DESC
+  weight_ASC
+  weight_DESC
+  Price_ASC
+  Price_DESC
+}
+
+type SKUPreviousValues {
+  id: ID!
+  grinded: Boolean!
+  weight: Int!
+  Price: Float!
+}
+
+input SKUScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  grinded: Boolean
+  grinded_not: Boolean
+  weight: Int
+  weight_not: Int
+  weight_in: [Int!]
+  weight_not_in: [Int!]
+  weight_lt: Int
+  weight_lte: Int
+  weight_gt: Int
+  weight_gte: Int
+  Price: Float
+  Price_not: Float
+  Price_in: [Float!]
+  Price_not_in: [Float!]
+  Price_lt: Float
+  Price_lte: Float
+  Price_gt: Float
+  Price_gte: Float
+  AND: [SKUScalarWhereInput!]
+  OR: [SKUScalarWhereInput!]
+  NOT: [SKUScalarWhereInput!]
+}
+
+type SKUSubscriptionPayload {
+  mutation: MutationType!
+  node: SKU
+  updatedFields: [String!]
+  previousValues: SKUPreviousValues
+}
+
+input SKUSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SKUWhereInput
+  AND: [SKUSubscriptionWhereInput!]
+  OR: [SKUSubscriptionWhereInput!]
+  NOT: [SKUSubscriptionWhereInput!]
+}
+
+input SKUUpdateDataInput {
+  product: ProductUpdateOneRequiredWithoutSkusInput
+  grinded: Boolean
+  weight: Int
+  Price: Float
+}
+
+input SKUUpdateInput {
+  product: ProductUpdateOneRequiredWithoutSkusInput
+  grinded: Boolean
+  weight: Int
+  Price: Float
+}
+
+input SKUUpdateManyDataInput {
+  grinded: Boolean
+  weight: Int
+  Price: Float
+}
+
+input SKUUpdateManyMutationInput {
+  grinded: Boolean
+  weight: Int
+  Price: Float
+}
+
+input SKUUpdateManyWithoutProductInput {
+  create: [SKUCreateWithoutProductInput!]
+  delete: [SKUWhereUniqueInput!]
+  connect: [SKUWhereUniqueInput!]
+  set: [SKUWhereUniqueInput!]
+  disconnect: [SKUWhereUniqueInput!]
+  update: [SKUUpdateWithWhereUniqueWithoutProductInput!]
+  upsert: [SKUUpsertWithWhereUniqueWithoutProductInput!]
+  deleteMany: [SKUScalarWhereInput!]
+  updateMany: [SKUUpdateManyWithWhereNestedInput!]
+}
+
+input SKUUpdateManyWithWhereNestedInput {
+  where: SKUScalarWhereInput!
+  data: SKUUpdateManyDataInput!
+}
+
+input SKUUpdateOneRequiredInput {
+  create: SKUCreateInput
+  update: SKUUpdateDataInput
+  upsert: SKUUpsertNestedInput
+  connect: SKUWhereUniqueInput
+}
+
+input SKUUpdateWithoutProductDataInput {
+  grinded: Boolean
+  weight: Int
+  Price: Float
+}
+
+input SKUUpdateWithWhereUniqueWithoutProductInput {
+  where: SKUWhereUniqueInput!
+  data: SKUUpdateWithoutProductDataInput!
+}
+
+input SKUUpsertNestedInput {
+  update: SKUUpdateDataInput!
+  create: SKUCreateInput!
+}
+
+input SKUUpsertWithWhereUniqueWithoutProductInput {
+  where: SKUWhereUniqueInput!
+  update: SKUUpdateWithoutProductDataInput!
+  create: SKUCreateWithoutProductInput!
+}
+
+input SKUWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  product: ProductWhereInput
+  grinded: Boolean
+  grinded_not: Boolean
+  weight: Int
+  weight_not: Int
+  weight_in: [Int!]
+  weight_not_in: [Int!]
+  weight_lt: Int
+  weight_lte: Int
+  weight_gt: Int
+  weight_gte: Int
+  Price: Float
+  Price_not: Float
+  Price_in: [Float!]
+  Price_not_in: [Float!]
+  Price_lt: Float
+  Price_lte: Float
+  Price_gt: Float
+  Price_gte: Float
+  AND: [SKUWhereInput!]
+  OR: [SKUWhereInput!]
+  NOT: [SKUWhereInput!]
+}
+
+input SKUWhereUniqueInput {
+  id: ID
+}
+
+type SubCategory {
+  id: ID!
+  category: Category!
+  subCategory: String!
+}
+
+type SubCategoryConnection {
+  pageInfo: PageInfo!
+  edges: [SubCategoryEdge]!
+  aggregate: AggregateSubCategory!
+}
+
+input SubCategoryCreateInput {
+  id: ID
+  category: CategoryCreateOneInput!
+  subCategory: String!
+}
+
+type SubCategoryEdge {
+  node: SubCategory!
+  cursor: String!
+}
+
+enum SubCategoryOrderByInput {
+  id_ASC
+  id_DESC
+  subCategory_ASC
+  subCategory_DESC
+}
+
+type SubCategoryPreviousValues {
+  id: ID!
+  subCategory: String!
+}
+
+type SubCategorySubscriptionPayload {
+  mutation: MutationType!
+  node: SubCategory
+  updatedFields: [String!]
+  previousValues: SubCategoryPreviousValues
+}
+
+input SubCategorySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SubCategoryWhereInput
+  AND: [SubCategorySubscriptionWhereInput!]
+  OR: [SubCategorySubscriptionWhereInput!]
+  NOT: [SubCategorySubscriptionWhereInput!]
+}
+
+input SubCategoryUpdateInput {
+  category: CategoryUpdateOneRequiredInput
+  subCategory: String
+}
+
+input SubCategoryUpdateManyMutationInput {
+  subCategory: String
+}
+
+input SubCategoryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  category: CategoryWhereInput
+  subCategory: String
+  subCategory_not: String
+  subCategory_in: [String!]
+  subCategory_not_in: [String!]
+  subCategory_lt: String
+  subCategory_lte: String
+  subCategory_gt: String
+  subCategory_gte: String
+  subCategory_contains: String
+  subCategory_not_contains: String
+  subCategory_starts_with: String
+  subCategory_not_starts_with: String
+  subCategory_ends_with: String
+  subCategory_not_ends_with: String
+  AND: [SubCategoryWhereInput!]
+  OR: [SubCategoryWhereInput!]
+  NOT: [SubCategoryWhereInput!]
+}
+
+input SubCategoryWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
+  contentArea(where: ContentAreaSubscriptionWhereInput): ContentAreaSubscriptionPayload
+  contentText(where: ContentTextSubscriptionWhereInput): ContentTextSubscriptionPayload
   country(where: CountrySubscriptionWhereInput): CountrySubscriptionPayload
   customer(where: CustomerSubscriptionWhereInput): CustomerSubscriptionPayload
+  grind(where: GrindSubscriptionWhereInput): GrindSubscriptionPayload
+  grindOption(where: GrindOptionSubscriptionWhereInput): GrindOptionSubscriptionPayload
+  order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
+  orderLine(where: OrderLineSubscriptionWhereInput): OrderLineSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   productImage(where: ProductImageSubscriptionWhereInput): ProductImageSubscriptionPayload
   region(where: RegionSubscriptionWhereInput): RegionSubscriptionPayload
+  review(where: ReviewSubscriptionWhereInput): ReviewSubscriptionPayload
+  sKU(where: SKUSubscriptionWhereInput): SKUSubscriptionPayload
+  subCategory(where: SubCategorySubscriptionWhereInput): SubCategorySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   vendor(where: VendorSubscriptionWhereInput): VendorSubscriptionPayload
 }
@@ -1440,8 +3348,8 @@ type Vendor {
   id: ID!
   displayName: String!
   organizationNumber: Int!
-  bankAccount: String!
-  logoImage: String!
+  bankAccount: String
+  logoImage: String
   facebookPageURL: String
   address: String!
   user: User!
@@ -1458,12 +3366,17 @@ input VendorCreateInput {
   id: ID
   displayName: String!
   organizationNumber: Int!
-  bankAccount: String!
-  logoImage: String!
+  bankAccount: String
+  logoImage: String
   facebookPageURL: String
   address: String!
   user: UserCreateOneWithoutVendorInput!
   products: ProductCreateManyWithoutVendorInput
+}
+
+input VendorCreateOneInput {
+  create: VendorCreateInput
+  connect: VendorWhereUniqueInput
 }
 
 input VendorCreateOneWithoutProductsInput {
@@ -1480,8 +3393,8 @@ input VendorCreateWithoutProductsInput {
   id: ID
   displayName: String!
   organizationNumber: Int!
-  bankAccount: String!
-  logoImage: String!
+  bankAccount: String
+  logoImage: String
   facebookPageURL: String
   address: String!
   user: UserCreateOneWithoutVendorInput!
@@ -1491,8 +3404,8 @@ input VendorCreateWithoutUserInput {
   id: ID
   displayName: String!
   organizationNumber: Int!
-  bankAccount: String!
-  logoImage: String!
+  bankAccount: String
+  logoImage: String
   facebookPageURL: String
   address: String!
   products: ProductCreateManyWithoutVendorInput
@@ -1524,8 +3437,8 @@ type VendorPreviousValues {
   id: ID!
   displayName: String!
   organizationNumber: Int!
-  bankAccount: String!
-  logoImage: String!
+  bankAccount: String
+  logoImage: String
   facebookPageURL: String
   address: String!
 }
@@ -1548,6 +3461,17 @@ input VendorSubscriptionWhereInput {
   NOT: [VendorSubscriptionWhereInput!]
 }
 
+input VendorUpdateDataInput {
+  displayName: String
+  organizationNumber: Int
+  bankAccount: String
+  logoImage: String
+  facebookPageURL: String
+  address: String
+  user: UserUpdateOneRequiredWithoutVendorInput
+  products: ProductUpdateManyWithoutVendorInput
+}
+
 input VendorUpdateInput {
   displayName: String
   organizationNumber: Int
@@ -1566,6 +3490,13 @@ input VendorUpdateManyMutationInput {
   logoImage: String
   facebookPageURL: String
   address: String
+}
+
+input VendorUpdateOneRequiredInput {
+  create: VendorCreateInput
+  update: VendorUpdateDataInput
+  upsert: VendorUpsertNestedInput
+  connect: VendorWhereUniqueInput
 }
 
 input VendorUpdateOneWithoutProductsInput {
@@ -1604,6 +3535,11 @@ input VendorUpdateWithoutUserDataInput {
   facebookPageURL: String
   address: String
   products: ProductUpdateManyWithoutVendorInput
+}
+
+input VendorUpsertNestedInput {
+  update: VendorUpdateDataInput!
+  create: VendorCreateInput!
 }
 
 input VendorUpsertWithoutProductsInput {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import firebase from "./firebase";
-import GetUser from "../GetUser";
+import GetUser from "../GraphQL/user/GetUser";
 
 
 export const AuthContext = React.createContext(null);
