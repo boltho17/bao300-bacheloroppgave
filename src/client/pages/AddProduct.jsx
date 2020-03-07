@@ -1,12 +1,27 @@
-import React from 'react';
-import PrivateRoute from "../components/Firebase/PrivateRoute";
-
+import React, {useState} from 'react';
+import AddProductForm from "../components/Forms/AddProductForm";
 
 const AddProduct = () => {
 
+    const [product, setProduct] = useState({
+        productName: "",
+        saleText: "",
+        region: "",
+        country: "",
+        beanType: "",
+        roastDegree: "",
+        tasteProfile: "",
+        certification: ""
+    });
+
+    const onSubmit = () => {
+        console.log(product)
+    };
+
     return (
         <div>
-            <PrivateRoute/>
+            <AddProductForm product={product} setProduct={setProduct}/>
+            <button onClick={onSubmit}>Console log product object</button>
         </div>
     );
 };
