@@ -27,9 +27,6 @@ const GetUser = (email) => {
         //console.log(data?.user?.vendor)
         userType = "vendor";
     }
-
-
-
     return userType
 };
 

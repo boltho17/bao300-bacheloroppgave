@@ -32,7 +32,7 @@ const FormCompanyInfo = props => {
                     </Col>
 
                     <Col>
-                        <FormInput label="Visningsnavn" name="displayName" value={props.vendor.navn} handleChange={handleChange}  />
+                        <FormInput label="Visningsnavn" name="displayName" value={props.vendorInfo.displayName} handleChange={handleChange}  />
                         <FormInput label="Kontaktperson" name="contactPerson" value={props.vendorInfo.contactPerson} placeholder="Ola Nordmann" handleChange={handleChange} />
                         <FormInput label="Epost" name="email" value={props.vendorInfo.email} placeholder="ola@kaffeslottet.no" handleChange={handleChange} />
                         <FormInput label="Passord" name="password" type="password" value={props.vendorInfo.password} placeholder="Minst 6 tegn" handleChange={handleChange} />

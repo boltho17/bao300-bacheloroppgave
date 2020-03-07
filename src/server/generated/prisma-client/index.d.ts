@@ -768,18 +768,20 @@ export type GrindOrderByInput =
 export type VendorOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "displayName_ASC"
-  | "displayName_DESC"
   | "organizationNumber_ASC"
   | "organizationNumber_DESC"
+  | "displayName_ASC"
+  | "displayName_DESC"
+  | "address_ASC"
+  | "address_DESC"
   | "bankAccount_ASC"
   | "bankAccount_DESC"
   | "logoImage_ASC"
   | "logoImage_DESC"
   | "facebookPageURL_ASC"
   | "facebookPageURL_DESC"
-  | "address_ASC"
-  | "address_DESC";
+  | "contactPerson_ASC"
+  | "contactPerson_DESC";
 
 export type CustomerOrderByInput =
   | "id_ASC"
@@ -1084,12 +1086,13 @@ export interface SKUSubscriptionWhereInput {
 }
 
 export interface VendorUpdateWithoutProductsDataInput {
-  displayName?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address?: Maybe<String>;
+  contactPerson?: Maybe<String>;
   user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
 }
 
@@ -1356,12 +1359,13 @@ export interface RegionUpdateWithoutCountriesDataInput {
 }
 
 export interface VendorUpdateInput {
-  displayName?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address?: Maybe<String>;
+  contactPerson?: Maybe<String>;
   user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
   products?: Maybe<ProductUpdateManyWithoutVendorInput>;
 }
@@ -1436,6 +1440,14 @@ export interface VendorWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  organizationNumber?: Maybe<Int>;
+  organizationNumber_not?: Maybe<Int>;
+  organizationNumber_in?: Maybe<Int[] | Int>;
+  organizationNumber_not_in?: Maybe<Int[] | Int>;
+  organizationNumber_lt?: Maybe<Int>;
+  organizationNumber_lte?: Maybe<Int>;
+  organizationNumber_gt?: Maybe<Int>;
+  organizationNumber_gte?: Maybe<Int>;
   displayName?: Maybe<String>;
   displayName_not?: Maybe<String>;
   displayName_in?: Maybe<String[] | String>;
@@ -1450,14 +1462,20 @@ export interface VendorWhereInput {
   displayName_not_starts_with?: Maybe<String>;
   displayName_ends_with?: Maybe<String>;
   displayName_not_ends_with?: Maybe<String>;
-  organizationNumber?: Maybe<Int>;
-  organizationNumber_not?: Maybe<Int>;
-  organizationNumber_in?: Maybe<Int[] | Int>;
-  organizationNumber_not_in?: Maybe<Int[] | Int>;
-  organizationNumber_lt?: Maybe<Int>;
-  organizationNumber_lte?: Maybe<Int>;
-  organizationNumber_gt?: Maybe<Int>;
-  organizationNumber_gte?: Maybe<Int>;
+  address?: Maybe<String>;
+  address_not?: Maybe<String>;
+  address_in?: Maybe<String[] | String>;
+  address_not_in?: Maybe<String[] | String>;
+  address_lt?: Maybe<String>;
+  address_lte?: Maybe<String>;
+  address_gt?: Maybe<String>;
+  address_gte?: Maybe<String>;
+  address_contains?: Maybe<String>;
+  address_not_contains?: Maybe<String>;
+  address_starts_with?: Maybe<String>;
+  address_not_starts_with?: Maybe<String>;
+  address_ends_with?: Maybe<String>;
+  address_not_ends_with?: Maybe<String>;
   bankAccount?: Maybe<String>;
   bankAccount_not?: Maybe<String>;
   bankAccount_in?: Maybe<String[] | String>;
@@ -1500,20 +1518,20 @@ export interface VendorWhereInput {
   facebookPageURL_not_starts_with?: Maybe<String>;
   facebookPageURL_ends_with?: Maybe<String>;
   facebookPageURL_not_ends_with?: Maybe<String>;
-  address?: Maybe<String>;
-  address_not?: Maybe<String>;
-  address_in?: Maybe<String[] | String>;
-  address_not_in?: Maybe<String[] | String>;
-  address_lt?: Maybe<String>;
-  address_lte?: Maybe<String>;
-  address_gt?: Maybe<String>;
-  address_gte?: Maybe<String>;
-  address_contains?: Maybe<String>;
-  address_not_contains?: Maybe<String>;
-  address_starts_with?: Maybe<String>;
-  address_not_starts_with?: Maybe<String>;
-  address_ends_with?: Maybe<String>;
-  address_not_ends_with?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  contactPerson_not?: Maybe<String>;
+  contactPerson_in?: Maybe<String[] | String>;
+  contactPerson_not_in?: Maybe<String[] | String>;
+  contactPerson_lt?: Maybe<String>;
+  contactPerson_lte?: Maybe<String>;
+  contactPerson_gt?: Maybe<String>;
+  contactPerson_gte?: Maybe<String>;
+  contactPerson_contains?: Maybe<String>;
+  contactPerson_not_contains?: Maybe<String>;
+  contactPerson_starts_with?: Maybe<String>;
+  contactPerson_not_starts_with?: Maybe<String>;
+  contactPerson_ends_with?: Maybe<String>;
+  contactPerson_not_ends_with?: Maybe<String>;
   user?: Maybe<UserWhereInput>;
   products_every?: Maybe<ProductWhereInput>;
   products_some?: Maybe<ProductWhereInput>;
@@ -1949,12 +1967,13 @@ export interface ProductImageCreateInput {
 
 export interface VendorCreateInput {
   id?: Maybe<ID_Input>;
-  displayName: String;
   organizationNumber: Int;
+  displayName: String;
+  address: String;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address: String;
+  contactPerson?: Maybe<String>;
   user: UserCreateOneWithoutVendorInput;
   products?: Maybe<ProductCreateManyWithoutVendorInput>;
 }
@@ -2086,12 +2105,13 @@ export interface OrderLineUpdateManyDataInput {
 }
 
 export interface VendorUpdateDataInput {
-  displayName?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address?: Maybe<String>;
+  contactPerson?: Maybe<String>;
   user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
   products?: Maybe<ProductUpdateManyWithoutVendorInput>;
 }
@@ -2186,12 +2206,13 @@ export interface CategoryUpdateWithWhereUniqueWithoutProductsInput {
 
 export interface VendorCreateWithoutProductsInput {
   id?: Maybe<ID_Input>;
-  displayName: String;
   organizationNumber: Int;
+  displayName: String;
+  address: String;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address: String;
+  contactPerson?: Maybe<String>;
   user: UserCreateOneWithoutVendorInput;
 }
 
@@ -2840,12 +2861,13 @@ export interface OrderUpsertWithoutOrderLinesInput {
 
 export interface VendorCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  displayName: String;
   organizationNumber: Int;
+  displayName: String;
+  address: String;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address: String;
+  contactPerson?: Maybe<String>;
   products?: Maybe<ProductCreateManyWithoutVendorInput>;
 }
 
@@ -2907,12 +2929,13 @@ export interface ProductCreateOneWithoutCategoriesInput {
 }
 
 export interface VendorUpdateWithoutUserDataInput {
-  displayName?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address?: Maybe<String>;
+  contactPerson?: Maybe<String>;
   products?: Maybe<ProductUpdateManyWithoutVendorInput>;
 }
 
@@ -3053,12 +3076,13 @@ export interface GrindUpdateInput {
 }
 
 export interface VendorUpdateManyMutationInput {
-  displayName?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
-  address?: Maybe<String>;
+  contactPerson?: Maybe<String>;
 }
 
 export interface GrindUpdateOneRequiredInput {
@@ -3706,36 +3730,39 @@ export interface NodeNode {
 
 export interface VendorPreviousValues {
   id: ID_Output;
-  displayName: String;
   organizationNumber: Int;
+  displayName: String;
+  address: String;
   bankAccount?: String;
   logoImage?: String;
   facebookPageURL?: String;
-  address: String;
+  contactPerson?: String;
 }
 
 export interface VendorPreviousValuesPromise
   extends Promise<VendorPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  displayName: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
+  displayName: () => Promise<String>;
+  address: () => Promise<String>;
   bankAccount: () => Promise<String>;
   logoImage: () => Promise<String>;
   facebookPageURL: () => Promise<String>;
-  address: () => Promise<String>;
+  contactPerson: () => Promise<String>;
 }
 
 export interface VendorPreviousValuesSubscription
   extends Promise<AsyncIterator<VendorPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  displayName: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
+  displayName: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
   bankAccount: () => Promise<AsyncIterator<String>>;
   logoImage: () => Promise<AsyncIterator<String>>;
   facebookPageURL: () => Promise<AsyncIterator<String>>;
-  address: () => Promise<AsyncIterator<String>>;
+  contactPerson: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CustomerEdge {
@@ -4394,22 +4421,24 @@ export interface ContentAreaPreviousValuesSubscription
 
 export interface Vendor {
   id: ID_Output;
-  displayName: String;
   organizationNumber: Int;
+  displayName: String;
+  address: String;
   bankAccount?: String;
   logoImage?: String;
   facebookPageURL?: String;
-  address: String;
+  contactPerson?: String;
 }
 
 export interface VendorPromise extends Promise<Vendor>, Fragmentable {
   id: () => Promise<ID_Output>;
-  displayName: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
+  displayName: () => Promise<String>;
+  address: () => Promise<String>;
   bankAccount: () => Promise<String>;
   logoImage: () => Promise<String>;
   facebookPageURL: () => Promise<String>;
-  address: () => Promise<String>;
+  contactPerson: () => Promise<String>;
   user: <T = UserPromise>() => T;
   products: <T = FragmentableArray<Product>>(args?: {
     where?: ProductWhereInput;
@@ -4426,12 +4455,13 @@ export interface VendorSubscription
   extends Promise<AsyncIterator<Vendor>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  displayName: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
+  displayName: () => Promise<AsyncIterator<String>>;
+  address: () => Promise<AsyncIterator<String>>;
   bankAccount: () => Promise<AsyncIterator<String>>;
   logoImage: () => Promise<AsyncIterator<String>>;
   facebookPageURL: () => Promise<AsyncIterator<String>>;
-  address: () => Promise<AsyncIterator<String>>;
+  contactPerson: () => Promise<AsyncIterator<String>>;
   user: <T = UserSubscription>() => T;
   products: <T = Promise<AsyncIterator<ProductSubscription>>>(args?: {
     where?: ProductWhereInput;
@@ -4448,12 +4478,13 @@ export interface VendorNullablePromise
   extends Promise<Vendor | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  displayName: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
+  displayName: () => Promise<String>;
+  address: () => Promise<String>;
   bankAccount: () => Promise<String>;
   logoImage: () => Promise<String>;
   facebookPageURL: () => Promise<String>;
-  address: () => Promise<String>;
+  contactPerson: () => Promise<String>;
   user: <T = UserPromise>() => T;
   products: <T = FragmentableArray<Product>>(args?: {
     where?: ProductWhereInput;

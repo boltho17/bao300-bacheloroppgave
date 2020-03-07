@@ -3346,12 +3346,13 @@ input UserWhereUniqueInput {
 
 type Vendor {
   id: ID!
-  displayName: String!
   organizationNumber: Int!
+  displayName: String!
+  address: String!
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String!
+  contactPerson: String
   user: User!
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
 }
@@ -3364,12 +3365,13 @@ type VendorConnection {
 
 input VendorCreateInput {
   id: ID
-  displayName: String!
   organizationNumber: Int!
+  displayName: String!
+  address: String!
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String!
+  contactPerson: String
   user: UserCreateOneWithoutVendorInput!
   products: ProductCreateManyWithoutVendorInput
 }
@@ -3391,23 +3393,25 @@ input VendorCreateOneWithoutUserInput {
 
 input VendorCreateWithoutProductsInput {
   id: ID
-  displayName: String!
   organizationNumber: Int!
+  displayName: String!
+  address: String!
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String!
+  contactPerson: String
   user: UserCreateOneWithoutVendorInput!
 }
 
 input VendorCreateWithoutUserInput {
   id: ID
-  displayName: String!
   organizationNumber: Int!
+  displayName: String!
+  address: String!
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String!
+  contactPerson: String
   products: ProductCreateManyWithoutVendorInput
 }
 
@@ -3419,28 +3423,31 @@ type VendorEdge {
 enum VendorOrderByInput {
   id_ASC
   id_DESC
-  displayName_ASC
-  displayName_DESC
   organizationNumber_ASC
   organizationNumber_DESC
+  displayName_ASC
+  displayName_DESC
+  address_ASC
+  address_DESC
   bankAccount_ASC
   bankAccount_DESC
   logoImage_ASC
   logoImage_DESC
   facebookPageURL_ASC
   facebookPageURL_DESC
-  address_ASC
-  address_DESC
+  contactPerson_ASC
+  contactPerson_DESC
 }
 
 type VendorPreviousValues {
   id: ID!
-  displayName: String!
   organizationNumber: Int!
+  displayName: String!
+  address: String!
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String!
+  contactPerson: String
 }
 
 type VendorSubscriptionPayload {
@@ -3462,34 +3469,37 @@ input VendorSubscriptionWhereInput {
 }
 
 input VendorUpdateDataInput {
-  displayName: String
   organizationNumber: Int
+  displayName: String
+  address: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String
+  contactPerson: String
   user: UserUpdateOneRequiredWithoutVendorInput
   products: ProductUpdateManyWithoutVendorInput
 }
 
 input VendorUpdateInput {
-  displayName: String
   organizationNumber: Int
+  displayName: String
+  address: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String
+  contactPerson: String
   user: UserUpdateOneRequiredWithoutVendorInput
   products: ProductUpdateManyWithoutVendorInput
 }
 
 input VendorUpdateManyMutationInput {
-  displayName: String
   organizationNumber: Int
+  displayName: String
+  address: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String
+  contactPerson: String
 }
 
 input VendorUpdateOneRequiredInput {
@@ -3518,22 +3528,24 @@ input VendorUpdateOneWithoutUserInput {
 }
 
 input VendorUpdateWithoutProductsDataInput {
-  displayName: String
   organizationNumber: Int
+  displayName: String
+  address: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String
+  contactPerson: String
   user: UserUpdateOneRequiredWithoutVendorInput
 }
 
 input VendorUpdateWithoutUserDataInput {
-  displayName: String
   organizationNumber: Int
+  displayName: String
+  address: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
-  address: String
+  contactPerson: String
   products: ProductUpdateManyWithoutVendorInput
 }
 
@@ -3567,6 +3579,14 @@ input VendorWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  organizationNumber: Int
+  organizationNumber_not: Int
+  organizationNumber_in: [Int!]
+  organizationNumber_not_in: [Int!]
+  organizationNumber_lt: Int
+  organizationNumber_lte: Int
+  organizationNumber_gt: Int
+  organizationNumber_gte: Int
   displayName: String
   displayName_not: String
   displayName_in: [String!]
@@ -3581,14 +3601,20 @@ input VendorWhereInput {
   displayName_not_starts_with: String
   displayName_ends_with: String
   displayName_not_ends_with: String
-  organizationNumber: Int
-  organizationNumber_not: Int
-  organizationNumber_in: [Int!]
-  organizationNumber_not_in: [Int!]
-  organizationNumber_lt: Int
-  organizationNumber_lte: Int
-  organizationNumber_gt: Int
-  organizationNumber_gte: Int
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
   bankAccount: String
   bankAccount_not: String
   bankAccount_in: [String!]
@@ -3631,20 +3657,20 @@ input VendorWhereInput {
   facebookPageURL_not_starts_with: String
   facebookPageURL_ends_with: String
   facebookPageURL_not_ends_with: String
-  address: String
-  address_not: String
-  address_in: [String!]
-  address_not_in: [String!]
-  address_lt: String
-  address_lte: String
-  address_gt: String
-  address_gte: String
-  address_contains: String
-  address_not_contains: String
-  address_starts_with: String
-  address_not_starts_with: String
-  address_ends_with: String
-  address_not_ends_with: String
+  contactPerson: String
+  contactPerson_not: String
+  contactPerson_in: [String!]
+  contactPerson_not_in: [String!]
+  contactPerson_lt: String
+  contactPerson_lte: String
+  contactPerson_gt: String
+  contactPerson_gte: String
+  contactPerson_contains: String
+  contactPerson_not_contains: String
+  contactPerson_starts_with: String
+  contactPerson_not_starts_with: String
+  contactPerson_ends_with: String
+  contactPerson_not_ends_with: String
   user: UserWhereInput
   products_every: ProductWhereInput
   products_some: ProductWhereInput

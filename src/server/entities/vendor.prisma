@@ -4,12 +4,13 @@ interface Node {
 
 type Vendor implements Node {
   id: ID! @id
-  displayName: String!
   organizationNumber: Int! @unique
+  displayName: String!
+  address: String!
   bankAccount: String @unique
   logoImage: String
   facebookPageURL: String
-  address: String!
+  contactPerson: String
   user: User!
   products: [Product!]
 }

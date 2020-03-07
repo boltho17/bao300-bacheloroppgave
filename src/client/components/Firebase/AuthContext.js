@@ -15,7 +15,7 @@ export const AuthProvider = ({children}) => {
     // Calls GetUser with the logged in users mail, returns the user type as a String(Customer or Vendor)
     const userType = GetUser(firebase.auth().currentUser?.email);
     if (userType) {
-        console.log("AuthContext.js: " + userType);
+        // console.log("AuthContext.js: " + userType);
     }
 
     return (

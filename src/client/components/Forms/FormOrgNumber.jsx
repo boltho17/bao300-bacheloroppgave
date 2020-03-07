@@ -24,7 +24,8 @@ const FormOrgNumber = props => {
                 .json()
                 .then(result => props.setVendor(result))
                 .catch(err => console.log('fetch error',err))
-                .finally(() => console.log(props.vendor));
+                //.finally(() => console.log(props.vendor));
+                //.finally(() => props.setVendorInfo({displayName: props.vendor.navn}));
         }
         else {
             console.log("Vennligst skriv inn et org nummer")

@@ -13,11 +13,12 @@ import {AuthContext} from "./Firebase/AuthContext";
 
 const Navigation = () => {
 
-    console.log(firebase.auth().currentUser?.email);
+    // PRINTER INNLOGGET BRUKERS EPOST:
+    // console.log(firebase.auth().currentUser?.email);
 
     // Access the user type globally from AuthContext (Customer or Vendor):
     let userType = useContext(AuthContext)?.userType;
-    console.log("Navigation.js: " + userType);
+    // console.log("Navigation.js: " + userType);
 
     // LOG OUT USER:
     const logoutUser = () => {
@@ -30,7 +31,6 @@ const Navigation = () => {
 
     // TOGGLE BETWEEN CUSTOMER AND VENDOR TYPE:
     const toggleUserType = () => {
-        // console.log(userType);
         if(userType === "customer") {
             userType = "vendor";
             console.log("Switched to vendor")
@@ -57,7 +57,8 @@ const Navigation = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse className="justify-content-end">
                 <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
-                    <Link className="links" to={ROUTES.VENDOR_SIGNUP}>Bli selger</Link>
+                    {!userType && <Link className="links" to={ROUTES.VENDOR_SIGNUP}>Bli selger</Link> }
+                    {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link> }
                     <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
                     <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
                     {!userType && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
