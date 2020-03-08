@@ -7,8 +7,8 @@ import * as ROUTES from '../constants/routes'
 
 import {IconContext} from "react-icons";
 import {FaRegUserCircle, FiSearch, TiShoppingCart} from "react-icons/all";
-import firebase from "firebase/app";
-import {AuthContext} from "./Firebase/AuthContext";
+import firebase from "firebase/app";import {AuthContext} from "./Firebase/AuthContext";
+
 
 
 const Navigation = () => {
@@ -82,7 +82,7 @@ const Navigation = () => {
                         <FiSearch/>
 
                         <button className="btn" onClick={() => toggleUserType()} type="button">
-                            <TiShoppingCart/>
+                            <TiShoppingCart />
                         </button>
 
                         <button className="btn" onClick={() => logoutUser()} type="button">

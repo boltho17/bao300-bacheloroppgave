@@ -3,7 +3,7 @@ import {Card} from "react-bootstrap";
 
 const ProductCard = ({product}) => {
     // console.log(product);
-
+    
     return (
         <div className="pr-0 col-12 col-md-6 col-lg-4 col-xl-3">
                 <Card className="product-card">
