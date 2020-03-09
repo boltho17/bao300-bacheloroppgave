@@ -735,7 +735,7 @@ type Customer {
   id: ID!
   firstName: String!
   lastName: String!
-  address: String!
+  address: String
   user: User!
 }
 
@@ -749,7 +749,7 @@ input CustomerCreateInput {
   id: ID
   firstName: String!
   lastName: String!
-  address: String!
+  address: String
   user: UserCreateOneWithoutCustomerInput!
 }
 
@@ -767,7 +767,7 @@ input CustomerCreateWithoutUserInput {
   id: ID
   firstName: String!
   lastName: String!
-  address: String!
+  address: String
 }
 
 type CustomerEdge {
@@ -790,7 +790,7 @@ type CustomerPreviousValues {
   id: ID!
   firstName: String!
   lastName: String!
-  address: String!
+  address: String
 }
 
 type CustomerSubscriptionPayload {

@@ -18,7 +18,7 @@ const Navigation = () => {
 
     // Access the user type globally from AuthContext (Customer or Vendor):
     let userType = useContext(AuthContext)?.userType;
-    // console.log("Navigation.js: " + userType);
+    console.log("Navigation.js: User type = " + userType);
 
     // LOG OUT USER:
     const logoutUser = () => {
@@ -55,7 +55,7 @@ const Navigation = () => {
             </Navbar.Brand>
 
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
-            <Navbar.Collapse className="justify-content-end">
+            <Navbar.Collapse>
                 <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
                     {!userType && <Link className="links" to={ROUTES.VENDOR_SIGNUP}>Bli selger</Link> }
                     {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link> }
@@ -89,11 +89,13 @@ const Navigation = () => {
                         <button className="btn" onClick={() => logoutUser()} type="button">
                             <FaRegUserCircle/>
                         </button>
+
                     </div>
                 </IconContext.Provider>
             </Navbar.Collapse>
         </Navbar>
     );
 };
+
 
 export default Navigation;

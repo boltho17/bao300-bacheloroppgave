@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import AddProductForm from "../components/Forms/AddProductForm";
 import Price from '../components/AddProduct/Price'
+import {Col, Row} from "react-bootstrap";
+import CheckBoxes from "../components/AddProduct/CheckBoxes";
 
 const AddProduct = () => {
 
@@ -25,8 +27,15 @@ const AddProduct = () => {
     };
 
     return (
-        <div>
-            <AddProductForm product={product} setProduct={setProduct}/>
+        <div className="container-fluid">
+            <h1 className="mt-4">Opprett et nytt produkt</h1>
+            <Row>
+                <Col sm={6}>
+                    <AddProductForm product={product} setProduct={setProduct}/>
+                </Col>
+                <CheckBoxes/>
+            </Row>
+
             <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions}/>
             <button onClick={onSubmit}>Console log product object</button>
         </div>

@@ -19,6 +19,8 @@ const GetUser = (email) => {
 
     let userType = "";
 
+    // console.log(data?.user);
+
     if(data?.user?.customer) {
         //console.log(data?.user?.customer)
         userType = "customer";

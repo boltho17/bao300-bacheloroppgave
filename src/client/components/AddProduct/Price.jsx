@@ -27,17 +27,16 @@ const Price = props => {
         });
     };
 
-
     const addPriceOption = () => {
         let options = [];
         for (let i = 0; i < numberOfPriceOptions; i++) {
             options.push(
                 <Row key={i}>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <FormInput name={'grams' + i} value={props.priceOptions.grams} className="price-form" placeholder="0"
                                    handleChange={handleChange} suffix={"gr"} maxLength="4"/>
                     </Col>
-                    <Col sm={3}>
+                    <Col sm={2}>
                         <FormInput name={'price' + i} value={props.priceOptions.price} className="price-form" placeholder="0"
                                    handleChange={handleChange} suffix={"kr"} maxLength="4"/>
                     </Col>
@@ -45,11 +44,10 @@ const Price = props => {
             );
         }
         return options;
-
     };
 
     const increment = () => {
-        if (numberOfPriceOptions < 3) {
+        if (numberOfPriceOptions < 4) {
             setNumberOfPriceOptions(numberOfPriceOptions + 1)
         }
     };
@@ -61,9 +59,9 @@ const Price = props => {
     };
 
     return (
-        <div className="container mt-4 mb-4">
+        <div className="container mt-4 mb-4 ml-4">
             <Row>
-                <h3>Pris</h3>
+                <h3>Størrelse og pris</h3>
                 <button onClick={decrement}>-</button>
                 <button onClick={increment}>+</button>
             </Row>

@@ -6,6 +6,6 @@ type Customer implements Node {
   id: ID! @id
   firstName: String!
   lastName: String!
-  address: String!
+  address: String
   user: User!
 }

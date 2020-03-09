@@ -32,13 +32,11 @@ const AddProductForm = props => {
     };
 
     return (
-        <div>
-            <h1>Opprett et nytt produkt</h1>
-            <form className="container-fluid">
-
+        <div className="container">
+            <form className="mt-3">
                 <div>
                     <Col sm={6}>
-                        <FormInput label="Navn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
+                        <FormInput label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
                         <label>Salgstekst</label>
                         <br/>
                         <textarea

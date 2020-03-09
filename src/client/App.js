@@ -11,7 +11,7 @@ import ShopPage from './pages/ShopPage'
 import AddProduct from "./pages/AddProduct";
 import VendorSignUp from "./pages/VendorSignUp";
 import Footer from "./components/Footer"
-import SignUpPage from "./pages/SignUpPage";
+import SignUpPage from "./pages/CustomerSignUp";
 
 
 

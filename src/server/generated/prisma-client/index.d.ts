@@ -2237,7 +2237,7 @@ export interface CustomerCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
   firstName: String;
   lastName: String;
-  address: String;
+  address?: Maybe<String>;
 }
 
 export interface CategoryScalarWhereInput {
@@ -2753,7 +2753,7 @@ export interface CustomerCreateInput {
   id?: Maybe<ID_Input>;
   firstName: String;
   lastName: String;
-  address: String;
+  address?: Maybe<String>;
   user: UserCreateOneWithoutCustomerInput;
 }
 
@@ -4818,7 +4818,7 @@ export interface CustomerPreviousValues {
   id: ID_Output;
   firstName: String;
   lastName: String;
-  address: String;
+  address?: String;
 }
 
 export interface CustomerPreviousValuesPromise
@@ -4911,7 +4911,7 @@ export interface Customer {
   id: ID_Output;
   firstName: String;
   lastName: String;
-  address: String;
+  address?: String;
 }
 
 export interface CustomerPromise extends Promise<Customer>, Fragmentable {
