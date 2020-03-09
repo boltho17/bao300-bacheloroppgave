@@ -34,12 +34,13 @@ const AddProductForm = props => {
     return (
         <div>
             <h1>Opprett et nytt produkt</h1>
-            <form className="container">
+            <form className="container-fluid">
 
-                <Row>
+                <div>
                     <Col sm={6}>
                         <FormInput label="Navn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
                         <label>Salgstekst</label>
+                        <br/>
                         <textarea
                             name="saleText"
                             rows="2"
@@ -68,7 +69,7 @@ const AddProductForm = props => {
                         <FormInput label="Smaksprofil" name="tasteProfile" value={props.product.tasteProfile} placeholder="Nam nam" handleChange={handleChange} />
                         <FormInput label="Sertifisering" name="certification" value={props.product.certification} placeholder="Fair Trade.." handleChange={handleChange} />
                     </Col>
-                </Row>
+                </div>
 
             </form>
         </div>
