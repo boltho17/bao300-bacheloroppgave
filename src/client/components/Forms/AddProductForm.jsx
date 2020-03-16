@@ -34,7 +34,7 @@ const AddProductForm = props => {
     return (
         <div className="container">
             <form className="mt-3">
-                <div>
+                <div className="test1">
                     <Col sm={6}>
                         <FormInput label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
                         <label>Salgstekst</label>

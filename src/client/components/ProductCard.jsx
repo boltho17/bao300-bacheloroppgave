@@ -12,9 +12,11 @@ const ProductCard = ({product}) => {
                     <Card.Body>
                         <Card.Subtitle className="vendor mb-2 text-muted">{product.vendor.displayName}</Card.Subtitle>
                         <Card.Title className="product-title">{product.title}</Card.Title>
-                        <Card.Text className="price">
-                            Pris: product.SKU[0].price
-                        </Card.Text>
+                        <Card.Text className="short-description">Fantastisk kaffe med smak av himmel og et hint av grønne blader..</Card.Text>
+                        <Card.Subtitle className="price">
+                         140Kr
+                        </Card.Subtitle>
+                        
 
                     </Card.Body>
                 </Card>
@@ -40,3 +42,5 @@ export default ProductCard
 </div>
 *
  */
+   /*Pris: product.SKU[0].price
+   product.saleText**/
