@@ -8,11 +8,11 @@ import Navigation from './components/Navigation'
 import LandingPage from "./pages/LandingPage";
 import LoginPage from './pages/LoginPage';
 import ShopPage from './pages/ShopPage'
-// import AddProduct from "./pages/AddProduct";
+import AddProduct from "./pages/AddProduct";
 import VendorSignUp from "./pages/VendorSignUp";
 import Footer from "./components/Footer"
-import SignUpPage from "./pages/SignUpPage";
-import SignUpVendorPage from "./pages/SignUpVendorPage/SignUpVendorPage";
+import SignUpPage from "./pages/CustomerSignUp";
+
 
 
 
@@ -44,7 +44,8 @@ const App = () => {
                 <Route path={ROUTES.SIGN_UP} component={SignUpPage}/>
                 <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
                 <Route path={ROUTES.PRODUCTS} component={ShopPage}/>
-                <Route path={ROUTES.ADD_PRODUCT} component={VendorSignUp}/>
+                <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
+                <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
             </div>
 
             

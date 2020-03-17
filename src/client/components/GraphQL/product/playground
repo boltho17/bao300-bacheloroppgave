@@ -145,3 +145,34 @@ mutation CreateRegion($name: String!) {
   {
     "name": "Europpa"
   }
+
+
+CREATE VENDOR:
+
+mutation CreateVendor ($displayName: String!, $organizationNumber: Int!, $address: String!, $userEmail: String!) {
+    createVendor(data: {
+      displayName: $displayName,
+      organizationNumber: $organizationNumber,
+      address: $address,
+      user: {
+        connect: {
+          email: $userEmail
+        }
+      }
+    }) {
+      id
+    	displayName
+    	user {
+        email
+      }
+    }
+  }
+
+  QUERY VARIABLES:
+
+    {
+      "displayName": "KaffeGodt AS",
+      "organizationNumber": 913571398,
+      "address": "Tollbugata 1, 4040 Oslo",
+      "userEmail": "aleksandra@example.com"
+    }

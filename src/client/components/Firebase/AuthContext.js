@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import firebase from "./firebase";
-import GetUser from "../GetUser";
+import GetUser from "../GraphQL/user/GetUser";
 
 
 export const AuthContext = React.createContext(null);
@@ -15,7 +15,7 @@ export const AuthProvider = ({children}) => {
     // Calls GetUser with the logged in users mail, returns the user type as a String(Customer or Vendor)
     const userType = GetUser(firebase.auth().currentUser?.email);
     if (userType) {
-        console.log("AuthContext.js: " + userType);
+        // console.log("AuthContext.js: " + userType);
     }
 
     return (

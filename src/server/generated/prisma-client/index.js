@@ -5,7 +5,19 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
-    name: "User",
+    name: "Category",
+    embedded: false
+  },
+  {
+    name: "ContentArea",
+    embedded: false
+  },
+  {
+    name: "ContentText",
+    embedded: false
+  },
+  {
+    name: "Country",
     embedded: false
   },
   {
@@ -13,7 +25,19 @@ var models = [
     embedded: false
   },
   {
-    name: "Vendor",
+    name: "Grind",
+    embedded: false
+  },
+  {
+    name: "GrindOption",
+    embedded: false
+  },
+  {
+    name: "Order",
+    embedded: false
+  },
+  {
+    name: "OrderLine",
     embedded: false
   },
   {
@@ -25,11 +49,27 @@ var models = [
     embedded: false
   },
   {
-    name: "Country",
+    name: "Region",
     embedded: false
   },
   {
-    name: "Region",
+    name: "Review",
+    embedded: false
+  },
+  {
+    name: "SKU",
+    embedded: false
+  },
+  {
+    name: "SubCategory",
+    embedded: false
+  },
+  {
+    name: "User",
+    embedded: false
+  },
+  {
+    name: "Vendor",
     embedded: false
   }
 ];
