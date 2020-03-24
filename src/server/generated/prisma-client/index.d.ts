@@ -768,6 +768,8 @@ export type GrindOrderByInput =
 export type VendorOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "stripeId_ASC"
+  | "stripeId_DESC"
   | "organizationNumber_ASC"
   | "organizationNumber_DESC"
   | "displayName_ASC"
@@ -1086,6 +1088,7 @@ export interface SKUSubscriptionWhereInput {
 }
 
 export interface VendorUpdateWithoutProductsDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -1359,6 +1362,7 @@ export interface RegionUpdateWithoutCountriesDataInput {
 }
 
 export interface VendorUpdateInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -1440,6 +1444,20 @@ export interface VendorWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  stripeId_not?: Maybe<String>;
+  stripeId_in?: Maybe<String[] | String>;
+  stripeId_not_in?: Maybe<String[] | String>;
+  stripeId_lt?: Maybe<String>;
+  stripeId_lte?: Maybe<String>;
+  stripeId_gt?: Maybe<String>;
+  stripeId_gte?: Maybe<String>;
+  stripeId_contains?: Maybe<String>;
+  stripeId_not_contains?: Maybe<String>;
+  stripeId_starts_with?: Maybe<String>;
+  stripeId_not_starts_with?: Maybe<String>;
+  stripeId_ends_with?: Maybe<String>;
+  stripeId_not_ends_with?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   organizationNumber_not?: Maybe<Int>;
   organizationNumber_in?: Maybe<Int[] | Int>;
@@ -1967,6 +1985,7 @@ export interface ProductImageCreateInput {
 
 export interface VendorCreateInput {
   id?: Maybe<ID_Input>;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2105,6 +2124,7 @@ export interface OrderLineUpdateManyDataInput {
 }
 
 export interface VendorUpdateDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -2206,6 +2226,7 @@ export interface CategoryUpdateWithWhereUniqueWithoutProductsInput {
 
 export interface VendorCreateWithoutProductsInput {
   id?: Maybe<ID_Input>;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2861,6 +2882,7 @@ export interface OrderUpsertWithoutOrderLinesInput {
 
 export interface VendorCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2929,6 +2951,7 @@ export interface ProductCreateOneWithoutCategoriesInput {
 }
 
 export interface VendorUpdateWithoutUserDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -3076,6 +3099,7 @@ export interface GrindUpdateInput {
 }
 
 export interface VendorUpdateManyMutationInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -3730,6 +3754,7 @@ export interface NodeNode {
 
 export interface VendorPreviousValues {
   id: ID_Output;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -3743,6 +3768,7 @@ export interface VendorPreviousValuesPromise
   extends Promise<VendorPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -3756,6 +3782,7 @@ export interface VendorPreviousValuesSubscription
   extends Promise<AsyncIterator<VendorPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -4421,6 +4448,7 @@ export interface ContentAreaPreviousValuesSubscription
 
 export interface Vendor {
   id: ID_Output;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -4432,6 +4460,7 @@ export interface Vendor {
 
 export interface VendorPromise extends Promise<Vendor>, Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -4455,6 +4484,7 @@ export interface VendorSubscription
   extends Promise<AsyncIterator<Vendor>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -4478,6 +4508,7 @@ export interface VendorNullablePromise
   extends Promise<Vendor | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;

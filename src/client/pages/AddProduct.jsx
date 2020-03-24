@@ -3,9 +3,13 @@ import AddProductForm from "../components/Forms/AddProductForm";
 import Price from '../components/AddProduct/Price'
 import {Col, Row} from "react-bootstrap";
 import CheckBoxes from "../components/AddProduct/CheckBoxes";
+import {useMutation} from "@apollo/react-hooks";
+import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
+import firebase from "firebase";
 
 const AddProduct = () => {
 
+    const [addProduct, {productData}] = useMutation(ADD_PRODUCT);
     const [product, setProduct] = useState({
         productName: "",
         saleText: "",
@@ -15,6 +19,7 @@ const AddProduct = () => {
         roastDegree: "",
         tasteProfile: "",
         certification: "",
+        info: "Bla bla info",
         priceOptions: [
             {id: 0, grams0: '', price0: ''},
             {id: 1, grams1: '', price1: ''},
@@ -22,8 +27,22 @@ const AddProduct = () => {
         ]
     });
 
+    // OPPRETTER VENDOR I DB:
+
     const onSubmit = () => {
-        console.log(product)
+        console.log(product);
+        addProduct({
+            variables: {
+                title: product.productName,
+                description: product.saleText,
+                flavorProfile: product.tasteProfile,
+                info: product.info,
+                vendorEmail: firebase.auth().currentUser?.email
+            }
+        });
+        console.log(productData);
+        //setRedirect(true)
+
     };
 
     return (

@@ -7,6 +7,7 @@ import {useMutation} from "@apollo/react-hooks";
 import {ADD_VENDOR} from "../components/GraphQL/vendor/mutations";
 
 
+
 const VendorSignUp = ({history}) => {
 
     const [isFirebaseUserCreated, setIsFirebaseUserCreated] = useState(false);

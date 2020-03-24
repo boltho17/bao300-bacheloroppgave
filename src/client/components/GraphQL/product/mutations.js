@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 export const ADD_PRODUCT = gql`
-    mutation AddProduct ($title: String!, $flavorProfile: String!, $description: String!, $info: String!, $vendorId: ID!, $countryId: ID!) {
+    mutation CreateProduct ($title: String!, $flavorProfile: String, $description: String!, $info: String!, $vendorEmail: String!, $countryName: String!) {
         createProduct(data: {
             title: $title,
             flavorProfile: $flavorProfile,
@@ -19,12 +19,12 @@ export const ADD_PRODUCT = gql`
             },
             vendorID: {
                 connect: {
-                    id: $vendorId
+                    email: $vendorEmail
                 }
             },
             countryID: {
-                connect: {
-                    id: $countryId
+                create: {
+                    name: $countryName
                 }
             }
         })

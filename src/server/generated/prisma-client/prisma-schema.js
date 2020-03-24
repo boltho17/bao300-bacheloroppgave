@@ -3346,6 +3346,7 @@ input UserWhereUniqueInput {
 
 type Vendor {
   id: ID!
+  stripeId: String!
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3365,6 +3366,7 @@ type VendorConnection {
 
 input VendorCreateInput {
   id: ID
+  stripeId: String!
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3393,6 +3395,7 @@ input VendorCreateOneWithoutUserInput {
 
 input VendorCreateWithoutProductsInput {
   id: ID
+  stripeId: String!
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3405,6 +3408,7 @@ input VendorCreateWithoutProductsInput {
 
 input VendorCreateWithoutUserInput {
   id: ID
+  stripeId: String!
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3423,6 +3427,8 @@ type VendorEdge {
 enum VendorOrderByInput {
   id_ASC
   id_DESC
+  stripeId_ASC
+  stripeId_DESC
   organizationNumber_ASC
   organizationNumber_DESC
   displayName_ASC
@@ -3441,6 +3447,7 @@ enum VendorOrderByInput {
 
 type VendorPreviousValues {
   id: ID!
+  stripeId: String!
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3469,6 +3476,7 @@ input VendorSubscriptionWhereInput {
 }
 
 input VendorUpdateDataInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3481,6 +3489,7 @@ input VendorUpdateDataInput {
 }
 
 input VendorUpdateInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3493,6 +3502,7 @@ input VendorUpdateInput {
 }
 
 input VendorUpdateManyMutationInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3528,6 +3538,7 @@ input VendorUpdateOneWithoutUserInput {
 }
 
 input VendorUpdateWithoutProductsDataInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3539,6 +3550,7 @@ input VendorUpdateWithoutProductsDataInput {
 }
 
 input VendorUpdateWithoutUserDataInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3579,6 +3591,20 @@ input VendorWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  stripeId: String
+  stripeId_not: String
+  stripeId_in: [String!]
+  stripeId_not_in: [String!]
+  stripeId_lt: String
+  stripeId_lte: String
+  stripeId_gt: String
+  stripeId_gte: String
+  stripeId_contains: String
+  stripeId_not_contains: String
+  stripeId_starts_with: String
+  stripeId_not_starts_with: String
+  stripeId_ends_with: String
+  stripeId_not_ends_with: String
   organizationNumber: Int
   organizationNumber_not: Int
   organizationNumber_in: [Int!]
