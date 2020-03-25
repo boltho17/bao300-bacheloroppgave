@@ -13,8 +13,6 @@ app.get("/", (req, res) => {
     res.sendFile(path);
 });
 
-var accId = "";
-
 // Part 1: hosted Connect Custom Onboarding:
 app.post("/create-account-hosted", async (req, res) => {
     const data = req.body;
@@ -49,14 +47,13 @@ app.post("/create-account-hosted", async (req, res) => {
             type: 'custom_account_verification',
             collect: 'eventually_due'
         });
-        accId = account.id;
     } catch (err) {
         console.log(err);
         res.status(400);
         res.send({error: err});
         return;
     }
-    res.send(accountLink)
+    res.send(accountLink);
 });
 
 // Part 2: custom onboarding flow:
@@ -85,16 +82,14 @@ app.post("/create-account", async(req, res) => {
 });
 
 // User Dashboard
-app.get("/dashboard", async(req, res) => {
-    var loginLink = stripe.accounts.createLoginLink(
-        accId,
+app.post("/dashboard", async(req, res) => {
+    stripe.accounts.createLoginLink(
+        'acct_1GQ6P8JUUzrpfdcv',
         function(err, link) {
             // asynchronously called
-            console.log(err);
-            console.log(link);
         }
-    );
-    res.send(loginLink)
+    ).then(res => console.log(res))
+
 });
 
 

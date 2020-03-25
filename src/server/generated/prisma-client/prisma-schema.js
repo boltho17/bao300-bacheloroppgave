@@ -1742,9 +1742,9 @@ type PageInfo {
 
 type Product {
   id: ID!
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean!
   vendor: Vendor
@@ -1762,9 +1762,9 @@ type ProductConnection {
 
 input ProductCreateInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1806,9 +1806,9 @@ input ProductCreateOneWithoutSkusInput {
 
 input ProductCreateWithoutCategoriesInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1819,9 +1819,9 @@ input ProductCreateWithoutCategoriesInput {
 
 input ProductCreateWithoutCountryInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1832,9 +1832,9 @@ input ProductCreateWithoutCountryInput {
 
 input ProductCreateWithoutProductImagesInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1845,9 +1845,9 @@ input ProductCreateWithoutProductImagesInput {
 
 input ProductCreateWithoutSkusInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1858,9 +1858,9 @@ input ProductCreateWithoutSkusInput {
 
 input ProductCreateWithoutVendorInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   country: CountryCreateOneWithoutProductsInput
@@ -2072,9 +2072,9 @@ enum ProductOrderByInput {
 
 type ProductPreviousValues {
   id: ID!
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean!
 }
@@ -2813,7 +2813,7 @@ type SKU {
   product: Product!
   grinded: Boolean!
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 type SKUConnection {
@@ -2827,7 +2827,7 @@ input SKUCreateInput {
   product: ProductCreateOneWithoutSkusInput!
   grinded: Boolean
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 input SKUCreateManyWithoutProductInput {
@@ -2844,7 +2844,7 @@ input SKUCreateWithoutProductInput {
   id: ID
   grinded: Boolean
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 type SKUEdge {
@@ -2859,15 +2859,15 @@ enum SKUOrderByInput {
   grinded_DESC
   weight_ASC
   weight_DESC
-  Price_ASC
-  Price_DESC
+  price_ASC
+  price_DESC
 }
 
 type SKUPreviousValues {
   id: ID!
   grinded: Boolean!
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 input SKUScalarWhereInput {
@@ -2895,14 +2895,14 @@ input SKUScalarWhereInput {
   weight_lte: Int
   weight_gt: Int
   weight_gte: Int
-  Price: Float
-  Price_not: Float
-  Price_in: [Float!]
-  Price_not_in: [Float!]
-  Price_lt: Float
-  Price_lte: Float
-  Price_gt: Float
-  Price_gte: Float
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
   AND: [SKUScalarWhereInput!]
   OR: [SKUScalarWhereInput!]
   NOT: [SKUScalarWhereInput!]
@@ -2930,26 +2930,26 @@ input SKUUpdateDataInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateManyDataInput {
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateManyMutationInput {
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateManyWithoutProductInput {
@@ -2979,7 +2979,7 @@ input SKUUpdateOneRequiredInput {
 input SKUUpdateWithoutProductDataInput {
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateWithWhereUniqueWithoutProductInput {
@@ -3024,14 +3024,14 @@ input SKUWhereInput {
   weight_lte: Int
   weight_gt: Int
   weight_gte: Int
-  Price: Float
-  Price_not: Float
-  Price_in: [Float!]
-  Price_not_in: [Float!]
-  Price_lt: Float
-  Price_lte: Float
-  Price_gt: Float
-  Price_gte: Float
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
   AND: [SKUWhereInput!]
   OR: [SKUWhereInput!]
   NOT: [SKUWhereInput!]
@@ -3708,7 +3708,6 @@ input VendorWhereInput {
 
 input VendorWhereUniqueInput {
   id: ID
-  organizationNumber: Int
   bankAccount: String
 }
 `

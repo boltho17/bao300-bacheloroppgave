@@ -5,7 +5,7 @@ interface Node {
 type Vendor implements Node {
   id: ID! @id
   stripeId: String!
-  organizationNumber: Int! @unique
+  organizationNumber: Int!
   displayName: String!
   address: String!
   bankAccount: String @unique

@@ -1,32 +1,32 @@
 import gql from 'graphql-tag';
 
 export const ADD_PRODUCT = gql`
-    mutation CreateProduct ($title: String!, $flavorProfile: String, $description: String!, $info: String!, $vendorEmail: String!, $countryName: String!) {
+    mutation CreateProduct ($title: String, $flavorProfile: String, $description: String, $info: String, $id: ID, $countryName: String) {
         createProduct(data: {
             title: $title,
             flavorProfile: $flavorProfile,
             description: $description,
             info: $info,
             published: true,
-            productImagesID: {
-                create: [
-                    {image: "image01"},
-                    {image: "image02"},
-                    {image: "image03"},
-                    {image: "image04"},
-                    {image: "image05"}
-                ]
-            },
-            vendorID: {
+            vendor: {
                 connect: {
-                    email: $vendorEmail
+                    id: $id
                 }
             },
-            countryID: {
-                create: {
+            country: {
+                connect: {
                     name: $countryName
                 }
             }
-        })
+            productImages: {
+                create: [
+                    {image: "img_01.jpg"},
+                    {image: "img_02.jpg"},
+                ]
+            }
+        }) {
+            id
+            title
+        }
     }
 `;

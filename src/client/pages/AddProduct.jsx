@@ -5,14 +5,26 @@ import {Col, Row} from "react-bootstrap";
 import CheckBoxes from "../components/AddProduct/CheckBoxes";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
-import firebase from "firebase";
 
 const AddProduct = () => {
+
+    /*
+    *title: String!
+  flavorProfile: String
+  description: String!
+  info: String
+  published: Boolean! @default(value: false)
+  vendor: Vendor @relation(link: INLINE)
+  country: Country @relation(link:INLINE)
+  productImages: [ProductImage!]!
+  categories: [Category!]!
+  skus: [SKU]
+    * */
 
     const [addProduct, {productData}] = useMutation(ADD_PRODUCT);
     const [product, setProduct] = useState({
         productName: "",
-        saleText: "",
+        saleText: "Description ipsum lorem bla bla bla bla",
         region: "",
         country: "",
         beanType: "",
@@ -24,7 +36,8 @@ const AddProduct = () => {
             {id: 0, grams0: '', price0: ''},
             {id: 1, grams1: '', price1: ''},
             {id: 2, grams2: '', price2: ''},
-        ]
+        ],
+        publishedStatus: true
     });
 
     // OPPRETTER VENDOR I DB:
@@ -37,7 +50,9 @@ const AddProduct = () => {
                 description: product.saleText,
                 flavorProfile: product.tasteProfile,
                 info: product.info,
-                vendorEmail: firebase.auth().currentUser?.email
+                id: "ck6i1ll4m007h0726n3cujwit",
+                published: product.publishedStatus,
+                countryName: "Finland"
             }
         });
         console.log(productData);
