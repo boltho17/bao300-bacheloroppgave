@@ -1,24 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Dropdown, Button } from "react-bootstrap";
 
 import CartProductCard from '../components/CartProductCard';
 
 export const Cart = (props) => {
-    const [product, setProduct] = useState({ productName: "Ost", productPrice: "100"}, {productName: "Melk", productPrice: "70"})
-        
+    const cartValue = 0
+    const [product, setProduct] = useState([]);
+
+    const addProduct = ()  => {
+        const addNewProduct = [...product, {productName: 'Test3', productPrice: '158'}]
+        setProduct(addNewProduct)
+        localStorage.clear()
+        localStorage.setItem('addNewProduct', JSON.stringify(addNewProduct))
+    };
+
+    useEffect(() => {
+        const data = localStorage.getItem('addNewProduct')
+        if(data){
+            setProduct(JSON.parse(data))
+        }
+    }, []);
+
         return (
             <div>
-                <Dropdown className="dropdownentry" alignRight>
-                    <Dropdown.Toggle className="testus" id=""></Dropdown.Toggle>
+                <Dropdown className="dropdownentry" aria-labelledby="dropdownMenuOffset" alignRight>
+                    <Dropdown.Toggle id="dropdown-toggle"></Dropdown.Toggle>
                     <Dropdown.Menu className="drop-down-custom-menu">
                             <p>FRI FRAKT OVER 100Kr,-</p>
-                            <h5>Handlekurven er tom</h5>
-
+                            <h3>{product.length < 1 ? 'Handlekurven er tom!' : null}</h3>
+                            {product.map((product, index) => (
+                                <CartProductCard key={index} {...props} product = {product} /> 
+                            ))}
                             
-                            <CartProductCard {...props} product = {product} />
-
-
-                            <h3>Totalt å betale: 0,-</h3>
+                            <h3>Totalt å betale: {cartValue},-</h3>
+                            <Button onClick={e => addProduct()}>ADD</Button>
+                            <Button onClick={e => console.log(product)}>LOGG</Button>
                             <Button className="cart-button-1">TIL KASSEN</Button>
                     </Dropdown.Menu>
                 </Dropdown>
