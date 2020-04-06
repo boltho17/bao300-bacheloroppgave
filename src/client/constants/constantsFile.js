@@ -3,16 +3,38 @@ export const CONSTANT_REGIONS = [
     "",
     "Afrika",
     "Asia",
-    "Europa",
     "Sør-Amerika"
 ];
-export const CONSTANT_COUNTRIES = [
+
+export const CONSTANT_COUNTRIES_AFRICA = [
+    "",
+    "Burundi",
+    "Etiopia",
+    "Kenya",
+    "Rwanda",
+    "Tanzania",
+    "Uganda",
+    "Yemen",
+    "Annet"
+];
+
+export const CONSTANT_COUNTRIES_ASIA = [
+    "",
+    "India",
+    "Indonesia",
+    "Kina",
+    "Papua Ny-Guinea",
+    "Vietnam",
+    "Annet"
+];
+
+export const CONSTANT_COUNTRIES_AMERICA = [
     "",
     "Brasil",
-    "Vietnam",
     "Colombia",
-    "Indonesia",
-    "Etiopia",
+    "Costa Rica",
+    "El Salvador",
+    "Guatemala",
     "Honduras",
     "India",
     "Uganda",
@@ -21,6 +43,8 @@ export const CONSTANT_COUNTRIES = [
     "Peru",
     "Annet"
 ];
+
+
 export const CONSTANT_BEAN_TYPES = [
     "",
     "Arabica",
