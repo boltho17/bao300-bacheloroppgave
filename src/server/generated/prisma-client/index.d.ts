@@ -768,6 +768,8 @@ export type GrindOrderByInput =
 export type VendorOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "stripeId_ASC"
+  | "stripeId_DESC"
   | "organizationNumber_ASC"
   | "organizationNumber_DESC"
   | "displayName_ASC"
@@ -856,8 +858,8 @@ export type SKUOrderByInput =
   | "grinded_DESC"
   | "weight_ASC"
   | "weight_DESC"
-  | "Price_ASC"
-  | "Price_DESC";
+  | "price_ASC"
+  | "price_DESC";
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
@@ -895,9 +897,9 @@ export type UserOrderByInput =
 
 export interface ProductCreateWithoutVendorInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
+  description?: Maybe<String>;
   info?: Maybe<String>;
   published?: Maybe<Boolean>;
   country?: Maybe<CountryCreateOneWithoutProductsInput>;
@@ -928,7 +930,7 @@ export interface SKUCreateWithoutProductInput {
   id?: Maybe<ID_Input>;
   grinded?: Maybe<Boolean>;
   weight: Int;
-  Price: Float;
+  price: Float;
 }
 
 export interface CategoryUpdateManyWithoutProductsInput {
@@ -985,14 +987,14 @@ export interface SKUWhereInput {
   weight_lte?: Maybe<Int>;
   weight_gt?: Maybe<Int>;
   weight_gte?: Maybe<Int>;
-  Price?: Maybe<Float>;
-  Price_not?: Maybe<Float>;
-  Price_in?: Maybe<Float[] | Float>;
-  Price_not_in?: Maybe<Float[] | Float>;
-  Price_lt?: Maybe<Float>;
-  Price_lte?: Maybe<Float>;
-  Price_gt?: Maybe<Float>;
-  Price_gte?: Maybe<Float>;
+  price?: Maybe<Float>;
+  price_not?: Maybe<Float>;
+  price_in?: Maybe<Float[] | Float>;
+  price_not_in?: Maybe<Float[] | Float>;
+  price_lt?: Maybe<Float>;
+  price_lte?: Maybe<Float>;
+  price_gt?: Maybe<Float>;
+  price_gte?: Maybe<Float>;
   AND?: Maybe<SKUWhereInput[] | SKUWhereInput>;
   OR?: Maybe<SKUWhereInput[] | SKUWhereInput>;
   NOT?: Maybe<SKUWhereInput[] | SKUWhereInput>;
@@ -1086,6 +1088,7 @@ export interface SKUSubscriptionWhereInput {
 }
 
 export interface VendorUpdateWithoutProductsDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -1359,6 +1362,7 @@ export interface RegionUpdateWithoutCountriesDataInput {
 }
 
 export interface VendorUpdateInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -1440,6 +1444,20 @@ export interface VendorWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  stripeId_not?: Maybe<String>;
+  stripeId_in?: Maybe<String[] | String>;
+  stripeId_not_in?: Maybe<String[] | String>;
+  stripeId_lt?: Maybe<String>;
+  stripeId_lte?: Maybe<String>;
+  stripeId_gt?: Maybe<String>;
+  stripeId_gte?: Maybe<String>;
+  stripeId_contains?: Maybe<String>;
+  stripeId_not_contains?: Maybe<String>;
+  stripeId_starts_with?: Maybe<String>;
+  stripeId_not_starts_with?: Maybe<String>;
+  stripeId_ends_with?: Maybe<String>;
+  stripeId_not_ends_with?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   organizationNumber_not?: Maybe<Int>;
   organizationNumber_in?: Maybe<Int[] | Int>;
@@ -1644,7 +1662,7 @@ export interface ProductImageUpdateManyDataInput {
 export interface SKUUpdateManyMutationInput {
   grinded?: Maybe<Boolean>;
   weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
+  price?: Maybe<Float>;
 }
 
 export interface SKUUpdateManyWithoutProductInput {
@@ -1748,7 +1766,7 @@ export interface ReviewUpdateManyMutationInput {
 export interface SKUUpdateWithoutProductDataInput {
   grinded?: Maybe<Boolean>;
   weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
+  price?: Maybe<Float>;
 }
 
 export interface ReviewCreateInput {
@@ -1796,14 +1814,14 @@ export interface SKUScalarWhereInput {
   weight_lte?: Maybe<Int>;
   weight_gt?: Maybe<Int>;
   weight_gte?: Maybe<Int>;
-  Price?: Maybe<Float>;
-  Price_not?: Maybe<Float>;
-  Price_in?: Maybe<Float[] | Float>;
-  Price_not_in?: Maybe<Float[] | Float>;
-  Price_lt?: Maybe<Float>;
-  Price_lte?: Maybe<Float>;
-  Price_gt?: Maybe<Float>;
-  Price_gte?: Maybe<Float>;
+  price?: Maybe<Float>;
+  price_not?: Maybe<Float>;
+  price_in?: Maybe<Float[] | Float>;
+  price_not_in?: Maybe<Float[] | Float>;
+  price_lt?: Maybe<Float>;
+  price_lte?: Maybe<Float>;
+  price_gt?: Maybe<Float>;
+  price_gte?: Maybe<Float>;
   AND?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
   OR?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
   NOT?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
@@ -1827,7 +1845,7 @@ export interface CountryUpsertWithWhereUniqueWithoutRegionInput {
 export interface SKUUpdateManyDataInput {
   grinded?: Maybe<Boolean>;
   weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
+  price?: Maybe<Float>;
 }
 
 export type ProductWhereUniqueInput = AtLeastOne<{
@@ -1943,9 +1961,9 @@ export interface ContentTextCreateInput {
 
 export interface ProductCreateWithoutProductImagesInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
+  description?: Maybe<String>;
   info?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
@@ -1967,6 +1985,7 @@ export interface ProductImageCreateInput {
 
 export interface VendorCreateInput {
   id?: Maybe<ID_Input>;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2000,7 +2019,7 @@ export interface SKUUpdateDataInput {
   product?: Maybe<ProductUpdateOneRequiredWithoutSkusInput>;
   grinded?: Maybe<Boolean>;
   weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
+  price?: Maybe<Float>;
 }
 
 export type SubCategoryWhereUniqueInput = AtLeastOne<{
@@ -2105,6 +2124,7 @@ export interface OrderLineUpdateManyDataInput {
 }
 
 export interface VendorUpdateDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -2118,7 +2138,6 @@ export interface VendorUpdateDataInput {
 
 export type VendorWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
-  organizationNumber?: Maybe<Int>;
   bankAccount?: Maybe<String>;
 }>;
 
@@ -2188,9 +2207,9 @@ export interface SKUUpdateOneRequiredInput {
 
 export interface ProductCreateWithoutCategoriesInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
+  description?: Maybe<String>;
   info?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
@@ -2206,6 +2225,7 @@ export interface CategoryUpdateWithWhereUniqueWithoutProductsInput {
 
 export interface VendorCreateWithoutProductsInput {
   id?: Maybe<ID_Input>;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2640,9 +2660,9 @@ export interface CategoryUpdateOneRequiredInput {
 
 export interface ProductCreateWithoutCountryInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
+  description?: Maybe<String>;
   info?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
@@ -2666,7 +2686,7 @@ export interface SKUUpdateInput {
   product?: Maybe<ProductUpdateOneRequiredWithoutSkusInput>;
   grinded?: Maybe<Boolean>;
   weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
+  price?: Maybe<Float>;
 }
 
 export interface ProductUpdateManyWithoutCountryInput {
@@ -2861,6 +2881,7 @@ export interface OrderUpsertWithoutOrderLinesInput {
 
 export interface VendorCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2929,6 +2950,7 @@ export interface ProductCreateOneWithoutCategoriesInput {
 }
 
 export interface VendorUpdateWithoutUserDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -3076,6 +3098,7 @@ export interface GrindUpdateInput {
 }
 
 export interface VendorUpdateManyMutationInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -3362,9 +3385,9 @@ export type ReviewWhereUniqueInput = AtLeastOne<{
 
 export interface ProductCreateInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
+  description?: Maybe<String>;
   info?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
@@ -3584,7 +3607,7 @@ export interface SKUCreateInput {
   product: ProductCreateOneWithoutSkusInput;
   grinded?: Maybe<Boolean>;
   weight: Int;
-  Price: Float;
+  price: Float;
 }
 
 export interface OrderUpdateWithoutOrderLinesDataInput {
@@ -3614,9 +3637,9 @@ export interface VendorSubscriptionWhereInput {
 
 export interface ProductCreateWithoutSkusInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
+  description?: Maybe<String>;
   info?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
@@ -3730,6 +3753,7 @@ export interface NodeNode {
 
 export interface VendorPreviousValues {
   id: ID_Output;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -3743,6 +3767,7 @@ export interface VendorPreviousValuesPromise
   extends Promise<VendorPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -3756,6 +3781,7 @@ export interface VendorPreviousValuesSubscription
   extends Promise<AsyncIterator<VendorPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -4058,9 +4084,9 @@ export interface CountryEdgeSubscription
 
 export interface Product {
   id: ID_Output;
-  title: String;
+  title?: String;
   flavorProfile?: String;
-  description: String;
+  description?: String;
   info?: String;
   published: Boolean;
 }
@@ -4421,6 +4447,7 @@ export interface ContentAreaPreviousValuesSubscription
 
 export interface Vendor {
   id: ID_Output;
+  stripeId: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -4432,6 +4459,7 @@ export interface Vendor {
 
 export interface VendorPromise extends Promise<Vendor>, Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -4455,6 +4483,7 @@ export interface VendorSubscription
   extends Promise<AsyncIterator<Vendor>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -4478,6 +4507,7 @@ export interface VendorNullablePromise
   extends Promise<Vendor | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -5590,9 +5620,9 @@ export interface OrderLineEdgeSubscription
 
 export interface ProductPreviousValues {
   id: ID_Output;
-  title: String;
+  title?: String;
   flavorProfile?: String;
-  description: String;
+  description?: String;
   info?: String;
   published: Boolean;
 }
@@ -6127,7 +6157,7 @@ export interface SKU {
   id: ID_Output;
   grinded: Boolean;
   weight: Int;
-  Price: Float;
+  price: Float;
 }
 
 export interface SKUPromise extends Promise<SKU>, Fragmentable {
@@ -6135,7 +6165,7 @@ export interface SKUPromise extends Promise<SKU>, Fragmentable {
   product: <T = ProductPromise>() => T;
   grinded: () => Promise<Boolean>;
   weight: () => Promise<Int>;
-  Price: () => Promise<Float>;
+  price: () => Promise<Float>;
 }
 
 export interface SKUSubscription
@@ -6145,7 +6175,7 @@ export interface SKUSubscription
   product: <T = ProductSubscription>() => T;
   grinded: () => Promise<AsyncIterator<Boolean>>;
   weight: () => Promise<AsyncIterator<Int>>;
-  Price: () => Promise<AsyncIterator<Float>>;
+  price: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface SKUNullablePromise extends Promise<SKU | null>, Fragmentable {
@@ -6153,14 +6183,14 @@ export interface SKUNullablePromise extends Promise<SKU | null>, Fragmentable {
   product: <T = ProductPromise>() => T;
   grinded: () => Promise<Boolean>;
   weight: () => Promise<Int>;
-  Price: () => Promise<Float>;
+  price: () => Promise<Float>;
 }
 
 export interface SKUPreviousValues {
   id: ID_Output;
   grinded: Boolean;
   weight: Int;
-  Price: Float;
+  price: Float;
 }
 
 export interface SKUPreviousValuesPromise
@@ -6169,7 +6199,7 @@ export interface SKUPreviousValuesPromise
   id: () => Promise<ID_Output>;
   grinded: () => Promise<Boolean>;
   weight: () => Promise<Int>;
-  Price: () => Promise<Float>;
+  price: () => Promise<Float>;
 }
 
 export interface SKUPreviousValuesSubscription
@@ -6178,7 +6208,7 @@ export interface SKUPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   grinded: () => Promise<AsyncIterator<Boolean>>;
   weight: () => Promise<AsyncIterator<Int>>;
-  Price: () => Promise<AsyncIterator<Float>>;
+  price: () => Promise<AsyncIterator<Float>>;
 }
 
 export interface SKUSubscriptionPayload {
