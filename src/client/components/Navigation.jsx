@@ -82,8 +82,8 @@ const Navigation = () => {
                     <div className="icon-group">
                         <FiSearch/>
 
-                        <button className="btn" onClick={() => toggleUserType()} type="button">
-                            <TiShoppingCart/>
+                        <button className="btn" onClick={() => toggleUserType()} data-toggle="dropdown" type="button" id="dropdownMenuOffset" >
+                          <TiShoppingCart />
                         </button>
                     </div>
 
