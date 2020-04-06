@@ -17,7 +17,10 @@ export const CONSTANT_COUNTRIES_AFRICA = [
     "Yemen",
     "Annet"
 ];
-
+export const CONSTANT_COUNTRIES = [
+    "",
+    "Annet"
+];
 export const CONSTANT_COUNTRIES_ASIA = [
     "",
     "India",
