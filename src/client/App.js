@@ -28,10 +28,8 @@ const App = () => {
                 <Route path={ROUTES.PRODUCTS} component={ShopPage}/>
                 <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
                 <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
+                <Footer />
             </div>
-
-            
-            <Footer />
 
         </Router>
     );
