@@ -8,3 +8,4 @@ export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
 export const PRODUCTS = '/products';
 export const ADD_PRODUCT = '/new_product';
+export const LANDING_VENDOR = '/landing-vendor';
