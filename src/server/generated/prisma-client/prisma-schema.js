@@ -3346,7 +3346,7 @@ input UserWhereUniqueInput {
 
 type Vendor {
   id: ID!
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3366,7 +3366,7 @@ type VendorConnection {
 
 input VendorCreateInput {
   id: ID
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3395,7 +3395,7 @@ input VendorCreateOneWithoutUserInput {
 
 input VendorCreateWithoutProductsInput {
   id: ID
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3408,7 +3408,7 @@ input VendorCreateWithoutProductsInput {
 
 input VendorCreateWithoutUserInput {
   id: ID
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3447,7 +3447,7 @@ enum VendorOrderByInput {
 
 type VendorPreviousValues {
   id: ID!
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!

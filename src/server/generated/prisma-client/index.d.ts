@@ -1985,7 +1985,7 @@ export interface ProductImageCreateInput {
 
 export interface VendorCreateInput {
   id?: Maybe<ID_Input>;
-  stripeId: String;
+  stripeId?: Maybe<String>;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2225,7 +2225,7 @@ export interface CategoryUpdateWithWhereUniqueWithoutProductsInput {
 
 export interface VendorCreateWithoutProductsInput {
   id?: Maybe<ID_Input>;
-  stripeId: String;
+  stripeId?: Maybe<String>;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -2881,7 +2881,7 @@ export interface OrderUpsertWithoutOrderLinesInput {
 
 export interface VendorCreateWithoutUserInput {
   id?: Maybe<ID_Input>;
-  stripeId: String;
+  stripeId?: Maybe<String>;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -3753,7 +3753,7 @@ export interface NodeNode {
 
 export interface VendorPreviousValues {
   id: ID_Output;
-  stripeId: String;
+  stripeId?: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -4447,7 +4447,7 @@ export interface ContentAreaPreviousValuesSubscription
 
 export interface Vendor {
   id: ID_Output;
-  stripeId: String;
+  stripeId?: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
