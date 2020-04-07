@@ -3,24 +3,44 @@ export const CONSTANT_REGIONS = [
     "",
     "Afrika",
     "Asia",
-    "Europa",
     "Sør-Amerika"
 ];
-export const CONSTANT_COUNTRIES = [
-    "",
-    "Brasil",
-    "Vietnam",
-    "Colombia",
-    "Indonesia",
+
+export const CONSTANT_COUNTRIES_AFRICA = [
+    "Burundi",
     "Etiopia",
-    "Honduras",
-    "India",
+    "Kenya",
+    "Rwanda",
+    "Tanzania",
     "Uganda",
-    "Mexico",
+    "Yemen",
+    "Annet"
+];
+
+export const CONSTANT_COUNTRIES_ASIA = [
+    "India",
+    "Indonesia",
+    "Kina",
+    "Papua Ny-Guinea",
+    "Vietnam",
+    "Annet"
+];
+
+export const CONSTANT_COUNTRIES_AMERICA = [
+    "Brasil",
+    "Columbia",
+    "Costa Rica",
+    "El Salvador",
     "Guatemala",
+    "Honduras",
+    "Mexico",
+    "Nicaragua",
+    "Panama",
     "Peru",
     "Annet"
 ];
+
+
 export const CONSTANT_BEAN_TYPES = [
     "",
     "Arabica",
@@ -31,9 +51,11 @@ export const CONSTANT_BEAN_TYPES = [
 export const CONSTANT_ROAST_DEGREES = [
     "",
     "Lys",
+    "Lys/Medium",
     "Medium",
-    "Mørk",
-    "Veldig mørk"
+    "Medium/Mørk",
+    "Roast",
+    "Espresso"
 ];
 
 //

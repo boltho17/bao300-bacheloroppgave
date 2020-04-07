@@ -39,6 +39,10 @@ type AggregateOrderLine {
   count: Int!
 }
 
+type AggregateOrigin {
+  count: Int!
+}
+
 type AggregateProduct {
   count: Int!
 }
@@ -728,7 +732,6 @@ input CountryWhereInput {
 
 input CountryWhereUniqueInput {
   id: ID
-  name: String
 }
 
 type Customer {
@@ -1192,6 +1195,12 @@ type Mutation {
   upsertOrderLine(where: OrderLineWhereUniqueInput!, create: OrderLineCreateInput!, update: OrderLineUpdateInput!): OrderLine!
   deleteOrderLine(where: OrderLineWhereUniqueInput!): OrderLine
   deleteManyOrderLines(where: OrderLineWhereInput): BatchPayload!
+  createOrigin(data: OriginCreateInput!): Origin!
+  updateOrigin(data: OriginUpdateInput!, where: OriginWhereUniqueInput!): Origin
+  updateManyOrigins(data: OriginUpdateManyMutationInput!, where: OriginWhereInput): BatchPayload!
+  upsertOrigin(where: OriginWhereUniqueInput!, create: OriginCreateInput!, update: OriginUpdateInput!): Origin!
+  deleteOrigin(where: OriginWhereUniqueInput!): Origin
+  deleteManyOrigins(where: OriginWhereInput): BatchPayload!
   createProduct(data: ProductCreateInput!): Product!
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
@@ -1733,6 +1742,110 @@ input OrderWhereUniqueInput {
   id: ID
 }
 
+type Origin {
+  id: ID!
+  name: String!
+  regions(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region!]
+}
+
+type OriginConnection {
+  pageInfo: PageInfo!
+  edges: [OriginEdge]!
+  aggregate: AggregateOrigin!
+}
+
+input OriginCreateInput {
+  id: ID
+  name: String!
+  regions: RegionCreateManyInput
+}
+
+type OriginEdge {
+  node: Origin!
+  cursor: String!
+}
+
+enum OriginOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type OriginPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type OriginSubscriptionPayload {
+  mutation: MutationType!
+  node: Origin
+  updatedFields: [String!]
+  previousValues: OriginPreviousValues
+}
+
+input OriginSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OriginWhereInput
+  AND: [OriginSubscriptionWhereInput!]
+  OR: [OriginSubscriptionWhereInput!]
+  NOT: [OriginSubscriptionWhereInput!]
+}
+
+input OriginUpdateInput {
+  name: String
+  regions: RegionUpdateManyInput
+}
+
+input OriginUpdateManyMutationInput {
+  name: String
+}
+
+input OriginWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  regions_every: RegionWhereInput
+  regions_some: RegionWhereInput
+  regions_none: RegionWhereInput
+  AND: [OriginWhereInput!]
+  OR: [OriginWhereInput!]
+  NOT: [OriginWhereInput!]
+}
+
+input OriginWhereUniqueInput {
+  id: ID
+  name: String
+}
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -1742,9 +1855,9 @@ type PageInfo {
 
 type Product {
   id: ID!
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean!
   vendor: Vendor
@@ -1762,9 +1875,9 @@ type ProductConnection {
 
 input ProductCreateInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1806,9 +1919,9 @@ input ProductCreateOneWithoutSkusInput {
 
 input ProductCreateWithoutCategoriesInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1819,9 +1932,9 @@ input ProductCreateWithoutCategoriesInput {
 
 input ProductCreateWithoutCountryInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1832,9 +1945,9 @@ input ProductCreateWithoutCountryInput {
 
 input ProductCreateWithoutProductImagesInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1845,9 +1958,9 @@ input ProductCreateWithoutProductImagesInput {
 
 input ProductCreateWithoutSkusInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
@@ -1858,9 +1971,9 @@ input ProductCreateWithoutSkusInput {
 
 input ProductCreateWithoutVendorInput {
   id: ID
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean
   country: CountryCreateOneWithoutProductsInput
@@ -2072,9 +2185,9 @@ enum ProductOrderByInput {
 
 type ProductPreviousValues {
   id: ID!
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
+  description: String
   info: String
   published: Boolean!
 }
@@ -2499,6 +2612,9 @@ type Query {
   orderLine(where: OrderLineWhereUniqueInput!): OrderLine
   orderLines(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLine]!
   orderLinesConnection(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderLineConnection!
+  origin(where: OriginWhereUniqueInput!): Origin
+  origins(where: OriginWhereInput, orderBy: OriginOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Origin]!
+  originsConnection(where: OriginWhereInput, orderBy: OriginOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OriginConnection!
   product(where: ProductWhereUniqueInput!): Product
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
@@ -2544,6 +2660,11 @@ input RegionCreateInput {
   countries: CountryCreateManyWithoutRegionInput
 }
 
+input RegionCreateManyInput {
+  create: [RegionCreateInput!]
+  connect: [RegionWhereUniqueInput!]
+}
+
 input RegionCreateOneWithoutCountriesInput {
   create: RegionCreateWithoutCountriesInput
   connect: RegionWhereUniqueInput
@@ -2571,6 +2692,40 @@ type RegionPreviousValues {
   name: String!
 }
 
+input RegionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [RegionScalarWhereInput!]
+  OR: [RegionScalarWhereInput!]
+  NOT: [RegionScalarWhereInput!]
+}
+
 type RegionSubscriptionPayload {
   mutation: MutationType!
   node: Region
@@ -2589,13 +2744,39 @@ input RegionSubscriptionWhereInput {
   NOT: [RegionSubscriptionWhereInput!]
 }
 
+input RegionUpdateDataInput {
+  name: String
+  countries: CountryUpdateManyWithoutRegionInput
+}
+
 input RegionUpdateInput {
   name: String
   countries: CountryUpdateManyWithoutRegionInput
 }
 
+input RegionUpdateManyDataInput {
+  name: String
+}
+
+input RegionUpdateManyInput {
+  create: [RegionCreateInput!]
+  update: [RegionUpdateWithWhereUniqueNestedInput!]
+  upsert: [RegionUpsertWithWhereUniqueNestedInput!]
+  delete: [RegionWhereUniqueInput!]
+  connect: [RegionWhereUniqueInput!]
+  set: [RegionWhereUniqueInput!]
+  disconnect: [RegionWhereUniqueInput!]
+  deleteMany: [RegionScalarWhereInput!]
+  updateMany: [RegionUpdateManyWithWhereNestedInput!]
+}
+
 input RegionUpdateManyMutationInput {
   name: String
+}
+
+input RegionUpdateManyWithWhereNestedInput {
+  where: RegionScalarWhereInput!
+  data: RegionUpdateManyDataInput!
 }
 
 input RegionUpdateOneWithoutCountriesInput {
@@ -2611,9 +2792,20 @@ input RegionUpdateWithoutCountriesDataInput {
   name: String
 }
 
+input RegionUpdateWithWhereUniqueNestedInput {
+  where: RegionWhereUniqueInput!
+  data: RegionUpdateDataInput!
+}
+
 input RegionUpsertWithoutCountriesInput {
   update: RegionUpdateWithoutCountriesDataInput!
   create: RegionCreateWithoutCountriesInput!
+}
+
+input RegionUpsertWithWhereUniqueNestedInput {
+  where: RegionWhereUniqueInput!
+  update: RegionUpdateDataInput!
+  create: RegionCreateInput!
 }
 
 input RegionWhereInput {
@@ -2813,7 +3005,7 @@ type SKU {
   product: Product!
   grinded: Boolean!
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 type SKUConnection {
@@ -2827,7 +3019,7 @@ input SKUCreateInput {
   product: ProductCreateOneWithoutSkusInput!
   grinded: Boolean
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 input SKUCreateManyWithoutProductInput {
@@ -2844,7 +3036,7 @@ input SKUCreateWithoutProductInput {
   id: ID
   grinded: Boolean
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 type SKUEdge {
@@ -2859,15 +3051,15 @@ enum SKUOrderByInput {
   grinded_DESC
   weight_ASC
   weight_DESC
-  Price_ASC
-  Price_DESC
+  price_ASC
+  price_DESC
 }
 
 type SKUPreviousValues {
   id: ID!
   grinded: Boolean!
   weight: Int!
-  Price: Float!
+  price: Float!
 }
 
 input SKUScalarWhereInput {
@@ -2895,14 +3087,14 @@ input SKUScalarWhereInput {
   weight_lte: Int
   weight_gt: Int
   weight_gte: Int
-  Price: Float
-  Price_not: Float
-  Price_in: [Float!]
-  Price_not_in: [Float!]
-  Price_lt: Float
-  Price_lte: Float
-  Price_gt: Float
-  Price_gte: Float
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
   AND: [SKUScalarWhereInput!]
   OR: [SKUScalarWhereInput!]
   NOT: [SKUScalarWhereInput!]
@@ -2930,26 +3122,26 @@ input SKUUpdateDataInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateManyDataInput {
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateManyMutationInput {
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateManyWithoutProductInput {
@@ -2979,7 +3171,7 @@ input SKUUpdateOneRequiredInput {
 input SKUUpdateWithoutProductDataInput {
   grinded: Boolean
   weight: Int
-  Price: Float
+  price: Float
 }
 
 input SKUUpdateWithWhereUniqueWithoutProductInput {
@@ -3024,14 +3216,14 @@ input SKUWhereInput {
   weight_lte: Int
   weight_gt: Int
   weight_gte: Int
-  Price: Float
-  Price_not: Float
-  Price_in: [Float!]
-  Price_not_in: [Float!]
-  Price_lt: Float
-  Price_lte: Float
-  Price_gt: Float
-  Price_gte: Float
+  price: Float
+  price_not: Float
+  price_in: [Float!]
+  price_not_in: [Float!]
+  price_lt: Float
+  price_lte: Float
+  price_gt: Float
+  price_gte: Float
   AND: [SKUWhereInput!]
   OR: [SKUWhereInput!]
   NOT: [SKUWhereInput!]
@@ -3152,6 +3344,7 @@ type Subscription {
   grindOption(where: GrindOptionSubscriptionWhereInput): GrindOptionSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderLine(where: OrderLineSubscriptionWhereInput): OrderLineSubscriptionPayload
+  origin(where: OriginSubscriptionWhereInput): OriginSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   productImage(where: ProductImageSubscriptionWhereInput): ProductImageSubscriptionPayload
   region(where: RegionSubscriptionWhereInput): RegionSubscriptionPayload
@@ -3346,6 +3539,7 @@ input UserWhereUniqueInput {
 
 type Vendor {
   id: ID!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3365,6 +3559,7 @@ type VendorConnection {
 
 input VendorCreateInput {
   id: ID
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3393,6 +3588,7 @@ input VendorCreateOneWithoutUserInput {
 
 input VendorCreateWithoutProductsInput {
   id: ID
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3405,6 +3601,7 @@ input VendorCreateWithoutProductsInput {
 
 input VendorCreateWithoutUserInput {
   id: ID
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3423,6 +3620,8 @@ type VendorEdge {
 enum VendorOrderByInput {
   id_ASC
   id_DESC
+  stripeId_ASC
+  stripeId_DESC
   organizationNumber_ASC
   organizationNumber_DESC
   displayName_ASC
@@ -3441,6 +3640,7 @@ enum VendorOrderByInput {
 
 type VendorPreviousValues {
   id: ID!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3469,6 +3669,7 @@ input VendorSubscriptionWhereInput {
 }
 
 input VendorUpdateDataInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3481,6 +3682,7 @@ input VendorUpdateDataInput {
 }
 
 input VendorUpdateInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3493,6 +3695,7 @@ input VendorUpdateInput {
 }
 
 input VendorUpdateManyMutationInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3528,6 +3731,7 @@ input VendorUpdateOneWithoutUserInput {
 }
 
 input VendorUpdateWithoutProductsDataInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3539,6 +3743,7 @@ input VendorUpdateWithoutProductsDataInput {
 }
 
 input VendorUpdateWithoutUserDataInput {
+  stripeId: String
   organizationNumber: Int
   displayName: String
   address: String
@@ -3579,6 +3784,20 @@ input VendorWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  stripeId: String
+  stripeId_not: String
+  stripeId_in: [String!]
+  stripeId_not_in: [String!]
+  stripeId_lt: String
+  stripeId_lte: String
+  stripeId_gt: String
+  stripeId_gte: String
+  stripeId_contains: String
+  stripeId_not_contains: String
+  stripeId_starts_with: String
+  stripeId_not_starts_with: String
+  stripeId_ends_with: String
+  stripeId_not_ends_with: String
   organizationNumber: Int
   organizationNumber_not: Int
   organizationNumber_in: [Int!]
@@ -3682,7 +3901,6 @@ input VendorWhereInput {
 
 input VendorWhereUniqueInput {
   id: ID
-  organizationNumber: Int
   bankAccount: String
 }
 `

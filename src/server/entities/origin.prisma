@@ -1,0 +1,8 @@
+interface Node {
+  id: ID!
+}
+type Origin implements Node {
+  id: ID! @id
+  name: String! @unique
+  regions: [Region!]!
+}

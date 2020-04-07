@@ -30,17 +30,6 @@ const Navigation = () => {
         });
     };
 
-    // TOGGLE BETWEEN CUSTOMER AND VENDOR TYPE:
-    const toggleUserType = () => {
-        if (userType === "customer") {
-            userType = "vendor";
-            console.log("Switched to vendor")
-        } else if (userType === "vendor") {
-            userType = "customer";
-            console.log("Switched to customer")
-        }
-    };
-
     return (
         <Navbar className="top-navbar" expand="md">
             <Navbar.Brand href="/">
@@ -82,14 +71,14 @@ const Navigation = () => {
                     <div className="icon-group">
                         <FiSearch/>
 
-                        <button className="btn" onClick={() => toggleUserType()} data-toggle="dropdown" type="button" id="dropdownMenuOffset" >
-                          <TiShoppingCart />
+                        <button className="btn" type="button">
+                            <TiShoppingCart/>
                         </button>
                     </div>
 
                     <div>
-                        {firebase.auth().currentUser?.email && <NavDropdown title="Settings" id="basic-nav-dropdown">
-                            {userType && <NavDropdown.Item>{'Velkommen ' + userType}</NavDropdown.Item>}
+                        {firebase.auth().currentUser?.email && <NavDropdown title="Velkommen!" id="basic-nav-dropdown">
+                            {userType && <NavDropdown.Item>{userType}</NavDropdown.Item>}
                             <NavDropdown.Divider/>
                             {firebase.auth().currentUser?.email && <NavDropdown.Item onClick={() => logoutUser()}>Logg ut</NavDropdown.Item>}
                         </NavDropdown>}
