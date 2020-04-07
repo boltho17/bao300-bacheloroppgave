@@ -37,7 +37,6 @@ export const CONSTANT_COUNTRIES_AMERICA = [
     "Nicaragua",
     "Panama",
     "Peru",
-    "Uganda",
     "Annet"
 ];
 
