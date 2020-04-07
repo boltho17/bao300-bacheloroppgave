@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import AddProductForm from "../components/Forms/AddProductForm";
 import Price from '../components/AddProduct/Price'
 import {Col, Row} from "react-bootstrap";
 import CheckBoxes from "../components/AddProduct/CheckBoxes";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
+import {AuthContext} from "../components/Firebase/AuthContext";
 
 const AddProduct = () => {
 
@@ -20,6 +21,9 @@ const AddProduct = () => {
   categories: [Category!]!
   skus: [SKU]
     * */
+
+    // Access the vendor object globally from AuthContext:
+    let signedInVendor = useContext(AuthContext)?.vendor;
 
     const [addProduct, {productData}] = useMutation(ADD_PRODUCT);
     const [product, setProduct] = useState({
@@ -40,7 +44,7 @@ const AddProduct = () => {
         publishedStatus: true
     });
 
-    // OPPRETTER VENDOR I DB:
+    // OPPRETTER PRODUCT I DB:
 
     const onSubmit = () => {
         console.log(product);
@@ -50,12 +54,14 @@ const AddProduct = () => {
                 description: product.saleText,
                 flavorProfile: product.tasteProfile,
                 info: product.info,
-                id: "ck6i1ll4m007h0726n3cujwit",
+                id: signedInVendor.id,
                 published: product.publishedStatus,
-                countryName: "Finland"
+                region: product.region,
+                countryName: product.country
             }
         });
         console.log(productData);
+        alert("Lagret!")
         //setRedirect(true)
 
     };

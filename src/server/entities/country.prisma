@@ -4,7 +4,7 @@ interface Node {
 
 type Country implements Node {
   id: ID! @id
-  name: String! @unique
+  name: String!
   region: Region @relation(link: INLINE)
   products: [Product!]
 }

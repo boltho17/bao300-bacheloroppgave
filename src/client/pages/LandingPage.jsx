@@ -2,6 +2,8 @@ import React from 'react';
 
 import RecommendedProducts from '../components/RecommendedProducts'
 
+import Cart from '../components/Cart'
+
 class LandingPage extends React.Component {
 
     render() {
@@ -21,6 +23,7 @@ class LandingPage extends React.Component {
                         </div>
                     </div>
                 </div>
+                    <Cart />
 
                 <section className="features">
                 
@@ -49,7 +52,7 @@ class LandingPage extends React.Component {
                 <RecommendedProducts />
                 
                 <section className="artikkel-container">
-                    <div className="container">
+                    <div className="containertb">
                         <div className="row">
                             <div className="artikkel-tittle col-lg-6">
                                 <h2>En eller annen artikkel?</h2>

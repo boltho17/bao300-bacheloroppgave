@@ -2,7 +2,12 @@ import React from 'react';
 import FormInput from "./FormInput";
 import {Col, Row} from "react-bootstrap";
 import FormSelect from "./FormSelect";
-import {CONSTANT_BEAN_TYPES, CONSTANT_COUNTRIES, CONSTANT_REGIONS, CONSTANT_ROAST_DEGREES} from "../../constants/constantsFile";
+import {
+    CONSTANT_BEAN_TYPES,
+    CONSTANT_COUNTRIES_AFRICA, CONSTANT_COUNTRIES_AMERICA, CONSTANT_COUNTRIES_ASIA,
+    CONSTANT_REGIONS,
+    CONSTANT_ROAST_DEGREES
+} from "../../constants/constantsFile";
 
 const AddProductForm = props => {
 
@@ -34,7 +39,7 @@ const AddProductForm = props => {
     return (
         <div className="container">
             <form className="mt-3">
-                <div>
+                <div className="test1">
                     <Col sm={6}>
                         <FormInput label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
                         <label>Salgstekst</label>
@@ -53,7 +58,18 @@ const AddProductForm = props => {
                                 <FormSelect navn="Region" name="region" value={props.product.region} selectionList={CONSTANT_REGIONS} handleChange={handleChange}/>
                             </Col>
                             <Col sm={6}>
-                                <FormSelect navn="Land" name="country" value={props.product.country} selectionList={CONSTANT_COUNTRIES} handleChange={handleChange}/>
+                                {props.product.region === "Afrika" &&
+                                <FormSelect navn="Land" name="country" value={props.product.country}
+                                            selectionList={CONSTANT_COUNTRIES_AFRICA} handleChange={handleChange}/>
+                                }
+                                {props.product.region === "Asia" &&
+                                <FormSelect navn="Land" name="country" value={props.product.country}
+                                            selectionList={CONSTANT_COUNTRIES_ASIA} handleChange={handleChange}/>
+                                }
+                                {props.product.region === "Sør-Amerika" &&
+                                <FormSelect navn="Land" name="country" value={props.product.country}
+                                            selectionList={CONSTANT_COUNTRIES_AMERICA} handleChange={handleChange}/>
+                                }
                             </Col>
                         </Row>
                         <Row>

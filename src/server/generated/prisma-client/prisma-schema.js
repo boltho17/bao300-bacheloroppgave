@@ -39,6 +39,10 @@ type AggregateOrderLine {
   count: Int!
 }
 
+type AggregateOrigin {
+  count: Int!
+}
+
 type AggregateProduct {
   count: Int!
 }
@@ -728,7 +732,6 @@ input CountryWhereInput {
 
 input CountryWhereUniqueInput {
   id: ID
-  name: String
 }
 
 type Customer {
@@ -1192,6 +1195,12 @@ type Mutation {
   upsertOrderLine(where: OrderLineWhereUniqueInput!, create: OrderLineCreateInput!, update: OrderLineUpdateInput!): OrderLine!
   deleteOrderLine(where: OrderLineWhereUniqueInput!): OrderLine
   deleteManyOrderLines(where: OrderLineWhereInput): BatchPayload!
+  createOrigin(data: OriginCreateInput!): Origin!
+  updateOrigin(data: OriginUpdateInput!, where: OriginWhereUniqueInput!): Origin
+  updateManyOrigins(data: OriginUpdateManyMutationInput!, where: OriginWhereInput): BatchPayload!
+  upsertOrigin(where: OriginWhereUniqueInput!, create: OriginCreateInput!, update: OriginUpdateInput!): Origin!
+  deleteOrigin(where: OriginWhereUniqueInput!): Origin
+  deleteManyOrigins(where: OriginWhereInput): BatchPayload!
   createProduct(data: ProductCreateInput!): Product!
   updateProduct(data: ProductUpdateInput!, where: ProductWhereUniqueInput!): Product
   updateManyProducts(data: ProductUpdateManyMutationInput!, where: ProductWhereInput): BatchPayload!
@@ -1731,6 +1740,110 @@ input OrderWhereInput {
 
 input OrderWhereUniqueInput {
   id: ID
+}
+
+type Origin {
+  id: ID!
+  name: String!
+  regions(where: RegionWhereInput, orderBy: RegionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Region!]
+}
+
+type OriginConnection {
+  pageInfo: PageInfo!
+  edges: [OriginEdge]!
+  aggregate: AggregateOrigin!
+}
+
+input OriginCreateInput {
+  id: ID
+  name: String!
+  regions: RegionCreateManyInput
+}
+
+type OriginEdge {
+  node: Origin!
+  cursor: String!
+}
+
+enum OriginOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type OriginPreviousValues {
+  id: ID!
+  name: String!
+}
+
+type OriginSubscriptionPayload {
+  mutation: MutationType!
+  node: Origin
+  updatedFields: [String!]
+  previousValues: OriginPreviousValues
+}
+
+input OriginSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: OriginWhereInput
+  AND: [OriginSubscriptionWhereInput!]
+  OR: [OriginSubscriptionWhereInput!]
+  NOT: [OriginSubscriptionWhereInput!]
+}
+
+input OriginUpdateInput {
+  name: String
+  regions: RegionUpdateManyInput
+}
+
+input OriginUpdateManyMutationInput {
+  name: String
+}
+
+input OriginWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  regions_every: RegionWhereInput
+  regions_some: RegionWhereInput
+  regions_none: RegionWhereInput
+  AND: [OriginWhereInput!]
+  OR: [OriginWhereInput!]
+  NOT: [OriginWhereInput!]
+}
+
+input OriginWhereUniqueInput {
+  id: ID
+  name: String
 }
 
 type PageInfo {
@@ -2499,6 +2612,9 @@ type Query {
   orderLine(where: OrderLineWhereUniqueInput!): OrderLine
   orderLines(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [OrderLine]!
   orderLinesConnection(where: OrderLineWhereInput, orderBy: OrderLineOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OrderLineConnection!
+  origin(where: OriginWhereUniqueInput!): Origin
+  origins(where: OriginWhereInput, orderBy: OriginOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Origin]!
+  originsConnection(where: OriginWhereInput, orderBy: OriginOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): OriginConnection!
   product(where: ProductWhereUniqueInput!): Product
   products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product]!
   productsConnection(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ProductConnection!
@@ -2544,6 +2660,11 @@ input RegionCreateInput {
   countries: CountryCreateManyWithoutRegionInput
 }
 
+input RegionCreateManyInput {
+  create: [RegionCreateInput!]
+  connect: [RegionWhereUniqueInput!]
+}
+
 input RegionCreateOneWithoutCountriesInput {
   create: RegionCreateWithoutCountriesInput
   connect: RegionWhereUniqueInput
@@ -2571,6 +2692,40 @@ type RegionPreviousValues {
   name: String!
 }
 
+input RegionScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  AND: [RegionScalarWhereInput!]
+  OR: [RegionScalarWhereInput!]
+  NOT: [RegionScalarWhereInput!]
+}
+
 type RegionSubscriptionPayload {
   mutation: MutationType!
   node: Region
@@ -2589,13 +2744,39 @@ input RegionSubscriptionWhereInput {
   NOT: [RegionSubscriptionWhereInput!]
 }
 
+input RegionUpdateDataInput {
+  name: String
+  countries: CountryUpdateManyWithoutRegionInput
+}
+
 input RegionUpdateInput {
   name: String
   countries: CountryUpdateManyWithoutRegionInput
 }
 
+input RegionUpdateManyDataInput {
+  name: String
+}
+
+input RegionUpdateManyInput {
+  create: [RegionCreateInput!]
+  update: [RegionUpdateWithWhereUniqueNestedInput!]
+  upsert: [RegionUpsertWithWhereUniqueNestedInput!]
+  delete: [RegionWhereUniqueInput!]
+  connect: [RegionWhereUniqueInput!]
+  set: [RegionWhereUniqueInput!]
+  disconnect: [RegionWhereUniqueInput!]
+  deleteMany: [RegionScalarWhereInput!]
+  updateMany: [RegionUpdateManyWithWhereNestedInput!]
+}
+
 input RegionUpdateManyMutationInput {
   name: String
+}
+
+input RegionUpdateManyWithWhereNestedInput {
+  where: RegionScalarWhereInput!
+  data: RegionUpdateManyDataInput!
 }
 
 input RegionUpdateOneWithoutCountriesInput {
@@ -2611,9 +2792,20 @@ input RegionUpdateWithoutCountriesDataInput {
   name: String
 }
 
+input RegionUpdateWithWhereUniqueNestedInput {
+  where: RegionWhereUniqueInput!
+  data: RegionUpdateDataInput!
+}
+
 input RegionUpsertWithoutCountriesInput {
   update: RegionUpdateWithoutCountriesDataInput!
   create: RegionCreateWithoutCountriesInput!
+}
+
+input RegionUpsertWithWhereUniqueNestedInput {
+  where: RegionWhereUniqueInput!
+  update: RegionUpdateDataInput!
+  create: RegionCreateInput!
 }
 
 input RegionWhereInput {
@@ -3152,6 +3344,7 @@ type Subscription {
   grindOption(where: GrindOptionSubscriptionWhereInput): GrindOptionSubscriptionPayload
   order(where: OrderSubscriptionWhereInput): OrderSubscriptionPayload
   orderLine(where: OrderLineSubscriptionWhereInput): OrderLineSubscriptionPayload
+  origin(where: OriginSubscriptionWhereInput): OriginSubscriptionPayload
   product(where: ProductSubscriptionWhereInput): ProductSubscriptionPayload
   productImage(where: ProductImageSubscriptionWhereInput): ProductImageSubscriptionPayload
   region(where: RegionSubscriptionWhereInput): RegionSubscriptionPayload
@@ -3346,7 +3539,7 @@ input UserWhereUniqueInput {
 
 type Vendor {
   id: ID!
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3366,7 +3559,7 @@ type VendorConnection {
 
 input VendorCreateInput {
   id: ID
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3395,7 +3588,7 @@ input VendorCreateOneWithoutUserInput {
 
 input VendorCreateWithoutProductsInput {
   id: ID
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3408,7 +3601,7 @@ input VendorCreateWithoutProductsInput {
 
 input VendorCreateWithoutUserInput {
   id: ID
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
@@ -3447,7 +3640,7 @@ enum VendorOrderByInput {
 
 type VendorPreviousValues {
   id: ID!
-  stripeId: String!
+  stripeId: String
   organizationNumber: Int!
   displayName: String!
   address: String!
