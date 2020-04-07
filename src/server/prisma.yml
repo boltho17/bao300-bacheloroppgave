@@ -9,6 +9,7 @@ datamodel:
   - entities/grindOption.prisma
   - entities/order.prisma
   - entities/orderLine.prisma
+  - entities/origin.prisma
   - entities/product.prisma
   - entities/productImage.prisma
   - entities/region.prisma

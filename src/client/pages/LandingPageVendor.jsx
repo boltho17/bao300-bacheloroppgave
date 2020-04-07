@@ -34,7 +34,7 @@ const LandingPageVendor = props => {
             </div>
           </div>
 
-          <div className="featureSection featuresTEMP section row ">
+          <div className="featureSection featuresTEMP section row">
             FEATURE section
 
          <div className="featureTEMP col">
