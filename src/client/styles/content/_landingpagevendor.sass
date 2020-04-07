@@ -1,4 +1,91 @@
 .landingpagevendor
   //background: blue
   p
-    color: red
+
+  .header
+    width: 100%
+    height: 40vh
+    background-position: center center
+    background: url('/landing-vendor-header.jpg')
+    background-size: cover
+    background-repeat: no-repeat
+    background-attachment: fixed
+    color: white
+    .headerContent
+      padding: 60px 1rem
+      text-align: center
+      .title
+        color: white
+        &.headerTitle > *
+          font-size: 8rem
+        &.subTitle > *
+          font-size: 4rem
+      .bodyText
+        font-size: 2rem
+
+  .shadow
+    box-shadow:
+    0 14px 28px rgba(0,0,0,0.25), 
+    0 10px 10px rgba(0,0,0,0.22) 
+    border-radius: 5px
+
+  .featureTEMP
+    margin: 1em
+    text-align: center
+    padding: 1rem
+    .symbol
+      font-size: 2rem
+
+// TEMP - PLACEHOLDERS
+*
+  position: relative
+  &::before
+    color: grey
+    opacity: .5
+    position: absolute
+    top: -16px
+
+.header
+  &::before
+    content: 'HEADER'
+
+.title
+  &::before
+    content: 'TITLE'
+
+.button
+  &::before
+    content: 'BUTTON'
+
+.main
+  &::before
+    content: 'MAIN'
+
+.contentSection
+  &::before
+    content: 'CONTENT SECTION'
+
+.section
+  &::before
+    content: 'SECTION'
+
+.bodyText
+  &::before
+    content: 'BODYTEXT'
+
+.featureSection
+  &::before
+    content: 'FEATURE SECTION'
+
+.featureTEMP
+  &::before
+    content: 'FEATURE'
+
+.spacer
+  height: 100vh
+  background-image: radial-gradient(#21212171 20%, transparent 20%),radial-gradient(#b9b9b986 20%, transparent 20%)
+  background-color: #dbdbdb
+  background-position: 0 0, 50px 50px
+  background-size: 100px 100px
+  border: 1px solid grey
+  opacity: .5

@@ -8,62 +8,109 @@ const LandingPageVendor = props => {
     <div className="landingpagevendor">
 
       <div className="header">
-        HEADER
-         <div className="headerContent">
-          <div classname="headerTitle title">TITLE/SLOGAN</div>
-          <div className="headerSubtitle subTitle title"><p>SUBTITLE</p></div>
-          <div className="headerBodyText bodyText"><p>BODY TEXT</p></div>
-          <div className="headerButton button">BUTTON</div>
+        <div className="headerContent">
+          <div className="headerTitle title">
+            <h1>Title / Slogan</h1>
+          </div>
+          <div className="headerSubtitle subTitle title">
+            <h2>Undertittel</h2>
+          </div>
+          <div className="headerBodyText bodyText">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+          </div>
+          <div className="headerButton button">
+            <button type="button" className="btn btn-primary">
+              Klikk her
+            </button>
+
+          </div>
         </div>
 
       </div>
 
       <div className="main mainContent">
-        MAIN         
+
 
         <div className="contentSection content section container">
-          content-section
 
           <div className="">
-            CONTENT
-             <div className="title">
-              TITLE
-             </div>
+
+            <div className="title">
+              <h2>Quisque eu interdum</h2>
+
+            </div>
             <div className="bodyText">
-              TEXT
+              <p>Duis nec nulla in nulla convallis auctor eget ac tortor.
+              Cras vel libero tempus, pharetra mi et, egestas nulla.
+              Vestibulum elementum nisl nulla, eget mattis eros hendrerit
+              nec.</p>
             </div>
           </div>
 
           <div className="featureSection featuresTEMP section row">
-            FEATURE section
 
-         <div className="featureTEMP col">
-              FEATURE
-             <div>TITLE</div>
-              <div>DESC.</div>
-              <div>BUTTON</div>
+            <div className="featureTEMP shadow col">
+
+              <div className="featureSymbol symbol">
+                &#x2605;
+              </div>
+
+              <div>
+                <h3 className="featureTitle title">Feature title</h3>
+              </div>
+              <div>
+                <p className="bodyText featureText">Curabitur hendrerit mi
+                nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
+                eget lacinia mi. </p>
+              </div>
+              <div className="featureButton button">
+                <button type="button" className="btn btn-primary">
+                  Klikk her
+            </button>
+              </div>
             </div>
 
-            <div className="featureTEMP col">
-              FEATURE
-             <div>TITLE</div>
-              <div>DESC.</div>
-              <div>BUTTON</div>
+            <div className="featureTEMP shadow col">
+
+              <div className="featureSymbol symbol">
+                &#x2605;
+              </div>
+
+              <h3 className="featureTitle title">Feature title</h3>
+              <div>
+                <p className="bodyText featureText">Curabitur hendrerit mi
+                nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
+                eget lacinia mi. </p>
+              </div>
+              <div className="featureButton button">
+                <button type="button" className="btn btn-primary">
+                  Klikk her
+            </button>
+              </div>
             </div>
 
-            <div className="featureTEMP col">
-              FEATURE
-             <div>TITLE</div>
-              <div>DESC.</div>
-              <div>BUTTON</div>
-            </div>
+            <div className="featureTEMP shadow col">
 
+              <div className="featureSymbol symbol">
+                &#x2605;
+              </div>
+
+              <h3 className="featureTitle title">Feature title</h3>
+              <div className="featureText">
+                <p className="bodyText featureText">Curabitur hendrerit mi
+                nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
+                eget lacinia mi. </p>
+              </div>
+              <div className="featureButton button">
+                <button type="button" className="btn btn-primary">
+                  Klikk her
+            </button>
+              </div>
+            </div>
 
           </div>
 
-
-
-
+          <div className="spacer">SPACER</div>
         </div>
 
 
