@@ -9,10 +9,15 @@ export const GET_PRODUCTS = gql`
             }
             title
             flavorProfile
-            description
-            info
+            descriptionShort
+            descriptionLong
             productImages {
                 image
+            }
+            skus {
+                weight
+                price
+                grinded
             }
             country {
                 name

@@ -6,6 +6,6 @@ type SKU implements Node {
   id: ID! @id @unique
   product: Product! @relation(link: INLINE)
   grinded: Boolean! @default(value: false)
-  weight: Int!
-  price: Float!
+  weight: String!
+  price: String!
 }
