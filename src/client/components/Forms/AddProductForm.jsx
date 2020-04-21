@@ -37,11 +37,16 @@ const AddProductForm = props => {
     };
 
     return (
-        <div className="container">
-            <form className="mt-3">
+        <div className="container newProd">
+            <form className="prod-form">
                 <div className="test1">
-                    <Col sm={6}>
-                        <FormInput label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
+                    <Row>
+                        <Col sm={12}>
+                        <FormInput className="prod-input" id="ProdName" label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={handleChange}  />
+                        </Col>
+                    </Row>
+                       <Row>
+                       <Col sm={12}>
                         <label>Salgstekst</label>
                         <br/>
                         <textarea
@@ -53,6 +58,8 @@ const AddProductForm = props => {
                             placeholder="Fantastisk kaffe med smak av himmel og et hint av grønne blader.."
                             onChange={handleChange}
                         />
+                        </Col>
+                        </Row>
                         <Row>
                             <Col sm={6}>
                                 <FormSelect navn="Region" name="region" value={props.product.region} selectionList={CONSTANT_REGIONS} handleChange={handleChange}/>
@@ -80,9 +87,17 @@ const AddProductForm = props => {
                                 <FormSelect navn="Brennegrad" name="roastDegree" value={props.product.roastDegree} selectionList={CONSTANT_ROAST_DEGREES} handleChange={handleChange}/>
                             </Col>
                         </Row>
-                        <FormInput label="Smaksprofil" name="tasteProfile" value={props.product.tasteProfile} placeholder="Nam nam" handleChange={handleChange} />
-                        <FormInput label="Sertifisering" name="certification" value={props.product.certification} placeholder="Fair Trade.." handleChange={handleChange} />
-                    </Col>
+                        <Row>
+                        <Col md={12}>
+                        <FormInput className="prod-input" label="Smaksprofil" name="tasteProfile" value={props.product.tasteProfile} placeholder="Nam nam" handleChange={handleChange} />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={12}>
+                        <FormInput className="prod-input" label="Sertifisering" name="certification" value={props.product.certification} placeholder="Fair Trade.." handleChange={handleChange} />
+                        </Col>
+                    </Row>
+                        
                 </div>
 
             </form>

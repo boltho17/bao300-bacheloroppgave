@@ -7,7 +7,7 @@ const FormInput = props => {
         <div className={props.className}>
             <label htmlFor={props.label}>{props.label}</label>
             <Row>
-                <input style={{width: '300px'}}
+                <input
                     className="form-input"
                     id={props.name}
                     name={props.name}
