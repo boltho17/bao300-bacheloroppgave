@@ -12,8 +12,6 @@ import TextAreaInput from "./TextAreaInput";
 
 const AddProductForm = props => {
 
-
-
     return (
         <div className="container">
             <form className="mt-3">

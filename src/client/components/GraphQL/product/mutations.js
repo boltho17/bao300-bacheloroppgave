@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 
 export const ADD_PRODUCT = gql`
-    mutation CreateProduct ($title: String, $flavorProfile: String, $descriptionShort: String, $descriptionLong: String, $id: ID, $countryName: String!, $skus: [SKUCreateWithoutProductInput!]!) {
+    mutation CreateProduct ($title: String, $flavorProfile: String, $descriptionShort: String, $descriptionLong: String, $brewText: String, $id: ID, $countryName: String!, $skus: [SKUCreateWithoutProductInput!]) {
         createProduct(data: {
             title: $title,
             flavorProfile: $flavorProfile,
             descriptionShort: $descriptionShort,
             descriptionLong: $descriptionLong,
+            brewText: $brewText,
             published: true,
             vendor: {
                 connect: {

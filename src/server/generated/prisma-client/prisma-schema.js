@@ -938,8 +938,16 @@ scalar DateTime
 
 type Grind {
   id: ID!
-  grindOption: String!
-  grindOptions: Grind!
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
 }
 
 type GrindConnection {
@@ -950,8 +958,16 @@ type GrindConnection {
 
 input GrindCreateInput {
   id: ID
-  grindOption: String!
-  grindOptions: GrindCreateOneInput!
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
 }
 
 input GrindCreateOneInput {
@@ -1048,13 +1064,40 @@ input GrindOptionWhereUniqueInput {
 enum GrindOrderByInput {
   id_ASC
   id_DESC
-  grindOption_ASC
-  grindOption_DESC
+  Ja_ASC
+  Ja_DESC
+  Nei_ASC
+  Nei_DESC
+  Espressomaskin_ASC
+  Espressomaskin_DESC
+  Espressokanne_ASC
+  Espressokanne_DESC
+  Aeropress_ASC
+  Aeropress_DESC
+  DryppV60_ASC
+  DryppV60_DESC
+  Filtermalt_ASC
+  Filtermalt_DESC
+  Presskanne_ASC
+  Presskanne_DESC
+  Chemex_ASC
+  Chemex_DESC
+  Kokmalt_ASC
+  Kokmalt_DESC
 }
 
 type GrindPreviousValues {
   id: ID!
-  grindOption: String!
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
 }
 
 type GrindSubscriptionPayload {
@@ -1076,17 +1119,51 @@ input GrindSubscriptionWhereInput {
 }
 
 input GrindUpdateDataInput {
-  grindOption: String
-  grindOptions: GrindUpdateOneRequiredInput
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
 }
 
 input GrindUpdateInput {
-  grindOption: String
-  grindOptions: GrindUpdateOneRequiredInput
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
 }
 
 input GrindUpdateManyMutationInput {
-  grindOption: String
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
+}
+
+input GrindUpdateOneInput {
+  create: GrindCreateInput
+  update: GrindUpdateDataInput
+  upsert: GrindUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: GrindWhereUniqueInput
 }
 
 input GrindUpdateOneRequiredInput {
@@ -1116,21 +1193,26 @@ input GrindWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  grindOption: String
-  grindOption_not: String
-  grindOption_in: [String!]
-  grindOption_not_in: [String!]
-  grindOption_lt: String
-  grindOption_lte: String
-  grindOption_gt: String
-  grindOption_gte: String
-  grindOption_contains: String
-  grindOption_not_contains: String
-  grindOption_starts_with: String
-  grindOption_not_starts_with: String
-  grindOption_ends_with: String
-  grindOption_not_ends_with: String
-  grindOptions: GrindWhereInput
+  Ja: Boolean
+  Ja_not: Boolean
+  Nei: Boolean
+  Nei_not: Boolean
+  Espressomaskin: Boolean
+  Espressomaskin_not: Boolean
+  Espressokanne: Boolean
+  Espressokanne_not: Boolean
+  Aeropress: Boolean
+  Aeropress_not: Boolean
+  DryppV60: Boolean
+  DryppV60_not: Boolean
+  Filtermalt: Boolean
+  Filtermalt_not: Boolean
+  Presskanne: Boolean
+  Presskanne_not: Boolean
+  Chemex: Boolean
+  Chemex_not: Boolean
+  Kokmalt: Boolean
+  Kokmalt_not: Boolean
   AND: [GrindWhereInput!]
   OR: [GrindWhereInput!]
   NOT: [GrindWhereInput!]
@@ -1860,6 +1942,7 @@ type Product {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean!
   vendor: Vendor
   country: Country
@@ -1880,6 +1963,7 @@ input ProductCreateInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
@@ -1924,6 +2008,7 @@ input ProductCreateWithoutCategoriesInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
@@ -1937,6 +2022,7 @@ input ProductCreateWithoutCountryInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
@@ -1950,6 +2036,7 @@ input ProductCreateWithoutProductImagesInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
@@ -1963,6 +2050,7 @@ input ProductCreateWithoutSkusInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
@@ -1976,6 +2064,7 @@ input ProductCreateWithoutVendorInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   country: CountryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
@@ -2180,6 +2269,8 @@ enum ProductOrderByInput {
   descriptionShort_DESC
   descriptionLong_ASC
   descriptionLong_DESC
+  brewText_ASC
+  brewText_DESC
   published_ASC
   published_DESC
 }
@@ -2190,6 +2281,7 @@ type ProductPreviousValues {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean!
 }
 
@@ -2264,6 +2356,20 @@ input ProductScalarWhereInput {
   descriptionLong_not_starts_with: String
   descriptionLong_ends_with: String
   descriptionLong_not_ends_with: String
+  brewText: String
+  brewText_not: String
+  brewText_in: [String!]
+  brewText_not_in: [String!]
+  brewText_lt: String
+  brewText_lte: String
+  brewText_gt: String
+  brewText_gte: String
+  brewText_contains: String
+  brewText_not_contains: String
+  brewText_starts_with: String
+  brewText_not_starts_with: String
+  brewText_ends_with: String
+  brewText_not_ends_with: String
   published: Boolean
   published_not: Boolean
   AND: [ProductScalarWhereInput!]
@@ -2294,6 +2400,7 @@ input ProductUpdateDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
@@ -2307,6 +2414,7 @@ input ProductUpdateInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
@@ -2320,6 +2428,7 @@ input ProductUpdateManyDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
 }
 
@@ -2328,6 +2437,7 @@ input ProductUpdateManyMutationInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
 }
 
@@ -2395,6 +2505,7 @@ input ProductUpdateWithoutCategoriesDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
@@ -2407,6 +2518,7 @@ input ProductUpdateWithoutCountryDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
@@ -2419,6 +2531,7 @@ input ProductUpdateWithoutProductImagesDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
@@ -2431,6 +2544,7 @@ input ProductUpdateWithoutSkusDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
@@ -2443,6 +2557,7 @@ input ProductUpdateWithoutVendorDataInput {
   flavorProfile: String
   descriptionShort: String
   descriptionLong: String
+  brewText: String
   published: Boolean
   country: CountryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
@@ -2563,6 +2678,20 @@ input ProductWhereInput {
   descriptionLong_not_starts_with: String
   descriptionLong_ends_with: String
   descriptionLong_not_ends_with: String
+  brewText: String
+  brewText_not: String
+  brewText_in: [String!]
+  brewText_not_in: [String!]
+  brewText_lt: String
+  brewText_lte: String
+  brewText_gt: String
+  brewText_gte: String
+  brewText_contains: String
+  brewText_not_contains: String
+  brewText_starts_with: String
+  brewText_not_starts_with: String
+  brewText_ends_with: String
+  brewText_not_ends_with: String
   published: Boolean
   published_not: Boolean
   vendor: VendorWhereInput
@@ -3004,7 +3133,7 @@ input ReviewWhereUniqueInput {
 type SKU {
   id: ID!
   product: Product!
-  grinded: Boolean!
+  grindOptions: Grind
   weight: String!
   price: String!
 }
@@ -3018,7 +3147,7 @@ type SKUConnection {
 input SKUCreateInput {
   id: ID
   product: ProductCreateOneWithoutSkusInput!
-  grinded: Boolean
+  grindOptions: GrindCreateOneInput
   weight: String!
   price: String!
 }
@@ -3035,7 +3164,7 @@ input SKUCreateOneInput {
 
 input SKUCreateWithoutProductInput {
   id: ID
-  grinded: Boolean
+  grindOptions: GrindCreateInput
   weight: String!
   price: String!
 }
@@ -3048,8 +3177,6 @@ type SKUEdge {
 enum SKUOrderByInput {
   id_ASC
   id_DESC
-  grinded_ASC
-  grinded_DESC
   weight_ASC
   weight_DESC
   price_ASC
@@ -3058,7 +3185,6 @@ enum SKUOrderByInput {
 
 type SKUPreviousValues {
   id: ID!
-  grinded: Boolean!
   weight: String!
   price: String!
 }
@@ -3078,8 +3204,6 @@ input SKUScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  grinded: Boolean
-  grinded_not: Boolean
   weight: String
   weight_not: String
   weight_in: [String!]
@@ -3133,26 +3257,24 @@ input SKUSubscriptionWhereInput {
 
 input SKUUpdateDataInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
-  grinded: Boolean
+  grindOptions: GrindUpdateOneInput
   weight: String
   price: String
 }
 
 input SKUUpdateInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
-  grinded: Boolean
+  grindOptions: GrindUpdateOneInput
   weight: String
   price: String
 }
 
 input SKUUpdateManyDataInput {
-  grinded: Boolean
   weight: String
   price: String
 }
 
 input SKUUpdateManyMutationInput {
-  grinded: Boolean
   weight: String
   price: String
 }
@@ -3182,7 +3304,7 @@ input SKUUpdateOneRequiredInput {
 }
 
 input SKUUpdateWithoutProductDataInput {
-  grinded: Boolean
+  grindOptions: GrindUpdateOneInput
   weight: String
   price: String
 }
@@ -3219,8 +3341,7 @@ input SKUWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   product: ProductWhereInput
-  grinded: Boolean
-  grinded_not: Boolean
+  grindOptions: GrindWhereInput
   weight: String
   weight_not: String
   weight_in: [String!]
@@ -3930,4 +4051,3 @@ input VendorWhereUniqueInput {
 }
 `
       }
-    

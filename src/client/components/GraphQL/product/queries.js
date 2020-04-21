@@ -17,7 +17,9 @@ export const GET_PRODUCTS = gql`
             skus {
                 weight
                 price
-                grinded
+                grindOptions {
+                    id
+                }
             }
             country {
                 name

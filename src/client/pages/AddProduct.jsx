@@ -27,6 +27,7 @@ const AddProduct = () => {
         roastDegree: "",
         tasteProfile: "",
         certification: "",
+        brewText: "",
         priceOptions: [
             {grams0: null, price0: null},
             {grams1: null, price1: null},
@@ -34,7 +35,8 @@ const AddProduct = () => {
         ],
         grinded: true,
         publishedStatus: true,
-        pictures: []
+        pictures: [],
+        checkedItems: {},
     };
 
     const [product, setProduct] = useState(initialState);
@@ -67,22 +69,37 @@ const AddProduct = () => {
         });
     };
 
+    const handleCheckBoxChange = event => {
+        const item = event.target.name;
+        const isChecked = event.target.checked;
+
+        setProduct(prevValue => {
+            return {
+                ...prevValue, // Beholder previous values i hele state objektet
+                checkedItems: {
+                    ...prevValue.checkedItems,
+                    [item]: isChecked
+                }
+            };
+        });
+    }
+
     const getSkus = () => {
         if(product.priceOptions[2].grams2 && product.priceOptions[2].price2) {
             return [
-                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grinded: product.grinded},
-                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price1, grinded: product.grinded},
-                {weight: product.priceOptions[2].grams2, price: product.priceOptions[2].price2, grinded: product.grinded}
+                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grindOptions: product.checkedItems},
+                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price1, grindOptions: product.checkedItems},
+                {weight: product.priceOptions[2].grams2, price: product.priceOptions[2].price2, grindOptions: product.checkedItems}
             ]
         }
         else if(product.priceOptions[1].grams1 && product.priceOptions[1].price1) {
             return [
-                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grinded: product.grinded},
-                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price0, grinded: product.grinded}
+                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grindOptions: product.checkedItems},
+                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price0, grindOptions: product.checkedItems}
             ]
         } else {
             return [
-                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grinded: product.grinded}
+                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grindOptions: product.checkedItems}
             ]
         }
     };
@@ -136,18 +153,23 @@ const AddProduct = () => {
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>
                 </Col>
                 <Col sm={3}>
-                    <CheckBoxes title={'Hele Bønner'} labels={['Ja', 'Nei']} inLine={true}/>
+                    <CheckBoxes title={'Hele Bønner'} labels={['Ja', 'Nei']} inLine={true} handleChange={handleCheckBoxChange}/>
                 </Col>
                 <Col sm={3}>
-                    <CheckBoxes title={'Kverningsgrader'} labels={['Espressomaskin', 'Espressokanne', 'Aeropress', 'Drypp/V60', 'Filtermalt', 'Presskanne', 'Chemex', 'Kokmalt']} inLine={false}/>
+                    <CheckBoxes title={'Kverningsgrader'} labels={['Espressomaskin', 'Espressokanne', 'Aeropress', 'DryppV60', 'Filtermalt', 'Presskanne', 'Chemex', 'Kokmalt']} inLine={false} handleChange={handleCheckBoxChange}/>
                 </Col>
             </Row>
             <Row>
-                <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions} error={error} setError={setError}/>
-                <TextAreaInput label={'Beskrivelse'} handleChange={handleChange} product={product} value={product.descriptionLong} config={{name: 'descriptionLong', rows: '5', cols: '70', maxLength: '70', placeholder: 'Beskrivelse her..'}}/>
+                <Col sm={6}>
+                    <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions} error={error} setError={setError}/>
+                </Col>
+                <Col sm={6}>
+                    <TextAreaInput label={'Bryggeritips'} handleChange={handleChange} product={product} value={product.brewText} config={{name: 'brewText', rows: '5', cols: '50', maxLength: '70', placeholder: 'Bryggeritips her..'}}/>
+                </Col>
             </Row>
+            <TextAreaInput label={'Beskrivelse'} handleChange={handleChange} product={product} value={product.descriptionLong} config={{name: 'descriptionLong', rows: '5', cols: '50', maxLength: '70', placeholder: 'Beskrivelse her..'}}/>
             <ImageUpload product={product} setProduct={setProduct} />
-            <button onClick={onSubmit}>Lagre til DB og print</button>
+            <button onClick={onSubmit}>Opprett produkt</button>
         </div>
     );
 };

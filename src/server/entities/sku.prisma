@@ -5,7 +5,7 @@ interface Node {
 type SKU implements Node {
   id: ID! @id @unique
   product: Product! @relation(link: INLINE)
-  grinded: Boolean! @default(value: false)
+  grindOptions: Grind
   weight: String!
   price: String!
 }
