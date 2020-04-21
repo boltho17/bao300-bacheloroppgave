@@ -17,11 +17,11 @@ export const CartProductCard = (props) => {
                                     <div className="col-8">
                                         <div className="card-body">
                         
-                                            <h5 className="card-title">{props.product.productName}</h5>
-                                            <p className="card-text">{props.product.productPrice} NOK,-</p>
+                                            <h5 className="card-title">{props.product?.title}</h5>
+                                            <p className="card-text">{props.product?.flavorProfile} NOK,-</p>
 
                                             <div className="knapp col-6">
-                                                <Button className="btn-danger">X</Button>
+                                                <Button className="btn-danger" onClick={() => {props.onDelete(props.id)}}>X</Button>
                                             </div>
                                             
                                         </div>                                    

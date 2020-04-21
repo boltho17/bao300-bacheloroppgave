@@ -1,14 +1,12 @@
 import React from 'react';
 import ProductList from "../components/ProductList";
 
-class ShopPage extends React.Component {
-    render() {
+const ShopPage = (props) => {
         return (
             <div>
-                <ProductList/>
+                <ProductList cartItems={props.cartItems} setCartItems={props.setCartItems}/>
             </div>
         );
-    }
-}
+};
 
 export default ShopPage

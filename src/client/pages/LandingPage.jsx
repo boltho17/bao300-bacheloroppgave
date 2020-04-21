@@ -2,8 +2,6 @@ import React from 'react';
 
 import RecommendedProducts from '../components/RecommendedProducts'
 
-import Cart from '../components/Cart'
-
 class LandingPage extends React.Component {
 
     render() {
@@ -23,7 +21,6 @@ class LandingPage extends React.Component {
                         </div>
                     </div>
                 </div>
-                    <Cart />
 
                 <section className="features">
                 

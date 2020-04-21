@@ -1,13 +1,16 @@
-import React from 'react';
 import ProductCard from "../components/ProductCard";
 import {useQuery} from '@apollo/react-hooks';
+import React from 'react';
 import {GET_PRODUCTS} from "../components/GraphQL/product/queries";
 import {Col, Row} from "react-bootstrap";
 import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
 
 
-const ProductList = () => {
+const ProductList = (props) => {
+
+    //const [selected, setSelected] = useState([]);
+
     let productList;
     let totalProducts = 0;
 
@@ -17,10 +20,22 @@ const ProductList = () => {
     if (error) return `Error! ${error.message}`;
     //console.log(data);
 
+    const onSelect = selectedProduct => {
+        console.log(selectedProduct); // Printer ut det produkt objektet man trykker på!
+
+        //setSelected([...selected, selectedProduct]);
+        //console.log(selected)
+
+        // Overskriver det som ligger i localStorage, må inkludere prevState
+        localStorage.setItem('cart', JSON.stringify(selectedProduct))
+
+        props.setCartItems([...props.cartItems, selectedProduct])
+    };
+
     if (data) {
         productList = data.products.map(product => {
             totalProducts++;
-            return <ProductCard product={product} key={product.id}/>
+            return <ProductCard product={product} key={product.id} id={product.id} onSelect={onSelect}/>
         });
     }
 

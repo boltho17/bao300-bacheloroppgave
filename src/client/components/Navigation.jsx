@@ -10,6 +10,7 @@ import {FiSearch, TiShoppingCart} from "react-icons/all";
 import firebase from "firebase/app";
 import {AuthContext} from "./Firebase/AuthContext";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Cart from './Cart';
 
 
 const Navigation = () => {
@@ -28,17 +29,6 @@ const Navigation = () => {
         }).catch(function (error) {
             console.log(error)
         });
-    };
-
-    // TOGGLE BETWEEN CUSTOMER AND VENDOR TYPE:
-    const toggleUserType = () => {
-        if (userType === "customer") {
-            userType = "vendor";
-            console.log("Switched to vendor")
-        } else if (userType === "vendor") {
-            userType = "customer";
-            console.log("Switched to customer")
-        }
     };
 
     return (
@@ -82,9 +72,10 @@ const Navigation = () => {
                     <div className="icon-group">
                         <FiSearch/>
 
-                        <button className="btn" onClick={() => toggleUserType()} data-toggle="dropdown" type="button" id="dropdownMenuOffset" >
-                          <TiShoppingCart />
-                        </button>
+                        <Cart>
+                          <TiShoppingCart/>
+                        </Cart>
+
                     </div>
 
                     <div>

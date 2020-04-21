@@ -7,4 +7,6 @@ export const PASSWORD_FORGET = '/pw-forget';
 export const ACCOUNT = '/account';
 export const ADMIN = '/admin';
 export const PRODUCTS = '/products';
+export const PRODUCT = '/product';
 export const ADD_PRODUCT = '/new_product';
+export const PRODUCT_DETAIL_VIEW = '/productdetailview';
