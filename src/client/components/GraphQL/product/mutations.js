@@ -1,12 +1,13 @@
 import gql from 'graphql-tag';
 
 export const ADD_PRODUCT = gql`
-    mutation CreateProduct ($title: String, $flavorProfile: String, $description: String, $info: String, $id: ID, $countryName: String!) {
+    mutation CreateProduct ($title: String, $flavorProfile: String, $descriptionShort: String, $descriptionLong: String, $brewText: String, $id: ID, $countryName: String!, $skus: [SKUCreateWithoutProductInput!]) {
         createProduct(data: {
             title: $title,
             flavorProfile: $flavorProfile,
-            description: $description,
-            info: $info,
+            descriptionShort: $descriptionShort,
+            descriptionLong: $descriptionLong,
+            brewText: $brewText,
             published: true,
             vendor: {
                 connect: {
@@ -17,7 +18,10 @@ export const ADD_PRODUCT = gql`
                 connect: {
                     name: $countryName
                 }
-            }
+            },
+            skus: {
+                create: $skus
+            },
             productImages: {
                 create: [
                     {image: "img_01.jpg"},

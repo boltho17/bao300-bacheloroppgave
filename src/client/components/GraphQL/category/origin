@@ -13,7 +13,6 @@ mutation CreateOrigin {
                   {name: "Rwanda"},
                   {name: "Tanzania"},
                   {name: "Uganda"},
-                  {name: "Yemen"},
         				]
       				}
             },
@@ -26,7 +25,6 @@ mutation CreateOrigin {
                   {name: "Kina"},
                   {name: "Papua Ny-Guinea"},
                   {name: "Vietnam"},
-                  {name: "Uganda"},
                   {name: "Yemen"},
                 ]
               }

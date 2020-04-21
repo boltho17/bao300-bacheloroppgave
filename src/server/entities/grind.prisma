@@ -4,6 +4,14 @@ interface Node {
 
 type Grind implements Node {
   id: ID! @id @unique
-  grindOption: String!
-  grindOptions: Grind!
+  Ja: Boolean
+  Nei: Boolean
+  Espressomaskin: Boolean
+  Espressokanne: Boolean
+  Aeropress: Boolean
+  DryppV60: Boolean
+  Filtermalt: Boolean
+  Presskanne: Boolean
+  Chemex: Boolean
+  Kokmalt: Boolean
 }

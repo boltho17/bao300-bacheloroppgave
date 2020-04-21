@@ -16,6 +16,8 @@ const FormInput = props => {
                     onChange={props.handleChange}
                     placeholder={props.placeholder}
                     disabled={props.disabled}
+                    min={props.min}
+                    max={props.max}
                     maxLength={props.maxLength}
                 />
                 <div>{props.suffix}</div>
