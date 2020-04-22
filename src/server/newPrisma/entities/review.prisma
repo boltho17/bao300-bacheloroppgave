@@ -1,0 +1,13 @@
+interface Node {
+  id: ID!
+}
+
+type Review implements Node {
+  id: ID! @id @unique
+  customer: Customer! @relation(link: INLINE)
+  product: Product! @relation(link: INLINE)
+  rating: Int!
+  title: String
+  content: String
+  publishedStatus: Boolean! @default(value: false)
+}

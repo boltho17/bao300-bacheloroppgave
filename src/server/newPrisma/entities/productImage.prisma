@@ -1,0 +1,9 @@
+interface Node {
+  id: ID!
+}
+
+type ProductImage implements Node {
+  id: ID! @id
+  image: String!
+  product: Product @relation(link: INLINE)
+}
