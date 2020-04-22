@@ -5,6 +5,8 @@ import FormOrgNumber from "../components/Forms/FormOrgNumber";
 import FormCompanyInfo from "../components/Forms/FormCompanyInfo";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_VENDOR} from "../components/GraphQL/vendor/mutations";
+const uniqid = require('uniqid');
+
 
 
 const VendorSignUp = ({history}) => {
@@ -42,7 +44,8 @@ const VendorSignUp = ({history}) => {
                     organizationNumber: Number(vendor.organisasjonsnummer),
                     address: vendor.forretningsadresse.adresse[1] || "Ingen registrert adresse",
                     contactPerson: vendorInfo.contactPerson,
-                    userEmail: vendorInfo.email
+                    userEmail: vendorInfo.email,
+                    stripeId: uniqid(),
                 }
             });
             console.log(vendorData);

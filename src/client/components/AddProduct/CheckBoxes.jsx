@@ -1,19 +1,15 @@
 import React from 'react';
+import { Form } from 'react-bootstrap';
 
-const CheckBoxes = () => {
+const CheckBoxes = ({title, inLine, labels, handleChange}) => {
 
     return(
-        <div className="mt-3">
-            <h6>Hele bønner</h6>
-            <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1"/>
-                    <label className="form-check-label" htmlFor="inlineCheckbox1">Ja</label>
-            </div>
-            <div className="form-check form-check-inline">
-                <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2"/>
-                    <label className="form-check-label" htmlFor="inlineCheckbox2">Nei</label>
-            </div>
-        </div>
+        <Form>
+            <h5>{title}</h5>
+            {labels.map((label, i) => (
+                <Form.Check name={label} type="checkbox" inline={inLine} label={label} key={i} onChange={handleChange} />
+            ))}
+        </Form>
     )
 };
 

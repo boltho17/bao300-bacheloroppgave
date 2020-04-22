@@ -47,7 +47,7 @@ const ProductList = (props) => {
                     <ProductFilter totalProducts={totalProducts}/>
                 </Col>
                 <Col>
-                    <Row>{productList}</Row>
+                    <Row>{productList.reverse()}</Row>
             <div className="text-center">
                 <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
             </div>

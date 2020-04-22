@@ -1,0 +1,53 @@
+mutation CreateOrigin {
+    createOrigin(data: {
+      name: "All Regions",
+      regions: {
+        create: [
+          	{
+            name: "Afrika",
+            	countries: {
+                create: [
+                  {name: "Burundi"},
+                  {name: "Etiopia"},
+                  {name: "Kenya"},
+                  {name: "Rwanda"},
+                  {name: "Tanzania"},
+                  {name: "Uganda"},
+        				]
+      				}
+            },
+          	{
+            name: "Asia",
+              countries: {
+                create: [
+                  {name: "India"},
+                  {name: "Indonesia"},
+                  {name: "Kina"},
+                  {name: "Papua Ny-Guinea"},
+                  {name: "Vietnam"},
+                  {name: "Yemen"},
+                ]
+              }
+            },
+        		{
+            name: "Sør-Amerika",
+              countries: {
+                create: [
+                  {name: "Brasil"},
+                  {name: "Columbia"},
+                  {name: "Costa Rica"},
+                  {name: "El Salvador"},
+                  {name: "Guatemala"},
+                  {name: "Honduras"},
+                  {name: "Mexico"},
+                  {name: "Nicaragua"},
+                  {name: "Panama"},
+                  {name: "Peru"},
+                ]
+              }
+            }
+        ]}}) {
+      id
+    	name
+    }
+  }

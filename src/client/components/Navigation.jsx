@@ -20,7 +20,7 @@ const Navigation = () => {
 
     // Access the user type globally from AuthContext (Customer or Vendor):
     let userType = useContext(AuthContext)?.userType;
-    console.log("Navigation.js: User type = " + userType);
+    // console.log("Navigation.js: User type = " + userType);
 
     // LOG OUT USER:
     const logoutUser = () => {
@@ -76,11 +76,14 @@ const Navigation = () => {
                           <TiShoppingCart/>
                         </Cart>
 
+                        <button className="btn" type="button">
+                            <TiShoppingCart/>
+                        </button>
                     </div>
 
                     <div>
-                        {firebase.auth().currentUser?.email && <NavDropdown title="Settings" id="basic-nav-dropdown">
-                            {userType && <NavDropdown.Item>{'Velkommen ' + userType}</NavDropdown.Item>}
+                        {firebase.auth().currentUser?.email && <NavDropdown title="Velkommen!" id="basic-nav-dropdown">
+                            {userType && <NavDropdown.Item>{userType}</NavDropdown.Item>}
                             <NavDropdown.Divider/>
                             {firebase.auth().currentUser?.email && <NavDropdown.Item onClick={() => logoutUser()}>Logg ut</NavDropdown.Item>}
                         </NavDropdown>}

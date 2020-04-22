@@ -4,15 +4,16 @@ interface Node {
 
 type Product implements Node {
   id: ID! @id
-  title: String!
+  title: String
   flavorProfile: String
-  description: String!
-  info: String
+  descriptionShort: String
+  descriptionLong: String
+  brewText: String
   published: Boolean! @default(value: false)
   vendor: Vendor @relation(link: INLINE)
   country: Country @relation(link:INLINE)
-  productImages: [ProductImage!]!
-  categories: [Category!]!
+  productImages: [ProductImage!]
+  categories: [Category!]
   skus: [SKU]
 
 }

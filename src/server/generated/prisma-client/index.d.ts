@@ -25,6 +25,7 @@ export interface Exists {
   grindOption: (where?: GrindOptionWhereInput) => Promise<boolean>;
   order: (where?: OrderWhereInput) => Promise<boolean>;
   orderLine: (where?: OrderLineWhereInput) => Promise<boolean>;
+  origin: (where?: OriginWhereInput) => Promise<boolean>;
   product: (where?: ProductWhereInput) => Promise<boolean>;
   productImage: (where?: ProductImageWhereInput) => Promise<boolean>;
   region: (where?: RegionWhereInput) => Promise<boolean>;
@@ -231,6 +232,25 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => OrderLineConnectionPromise;
+  origin: (where: OriginWhereUniqueInput) => OriginNullablePromise;
+  origins: (args?: {
+    where?: OriginWhereInput;
+    orderBy?: OriginOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Origin>;
+  originsConnection: (args?: {
+    where?: OriginWhereInput;
+    orderBy?: OriginOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => OriginConnectionPromise;
   product: (where: ProductWhereUniqueInput) => ProductNullablePromise;
   products: (args?: {
     where?: ProductWhereInput;
@@ -539,6 +559,22 @@ export interface Prisma {
   }) => OrderLinePromise;
   deleteOrderLine: (where: OrderLineWhereUniqueInput) => OrderLinePromise;
   deleteManyOrderLines: (where?: OrderLineWhereInput) => BatchPayloadPromise;
+  createOrigin: (data: OriginCreateInput) => OriginPromise;
+  updateOrigin: (args: {
+    data: OriginUpdateInput;
+    where: OriginWhereUniqueInput;
+  }) => OriginPromise;
+  updateManyOrigins: (args: {
+    data: OriginUpdateManyMutationInput;
+    where?: OriginWhereInput;
+  }) => BatchPayloadPromise;
+  upsertOrigin: (args: {
+    where: OriginWhereUniqueInput;
+    create: OriginCreateInput;
+    update: OriginUpdateInput;
+  }) => OriginPromise;
+  deleteOrigin: (where: OriginWhereUniqueInput) => OriginPromise;
+  deleteManyOrigins: (where?: OriginWhereInput) => BatchPayloadPromise;
   createProduct: (data: ProductCreateInput) => ProductPromise;
   updateProduct: (args: {
     data: ProductUpdateInput;
@@ -709,6 +745,9 @@ export interface Subscription {
   orderLine: (
     where?: OrderLineSubscriptionWhereInput
   ) => OrderLineSubscriptionPayloadSubscription;
+  origin: (
+    where?: OriginSubscriptionWhereInput
+  ) => OriginSubscriptionPayloadSubscription;
   product: (
     where?: ProductSubscriptionWhereInput
   ) => ProductSubscriptionPayloadSubscription;
@@ -752,22 +791,44 @@ export type ProductOrderByInput =
   | "title_DESC"
   | "flavorProfile_ASC"
   | "flavorProfile_DESC"
-  | "description_ASC"
-  | "description_DESC"
-  | "info_ASC"
-  | "info_DESC"
+  | "descriptionShort_ASC"
+  | "descriptionShort_DESC"
+  | "descriptionLong_ASC"
+  | "descriptionLong_DESC"
+  | "brewText_ASC"
+  | "brewText_DESC"
   | "published_ASC"
   | "published_DESC";
 
 export type GrindOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "grindOption_ASC"
-  | "grindOption_DESC";
+  | "Ja_ASC"
+  | "Ja_DESC"
+  | "Nei_ASC"
+  | "Nei_DESC"
+  | "Espressomaskin_ASC"
+  | "Espressomaskin_DESC"
+  | "Espressokanne_ASC"
+  | "Espressokanne_DESC"
+  | "Aeropress_ASC"
+  | "Aeropress_DESC"
+  | "DryppV60_ASC"
+  | "DryppV60_DESC"
+  | "Filtermalt_ASC"
+  | "Filtermalt_DESC"
+  | "Presskanne_ASC"
+  | "Presskanne_DESC"
+  | "Chemex_ASC"
+  | "Chemex_DESC"
+  | "Kokmalt_ASC"
+  | "Kokmalt_DESC";
 
 export type VendorOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "stripeId_ASC"
+  | "stripeId_DESC"
   | "organizationNumber_ASC"
   | "organizationNumber_DESC"
   | "displayName_ASC"
@@ -807,7 +868,7 @@ export type ContentTextOrderByInput =
   | "publishedStatus_ASC"
   | "publishedStatus_DESC";
 
-export type RegionOrderByInput =
+export type OriginOrderByInput =
   | "id_ASC"
   | "id_DESC"
   | "name_ASC"
@@ -819,17 +880,17 @@ export type ContentAreaOrderByInput =
   | "name_ASC"
   | "name_DESC";
 
-export type OrderLineOrderByInput =
+export type OrderOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "productName_ASC"
-  | "productName_DESC"
-  | "grindOption_ASC"
-  | "grindOption_DESC"
-  | "quantity_ASC"
-  | "quantity_DESC"
-  | "orderPrice_ASC"
-  | "orderPrice_DESC";
+  | "deliveryStatus_ASC"
+  | "deliveryStatus_DESC"
+  | "orderData_ASC"
+  | "orderData_DESC"
+  | "orderNote_ASC"
+  | "orderNote_DESC"
+  | "deliveryAddress_ASC"
+  | "deliveryAddress_DESC";
 
 export type CountryOrderByInput =
   | "id_ASC"
@@ -852,26 +913,28 @@ export type CategoryOrderByInput =
 export type SKUOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "grinded_ASC"
-  | "grinded_DESC"
   | "weight_ASC"
   | "weight_DESC"
-  | "Price_ASC"
-  | "Price_DESC";
+  | "price_ASC"
+  | "price_DESC";
 
-export type MutationType = "CREATED" | "UPDATED" | "DELETED";
-
-export type OrderOrderByInput =
+export type OrderLineOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "deliveryStatus_ASC"
-  | "deliveryStatus_DESC"
-  | "orderData_ASC"
-  | "orderData_DESC"
-  | "orderNote_ASC"
-  | "orderNote_DESC"
-  | "deliveryAddress_ASC"
-  | "deliveryAddress_DESC";
+  | "productName_ASC"
+  | "productName_DESC"
+  | "grindOption_ASC"
+  | "grindOption_DESC"
+  | "quantity_ASC"
+  | "quantity_DESC"
+  | "orderPrice_ASC"
+  | "orderPrice_DESC";
+
+export type RegionOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "name_ASC"
+  | "name_DESC";
 
 export type ReviewOrderByInput =
   | "id_ASC"
@@ -893,17 +956,13 @@ export type UserOrderByInput =
   | "phone_ASC"
   | "phone_DESC";
 
-export interface ProductCreateWithoutVendorInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  flavorProfile?: Maybe<String>;
-  description: String;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  country?: Maybe<CountryCreateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageCreateManyWithoutProductInput>;
-  categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
-  skus?: Maybe<SKUCreateManyWithoutProductInput>;
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export interface ProductCreateManyWithoutVendorInput {
+  create?: Maybe<
+    ProductCreateWithoutVendorInput[] | ProductCreateWithoutVendorInput
+  >;
+  connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
 }
 
 export type CategoryWhereUniqueInput = AtLeastOne<{
@@ -911,47 +970,100 @@ export type CategoryWhereUniqueInput = AtLeastOne<{
   category?: Maybe<String>;
 }>;
 
-export interface SKUCreateManyWithoutProductInput {
-  create?: Maybe<SKUCreateWithoutProductInput[] | SKUCreateWithoutProductInput>;
-  connect?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
+export interface GrindCreateOneInput {
+  create?: Maybe<GrindCreateInput>;
+  connect?: Maybe<GrindWhereUniqueInput>;
 }
 
-export interface OrderLineUpdateWithoutOrderDataInput {
-  sku?: Maybe<SKUUpdateOneRequiredInput>;
-  productName?: Maybe<String>;
-  grindOption?: Maybe<String>;
-  quantity?: Maybe<Int>;
-  orderPrice?: Maybe<Float>;
-}
-
-export interface SKUCreateWithoutProductInput {
+export interface OrderLineScalarWhereInput {
   id?: Maybe<ID_Input>;
-  grinded?: Maybe<Boolean>;
-  weight: Int;
-  Price: Float;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  productName?: Maybe<String>;
+  productName_not?: Maybe<String>;
+  productName_in?: Maybe<String[] | String>;
+  productName_not_in?: Maybe<String[] | String>;
+  productName_lt?: Maybe<String>;
+  productName_lte?: Maybe<String>;
+  productName_gt?: Maybe<String>;
+  productName_gte?: Maybe<String>;
+  productName_contains?: Maybe<String>;
+  productName_not_contains?: Maybe<String>;
+  productName_starts_with?: Maybe<String>;
+  productName_not_starts_with?: Maybe<String>;
+  productName_ends_with?: Maybe<String>;
+  productName_not_ends_with?: Maybe<String>;
+  grindOption?: Maybe<String>;
+  grindOption_not?: Maybe<String>;
+  grindOption_in?: Maybe<String[] | String>;
+  grindOption_not_in?: Maybe<String[] | String>;
+  grindOption_lt?: Maybe<String>;
+  grindOption_lte?: Maybe<String>;
+  grindOption_gt?: Maybe<String>;
+  grindOption_gte?: Maybe<String>;
+  grindOption_contains?: Maybe<String>;
+  grindOption_not_contains?: Maybe<String>;
+  grindOption_starts_with?: Maybe<String>;
+  grindOption_not_starts_with?: Maybe<String>;
+  grindOption_ends_with?: Maybe<String>;
+  grindOption_not_ends_with?: Maybe<String>;
+  quantity?: Maybe<Int>;
+  quantity_not?: Maybe<Int>;
+  quantity_in?: Maybe<Int[] | Int>;
+  quantity_not_in?: Maybe<Int[] | Int>;
+  quantity_lt?: Maybe<Int>;
+  quantity_lte?: Maybe<Int>;
+  quantity_gt?: Maybe<Int>;
+  quantity_gte?: Maybe<Int>;
+  orderPrice?: Maybe<Float>;
+  orderPrice_not?: Maybe<Float>;
+  orderPrice_in?: Maybe<Float[] | Float>;
+  orderPrice_not_in?: Maybe<Float[] | Float>;
+  orderPrice_lt?: Maybe<Float>;
+  orderPrice_lte?: Maybe<Float>;
+  orderPrice_gt?: Maybe<Float>;
+  orderPrice_gte?: Maybe<Float>;
+  AND?: Maybe<OrderLineScalarWhereInput[] | OrderLineScalarWhereInput>;
+  OR?: Maybe<OrderLineScalarWhereInput[] | OrderLineScalarWhereInput>;
+  NOT?: Maybe<OrderLineScalarWhereInput[] | OrderLineScalarWhereInput>;
 }
 
-export interface CategoryUpdateManyWithoutProductsInput {
-  create?: Maybe<
-    CategoryCreateWithoutProductsInput[] | CategoryCreateWithoutProductsInput
-  >;
-  delete?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
-  connect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
-  set?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
-  disconnect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
-  update?: Maybe<
-    | CategoryUpdateWithWhereUniqueWithoutProductsInput[]
-    | CategoryUpdateWithWhereUniqueWithoutProductsInput
-  >;
-  upsert?: Maybe<
-    | CategoryUpsertWithWhereUniqueWithoutProductsInput[]
-    | CategoryUpsertWithWhereUniqueWithoutProductsInput
-  >;
-  deleteMany?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
-  updateMany?: Maybe<
-    | CategoryUpdateManyWithWhereNestedInput[]
-    | CategoryUpdateManyWithWhereNestedInput
-  >;
+export interface GrindCreateInput {
+  id?: Maybe<ID_Input>;
+  Ja?: Maybe<Boolean>;
+  Nei?: Maybe<Boolean>;
+  Espressomaskin?: Maybe<Boolean>;
+  Espressokanne?: Maybe<Boolean>;
+  Aeropress?: Maybe<Boolean>;
+  DryppV60?: Maybe<Boolean>;
+  Filtermalt?: Maybe<Boolean>;
+  Presskanne?: Maybe<Boolean>;
+  Chemex?: Maybe<Boolean>;
+  Kokmalt?: Maybe<Boolean>;
+}
+
+export interface ProductUpdateWithoutVendorDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
+  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
 }
 
 export interface CategoryUpdateInput {
@@ -975,24 +1087,35 @@ export interface SKUWhereInput {
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
   product?: Maybe<ProductWhereInput>;
-  grinded?: Maybe<Boolean>;
-  grinded_not?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  weight_not?: Maybe<Int>;
-  weight_in?: Maybe<Int[] | Int>;
-  weight_not_in?: Maybe<Int[] | Int>;
-  weight_lt?: Maybe<Int>;
-  weight_lte?: Maybe<Int>;
-  weight_gt?: Maybe<Int>;
-  weight_gte?: Maybe<Int>;
-  Price?: Maybe<Float>;
-  Price_not?: Maybe<Float>;
-  Price_in?: Maybe<Float[] | Float>;
-  Price_not_in?: Maybe<Float[] | Float>;
-  Price_lt?: Maybe<Float>;
-  Price_lte?: Maybe<Float>;
-  Price_gt?: Maybe<Float>;
-  Price_gte?: Maybe<Float>;
+  grindOptions?: Maybe<GrindWhereInput>;
+  weight?: Maybe<String>;
+  weight_not?: Maybe<String>;
+  weight_in?: Maybe<String[] | String>;
+  weight_not_in?: Maybe<String[] | String>;
+  weight_lt?: Maybe<String>;
+  weight_lte?: Maybe<String>;
+  weight_gt?: Maybe<String>;
+  weight_gte?: Maybe<String>;
+  weight_contains?: Maybe<String>;
+  weight_not_contains?: Maybe<String>;
+  weight_starts_with?: Maybe<String>;
+  weight_not_starts_with?: Maybe<String>;
+  weight_ends_with?: Maybe<String>;
+  weight_not_ends_with?: Maybe<String>;
+  price?: Maybe<String>;
+  price_not?: Maybe<String>;
+  price_in?: Maybe<String[] | String>;
+  price_not_in?: Maybe<String[] | String>;
+  price_lt?: Maybe<String>;
+  price_lte?: Maybe<String>;
+  price_gt?: Maybe<String>;
+  price_gte?: Maybe<String>;
+  price_contains?: Maybe<String>;
+  price_not_contains?: Maybe<String>;
+  price_starts_with?: Maybe<String>;
+  price_not_starts_with?: Maybe<String>;
+  price_ends_with?: Maybe<String>;
+  price_not_ends_with?: Maybe<String>;
   AND?: Maybe<SKUWhereInput[] | SKUWhereInput>;
   OR?: Maybe<SKUWhereInput[] | SKUWhereInput>;
   NOT?: Maybe<SKUWhereInput[] | SKUWhereInput>;
@@ -1005,30 +1128,7 @@ export interface ProductUpdateOneRequiredWithoutCategoriesInput {
   connect?: Maybe<ProductWhereUniqueInput>;
 }
 
-export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<UserWhereInput>;
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
-}
-
-export interface ProductUpdateWithoutCategoriesDataInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
-  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
-  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
-}
-
-export interface RegionWhereInput {
+export interface CategoryWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -1043,26 +1143,48 @@ export interface RegionWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  countries_every?: Maybe<CountryWhereInput>;
-  countries_some?: Maybe<CountryWhereInput>;
-  countries_none?: Maybe<CountryWhereInput>;
-  AND?: Maybe<RegionWhereInput[] | RegionWhereInput>;
-  OR?: Maybe<RegionWhereInput[] | RegionWhereInput>;
-  NOT?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+  products?: Maybe<ProductWhereInput>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
+  OR?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
+  NOT?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
+}
+
+export interface ProductUpdateWithoutCategoriesDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
+  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
+  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
+}
+
+export interface UserSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface VendorUpdateOneWithoutProductsInput {
@@ -1086,6 +1208,7 @@ export interface SKUSubscriptionWhereInput {
 }
 
 export interface VendorUpdateWithoutProductsDataInput {
+  stripeId?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
@@ -1167,27 +1290,37 @@ export interface CustomerUpdateOneWithoutUserInput {
   connect?: Maybe<CustomerWhereUniqueInput>;
 }
 
-export interface OrderLineSubscriptionWhereInput {
+export interface OriginSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<OrderLineWhereInput>;
-  AND?: Maybe<
-    OrderLineSubscriptionWhereInput[] | OrderLineSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    OrderLineSubscriptionWhereInput[] | OrderLineSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    OrderLineSubscriptionWhereInput[] | OrderLineSubscriptionWhereInput
-  >;
+  node?: Maybe<OriginWhereInput>;
+  AND?: Maybe<OriginSubscriptionWhereInput[] | OriginSubscriptionWhereInput>;
+  OR?: Maybe<OriginSubscriptionWhereInput[] | OriginSubscriptionWhereInput>;
+  NOT?: Maybe<OriginSubscriptionWhereInput[] | OriginSubscriptionWhereInput>;
 }
 
 export interface CustomerUpdateWithoutUserDataInput {
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
   address?: Maybe<String>;
+}
+
+export interface OrderSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<OrderWhereInput>;
+  AND?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+  OR?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+  NOT?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+}
+
+export interface CustomerUpsertWithoutUserInput {
+  update: CustomerUpdateWithoutUserDataInput;
+  create: CustomerCreateWithoutUserInput;
 }
 
 export interface GrindOptionSubscriptionWhereInput {
@@ -1207,9 +1340,1346 @@ export interface GrindOptionSubscriptionWhereInput {
   >;
 }
 
-export interface CustomerUpsertWithoutUserInput {
-  update: CustomerUpdateWithoutUserDataInput;
-  create: CustomerCreateWithoutUserInput;
+export interface UserUpsertWithoutVendorInput {
+  update: UserUpdateWithoutVendorDataInput;
+  create: UserCreateWithoutVendorInput;
+}
+
+export interface CountryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  region?: Maybe<RegionWhereInput>;
+  products_every?: Maybe<ProductWhereInput>;
+  products_some?: Maybe<ProductWhereInput>;
+  products_none?: Maybe<ProductWhereInput>;
+  AND?: Maybe<CountryWhereInput[] | CountryWhereInput>;
+  OR?: Maybe<CountryWhereInput[] | CountryWhereInput>;
+  NOT?: Maybe<CountryWhereInput[] | CountryWhereInput>;
+}
+
+export interface VendorUpsertWithoutProductsInput {
+  update: VendorUpdateWithoutProductsDataInput;
+  create: VendorCreateWithoutProductsInput;
+}
+
+export interface CustomerSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CustomerWhereInput>;
+  AND?: Maybe<
+    CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput
+  >;
+  OR?: Maybe<CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput>;
+  NOT?: Maybe<
+    CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput
+  >;
+}
+
+export interface CountryUpdateOneWithoutProductsInput {
+  create?: Maybe<CountryCreateWithoutProductsInput>;
+  update?: Maybe<CountryUpdateWithoutProductsDataInput>;
+  upsert?: Maybe<CountryUpsertWithoutProductsInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<CountryWhereUniqueInput>;
+}
+
+export type CountryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface CountryUpdateWithoutProductsDataInput {
+  name?: Maybe<String>;
+  region?: Maybe<RegionUpdateOneWithoutCountriesInput>;
+}
+
+export interface ContentAreaSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ContentAreaWhereInput>;
+  AND?: Maybe<
+    ContentAreaSubscriptionWhereInput[] | ContentAreaSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ContentAreaSubscriptionWhereInput[] | ContentAreaSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ContentAreaSubscriptionWhereInput[] | ContentAreaSubscriptionWhereInput
+  >;
+}
+
+export interface RegionUpdateOneWithoutCountriesInput {
+  create?: Maybe<RegionCreateWithoutCountriesInput>;
+  update?: Maybe<RegionUpdateWithoutCountriesDataInput>;
+  upsert?: Maybe<RegionUpsertWithoutCountriesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<RegionWhereUniqueInput>;
+}
+
+export type CustomerWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface RegionUpdateWithoutCountriesDataInput {
+  name?: Maybe<String>;
+}
+
+export interface VendorUpdateManyMutationInput {
+  stripeId?: Maybe<String>;
+  organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+}
+
+export interface RegionUpsertWithoutCountriesInput {
+  update: RegionUpdateWithoutCountriesDataInput;
+  create: RegionCreateWithoutCountriesInput;
+}
+
+export interface UserUpdateManyMutationInput {
+  email?: Maybe<String>;
+  phone?: Maybe<Int>;
+}
+
+export interface CountryUpsertWithoutProductsInput {
+  update: CountryUpdateWithoutProductsDataInput;
+  create: CountryCreateWithoutProductsInput;
+}
+
+export interface UserWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  phone?: Maybe<Int>;
+  phone_not?: Maybe<Int>;
+  phone_in?: Maybe<Int[] | Int>;
+  phone_not_in?: Maybe<Int[] | Int>;
+  phone_lt?: Maybe<Int>;
+  phone_lte?: Maybe<Int>;
+  phone_gt?: Maybe<Int>;
+  phone_gte?: Maybe<Int>;
+  customer?: Maybe<CustomerWhereInput>;
+  vendor?: Maybe<VendorWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
+}
+
+export interface ProductImageUpdateManyWithoutProductInput {
+  create?: Maybe<
+    | ProductImageCreateWithoutProductInput[]
+    | ProductImageCreateWithoutProductInput
+  >;
+  delete?: Maybe<ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput>;
+  connect?: Maybe<
+    ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput
+  >;
+  set?: Maybe<ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput>;
+  disconnect?: Maybe<
+    ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput
+  >;
+  update?: Maybe<
+    | ProductImageUpdateWithWhereUniqueWithoutProductInput[]
+    | ProductImageUpdateWithWhereUniqueWithoutProductInput
+  >;
+  upsert?: Maybe<
+    | ProductImageUpsertWithWhereUniqueWithoutProductInput[]
+    | ProductImageUpsertWithWhereUniqueWithoutProductInput
+  >;
+  deleteMany?: Maybe<
+    ProductImageScalarWhereInput[] | ProductImageScalarWhereInput
+  >;
+  updateMany?: Maybe<
+    | ProductImageUpdateManyWithWhereNestedInput[]
+    | ProductImageUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface UserCreateInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  phone?: Maybe<Int>;
+  customer?: Maybe<CustomerCreateOneWithoutUserInput>;
+  vendor?: Maybe<VendorCreateOneWithoutUserInput>;
+}
+
+export interface ProductImageUpdateWithWhereUniqueWithoutProductInput {
+  where: ProductImageWhereUniqueInput;
+  data: ProductImageUpdateWithoutProductDataInput;
+}
+
+export type GrindOptionWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProductImageUpdateWithoutProductDataInput {
+  image?: Maybe<String>;
+}
+
+export interface GrindOptionWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  product?: Maybe<ProductWhereInput>;
+  grind?: Maybe<GrindWhereInput>;
+  AND?: Maybe<GrindOptionWhereInput[] | GrindOptionWhereInput>;
+  OR?: Maybe<GrindOptionWhereInput[] | GrindOptionWhereInput>;
+  NOT?: Maybe<GrindOptionWhereInput[] | GrindOptionWhereInput>;
+}
+
+export interface ProductImageUpsertWithWhereUniqueWithoutProductInput {
+  where: ProductImageWhereUniqueInput;
+  update: ProductImageUpdateWithoutProductDataInput;
+  create: ProductImageCreateWithoutProductInput;
+}
+
+export interface CategoryUpdateDataInput {
+  products?: Maybe<ProductUpdateOneRequiredWithoutCategoriesInput>;
+  category?: Maybe<String>;
+}
+
+export interface ProductImageScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
+  AND?: Maybe<ProductImageScalarWhereInput[] | ProductImageScalarWhereInput>;
+  OR?: Maybe<ProductImageScalarWhereInput[] | ProductImageScalarWhereInput>;
+  NOT?: Maybe<ProductImageScalarWhereInput[] | ProductImageScalarWhereInput>;
+}
+
+export interface SubCategoryUpdateInput {
+  category?: Maybe<CategoryUpdateOneRequiredInput>;
+  subCategory?: Maybe<String>;
+}
+
+export interface ProductImageUpdateManyWithWhereNestedInput {
+  where: ProductImageScalarWhereInput;
+  data: ProductImageUpdateManyDataInput;
+}
+
+export interface CategoryCreateOneInput {
+  create?: Maybe<CategoryCreateInput>;
+  connect?: Maybe<CategoryWhereUniqueInput>;
+}
+
+export interface ProductImageUpdateManyDataInput {
+  image?: Maybe<String>;
+}
+
+export interface OrderLineWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  order?: Maybe<OrderWhereInput>;
+  sku?: Maybe<SKUWhereInput>;
+  productName?: Maybe<String>;
+  productName_not?: Maybe<String>;
+  productName_in?: Maybe<String[] | String>;
+  productName_not_in?: Maybe<String[] | String>;
+  productName_lt?: Maybe<String>;
+  productName_lte?: Maybe<String>;
+  productName_gt?: Maybe<String>;
+  productName_gte?: Maybe<String>;
+  productName_contains?: Maybe<String>;
+  productName_not_contains?: Maybe<String>;
+  productName_starts_with?: Maybe<String>;
+  productName_not_starts_with?: Maybe<String>;
+  productName_ends_with?: Maybe<String>;
+  productName_not_ends_with?: Maybe<String>;
+  grindOption?: Maybe<String>;
+  grindOption_not?: Maybe<String>;
+  grindOption_in?: Maybe<String[] | String>;
+  grindOption_not_in?: Maybe<String[] | String>;
+  grindOption_lt?: Maybe<String>;
+  grindOption_lte?: Maybe<String>;
+  grindOption_gt?: Maybe<String>;
+  grindOption_gte?: Maybe<String>;
+  grindOption_contains?: Maybe<String>;
+  grindOption_not_contains?: Maybe<String>;
+  grindOption_starts_with?: Maybe<String>;
+  grindOption_not_starts_with?: Maybe<String>;
+  grindOption_ends_with?: Maybe<String>;
+  grindOption_not_ends_with?: Maybe<String>;
+  quantity?: Maybe<Int>;
+  quantity_not?: Maybe<Int>;
+  quantity_in?: Maybe<Int[] | Int>;
+  quantity_not_in?: Maybe<Int[] | Int>;
+  quantity_lt?: Maybe<Int>;
+  quantity_lte?: Maybe<Int>;
+  quantity_gt?: Maybe<Int>;
+  quantity_gte?: Maybe<Int>;
+  orderPrice?: Maybe<Float>;
+  orderPrice_not?: Maybe<Float>;
+  orderPrice_in?: Maybe<Float[] | Float>;
+  orderPrice_not_in?: Maybe<Float[] | Float>;
+  orderPrice_lt?: Maybe<Float>;
+  orderPrice_lte?: Maybe<Float>;
+  orderPrice_gt?: Maybe<Float>;
+  orderPrice_gte?: Maybe<Float>;
+  AND?: Maybe<OrderLineWhereInput[] | OrderLineWhereInput>;
+  OR?: Maybe<OrderLineWhereInput[] | OrderLineWhereInput>;
+  NOT?: Maybe<OrderLineWhereInput[] | OrderLineWhereInput>;
+}
+
+export interface SKUUpdateManyWithoutProductInput {
+  create?: Maybe<SKUCreateWithoutProductInput[] | SKUCreateWithoutProductInput>;
+  delete?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
+  connect?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
+  set?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
+  disconnect?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
+  update?: Maybe<
+    | SKUUpdateWithWhereUniqueWithoutProductInput[]
+    | SKUUpdateWithWhereUniqueWithoutProductInput
+  >;
+  upsert?: Maybe<
+    | SKUUpsertWithWhereUniqueWithoutProductInput[]
+    | SKUUpsertWithWhereUniqueWithoutProductInput
+  >;
+  deleteMany?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
+  updateMany?: Maybe<
+    SKUUpdateManyWithWhereNestedInput[] | SKUUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface SKUUpdateManyMutationInput {
+  weight?: Maybe<String>;
+  price?: Maybe<String>;
+}
+
+export interface SKUUpdateWithWhereUniqueWithoutProductInput {
+  where: SKUWhereUniqueInput;
+  data: SKUUpdateWithoutProductDataInput;
+}
+
+export interface SKUUpdateInput {
+  product?: Maybe<ProductUpdateOneRequiredWithoutSkusInput>;
+  grindOptions?: Maybe<GrindUpdateOneInput>;
+  weight?: Maybe<String>;
+  price?: Maybe<String>;
+}
+
+export interface SKUUpdateWithoutProductDataInput {
+  grindOptions?: Maybe<GrindUpdateOneInput>;
+  weight?: Maybe<String>;
+  price?: Maybe<String>;
+}
+
+export interface ReviewUpdateInput {
+  customer?: Maybe<CustomerUpdateOneRequiredInput>;
+  product?: Maybe<ProductUpdateOneRequiredInput>;
+  rating?: Maybe<Int>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
+}
+
+export interface GrindUpdateOneInput {
+  create?: Maybe<GrindCreateInput>;
+  update?: Maybe<GrindUpdateDataInput>;
+  upsert?: Maybe<GrindUpsertNestedInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<GrindWhereUniqueInput>;
+}
+
+export interface RegionUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface GrindUpdateDataInput {
+  Ja?: Maybe<Boolean>;
+  Nei?: Maybe<Boolean>;
+  Espressomaskin?: Maybe<Boolean>;
+  Espressokanne?: Maybe<Boolean>;
+  Aeropress?: Maybe<Boolean>;
+  DryppV60?: Maybe<Boolean>;
+  Filtermalt?: Maybe<Boolean>;
+  Presskanne?: Maybe<Boolean>;
+  Chemex?: Maybe<Boolean>;
+  Kokmalt?: Maybe<Boolean>;
+}
+
+export interface RegionUpdateInput {
+  name?: Maybe<String>;
+  countries?: Maybe<CountryUpdateManyWithoutRegionInput>;
+}
+
+export interface GrindUpsertNestedInput {
+  update: GrindUpdateDataInput;
+  create: GrindCreateInput;
+}
+
+export interface ProductUpsertWithoutProductImagesInput {
+  update: ProductUpdateWithoutProductImagesDataInput;
+  create: ProductCreateWithoutProductImagesInput;
+}
+
+export interface SKUUpsertWithWhereUniqueWithoutProductInput {
+  where: SKUWhereUniqueInput;
+  update: SKUUpdateWithoutProductDataInput;
+  create: SKUCreateWithoutProductInput;
+}
+
+export interface ProductUpdateWithoutProductImagesDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
+  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
+  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
+}
+
+export interface SKUScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  weight?: Maybe<String>;
+  weight_not?: Maybe<String>;
+  weight_in?: Maybe<String[] | String>;
+  weight_not_in?: Maybe<String[] | String>;
+  weight_lt?: Maybe<String>;
+  weight_lte?: Maybe<String>;
+  weight_gt?: Maybe<String>;
+  weight_gte?: Maybe<String>;
+  weight_contains?: Maybe<String>;
+  weight_not_contains?: Maybe<String>;
+  weight_starts_with?: Maybe<String>;
+  weight_not_starts_with?: Maybe<String>;
+  weight_ends_with?: Maybe<String>;
+  weight_not_ends_with?: Maybe<String>;
+  price?: Maybe<String>;
+  price_not?: Maybe<String>;
+  price_in?: Maybe<String[] | String>;
+  price_not_in?: Maybe<String[] | String>;
+  price_lt?: Maybe<String>;
+  price_lte?: Maybe<String>;
+  price_gt?: Maybe<String>;
+  price_gte?: Maybe<String>;
+  price_contains?: Maybe<String>;
+  price_not_contains?: Maybe<String>;
+  price_starts_with?: Maybe<String>;
+  price_not_starts_with?: Maybe<String>;
+  price_ends_with?: Maybe<String>;
+  price_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
+  OR?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
+  NOT?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
+}
+
+export interface OriginWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  regions_every?: Maybe<RegionWhereInput>;
+  regions_some?: Maybe<RegionWhereInput>;
+  regions_none?: Maybe<RegionWhereInput>;
+  AND?: Maybe<OriginWhereInput[] | OriginWhereInput>;
+  OR?: Maybe<OriginWhereInput[] | OriginWhereInput>;
+  NOT?: Maybe<OriginWhereInput[] | OriginWhereInput>;
+}
+
+export interface SKUUpdateManyWithWhereNestedInput {
+  where: SKUScalarWhereInput;
+  data: SKUUpdateManyDataInput;
+}
+
+export interface ProductCreateWithoutProductImagesInput {
+  id?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
+  country?: Maybe<CountryCreateOneWithoutProductsInput>;
+  categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
+  skus?: Maybe<SKUCreateManyWithoutProductInput>;
+}
+
+export interface SKUUpdateManyDataInput {
+  weight?: Maybe<String>;
+  price?: Maybe<String>;
+}
+
+export interface ProductImageCreateInput {
+  id?: Maybe<ID_Input>;
+  image: String;
+  product?: Maybe<ProductCreateOneWithoutProductImagesInput>;
+}
+
+export interface ProductUpsertWithoutCategoriesInput {
+  update: ProductUpdateWithoutCategoriesDataInput;
+  create: ProductCreateWithoutCategoriesInput;
+}
+
+export interface ProductUpdateManyMutationInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+}
+
+export interface CategoryUpdateManyMutationInput {
+  category?: Maybe<String>;
+}
+
+export interface OriginUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface OrderLineCreateInput {
+  id?: Maybe<ID_Input>;
+  order: OrderCreateOneWithoutOrderLinesInput;
+  sku: SKUCreateOneInput;
+  productName: String;
+  grindOption: String;
+  quantity: Int;
+  orderPrice: Float;
+}
+
+export interface RegionUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface OrderUpdateManyMutationInput {
+  deliveryStatus?: Maybe<String>;
+  orderData?: Maybe<DateTimeInput>;
+  orderNote?: Maybe<String>;
+  deliveryAddress?: Maybe<String>;
+}
+
+export interface RegionScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+  OR?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+  NOT?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+}
+
+export interface ContentAreaCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface RegionUpsertWithWhereUniqueNestedInput {
+  where: RegionWhereUniqueInput;
+  update: RegionUpdateDataInput;
+  create: RegionCreateInput;
+}
+
+export interface ContentAreaUpdateInput {
+  name?: Maybe<String>;
+}
+
+export interface CountryUpdateManyWithWhereNestedInput {
+  where: CountryScalarWhereInput;
+  data: CountryUpdateManyDataInput;
+}
+
+export interface ContentAreaUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface CountryScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
+  OR?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
+  NOT?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
+}
+
+export interface ContentTextCreateInput {
+  id?: Maybe<ID_Input>;
+  vendor: VendorCreateOneInput;
+  contentArea: ContentAreaCreateOneInput;
+  content: String;
+  publishedStatus?: Maybe<Boolean>;
+}
+
+export interface CountryUpsertWithWhereUniqueWithoutRegionInput {
+  where: CountryWhereUniqueInput;
+  update: CountryUpdateWithoutRegionDataInput;
+  create: CountryCreateWithoutRegionInput;
+}
+
+export interface VendorCreateOneInput {
+  create?: Maybe<VendorCreateInput>;
+  connect?: Maybe<VendorWhereUniqueInput>;
+}
+
+export interface CountryUpdateWithWhereUniqueWithoutRegionInput {
+  where: CountryWhereUniqueInput;
+  data: CountryUpdateWithoutRegionDataInput;
+}
+
+export interface VendorCreateInput {
+  id?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  organizationNumber: Int;
+  displayName: String;
+  address: String;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  user: UserCreateOneWithoutVendorInput;
+  products?: Maybe<ProductCreateManyWithoutVendorInput>;
+}
+
+export type SKUWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface OrderLineUpdateManyDataInput {
+  productName?: Maybe<String>;
+  grindOption?: Maybe<String>;
+  quantity?: Maybe<Int>;
+  orderPrice?: Maybe<Float>;
+}
+
+export interface RegionUpdateWithWhereUniqueNestedInput {
+  where: RegionWhereUniqueInput;
+  data: RegionUpdateDataInput;
+}
+
+export interface ProductCreateWithoutVendorInput {
+  id?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  country?: Maybe<CountryCreateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageCreateManyWithoutProductInput>;
+  categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
+  skus?: Maybe<SKUCreateManyWithoutProductInput>;
+}
+
+export type SubCategoryWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface CategoryCreateManyWithoutProductsInput {
+  create?: Maybe<
+    CategoryCreateWithoutProductsInput[] | CategoryCreateWithoutProductsInput
+  >;
+  connect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
+}
+
+export interface SubCategoryWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  category?: Maybe<CategoryWhereInput>;
+  subCategory?: Maybe<String>;
+  subCategory_not?: Maybe<String>;
+  subCategory_in?: Maybe<String[] | String>;
+  subCategory_not_in?: Maybe<String[] | String>;
+  subCategory_lt?: Maybe<String>;
+  subCategory_lte?: Maybe<String>;
+  subCategory_gt?: Maybe<String>;
+  subCategory_gte?: Maybe<String>;
+  subCategory_contains?: Maybe<String>;
+  subCategory_not_contains?: Maybe<String>;
+  subCategory_starts_with?: Maybe<String>;
+  subCategory_not_starts_with?: Maybe<String>;
+  subCategory_ends_with?: Maybe<String>;
+  subCategory_not_ends_with?: Maybe<String>;
+  AND?: Maybe<SubCategoryWhereInput[] | SubCategoryWhereInput>;
+  OR?: Maybe<SubCategoryWhereInput[] | SubCategoryWhereInput>;
+  NOT?: Maybe<SubCategoryWhereInput[] | SubCategoryWhereInput>;
+}
+
+export interface CategoryCreateWithoutProductsInput {
+  id?: Maybe<ID_Input>;
+  category: String;
+}
+
+export interface CountryCreateManyWithoutRegionInput {
+  create?: Maybe<
+    CountryCreateWithoutRegionInput[] | CountryCreateWithoutRegionInput
+  >;
+  connect?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
+}
+
+export interface ContentAreaCreateOneInput {
+  create?: Maybe<ContentAreaCreateInput>;
+  connect?: Maybe<ContentAreaWhereUniqueInput>;
+}
+
+export interface RegionCreateManyInput {
+  create?: Maybe<RegionCreateInput[] | RegionCreateInput>;
+  connect?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+}
+
+export interface ContentTextUpdateInput {
+  vendor?: Maybe<VendorUpdateOneRequiredInput>;
+  contentArea?: Maybe<ContentAreaUpdateOneRequiredInput>;
+  content?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
+}
+
+export interface OriginCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  regions?: Maybe<RegionCreateManyInput>;
+}
+
+export interface VendorUpdateOneRequiredInput {
+  create?: Maybe<VendorCreateInput>;
+  update?: Maybe<VendorUpdateDataInput>;
+  upsert?: Maybe<VendorUpsertNestedInput>;
+  connect?: Maybe<VendorWhereUniqueInput>;
+}
+
+export interface OrderUpsertWithoutOrderLinesInput {
+  update: OrderUpdateWithoutOrderLinesDataInput;
+  create: OrderCreateWithoutOrderLinesInput;
+}
+
+export interface VendorUpdateDataInput {
+  stripeId?: Maybe<String>;
+  organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
+  products?: Maybe<ProductUpdateManyWithoutVendorInput>;
+}
+
+export type VendorWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  bankAccount?: Maybe<String>;
+}>;
+
+export interface ProductUpdateManyWithoutVendorInput {
+  create?: Maybe<
+    ProductCreateWithoutVendorInput[] | ProductCreateWithoutVendorInput
+  >;
+  delete?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
+  connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
+  set?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
+  disconnect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
+  update?: Maybe<
+    | ProductUpdateWithWhereUniqueWithoutVendorInput[]
+    | ProductUpdateWithWhereUniqueWithoutVendorInput
+  >;
+  upsert?: Maybe<
+    | ProductUpsertWithWhereUniqueWithoutVendorInput[]
+    | ProductUpsertWithWhereUniqueWithoutVendorInput
+  >;
+  deleteMany?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
+  updateMany?: Maybe<
+    | ProductUpdateManyWithWhereNestedInput[]
+    | ProductUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface OrderLineUpdateInput {
+  order?: Maybe<OrderUpdateOneRequiredWithoutOrderLinesInput>;
+  sku?: Maybe<SKUUpdateOneRequiredInput>;
+  productName?: Maybe<String>;
+  grindOption?: Maybe<String>;
+  quantity?: Maybe<Int>;
+  orderPrice?: Maybe<Float>;
+}
+
+export interface ProductUpdateWithWhereUniqueWithoutVendorInput {
+  where: ProductWhereUniqueInput;
+  data: ProductUpdateWithoutVendorDataInput;
+}
+
+export interface OrderCreateOneWithoutOrderLinesInput {
+  create?: Maybe<OrderCreateWithoutOrderLinesInput>;
+  connect?: Maybe<OrderWhereUniqueInput>;
+}
+
+export interface OrderLineUpdateManyWithWhereNestedInput {
+  where: OrderLineScalarWhereInput;
+  data: OrderLineUpdateManyDataInput;
+}
+
+export interface CategoryCreateInput {
+  id?: Maybe<ID_Input>;
+  products: ProductCreateOneWithoutCategoriesInput;
+  category: String;
+}
+
+export interface CategoryUpdateManyWithoutProductsInput {
+  create?: Maybe<
+    CategoryCreateWithoutProductsInput[] | CategoryCreateWithoutProductsInput
+  >;
+  delete?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
+  connect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
+  set?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
+  disconnect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
+  update?: Maybe<
+    | CategoryUpdateWithWhereUniqueWithoutProductsInput[]
+    | CategoryUpdateWithWhereUniqueWithoutProductsInput
+  >;
+  upsert?: Maybe<
+    | CategoryUpsertWithWhereUniqueWithoutProductsInput[]
+    | CategoryUpsertWithWhereUniqueWithoutProductsInput
+  >;
+  deleteMany?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+  updateMany?: Maybe<
+    | CategoryUpdateManyWithWhereNestedInput[]
+    | CategoryUpdateManyWithWhereNestedInput
+  >;
+}
+
+export interface ProductCreateWithoutCategoriesInput {
+  id?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
+  country?: Maybe<CountryCreateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageCreateManyWithoutProductInput>;
+  skus?: Maybe<SKUCreateManyWithoutProductInput>;
+}
+
+export interface CategoryUpdateWithWhereUniqueWithoutProductsInput {
+  where: CategoryWhereUniqueInput;
+  data: CategoryUpdateWithoutProductsDataInput;
+}
+
+export interface VendorCreateWithoutProductsInput {
+  id?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  organizationNumber: Int;
+  displayName: String;
+  address: String;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  user: UserCreateOneWithoutVendorInput;
+}
+
+export interface CategoryUpdateWithoutProductsDataInput {
+  category?: Maybe<String>;
+}
+
+export interface UserCreateWithoutVendorInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  phone?: Maybe<Int>;
+  customer?: Maybe<CustomerCreateOneWithoutUserInput>;
+}
+
+export interface CategoryUpsertWithWhereUniqueWithoutProductsInput {
+  where: CategoryWhereUniqueInput;
+  update: CategoryUpdateWithoutProductsDataInput;
+  create: CategoryCreateWithoutProductsInput;
+}
+
+export interface CustomerCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  firstName: String;
+  lastName: String;
+  address?: Maybe<String>;
+}
+
+export interface CategoryScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  category?: Maybe<String>;
+  category_not?: Maybe<String>;
+  category_in?: Maybe<String[] | String>;
+  category_not_in?: Maybe<String[] | String>;
+  category_lt?: Maybe<String>;
+  category_lte?: Maybe<String>;
+  category_gt?: Maybe<String>;
+  category_gte?: Maybe<String>;
+  category_contains?: Maybe<String>;
+  category_not_contains?: Maybe<String>;
+  category_starts_with?: Maybe<String>;
+  category_not_starts_with?: Maybe<String>;
+  category_ends_with?: Maybe<String>;
+  category_not_ends_with?: Maybe<String>;
+  AND?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+  OR?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+  NOT?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
+}
+
+export interface CountryCreateWithoutProductsInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  region?: Maybe<RegionCreateOneWithoutCountriesInput>;
+}
+
+export interface CategoryUpdateManyWithWhereNestedInput {
+  where: CategoryScalarWhereInput;
+  data: CategoryUpdateManyDataInput;
+}
+
+export interface RegionCreateWithoutCountriesInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+}
+
+export interface CategoryUpdateManyDataInput {
+  category?: Maybe<String>;
+}
+
+export interface ProductImageCreateWithoutProductInput {
+  id?: Maybe<ID_Input>;
+  image: String;
+}
+
+export interface ProductUpsertWithWhereUniqueWithoutVendorInput {
+  where: ProductWhereUniqueInput;
+  update: ProductUpdateWithoutVendorDataInput;
+  create: ProductCreateWithoutVendorInput;
+}
+
+export interface SKUCreateWithoutProductInput {
+  id?: Maybe<ID_Input>;
+  grindOptions?: Maybe<GrindCreateOneInput>;
+  weight: String;
+  price: String;
+}
+
+export interface ProductScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  flavorProfile_not?: Maybe<String>;
+  flavorProfile_in?: Maybe<String[] | String>;
+  flavorProfile_not_in?: Maybe<String[] | String>;
+  flavorProfile_lt?: Maybe<String>;
+  flavorProfile_lte?: Maybe<String>;
+  flavorProfile_gt?: Maybe<String>;
+  flavorProfile_gte?: Maybe<String>;
+  flavorProfile_contains?: Maybe<String>;
+  flavorProfile_not_contains?: Maybe<String>;
+  flavorProfile_starts_with?: Maybe<String>;
+  flavorProfile_not_starts_with?: Maybe<String>;
+  flavorProfile_ends_with?: Maybe<String>;
+  flavorProfile_not_ends_with?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionShort_not?: Maybe<String>;
+  descriptionShort_in?: Maybe<String[] | String>;
+  descriptionShort_not_in?: Maybe<String[] | String>;
+  descriptionShort_lt?: Maybe<String>;
+  descriptionShort_lte?: Maybe<String>;
+  descriptionShort_gt?: Maybe<String>;
+  descriptionShort_gte?: Maybe<String>;
+  descriptionShort_contains?: Maybe<String>;
+  descriptionShort_not_contains?: Maybe<String>;
+  descriptionShort_starts_with?: Maybe<String>;
+  descriptionShort_not_starts_with?: Maybe<String>;
+  descriptionShort_ends_with?: Maybe<String>;
+  descriptionShort_not_ends_with?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  descriptionLong_not?: Maybe<String>;
+  descriptionLong_in?: Maybe<String[] | String>;
+  descriptionLong_not_in?: Maybe<String[] | String>;
+  descriptionLong_lt?: Maybe<String>;
+  descriptionLong_lte?: Maybe<String>;
+  descriptionLong_gt?: Maybe<String>;
+  descriptionLong_gte?: Maybe<String>;
+  descriptionLong_contains?: Maybe<String>;
+  descriptionLong_not_contains?: Maybe<String>;
+  descriptionLong_starts_with?: Maybe<String>;
+  descriptionLong_not_starts_with?: Maybe<String>;
+  descriptionLong_ends_with?: Maybe<String>;
+  descriptionLong_not_ends_with?: Maybe<String>;
+  brewText?: Maybe<String>;
+  brewText_not?: Maybe<String>;
+  brewText_in?: Maybe<String[] | String>;
+  brewText_not_in?: Maybe<String[] | String>;
+  brewText_lt?: Maybe<String>;
+  brewText_lte?: Maybe<String>;
+  brewText_gt?: Maybe<String>;
+  brewText_gte?: Maybe<String>;
+  brewText_contains?: Maybe<String>;
+  brewText_not_contains?: Maybe<String>;
+  brewText_starts_with?: Maybe<String>;
+  brewText_not_starts_with?: Maybe<String>;
+  brewText_ends_with?: Maybe<String>;
+  brewText_not_ends_with?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  AND?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
+  OR?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
+  NOT?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
+}
+
+export interface VendorSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<VendorWhereInput>;
+  AND?: Maybe<VendorSubscriptionWhereInput[] | VendorSubscriptionWhereInput>;
+  OR?: Maybe<VendorSubscriptionWhereInput[] | VendorSubscriptionWhereInput>;
+  NOT?: Maybe<VendorSubscriptionWhereInput[] | VendorSubscriptionWhereInput>;
+}
+
+export interface ProductUpdateManyWithWhereNestedInput {
+  where: ProductScalarWhereInput;
+  data: ProductUpdateManyDataInput;
+}
+
+export interface SubCategorySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<SubCategoryWhereInput>;
+  AND?: Maybe<
+    SubCategorySubscriptionWhereInput[] | SubCategorySubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    SubCategorySubscriptionWhereInput[] | SubCategorySubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    SubCategorySubscriptionWhereInput[] | SubCategorySubscriptionWhereInput
+  >;
+}
+
+export interface ProductUpdateManyDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+}
+
+export interface ProductImageSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ProductImageWhereInput>;
+  AND?: Maybe<
+    ProductImageSubscriptionWhereInput[] | ProductImageSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ProductImageSubscriptionWhereInput[] | ProductImageSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ProductImageSubscriptionWhereInput[] | ProductImageSubscriptionWhereInput
+  >;
+}
+
+export interface VendorUpsertNestedInput {
+  update: VendorUpdateDataInput;
+  create: VendorCreateInput;
+}
+
+export interface RegionWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  countries_every?: Maybe<CountryWhereInput>;
+  countries_some?: Maybe<CountryWhereInput>;
+  countries_none?: Maybe<CountryWhereInput>;
+  AND?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+  OR?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+  NOT?: Maybe<RegionWhereInput[] | RegionWhereInput>;
+}
+
+export interface ContentAreaUpdateOneRequiredInput {
+  create?: Maybe<ContentAreaCreateInput>;
+  update?: Maybe<ContentAreaUpdateDataInput>;
+  upsert?: Maybe<ContentAreaUpsertNestedInput>;
+  connect?: Maybe<ContentAreaWhereUniqueInput>;
+}
+
+export type ContentTextWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ContentAreaUpdateDataInput {
+  name?: Maybe<String>;
 }
 
 export interface GrindSubscriptionWhereInput {
@@ -1223,9 +2693,31 @@ export interface GrindSubscriptionWhereInput {
   NOT?: Maybe<GrindSubscriptionWhereInput[] | GrindSubscriptionWhereInput>;
 }
 
-export interface UserUpsertWithoutVendorInput {
-  update: UserUpdateWithoutVendorDataInput;
-  create: UserCreateWithoutVendorInput;
+export interface ContentAreaUpsertNestedInput {
+  update: ContentAreaUpdateDataInput;
+  create: ContentAreaCreateInput;
+}
+
+export interface ContentTextSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ContentTextWhereInput>;
+  AND?: Maybe<
+    ContentTextSubscriptionWhereInput[] | ContentTextSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    ContentTextSubscriptionWhereInput[] | ContentTextSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    ContentTextSubscriptionWhereInput[] | ContentTextSubscriptionWhereInput
+  >;
+}
+
+export interface ContentTextUpdateManyMutationInput {
+  content?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
 }
 
 export interface CustomerWhereInput {
@@ -1291,138 +2783,40 @@ export interface CustomerWhereInput {
   NOT?: Maybe<CustomerWhereInput[] | CustomerWhereInput>;
 }
 
-export interface VendorUpsertWithoutProductsInput {
-  update: VendorUpdateWithoutProductsDataInput;
-  create: VendorCreateWithoutProductsInput;
-}
-
-export interface CountrySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CountryWhereInput>;
-  AND?: Maybe<CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput>;
-  OR?: Maybe<CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput>;
-  NOT?: Maybe<CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput>;
-}
-
-export interface CountryUpdateOneWithoutProductsInput {
-  create?: Maybe<CountryCreateWithoutProductsInput>;
-  update?: Maybe<CountryUpdateWithoutProductsDataInput>;
-  upsert?: Maybe<CountryUpsertWithoutProductsInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<CountryWhereUniqueInput>;
-}
-
-export type CountryWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export interface CountryUpdateWithoutProductsDataInput {
-  name?: Maybe<String>;
-  region?: Maybe<RegionUpdateOneWithoutCountriesInput>;
-}
-
-export interface CategorySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CategoryWhereInput>;
-  AND?: Maybe<
-    CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  >;
-  OR?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
-  NOT?: Maybe<
-    CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
-  >;
-}
-
-export interface RegionUpdateOneWithoutCountriesInput {
-  create?: Maybe<RegionCreateWithoutCountriesInput>;
-  update?: Maybe<RegionUpdateWithoutCountriesDataInput>;
-  upsert?: Maybe<RegionUpsertWithoutCountriesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<RegionWhereUniqueInput>;
-}
-
-export type CustomerWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface RegionUpdateWithoutCountriesDataInput {
-  name?: Maybe<String>;
-}
-
-export interface VendorUpdateInput {
-  organizationNumber?: Maybe<Int>;
-  displayName?: Maybe<String>;
-  address?: Maybe<String>;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
-  products?: Maybe<ProductUpdateManyWithoutVendorInput>;
-}
-
-export interface RegionUpsertWithoutCountriesInput {
-  update: RegionUpdateWithoutCountriesDataInput;
-  create: RegionCreateWithoutCountriesInput;
-}
-
-export interface UserUpdateInput {
-  email?: Maybe<String>;
-  phone?: Maybe<Int>;
-  customer?: Maybe<CustomerUpdateOneWithoutUserInput>;
-  vendor?: Maybe<VendorUpdateOneWithoutUserInput>;
-}
-
-export interface CountryUpsertWithoutProductsInput {
-  update: CountryUpdateWithoutProductsDataInput;
-  create: CountryCreateWithoutProductsInput;
-}
-
-export interface UserCreateInput {
+export interface CountryCreateInput {
   id?: Maybe<ID_Input>;
-  email: String;
-  phone?: Maybe<Int>;
-  customer?: Maybe<CustomerCreateOneWithoutUserInput>;
-  vendor?: Maybe<VendorCreateOneWithoutUserInput>;
+  name: String;
+  region?: Maybe<RegionCreateOneWithoutCountriesInput>;
+  products?: Maybe<ProductCreateManyWithoutCountryInput>;
 }
 
-export interface ProductImageUpdateManyWithoutProductInput {
+export type GrindWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProductCreateManyWithoutCountryInput {
   create?: Maybe<
-    | ProductImageCreateWithoutProductInput[]
-    | ProductImageCreateWithoutProductInput
+    ProductCreateWithoutCountryInput[] | ProductCreateWithoutCountryInput
   >;
-  delete?: Maybe<ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput>;
-  connect?: Maybe<
-    ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput
-  >;
-  set?: Maybe<ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput>;
-  disconnect?: Maybe<
-    ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput
-  >;
-  update?: Maybe<
-    | ProductImageUpdateWithWhereUniqueWithoutProductInput[]
-    | ProductImageUpdateWithWhereUniqueWithoutProductInput
-  >;
-  upsert?: Maybe<
-    | ProductImageUpsertWithWhereUniqueWithoutProductInput[]
-    | ProductImageUpsertWithWhereUniqueWithoutProductInput
-  >;
-  deleteMany?: Maybe<
-    ProductImageScalarWhereInput[] | ProductImageScalarWhereInput
-  >;
-  updateMany?: Maybe<
-    | ProductImageUpdateManyWithWhereNestedInput[]
-    | ProductImageUpdateManyWithWhereNestedInput
-  >;
+  connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
+}
+
+export interface SubCategoryUpdateManyMutationInput {
+  subCategory?: Maybe<String>;
+}
+
+export interface ProductCreateWithoutCountryInput {
+  id?: Maybe<ID_Input>;
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageCreateManyWithoutProductInput>;
+  categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
+  skus?: Maybe<SKUCreateManyWithoutProductInput>;
 }
 
 export interface VendorWhereInput {
@@ -1440,6 +2834,20 @@ export interface VendorWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  stripeId_not?: Maybe<String>;
+  stripeId_in?: Maybe<String[] | String>;
+  stripeId_not_in?: Maybe<String[] | String>;
+  stripeId_lt?: Maybe<String>;
+  stripeId_lte?: Maybe<String>;
+  stripeId_gt?: Maybe<String>;
+  stripeId_gte?: Maybe<String>;
+  stripeId_contains?: Maybe<String>;
+  stripeId_not_contains?: Maybe<String>;
+  stripeId_starts_with?: Maybe<String>;
+  stripeId_not_starts_with?: Maybe<String>;
+  stripeId_ends_with?: Maybe<String>;
+  stripeId_not_ends_with?: Maybe<String>;
   organizationNumber?: Maybe<Int>;
   organizationNumber_not?: Maybe<Int>;
   organizationNumber_in?: Maybe<Int[] | Int>;
@@ -1541,1133 +2949,15 @@ export interface VendorWhereInput {
   NOT?: Maybe<VendorWhereInput[] | VendorWhereInput>;
 }
 
-export interface ProductImageUpdateWithWhereUniqueWithoutProductInput {
-  where: ProductImageWhereUniqueInput;
-  data: ProductImageUpdateWithoutProductDataInput;
-}
-
-export interface CategoryUpsertNestedInput {
-  update: CategoryUpdateDataInput;
-  create: CategoryCreateInput;
-}
-
-export interface ProductImageUpdateWithoutProductDataInput {
-  image?: Maybe<String>;
-}
-
-export type GrindOptionWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductImageUpsertWithWhereUniqueWithoutProductInput {
-  where: ProductImageWhereUniqueInput;
-  update: ProductImageUpdateWithoutProductDataInput;
-  create: ProductImageCreateWithoutProductInput;
-}
-
-export interface GrindOptionWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  product?: Maybe<ProductWhereInput>;
-  grind?: Maybe<GrindWhereInput>;
-  AND?: Maybe<GrindOptionWhereInput[] | GrindOptionWhereInput>;
-  OR?: Maybe<GrindOptionWhereInput[] | GrindOptionWhereInput>;
-  NOT?: Maybe<GrindOptionWhereInput[] | GrindOptionWhereInput>;
-}
-
-export interface ProductImageScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
-  AND?: Maybe<ProductImageScalarWhereInput[] | ProductImageScalarWhereInput>;
-  OR?: Maybe<ProductImageScalarWhereInput[] | ProductImageScalarWhereInput>;
-  NOT?: Maybe<ProductImageScalarWhereInput[] | ProductImageScalarWhereInput>;
-}
-
-export interface SubCategoryUpdateInput {
-  category?: Maybe<CategoryUpdateOneRequiredInput>;
-  subCategory?: Maybe<String>;
-}
-
-export interface ProductImageUpdateManyWithWhereNestedInput {
-  where: ProductImageScalarWhereInput;
-  data: ProductImageUpdateManyDataInput;
-}
-
-export interface SubCategoryCreateInput {
-  id?: Maybe<ID_Input>;
-  category: CategoryCreateOneInput;
-  subCategory: String;
-}
-
-export interface ProductImageUpdateManyDataInput {
-  image?: Maybe<String>;
-}
-
-export interface SKUUpdateManyMutationInput {
-  grinded?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
-}
-
-export interface SKUUpdateManyWithoutProductInput {
-  create?: Maybe<SKUCreateWithoutProductInput[] | SKUCreateWithoutProductInput>;
-  delete?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
-  connect?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
-  set?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
-  disconnect?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
-  update?: Maybe<
-    | SKUUpdateWithWhereUniqueWithoutProductInput[]
-    | SKUUpdateWithWhereUniqueWithoutProductInput
-  >;
-  upsert?: Maybe<
-    | SKUUpsertWithWhereUniqueWithoutProductInput[]
-    | SKUUpsertWithWhereUniqueWithoutProductInput
-  >;
-  deleteMany?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
-  updateMany?: Maybe<
-    SKUUpdateManyWithWhereNestedInput[] | SKUUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface OrderLineWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  order?: Maybe<OrderWhereInput>;
-  sku?: Maybe<SKUWhereInput>;
-  productName?: Maybe<String>;
-  productName_not?: Maybe<String>;
-  productName_in?: Maybe<String[] | String>;
-  productName_not_in?: Maybe<String[] | String>;
-  productName_lt?: Maybe<String>;
-  productName_lte?: Maybe<String>;
-  productName_gt?: Maybe<String>;
-  productName_gte?: Maybe<String>;
-  productName_contains?: Maybe<String>;
-  productName_not_contains?: Maybe<String>;
-  productName_starts_with?: Maybe<String>;
-  productName_not_starts_with?: Maybe<String>;
-  productName_ends_with?: Maybe<String>;
-  productName_not_ends_with?: Maybe<String>;
-  grindOption?: Maybe<String>;
-  grindOption_not?: Maybe<String>;
-  grindOption_in?: Maybe<String[] | String>;
-  grindOption_not_in?: Maybe<String[] | String>;
-  grindOption_lt?: Maybe<String>;
-  grindOption_lte?: Maybe<String>;
-  grindOption_gt?: Maybe<String>;
-  grindOption_gte?: Maybe<String>;
-  grindOption_contains?: Maybe<String>;
-  grindOption_not_contains?: Maybe<String>;
-  grindOption_starts_with?: Maybe<String>;
-  grindOption_not_starts_with?: Maybe<String>;
-  grindOption_ends_with?: Maybe<String>;
-  grindOption_not_ends_with?: Maybe<String>;
-  quantity?: Maybe<Int>;
-  quantity_not?: Maybe<Int>;
-  quantity_in?: Maybe<Int[] | Int>;
-  quantity_not_in?: Maybe<Int[] | Int>;
-  quantity_lt?: Maybe<Int>;
-  quantity_lte?: Maybe<Int>;
-  quantity_gt?: Maybe<Int>;
-  quantity_gte?: Maybe<Int>;
-  orderPrice?: Maybe<Float>;
-  orderPrice_not?: Maybe<Float>;
-  orderPrice_in?: Maybe<Float[] | Float>;
-  orderPrice_not_in?: Maybe<Float[] | Float>;
-  orderPrice_lt?: Maybe<Float>;
-  orderPrice_lte?: Maybe<Float>;
-  orderPrice_gt?: Maybe<Float>;
-  orderPrice_gte?: Maybe<Float>;
-  AND?: Maybe<OrderLineWhereInput[] | OrderLineWhereInput>;
-  OR?: Maybe<OrderLineWhereInput[] | OrderLineWhereInput>;
-  NOT?: Maybe<OrderLineWhereInput[] | OrderLineWhereInput>;
-}
-
-export interface SKUUpdateWithWhereUniqueWithoutProductInput {
-  where: SKUWhereUniqueInput;
-  data: SKUUpdateWithoutProductDataInput;
-}
-
-export interface ReviewUpdateManyMutationInput {
-  rating?: Maybe<Int>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-}
-
-export interface SKUUpdateWithoutProductDataInput {
-  grinded?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
-}
-
-export interface ReviewCreateInput {
-  id?: Maybe<ID_Input>;
-  customer: CustomerCreateOneInput;
-  product: ProductCreateOneInput;
-  rating: Int;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-}
-
-export interface SKUUpsertWithWhereUniqueWithoutProductInput {
-  where: SKUWhereUniqueInput;
-  update: SKUUpdateWithoutProductDataInput;
-  create: SKUCreateWithoutProductInput;
-}
-
-export interface CountryUpdateManyDataInput {
-  name?: Maybe<String>;
-}
-
-export interface SKUScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  grinded?: Maybe<Boolean>;
-  grinded_not?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  weight_not?: Maybe<Int>;
-  weight_in?: Maybe<Int[] | Int>;
-  weight_not_in?: Maybe<Int[] | Int>;
-  weight_lt?: Maybe<Int>;
-  weight_lte?: Maybe<Int>;
-  weight_gt?: Maybe<Int>;
-  weight_gte?: Maybe<Int>;
-  Price?: Maybe<Float>;
-  Price_not?: Maybe<Float>;
-  Price_in?: Maybe<Float[] | Float>;
-  Price_not_in?: Maybe<Float[] | Float>;
-  Price_lt?: Maybe<Float>;
-  Price_lte?: Maybe<Float>;
-  Price_gt?: Maybe<Float>;
-  Price_gte?: Maybe<Float>;
-  AND?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
-  OR?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
-  NOT?: Maybe<SKUScalarWhereInput[] | SKUScalarWhereInput>;
-}
-
-export type OrderLineWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface SKUUpdateManyWithWhereNestedInput {
-  where: SKUScalarWhereInput;
-  data: SKUUpdateManyDataInput;
-}
-
-export interface CountryUpsertWithWhereUniqueWithoutRegionInput {
-  where: CountryWhereUniqueInput;
-  update: CountryUpdateWithoutRegionDataInput;
-  create: CountryCreateWithoutRegionInput;
-}
-
-export interface SKUUpdateManyDataInput {
-  grinded?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
-}
-
-export type ProductWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductUpsertWithoutCategoriesInput {
-  update: ProductUpdateWithoutCategoriesDataInput;
-  create: ProductCreateWithoutCategoriesInput;
-}
-
-export interface CountryUpdateManyWithoutRegionInput {
-  create?: Maybe<
-    CountryCreateWithoutRegionInput[] | CountryCreateWithoutRegionInput
-  >;
-  delete?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
-  connect?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
-  set?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
-  disconnect?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
-  update?: Maybe<
-    | CountryUpdateWithWhereUniqueWithoutRegionInput[]
-    | CountryUpdateWithWhereUniqueWithoutRegionInput
-  >;
-  upsert?: Maybe<
-    | CountryUpsertWithWhereUniqueWithoutRegionInput[]
-    | CountryUpsertWithWhereUniqueWithoutRegionInput
-  >;
-  deleteMany?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
-  updateMany?: Maybe<
-    | CountryUpdateManyWithWhereNestedInput[]
-    | CountryUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface CategoryUpdateManyMutationInput {
-  category?: Maybe<String>;
-}
-
-export type ProductImageWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductUpdateWithoutSkusDataInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
-  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
-}
-
-export interface CountryCreateManyWithoutRegionInput {
-  create?: Maybe<
-    CountryCreateWithoutRegionInput[] | CountryCreateWithoutRegionInput
-  >;
-  connect?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
-}
-
-export interface ProductUpdateOneRequiredWithoutSkusInput {
-  create?: Maybe<ProductCreateWithoutSkusInput>;
-  update?: Maybe<ProductUpdateWithoutSkusDataInput>;
-  upsert?: Maybe<ProductUpsertWithoutSkusInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
-}
-
-export type RegionWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  name?: Maybe<String>;
-}>;
-
-export interface ContentAreaCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface ProductUpsertWithoutProductImagesInput {
-  update: ProductUpdateWithoutProductImagesDataInput;
-  create: ProductCreateWithoutProductImagesInput;
-}
-
-export interface ContentAreaUpdateInput {
-  name?: Maybe<String>;
-}
-
-export interface ProductUpdateOneWithoutProductImagesInput {
-  create?: Maybe<ProductCreateWithoutProductImagesInput>;
-  update?: Maybe<ProductUpdateWithoutProductImagesDataInput>;
-  upsert?: Maybe<ProductUpsertWithoutProductImagesInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<ProductWhereUniqueInput>;
-}
-
-export interface ContentAreaUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface ProductImageUpdateInput {
-  image?: Maybe<String>;
-  product?: Maybe<ProductUpdateOneWithoutProductImagesInput>;
-}
-
-export interface ContentTextCreateInput {
-  id?: Maybe<ID_Input>;
-  vendor: VendorCreateOneInput;
-  contentArea: ContentAreaCreateOneInput;
-  content: String;
-  publishedStatus?: Maybe<Boolean>;
-}
-
-export interface ProductCreateWithoutProductImagesInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  flavorProfile?: Maybe<String>;
-  description: String;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
-  country?: Maybe<CountryCreateOneWithoutProductsInput>;
-  categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
-  skus?: Maybe<SKUCreateManyWithoutProductInput>;
-}
-
-export interface VendorCreateOneInput {
-  create?: Maybe<VendorCreateInput>;
-  connect?: Maybe<VendorWhereUniqueInput>;
-}
-
-export interface ProductImageCreateInput {
-  id?: Maybe<ID_Input>;
-  image: String;
-  product?: Maybe<ProductCreateOneWithoutProductImagesInput>;
-}
-
-export interface VendorCreateInput {
-  id?: Maybe<ID_Input>;
-  organizationNumber: Int;
-  displayName: String;
-  address: String;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-  user: UserCreateOneWithoutVendorInput;
-  products?: Maybe<ProductCreateManyWithoutVendorInput>;
-}
-
-export type SKUWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ProductCreateManyWithoutVendorInput {
-  create?: Maybe<
-    ProductCreateWithoutVendorInput[] | ProductCreateWithoutVendorInput
-  >;
-  connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
-}
-
-export interface OrderLineUpdateManyMutationInput {
-  productName?: Maybe<String>;
-  grindOption?: Maybe<String>;
-  quantity?: Maybe<Int>;
-  orderPrice?: Maybe<Float>;
-}
-
-export interface SKUUpdateDataInput {
-  product?: Maybe<ProductUpdateOneRequiredWithoutSkusInput>;
-  grinded?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
-}
-
-export type SubCategoryWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface CategoryCreateManyWithoutProductsInput {
-  create?: Maybe<
-    CategoryCreateWithoutProductsInput[] | CategoryCreateWithoutProductsInput
-  >;
-  connect?: Maybe<CategoryWhereUniqueInput[] | CategoryWhereUniqueInput>;
-}
-
-export interface SubCategoryWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  category?: Maybe<CategoryWhereInput>;
-  subCategory?: Maybe<String>;
-  subCategory_not?: Maybe<String>;
-  subCategory_in?: Maybe<String[] | String>;
-  subCategory_not_in?: Maybe<String[] | String>;
-  subCategory_lt?: Maybe<String>;
-  subCategory_lte?: Maybe<String>;
-  subCategory_gt?: Maybe<String>;
-  subCategory_gte?: Maybe<String>;
-  subCategory_contains?: Maybe<String>;
-  subCategory_not_contains?: Maybe<String>;
-  subCategory_starts_with?: Maybe<String>;
-  subCategory_not_starts_with?: Maybe<String>;
-  subCategory_ends_with?: Maybe<String>;
-  subCategory_not_ends_with?: Maybe<String>;
-  AND?: Maybe<SubCategoryWhereInput[] | SubCategoryWhereInput>;
-  OR?: Maybe<SubCategoryWhereInput[] | SubCategoryWhereInput>;
-  NOT?: Maybe<SubCategoryWhereInput[] | SubCategoryWhereInput>;
-}
-
-export interface CategoryCreateWithoutProductsInput {
-  id?: Maybe<ID_Input>;
-  category: String;
-}
-
-export interface OrderLineUpdateInput {
-  order?: Maybe<OrderUpdateOneRequiredWithoutOrderLinesInput>;
-  sku?: Maybe<SKUUpdateOneRequiredInput>;
-  productName?: Maybe<String>;
-  grindOption?: Maybe<String>;
-  quantity?: Maybe<Int>;
-  orderPrice?: Maybe<Float>;
-}
-
-export interface ContentAreaCreateOneInput {
-  create?: Maybe<ContentAreaCreateInput>;
-  connect?: Maybe<ContentAreaWhereUniqueInput>;
-}
-
-export interface OrderCreateOneWithoutOrderLinesInput {
-  create?: Maybe<OrderCreateWithoutOrderLinesInput>;
-  connect?: Maybe<OrderWhereUniqueInput>;
-}
-
-export interface ContentTextUpdateInput {
-  vendor?: Maybe<VendorUpdateOneRequiredInput>;
-  contentArea?: Maybe<ContentAreaUpdateOneRequiredInput>;
-  content?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-}
-
-export interface OrderLineCreateInput {
-  id?: Maybe<ID_Input>;
-  order: OrderCreateOneWithoutOrderLinesInput;
-  sku: SKUCreateOneInput;
-  productName: String;
-  grindOption: String;
-  quantity: Int;
-  orderPrice: Float;
-}
-
-export interface VendorUpdateOneRequiredInput {
-  create?: Maybe<VendorCreateInput>;
-  update?: Maybe<VendorUpdateDataInput>;
-  upsert?: Maybe<VendorUpsertNestedInput>;
-  connect?: Maybe<VendorWhereUniqueInput>;
-}
-
-export interface OrderLineUpdateManyDataInput {
-  productName?: Maybe<String>;
-  grindOption?: Maybe<String>;
-  quantity?: Maybe<Int>;
-  orderPrice?: Maybe<Float>;
-}
-
-export interface VendorUpdateDataInput {
-  organizationNumber?: Maybe<Int>;
-  displayName?: Maybe<String>;
-  address?: Maybe<String>;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
-  products?: Maybe<ProductUpdateManyWithoutVendorInput>;
-}
-
-export type VendorWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  organizationNumber?: Maybe<Int>;
-  bankAccount?: Maybe<String>;
-}>;
-
-export interface ProductUpdateManyWithoutVendorInput {
-  create?: Maybe<
-    ProductCreateWithoutVendorInput[] | ProductCreateWithoutVendorInput
-  >;
-  delete?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
-  connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
-  set?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
-  disconnect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
-  update?: Maybe<
-    | ProductUpdateWithWhereUniqueWithoutVendorInput[]
-    | ProductUpdateWithWhereUniqueWithoutVendorInput
-  >;
-  upsert?: Maybe<
-    | ProductUpsertWithWhereUniqueWithoutVendorInput[]
-    | ProductUpsertWithWhereUniqueWithoutVendorInput
-  >;
-  deleteMany?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
-  updateMany?: Maybe<
-    | ProductUpdateManyWithWhereNestedInput[]
-    | ProductUpdateManyWithWhereNestedInput
-  >;
-}
-
-export interface OrderLineUpsertWithWhereUniqueWithoutOrderInput {
-  where: OrderLineWhereUniqueInput;
-  update: OrderLineUpdateWithoutOrderDataInput;
-  create: OrderLineCreateWithoutOrderInput;
-}
-
-export interface ProductUpdateWithWhereUniqueWithoutVendorInput {
-  where: ProductWhereUniqueInput;
-  data: ProductUpdateWithoutVendorDataInput;
-}
-
-export interface ProductUpsertWithoutSkusInput {
-  update: ProductUpdateWithoutSkusDataInput;
-  create: ProductCreateWithoutSkusInput;
-}
-
-export interface ProductUpdateWithoutVendorDataInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
-  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
-}
-
-export interface CategoryCreateInput {
-  id?: Maybe<ID_Input>;
-  products: ProductCreateOneWithoutCategoriesInput;
-  category: String;
-}
-
-export interface SKUUpdateOneRequiredInput {
-  create?: Maybe<SKUCreateInput>;
-  update?: Maybe<SKUUpdateDataInput>;
-  upsert?: Maybe<SKUUpsertNestedInput>;
-  connect?: Maybe<SKUWhereUniqueInput>;
-}
-
-export interface ProductCreateWithoutCategoriesInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  flavorProfile?: Maybe<String>;
-  description: String;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
-  country?: Maybe<CountryCreateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageCreateManyWithoutProductInput>;
-  skus?: Maybe<SKUCreateManyWithoutProductInput>;
-}
-
-export interface CategoryUpdateWithWhereUniqueWithoutProductsInput {
-  where: CategoryWhereUniqueInput;
-  data: CategoryUpdateWithoutProductsDataInput;
-}
-
-export interface VendorCreateWithoutProductsInput {
-  id?: Maybe<ID_Input>;
-  organizationNumber: Int;
-  displayName: String;
-  address: String;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-  user: UserCreateOneWithoutVendorInput;
-}
-
-export interface CategoryUpdateWithoutProductsDataInput {
-  category?: Maybe<String>;
-}
-
-export interface UserCreateWithoutVendorInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  phone?: Maybe<Int>;
-  customer?: Maybe<CustomerCreateOneWithoutUserInput>;
-}
-
-export interface CategoryUpsertWithWhereUniqueWithoutProductsInput {
-  where: CategoryWhereUniqueInput;
-  update: CategoryUpdateWithoutProductsDataInput;
-  create: CategoryCreateWithoutProductsInput;
-}
-
-export interface CustomerCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  firstName: String;
-  lastName: String;
-  address?: Maybe<String>;
-}
-
-export interface CategoryScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  category?: Maybe<String>;
-  category_not?: Maybe<String>;
-  category_in?: Maybe<String[] | String>;
-  category_not_in?: Maybe<String[] | String>;
-  category_lt?: Maybe<String>;
-  category_lte?: Maybe<String>;
-  category_gt?: Maybe<String>;
-  category_gte?: Maybe<String>;
-  category_contains?: Maybe<String>;
-  category_not_contains?: Maybe<String>;
-  category_starts_with?: Maybe<String>;
-  category_not_starts_with?: Maybe<String>;
-  category_ends_with?: Maybe<String>;
-  category_not_ends_with?: Maybe<String>;
-  AND?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
-  OR?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
-  NOT?: Maybe<CategoryScalarWhereInput[] | CategoryScalarWhereInput>;
-}
-
-export interface CountryCreateWithoutProductsInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  region?: Maybe<RegionCreateOneWithoutCountriesInput>;
-}
-
-export interface CategoryUpdateManyWithWhereNestedInput {
-  where: CategoryScalarWhereInput;
-  data: CategoryUpdateManyDataInput;
-}
-
-export interface RegionCreateWithoutCountriesInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-}
-
-export interface CategoryUpdateManyDataInput {
-  category?: Maybe<String>;
-}
-
-export interface ProductImageCreateWithoutProductInput {
-  id?: Maybe<ID_Input>;
-  image: String;
-}
-
-export interface ProductUpsertWithWhereUniqueWithoutVendorInput {
-  where: ProductWhereUniqueInput;
-  update: ProductUpdateWithoutVendorDataInput;
-  create: ProductCreateWithoutVendorInput;
-}
-
-export interface CategoryWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  products?: Maybe<ProductWhereInput>;
-  category?: Maybe<String>;
-  category_not?: Maybe<String>;
-  category_in?: Maybe<String[] | String>;
-  category_not_in?: Maybe<String[] | String>;
-  category_lt?: Maybe<String>;
-  category_lte?: Maybe<String>;
-  category_gt?: Maybe<String>;
-  category_gte?: Maybe<String>;
-  category_contains?: Maybe<String>;
-  category_not_contains?: Maybe<String>;
-  category_starts_with?: Maybe<String>;
-  category_not_starts_with?: Maybe<String>;
-  category_ends_with?: Maybe<String>;
-  category_not_ends_with?: Maybe<String>;
-  AND?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
-  OR?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
-  NOT?: Maybe<CategoryWhereInput[] | CategoryWhereInput>;
-}
-
-export interface ProductScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  flavorProfile_not?: Maybe<String>;
-  flavorProfile_in?: Maybe<String[] | String>;
-  flavorProfile_not_in?: Maybe<String[] | String>;
-  flavorProfile_lt?: Maybe<String>;
-  flavorProfile_lte?: Maybe<String>;
-  flavorProfile_gt?: Maybe<String>;
-  flavorProfile_gte?: Maybe<String>;
-  flavorProfile_contains?: Maybe<String>;
-  flavorProfile_not_contains?: Maybe<String>;
-  flavorProfile_starts_with?: Maybe<String>;
-  flavorProfile_not_starts_with?: Maybe<String>;
-  flavorProfile_ends_with?: Maybe<String>;
-  flavorProfile_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  info?: Maybe<String>;
-  info_not?: Maybe<String>;
-  info_in?: Maybe<String[] | String>;
-  info_not_in?: Maybe<String[] | String>;
-  info_lt?: Maybe<String>;
-  info_lte?: Maybe<String>;
-  info_gt?: Maybe<String>;
-  info_gte?: Maybe<String>;
-  info_contains?: Maybe<String>;
-  info_not_contains?: Maybe<String>;
-  info_starts_with?: Maybe<String>;
-  info_not_starts_with?: Maybe<String>;
-  info_ends_with?: Maybe<String>;
-  info_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  AND?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
-  OR?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
-  NOT?: Maybe<ProductScalarWhereInput[] | ProductScalarWhereInput>;
-}
-
-export interface SubCategorySubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<SubCategoryWhereInput>;
-  AND?: Maybe<
-    SubCategorySubscriptionWhereInput[] | SubCategorySubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    SubCategorySubscriptionWhereInput[] | SubCategorySubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    SubCategorySubscriptionWhereInput[] | SubCategorySubscriptionWhereInput
-  >;
-}
-
-export interface ProductUpdateManyWithWhereNestedInput {
-  where: ProductScalarWhereInput;
-  data: ProductUpdateManyDataInput;
-}
-
-export interface ProductImageSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ProductImageWhereInput>;
-  AND?: Maybe<
-    ProductImageSubscriptionWhereInput[] | ProductImageSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ProductImageSubscriptionWhereInput[] | ProductImageSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ProductImageSubscriptionWhereInput[] | ProductImageSubscriptionWhereInput
-  >;
-}
-
-export interface ProductUpdateManyDataInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface CountryWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  region?: Maybe<RegionWhereInput>;
-  products_every?: Maybe<ProductWhereInput>;
-  products_some?: Maybe<ProductWhereInput>;
-  products_none?: Maybe<ProductWhereInput>;
-  AND?: Maybe<CountryWhereInput[] | CountryWhereInput>;
-  OR?: Maybe<CountryWhereInput[] | CountryWhereInput>;
-  NOT?: Maybe<CountryWhereInput[] | CountryWhereInput>;
-}
-
-export interface VendorUpsertNestedInput {
-  update: VendorUpdateDataInput;
-  create: VendorCreateInput;
-}
-
-export type ContentTextWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface ContentAreaUpdateOneRequiredInput {
-  create?: Maybe<ContentAreaCreateInput>;
-  update?: Maybe<ContentAreaUpdateDataInput>;
-  upsert?: Maybe<ContentAreaUpsertNestedInput>;
-  connect?: Maybe<ContentAreaWhereUniqueInput>;
-}
-
-export interface CustomerSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<CustomerWhereInput>;
-  AND?: Maybe<
-    CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput
-  >;
-  OR?: Maybe<CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput>;
-  NOT?: Maybe<
-    CustomerSubscriptionWhereInput[] | CustomerSubscriptionWhereInput
-  >;
-}
-
-export interface ContentAreaUpdateDataInput {
-  name?: Maybe<String>;
-}
-
-export interface ContentAreaSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ContentAreaWhereInput>;
-  AND?: Maybe<
-    ContentAreaSubscriptionWhereInput[] | ContentAreaSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ContentAreaSubscriptionWhereInput[] | ContentAreaSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ContentAreaSubscriptionWhereInput[] | ContentAreaSubscriptionWhereInput
-  >;
-}
-
-export interface ContentAreaUpsertNestedInput {
-  update: ContentAreaUpdateDataInput;
-  create: ContentAreaCreateInput;
-}
-
-export interface UserWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  email_not?: Maybe<String>;
-  email_in?: Maybe<String[] | String>;
-  email_not_in?: Maybe<String[] | String>;
-  email_lt?: Maybe<String>;
-  email_lte?: Maybe<String>;
-  email_gt?: Maybe<String>;
-  email_gte?: Maybe<String>;
-  email_contains?: Maybe<String>;
-  email_not_contains?: Maybe<String>;
-  email_starts_with?: Maybe<String>;
-  email_not_starts_with?: Maybe<String>;
-  email_ends_with?: Maybe<String>;
-  email_not_ends_with?: Maybe<String>;
-  phone?: Maybe<Int>;
-  phone_not?: Maybe<Int>;
-  phone_in?: Maybe<Int[] | Int>;
-  phone_not_in?: Maybe<Int[] | Int>;
-  phone_lt?: Maybe<Int>;
-  phone_lte?: Maybe<Int>;
-  phone_gt?: Maybe<Int>;
-  phone_gte?: Maybe<Int>;
-  customer?: Maybe<CustomerWhereInput>;
-  vendor?: Maybe<VendorWhereInput>;
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
-}
-
-export interface ContentTextUpdateManyMutationInput {
-  content?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-}
-
-export type GrindWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface CountryCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  region?: Maybe<RegionCreateOneWithoutCountriesInput>;
-  products?: Maybe<ProductCreateManyWithoutCountryInput>;
-}
-
-export interface SubCategoryUpdateManyMutationInput {
-  subCategory?: Maybe<String>;
-}
-
-export interface ProductCreateManyWithoutCountryInput {
-  create?: Maybe<
-    ProductCreateWithoutCountryInput[] | ProductCreateWithoutCountryInput
-  >;
-  connect?: Maybe<ProductWhereUniqueInput[] | ProductWhereUniqueInput>;
-}
-
-export interface CategoryUpdateOneRequiredInput {
-  create?: Maybe<CategoryCreateInput>;
-  update?: Maybe<CategoryUpdateDataInput>;
-  upsert?: Maybe<CategoryUpsertNestedInput>;
-  connect?: Maybe<CategoryWhereUniqueInput>;
-}
-
-export interface ProductCreateWithoutCountryInput {
-  id?: Maybe<ID_Input>;
-  title: String;
-  flavorProfile?: Maybe<String>;
-  description: String;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageCreateManyWithoutProductInput>;
-  categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
-  skus?: Maybe<SKUCreateManyWithoutProductInput>;
-}
-
-export interface CategoryCreateOneInput {
-  create?: Maybe<CategoryCreateInput>;
-  connect?: Maybe<CategoryWhereUniqueInput>;
-}
-
 export interface CountryUpdateInput {
   name?: Maybe<String>;
   region?: Maybe<RegionUpdateOneWithoutCountriesInput>;
   products?: Maybe<ProductUpdateManyWithoutCountryInput>;
 }
 
-export interface SKUUpdateInput {
-  product?: Maybe<ProductUpdateOneRequiredWithoutSkusInput>;
-  grinded?: Maybe<Boolean>;
-  weight?: Maybe<Int>;
-  Price?: Maybe<Float>;
-}
+export type OrderWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export interface ProductUpdateManyWithoutCountryInput {
   create?: Maybe<
@@ -2690,540 +2980,6 @@ export interface ProductUpdateManyWithoutCountryInput {
     | ProductUpdateManyWithWhereNestedInput[]
     | ProductUpdateManyWithWhereNestedInput
   >;
-}
-
-export interface ReviewUpdateInput {
-  customer?: Maybe<CustomerUpdateOneRequiredInput>;
-  product?: Maybe<ProductUpdateOneRequiredInput>;
-  rating?: Maybe<Int>;
-  title?: Maybe<String>;
-  content?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-}
-
-export interface ProductUpdateWithWhereUniqueWithoutCountryInput {
-  where: ProductWhereUniqueInput;
-  data: ProductUpdateWithoutCountryDataInput;
-}
-
-export interface CountryUpdateManyWithWhereNestedInput {
-  where: CountryScalarWhereInput;
-  data: CountryUpdateManyDataInput;
-}
-
-export interface ProductUpdateWithoutCountryDataInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
-  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
-}
-
-export interface CountryUpdateWithoutRegionDataInput {
-  name?: Maybe<String>;
-  products?: Maybe<ProductUpdateManyWithoutCountryInput>;
-}
-
-export interface ProductUpsertWithWhereUniqueWithoutCountryInput {
-  where: ProductWhereUniqueInput;
-  update: ProductUpdateWithoutCountryDataInput;
-  create: ProductCreateWithoutCountryInput;
-}
-
-export interface RegionUpdateInput {
-  name?: Maybe<String>;
-  countries?: Maybe<CountryUpdateManyWithoutRegionInput>;
-}
-
-export interface CountryUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
-
-export interface RegionCreateInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  countries?: Maybe<CountryCreateManyWithoutRegionInput>;
-}
-
-export interface CustomerCreateInput {
-  id?: Maybe<ID_Input>;
-  firstName: String;
-  lastName: String;
-  address?: Maybe<String>;
-  user: UserCreateOneWithoutCustomerInput;
-}
-
-export interface ProductUpdateWithoutProductImagesDataInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
-  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
-  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
-}
-
-export interface UserCreateOneWithoutCustomerInput {
-  create?: Maybe<UserCreateWithoutCustomerInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface ReviewWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  customer?: Maybe<CustomerWhereInput>;
-  product?: Maybe<ProductWhereInput>;
-  rating?: Maybe<Int>;
-  rating_not?: Maybe<Int>;
-  rating_in?: Maybe<Int[] | Int>;
-  rating_not_in?: Maybe<Int[] | Int>;
-  rating_lt?: Maybe<Int>;
-  rating_lte?: Maybe<Int>;
-  rating_gt?: Maybe<Int>;
-  rating_gte?: Maybe<Int>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-  publishedStatus_not?: Maybe<Boolean>;
-  AND?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
-  OR?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
-  NOT?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
-}
-
-export interface UserCreateWithoutCustomerInput {
-  id?: Maybe<ID_Input>;
-  email: String;
-  phone?: Maybe<Int>;
-  vendor?: Maybe<VendorCreateOneWithoutUserInput>;
-}
-
-export interface ProductUpdateManyMutationInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-}
-
-export interface VendorCreateOneWithoutUserInput {
-  create?: Maybe<VendorCreateWithoutUserInput>;
-  connect?: Maybe<VendorWhereUniqueInput>;
-}
-
-export interface OrderUpsertWithoutOrderLinesInput {
-  update: OrderUpdateWithoutOrderLinesDataInput;
-  create: OrderCreateWithoutOrderLinesInput;
-}
-
-export interface VendorCreateWithoutUserInput {
-  id?: Maybe<ID_Input>;
-  organizationNumber: Int;
-  displayName: String;
-  address: String;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-  products?: Maybe<ProductCreateManyWithoutVendorInput>;
-}
-
-export interface OrderUpdateOneRequiredWithoutOrderLinesInput {
-  create?: Maybe<OrderCreateWithoutOrderLinesInput>;
-  update?: Maybe<OrderUpdateWithoutOrderLinesDataInput>;
-  upsert?: Maybe<OrderUpsertWithoutOrderLinesInput>;
-  connect?: Maybe<OrderWhereUniqueInput>;
-}
-
-export interface CustomerUpdateInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  address?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCustomerInput>;
-}
-
-export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-  email?: Maybe<String>;
-  phone?: Maybe<Int>;
-}>;
-
-export interface UserUpdateOneRequiredWithoutCustomerInput {
-  create?: Maybe<UserCreateWithoutCustomerInput>;
-  update?: Maybe<UserUpdateWithoutCustomerDataInput>;
-  upsert?: Maybe<UserUpsertWithoutCustomerInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface OrderLineUpdateManyWithWhereNestedInput {
-  where: OrderLineScalarWhereInput;
-  data: OrderLineUpdateManyDataInput;
-}
-
-export interface UserUpdateWithoutCustomerDataInput {
-  email?: Maybe<String>;
-  phone?: Maybe<Int>;
-  vendor?: Maybe<VendorUpdateOneWithoutUserInput>;
-}
-
-export interface SKUUpsertNestedInput {
-  update: SKUUpdateDataInput;
-  create: SKUCreateInput;
-}
-
-export interface VendorUpdateOneWithoutUserInput {
-  create?: Maybe<VendorCreateWithoutUserInput>;
-  update?: Maybe<VendorUpdateWithoutUserDataInput>;
-  upsert?: Maybe<VendorUpsertWithoutUserInput>;
-  delete?: Maybe<Boolean>;
-  disconnect?: Maybe<Boolean>;
-  connect?: Maybe<VendorWhereUniqueInput>;
-}
-
-export interface ProductCreateOneWithoutCategoriesInput {
-  create?: Maybe<ProductCreateWithoutCategoriesInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
-}
-
-export interface VendorUpdateWithoutUserDataInput {
-  organizationNumber?: Maybe<Int>;
-  displayName?: Maybe<String>;
-  address?: Maybe<String>;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-  products?: Maybe<ProductUpdateManyWithoutVendorInput>;
-}
-
-export interface UserCreateOneWithoutVendorInput {
-  create?: Maybe<UserCreateWithoutVendorInput>;
-  connect?: Maybe<UserWhereUniqueInput>;
-}
-
-export interface VendorUpsertWithoutUserInput {
-  update: VendorUpdateWithoutUserDataInput;
-  create: VendorCreateWithoutUserInput;
-}
-
-export interface CountryCreateOneWithoutProductsInput {
-  create?: Maybe<CountryCreateWithoutProductsInput>;
-  connect?: Maybe<CountryWhereUniqueInput>;
-}
-
-export interface UserUpsertWithoutCustomerInput {
-  update: UserUpdateWithoutCustomerDataInput;
-  create: UserCreateWithoutCustomerInput;
-}
-
-export interface ProductImageCreateManyWithoutProductInput {
-  create?: Maybe<
-    | ProductImageCreateWithoutProductInput[]
-    | ProductImageCreateWithoutProductInput
-  >;
-  connect?: Maybe<
-    ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput
-  >;
-}
-
-export interface CustomerUpdateManyMutationInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  address?: Maybe<String>;
-}
-
-export interface ProductImageWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  image?: Maybe<String>;
-  image_not?: Maybe<String>;
-  image_in?: Maybe<String[] | String>;
-  image_not_in?: Maybe<String[] | String>;
-  image_lt?: Maybe<String>;
-  image_lte?: Maybe<String>;
-  image_gt?: Maybe<String>;
-  image_gte?: Maybe<String>;
-  image_contains?: Maybe<String>;
-  image_not_contains?: Maybe<String>;
-  image_starts_with?: Maybe<String>;
-  image_not_starts_with?: Maybe<String>;
-  image_ends_with?: Maybe<String>;
-  image_not_ends_with?: Maybe<String>;
-  product?: Maybe<ProductWhereInput>;
-  AND?: Maybe<ProductImageWhereInput[] | ProductImageWhereInput>;
-  OR?: Maybe<ProductImageWhereInput[] | ProductImageWhereInput>;
-  NOT?: Maybe<ProductImageWhereInput[] | ProductImageWhereInput>;
-}
-
-export interface GrindCreateInput {
-  id?: Maybe<ID_Input>;
-  grindOption: String;
-  grindOptions: GrindCreateOneInput;
-}
-
-export interface ProductSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ProductWhereInput>;
-  AND?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-  OR?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-  NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
-}
-
-export interface GrindCreateOneInput {
-  create?: Maybe<GrindCreateInput>;
-  connect?: Maybe<GrindWhereUniqueInput>;
-}
-
-export interface ContentTextWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  vendor?: Maybe<VendorWhereInput>;
-  contentArea?: Maybe<ContentAreaWhereInput>;
-  content?: Maybe<String>;
-  content_not?: Maybe<String>;
-  content_in?: Maybe<String[] | String>;
-  content_not_in?: Maybe<String[] | String>;
-  content_lt?: Maybe<String>;
-  content_lte?: Maybe<String>;
-  content_gt?: Maybe<String>;
-  content_gte?: Maybe<String>;
-  content_contains?: Maybe<String>;
-  content_not_contains?: Maybe<String>;
-  content_starts_with?: Maybe<String>;
-  content_not_starts_with?: Maybe<String>;
-  content_ends_with?: Maybe<String>;
-  content_not_ends_with?: Maybe<String>;
-  publishedStatus?: Maybe<Boolean>;
-  publishedStatus_not?: Maybe<Boolean>;
-  AND?: Maybe<ContentTextWhereInput[] | ContentTextWhereInput>;
-  OR?: Maybe<ContentTextWhereInput[] | ContentTextWhereInput>;
-  NOT?: Maybe<ContentTextWhereInput[] | ContentTextWhereInput>;
-}
-
-export interface GrindUpdateInput {
-  grindOption?: Maybe<String>;
-  grindOptions?: Maybe<GrindUpdateOneRequiredInput>;
-}
-
-export interface VendorUpdateManyMutationInput {
-  organizationNumber?: Maybe<Int>;
-  displayName?: Maybe<String>;
-  address?: Maybe<String>;
-  bankAccount?: Maybe<String>;
-  logoImage?: Maybe<String>;
-  facebookPageURL?: Maybe<String>;
-  contactPerson?: Maybe<String>;
-}
-
-export interface GrindUpdateOneRequiredInput {
-  create?: Maybe<GrindCreateInput>;
-  update?: Maybe<GrindUpdateDataInput>;
-  upsert?: Maybe<GrindUpsertNestedInput>;
-  connect?: Maybe<GrindWhereUniqueInput>;
-}
-
-export interface GrindWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  grindOption?: Maybe<String>;
-  grindOption_not?: Maybe<String>;
-  grindOption_in?: Maybe<String[] | String>;
-  grindOption_not_in?: Maybe<String[] | String>;
-  grindOption_lt?: Maybe<String>;
-  grindOption_lte?: Maybe<String>;
-  grindOption_gt?: Maybe<String>;
-  grindOption_gte?: Maybe<String>;
-  grindOption_contains?: Maybe<String>;
-  grindOption_not_contains?: Maybe<String>;
-  grindOption_starts_with?: Maybe<String>;
-  grindOption_not_starts_with?: Maybe<String>;
-  grindOption_ends_with?: Maybe<String>;
-  grindOption_not_ends_with?: Maybe<String>;
-  grindOptions?: Maybe<GrindWhereInput>;
-  AND?: Maybe<GrindWhereInput[] | GrindWhereInput>;
-  OR?: Maybe<GrindWhereInput[] | GrindWhereInput>;
-  NOT?: Maybe<GrindWhereInput[] | GrindWhereInput>;
-}
-
-export interface GrindUpdateDataInput {
-  grindOption?: Maybe<String>;
-  grindOptions?: Maybe<GrindUpdateOneRequiredInput>;
-}
-
-export interface ProductWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  title?: Maybe<String>;
-  title_not?: Maybe<String>;
-  title_in?: Maybe<String[] | String>;
-  title_not_in?: Maybe<String[] | String>;
-  title_lt?: Maybe<String>;
-  title_lte?: Maybe<String>;
-  title_gt?: Maybe<String>;
-  title_gte?: Maybe<String>;
-  title_contains?: Maybe<String>;
-  title_not_contains?: Maybe<String>;
-  title_starts_with?: Maybe<String>;
-  title_not_starts_with?: Maybe<String>;
-  title_ends_with?: Maybe<String>;
-  title_not_ends_with?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  flavorProfile_not?: Maybe<String>;
-  flavorProfile_in?: Maybe<String[] | String>;
-  flavorProfile_not_in?: Maybe<String[] | String>;
-  flavorProfile_lt?: Maybe<String>;
-  flavorProfile_lte?: Maybe<String>;
-  flavorProfile_gt?: Maybe<String>;
-  flavorProfile_gte?: Maybe<String>;
-  flavorProfile_contains?: Maybe<String>;
-  flavorProfile_not_contains?: Maybe<String>;
-  flavorProfile_starts_with?: Maybe<String>;
-  flavorProfile_not_starts_with?: Maybe<String>;
-  flavorProfile_ends_with?: Maybe<String>;
-  flavorProfile_not_ends_with?: Maybe<String>;
-  description?: Maybe<String>;
-  description_not?: Maybe<String>;
-  description_in?: Maybe<String[] | String>;
-  description_not_in?: Maybe<String[] | String>;
-  description_lt?: Maybe<String>;
-  description_lte?: Maybe<String>;
-  description_gt?: Maybe<String>;
-  description_gte?: Maybe<String>;
-  description_contains?: Maybe<String>;
-  description_not_contains?: Maybe<String>;
-  description_starts_with?: Maybe<String>;
-  description_not_starts_with?: Maybe<String>;
-  description_ends_with?: Maybe<String>;
-  description_not_ends_with?: Maybe<String>;
-  info?: Maybe<String>;
-  info_not?: Maybe<String>;
-  info_in?: Maybe<String[] | String>;
-  info_not_in?: Maybe<String[] | String>;
-  info_lt?: Maybe<String>;
-  info_lte?: Maybe<String>;
-  info_gt?: Maybe<String>;
-  info_gte?: Maybe<String>;
-  info_contains?: Maybe<String>;
-  info_not_contains?: Maybe<String>;
-  info_starts_with?: Maybe<String>;
-  info_not_starts_with?: Maybe<String>;
-  info_ends_with?: Maybe<String>;
-  info_not_ends_with?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  published_not?: Maybe<Boolean>;
-  vendor?: Maybe<VendorWhereInput>;
-  country?: Maybe<CountryWhereInput>;
-  productImages_every?: Maybe<ProductImageWhereInput>;
-  productImages_some?: Maybe<ProductImageWhereInput>;
-  productImages_none?: Maybe<ProductImageWhereInput>;
-  categories_every?: Maybe<CategoryWhereInput>;
-  categories_some?: Maybe<CategoryWhereInput>;
-  categories_none?: Maybe<CategoryWhereInput>;
-  skus_every?: Maybe<SKUWhereInput>;
-  skus_some?: Maybe<SKUWhereInput>;
-  skus_none?: Maybe<SKUWhereInput>;
-  AND?: Maybe<ProductWhereInput[] | ProductWhereInput>;
-  OR?: Maybe<ProductWhereInput[] | ProductWhereInput>;
-  NOT?: Maybe<ProductWhereInput[] | ProductWhereInput>;
-}
-
-export interface GrindUpsertNestedInput {
-  update: GrindUpdateDataInput;
-  create: GrindCreateInput;
 }
 
 export interface OrderWhereInput {
@@ -3301,11 +3057,249 @@ export interface OrderWhereInput {
   NOT?: Maybe<OrderWhereInput[] | OrderWhereInput>;
 }
 
-export interface GrindUpdateManyMutationInput {
-  grindOption?: Maybe<String>;
+export interface ProductUpdateWithWhereUniqueWithoutCountryInput {
+  where: ProductWhereUniqueInput;
+  data: ProductUpdateWithoutCountryDataInput;
 }
 
-export interface CountryScalarWhereInput {
+export interface ReviewUpdateManyMutationInput {
+  rating?: Maybe<Int>;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
+}
+
+export interface ProductUpdateWithoutCountryDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
+  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
+}
+
+export type OrderLineWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface ProductUpsertWithWhereUniqueWithoutCountryInput {
+  where: ProductWhereUniqueInput;
+  update: ProductUpdateWithoutCountryDataInput;
+  create: ProductCreateWithoutCountryInput;
+}
+
+export type OriginWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface CountryUpdateManyMutationInput {
+  name?: Maybe<String>;
+}
+
+export interface ProductImageUpdateInput {
+  image?: Maybe<String>;
+  product?: Maybe<ProductUpdateOneWithoutProductImagesInput>;
+}
+
+export interface CustomerCreateInput {
+  id?: Maybe<ID_Input>;
+  firstName: String;
+  lastName: String;
+  address?: Maybe<String>;
+  user: UserCreateOneWithoutCustomerInput;
+}
+
+export type ProductWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserCreateOneWithoutCustomerInput {
+  create?: Maybe<UserCreateWithoutCustomerInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export type ProductImageWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface UserCreateWithoutCustomerInput {
+  id?: Maybe<ID_Input>;
+  email: String;
+  phone?: Maybe<Int>;
+  vendor?: Maybe<VendorCreateOneWithoutUserInput>;
+}
+
+export type RegionWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  name?: Maybe<String>;
+}>;
+
+export interface VendorCreateOneWithoutUserInput {
+  create?: Maybe<VendorCreateWithoutUserInput>;
+  connect?: Maybe<VendorWhereUniqueInput>;
+}
+
+export type ReviewWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface VendorCreateWithoutUserInput {
+  id?: Maybe<ID_Input>;
+  stripeId?: Maybe<String>;
+  organizationNumber: Int;
+  displayName: String;
+  address: String;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  products?: Maybe<ProductCreateManyWithoutVendorInput>;
+}
+
+export interface CountryUpdateWithoutRegionDataInput {
+  name?: Maybe<String>;
+  products?: Maybe<ProductUpdateManyWithoutCountryInput>;
+}
+
+export interface CustomerUpdateInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  address?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutCustomerInput>;
+}
+
+export interface RegionUpdateDataInput {
+  name?: Maybe<String>;
+  countries?: Maybe<CountryUpdateManyWithoutRegionInput>;
+}
+
+export interface UserUpdateOneRequiredWithoutCustomerInput {
+  create?: Maybe<UserCreateWithoutCustomerInput>;
+  update?: Maybe<UserUpdateWithoutCustomerDataInput>;
+  upsert?: Maybe<UserUpsertWithoutCustomerInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
+}
+
+export interface OriginUpdateInput {
+  name?: Maybe<String>;
+  regions?: Maybe<RegionUpdateManyInput>;
+}
+
+export interface UserUpdateWithoutCustomerDataInput {
+  email?: Maybe<String>;
+  phone?: Maybe<Int>;
+  vendor?: Maybe<VendorUpdateOneWithoutUserInput>;
+}
+
+export interface RegionCreateInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  countries?: Maybe<CountryCreateManyWithoutRegionInput>;
+}
+
+export interface VendorUpdateOneWithoutUserInput {
+  create?: Maybe<VendorCreateWithoutUserInput>;
+  update?: Maybe<VendorUpdateWithoutUserDataInput>;
+  upsert?: Maybe<VendorUpsertWithoutUserInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<VendorWhereUniqueInput>;
+}
+
+export interface OrderLineUpdateManyMutationInput {
+  productName?: Maybe<String>;
+  grindOption?: Maybe<String>;
+  quantity?: Maybe<Int>;
+  orderPrice?: Maybe<Float>;
+}
+
+export interface VendorUpdateWithoutUserDataInput {
+  stripeId?: Maybe<String>;
+  organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  products?: Maybe<ProductUpdateManyWithoutVendorInput>;
+}
+
+export interface OrderUpdateOneRequiredWithoutOrderLinesInput {
+  create?: Maybe<OrderCreateWithoutOrderLinesInput>;
+  update?: Maybe<OrderUpdateWithoutOrderLinesDataInput>;
+  upsert?: Maybe<OrderUpsertWithoutOrderLinesInput>;
+  connect?: Maybe<OrderWhereUniqueInput>;
+}
+
+export interface VendorUpsertWithoutUserInput {
+  update: VendorUpdateWithoutUserDataInput;
+  create: VendorCreateWithoutUserInput;
+}
+
+export interface VendorCreateOneWithoutProductsInput {
+  create?: Maybe<VendorCreateWithoutProductsInput>;
+  connect?: Maybe<VendorWhereUniqueInput>;
+}
+
+export interface UserUpsertWithoutCustomerInput {
+  update: UserUpdateWithoutCustomerDataInput;
+  create: UserCreateWithoutCustomerInput;
+}
+
+export interface CustomerCreateOneWithoutUserInput {
+  create?: Maybe<CustomerCreateWithoutUserInput>;
+  connect?: Maybe<CustomerWhereUniqueInput>;
+}
+
+export interface CustomerUpdateManyMutationInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  address?: Maybe<String>;
+}
+
+export interface RegionCreateOneWithoutCountriesInput {
+  create?: Maybe<RegionCreateWithoutCountriesInput>;
+  connect?: Maybe<RegionWhereUniqueInput>;
+}
+
+export interface GrindUpdateInput {
+  Ja?: Maybe<Boolean>;
+  Nei?: Maybe<Boolean>;
+  Espressomaskin?: Maybe<Boolean>;
+  Espressokanne?: Maybe<Boolean>;
+  Aeropress?: Maybe<Boolean>;
+  DryppV60?: Maybe<Boolean>;
+  Filtermalt?: Maybe<Boolean>;
+  Presskanne?: Maybe<Boolean>;
+  Chemex?: Maybe<Boolean>;
+  Kokmalt?: Maybe<Boolean>;
+}
+
+export interface SKUCreateManyWithoutProductInput {
+  create?: Maybe<SKUCreateWithoutProductInput[] | SKUCreateWithoutProductInput>;
+  connect?: Maybe<SKUWhereUniqueInput[] | SKUWhereUniqueInput>;
+}
+
+export interface GrindUpdateManyMutationInput {
+  Ja?: Maybe<Boolean>;
+  Nei?: Maybe<Boolean>;
+  Espressomaskin?: Maybe<Boolean>;
+  Espressokanne?: Maybe<Boolean>;
+  Aeropress?: Maybe<Boolean>;
+  DryppV60?: Maybe<Boolean>;
+  Filtermalt?: Maybe<Boolean>;
+  Presskanne?: Maybe<Boolean>;
+  Chemex?: Maybe<Boolean>;
+  Kokmalt?: Maybe<Boolean>;
+}
+
+export interface ProductImageWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -3320,23 +3314,24 @@ export interface CountryScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
-  AND?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
-  OR?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
-  NOT?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
+  image?: Maybe<String>;
+  image_not?: Maybe<String>;
+  image_in?: Maybe<String[] | String>;
+  image_not_in?: Maybe<String[] | String>;
+  image_lt?: Maybe<String>;
+  image_lte?: Maybe<String>;
+  image_gt?: Maybe<String>;
+  image_gte?: Maybe<String>;
+  image_contains?: Maybe<String>;
+  image_not_contains?: Maybe<String>;
+  image_starts_with?: Maybe<String>;
+  image_not_starts_with?: Maybe<String>;
+  image_ends_with?: Maybe<String>;
+  image_not_ends_with?: Maybe<String>;
+  product?: Maybe<ProductWhereInput>;
+  AND?: Maybe<ProductImageWhereInput[] | ProductImageWhereInput>;
+  OR?: Maybe<ProductImageWhereInput[] | ProductImageWhereInput>;
+  NOT?: Maybe<ProductImageWhereInput[] | ProductImageWhereInput>;
 }
 
 export interface GrindOptionCreateInput {
@@ -3345,10 +3340,15 @@ export interface GrindOptionCreateInput {
   grind: GrindCreateOneInput;
 }
 
-export interface CountryCreateWithoutRegionInput {
-  id?: Maybe<ID_Input>;
-  name: String;
-  products?: Maybe<ProductCreateManyWithoutCountryInput>;
+export interface ProductSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ProductWhereInput>;
+  AND?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+  OR?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
+  NOT?: Maybe<ProductSubscriptionWhereInput[] | ProductSubscriptionWhereInput>;
 }
 
 export interface ProductCreateOneInput {
@@ -3356,16 +3356,51 @@ export interface ProductCreateOneInput {
   connect?: Maybe<ProductWhereUniqueInput>;
 }
 
-export type ReviewWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface ContentTextWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  vendor?: Maybe<VendorWhereInput>;
+  contentArea?: Maybe<ContentAreaWhereInput>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
+  publishedStatus_not?: Maybe<Boolean>;
+  AND?: Maybe<ContentTextWhereInput[] | ContentTextWhereInput>;
+  OR?: Maybe<ContentTextWhereInput[] | ContentTextWhereInput>;
+  NOT?: Maybe<ContentTextWhereInput[] | ContentTextWhereInput>;
+}
 
 export interface ProductCreateInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
-  info?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
   country?: Maybe<CountryCreateOneWithoutProductsInput>;
@@ -3374,17 +3409,19 @@ export interface ProductCreateInput {
   skus?: Maybe<SKUCreateManyWithoutProductInput>;
 }
 
-export interface ProductUpdateInput {
-  title?: Maybe<String>;
-  flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
-  published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
-  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
-  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
+export interface CategorySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CategoryWhereInput>;
+  AND?: Maybe<
+    CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  >;
+  OR?: Maybe<CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput>;
+  NOT?: Maybe<
+    CategorySubscriptionWhereInput[] | CategorySubscriptionWhereInput
+  >;
 }
 
 export interface GrindOptionUpdateInput {
@@ -3392,14 +3429,11 @@ export interface GrindOptionUpdateInput {
   grind?: Maybe<GrindUpdateOneRequiredInput>;
 }
 
-export interface OrderCreateWithoutOrderLinesInput {
-  id?: Maybe<ID_Input>;
-  customer: CustomerCreateOneInput;
-  vendor: VendorCreateOneInput;
-  deliveryStatus?: Maybe<String>;
-  orderData: DateTimeInput;
-  orderNote?: Maybe<String>;
-  deliveryAddress: String;
+export interface UserUpdateInput {
+  email?: Maybe<String>;
+  phone?: Maybe<Int>;
+  customer?: Maybe<CustomerUpdateOneWithoutUserInput>;
+  vendor?: Maybe<VendorUpdateOneWithoutUserInput>;
 }
 
 export interface ProductUpdateOneRequiredInput {
@@ -3409,7 +3443,28 @@ export interface ProductUpdateOneRequiredInput {
   connect?: Maybe<ProductWhereUniqueInput>;
 }
 
-export interface OrderLineScalarWhereInput {
+export interface CategoryUpdateOneRequiredInput {
+  create?: Maybe<CategoryCreateInput>;
+  update?: Maybe<CategoryUpdateDataInput>;
+  upsert?: Maybe<CategoryUpsertNestedInput>;
+  connect?: Maybe<CategoryWhereUniqueInput>;
+}
+
+export interface ProductUpdateDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
+  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
+  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
+}
+
+export interface ProductWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -3424,71 +3479,92 @@ export interface OrderLineScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  productName?: Maybe<String>;
-  productName_not?: Maybe<String>;
-  productName_in?: Maybe<String[] | String>;
-  productName_not_in?: Maybe<String[] | String>;
-  productName_lt?: Maybe<String>;
-  productName_lte?: Maybe<String>;
-  productName_gt?: Maybe<String>;
-  productName_gte?: Maybe<String>;
-  productName_contains?: Maybe<String>;
-  productName_not_contains?: Maybe<String>;
-  productName_starts_with?: Maybe<String>;
-  productName_not_starts_with?: Maybe<String>;
-  productName_ends_with?: Maybe<String>;
-  productName_not_ends_with?: Maybe<String>;
-  grindOption?: Maybe<String>;
-  grindOption_not?: Maybe<String>;
-  grindOption_in?: Maybe<String[] | String>;
-  grindOption_not_in?: Maybe<String[] | String>;
-  grindOption_lt?: Maybe<String>;
-  grindOption_lte?: Maybe<String>;
-  grindOption_gt?: Maybe<String>;
-  grindOption_gte?: Maybe<String>;
-  grindOption_contains?: Maybe<String>;
-  grindOption_not_contains?: Maybe<String>;
-  grindOption_starts_with?: Maybe<String>;
-  grindOption_not_starts_with?: Maybe<String>;
-  grindOption_ends_with?: Maybe<String>;
-  grindOption_not_ends_with?: Maybe<String>;
-  quantity?: Maybe<Int>;
-  quantity_not?: Maybe<Int>;
-  quantity_in?: Maybe<Int[] | Int>;
-  quantity_not_in?: Maybe<Int[] | Int>;
-  quantity_lt?: Maybe<Int>;
-  quantity_lte?: Maybe<Int>;
-  quantity_gt?: Maybe<Int>;
-  quantity_gte?: Maybe<Int>;
-  orderPrice?: Maybe<Float>;
-  orderPrice_not?: Maybe<Float>;
-  orderPrice_in?: Maybe<Float[] | Float>;
-  orderPrice_not_in?: Maybe<Float[] | Float>;
-  orderPrice_lt?: Maybe<Float>;
-  orderPrice_lte?: Maybe<Float>;
-  orderPrice_gt?: Maybe<Float>;
-  orderPrice_gte?: Maybe<Float>;
-  AND?: Maybe<OrderLineScalarWhereInput[] | OrderLineScalarWhereInput>;
-  OR?: Maybe<OrderLineScalarWhereInput[] | OrderLineScalarWhereInput>;
-  NOT?: Maybe<OrderLineScalarWhereInput[] | OrderLineScalarWhereInput>;
-}
-
-export interface ProductUpdateDataInput {
   title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description?: Maybe<String>;
-  info?: Maybe<String>;
+  flavorProfile_not?: Maybe<String>;
+  flavorProfile_in?: Maybe<String[] | String>;
+  flavorProfile_not_in?: Maybe<String[] | String>;
+  flavorProfile_lt?: Maybe<String>;
+  flavorProfile_lte?: Maybe<String>;
+  flavorProfile_gt?: Maybe<String>;
+  flavorProfile_gte?: Maybe<String>;
+  flavorProfile_contains?: Maybe<String>;
+  flavorProfile_not_contains?: Maybe<String>;
+  flavorProfile_starts_with?: Maybe<String>;
+  flavorProfile_not_starts_with?: Maybe<String>;
+  flavorProfile_ends_with?: Maybe<String>;
+  flavorProfile_not_ends_with?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionShort_not?: Maybe<String>;
+  descriptionShort_in?: Maybe<String[] | String>;
+  descriptionShort_not_in?: Maybe<String[] | String>;
+  descriptionShort_lt?: Maybe<String>;
+  descriptionShort_lte?: Maybe<String>;
+  descriptionShort_gt?: Maybe<String>;
+  descriptionShort_gte?: Maybe<String>;
+  descriptionShort_contains?: Maybe<String>;
+  descriptionShort_not_contains?: Maybe<String>;
+  descriptionShort_starts_with?: Maybe<String>;
+  descriptionShort_not_starts_with?: Maybe<String>;
+  descriptionShort_ends_with?: Maybe<String>;
+  descriptionShort_not_ends_with?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  descriptionLong_not?: Maybe<String>;
+  descriptionLong_in?: Maybe<String[] | String>;
+  descriptionLong_not_in?: Maybe<String[] | String>;
+  descriptionLong_lt?: Maybe<String>;
+  descriptionLong_lte?: Maybe<String>;
+  descriptionLong_gt?: Maybe<String>;
+  descriptionLong_gte?: Maybe<String>;
+  descriptionLong_contains?: Maybe<String>;
+  descriptionLong_not_contains?: Maybe<String>;
+  descriptionLong_starts_with?: Maybe<String>;
+  descriptionLong_not_starts_with?: Maybe<String>;
+  descriptionLong_ends_with?: Maybe<String>;
+  descriptionLong_not_ends_with?: Maybe<String>;
+  brewText?: Maybe<String>;
+  brewText_not?: Maybe<String>;
+  brewText_in?: Maybe<String[] | String>;
+  brewText_not_in?: Maybe<String[] | String>;
+  brewText_lt?: Maybe<String>;
+  brewText_lte?: Maybe<String>;
+  brewText_gt?: Maybe<String>;
+  brewText_gte?: Maybe<String>;
+  brewText_contains?: Maybe<String>;
+  brewText_not_contains?: Maybe<String>;
+  brewText_starts_with?: Maybe<String>;
+  brewText_not_starts_with?: Maybe<String>;
+  brewText_ends_with?: Maybe<String>;
+  brewText_not_ends_with?: Maybe<String>;
   published?: Maybe<Boolean>;
-  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
-  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
-  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
-  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
-  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
-}
-
-export interface VendorCreateOneWithoutProductsInput {
-  create?: Maybe<VendorCreateWithoutProductsInput>;
-  connect?: Maybe<VendorWhereUniqueInput>;
+  published_not?: Maybe<Boolean>;
+  vendor?: Maybe<VendorWhereInput>;
+  country?: Maybe<CountryWhereInput>;
+  productImages_every?: Maybe<ProductImageWhereInput>;
+  productImages_some?: Maybe<ProductImageWhereInput>;
+  productImages_none?: Maybe<ProductImageWhereInput>;
+  categories_every?: Maybe<CategoryWhereInput>;
+  categories_some?: Maybe<CategoryWhereInput>;
+  categories_none?: Maybe<CategoryWhereInput>;
+  skus_every?: Maybe<SKUWhereInput>;
+  skus_some?: Maybe<SKUWhereInput>;
+  skus_none?: Maybe<SKUWhereInput>;
+  AND?: Maybe<ProductWhereInput[] | ProductWhereInput>;
+  OR?: Maybe<ProductWhereInput[] | ProductWhereInput>;
+  NOT?: Maybe<ProductWhereInput[] | ProductWhereInput>;
 }
 
 export interface ProductUpsertNestedInput {
@@ -3496,9 +3572,20 @@ export interface ProductUpsertNestedInput {
   create: ProductCreateInput;
 }
 
-export interface RegionCreateOneWithoutCountriesInput {
-  create?: Maybe<RegionCreateWithoutCountriesInput>;
-  connect?: Maybe<RegionWhereUniqueInput>;
+export interface ProductImageUpdateManyMutationInput {
+  image?: Maybe<String>;
+}
+
+export interface GrindUpdateOneRequiredInput {
+  create?: Maybe<GrindCreateInput>;
+  update?: Maybe<GrindUpdateDataInput>;
+  upsert?: Maybe<GrindUpsertNestedInput>;
+  connect?: Maybe<GrindWhereUniqueInput>;
+}
+
+export interface ProductCreateOneWithoutProductImagesInput {
+  create?: Maybe<ProductCreateWithoutProductImagesInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
 }
 
 export interface OrderCreateInput {
@@ -3512,15 +3599,9 @@ export interface OrderCreateInput {
   orderLines?: Maybe<OrderLineCreateManyWithoutOrderInput>;
 }
 
-export interface ReviewSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ReviewWhereInput>;
-  AND?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-  OR?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
-  NOT?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+export interface RegionUpdateManyWithWhereNestedInput {
+  where: RegionScalarWhereInput;
+  data: RegionUpdateManyDataInput;
 }
 
 export interface CustomerCreateOneInput {
@@ -3528,21 +3609,64 @@ export interface CustomerCreateOneInput {
   connect?: Maybe<CustomerWhereUniqueInput>;
 }
 
-export interface ContentTextSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<ContentTextWhereInput>;
-  AND?: Maybe<
-    ContentTextSubscriptionWhereInput[] | ContentTextSubscriptionWhereInput
-  >;
-  OR?: Maybe<
-    ContentTextSubscriptionWhereInput[] | ContentTextSubscriptionWhereInput
-  >;
-  NOT?: Maybe<
-    ContentTextSubscriptionWhereInput[] | ContentTextSubscriptionWhereInput
-  >;
+export interface ReviewWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  customer?: Maybe<CustomerWhereInput>;
+  product?: Maybe<ProductWhereInput>;
+  rating?: Maybe<Int>;
+  rating_not?: Maybe<Int>;
+  rating_in?: Maybe<Int[] | Int>;
+  rating_not_in?: Maybe<Int[] | Int>;
+  rating_lt?: Maybe<Int>;
+  rating_lte?: Maybe<Int>;
+  rating_gt?: Maybe<Int>;
+  rating_gte?: Maybe<Int>;
+  title?: Maybe<String>;
+  title_not?: Maybe<String>;
+  title_in?: Maybe<String[] | String>;
+  title_not_in?: Maybe<String[] | String>;
+  title_lt?: Maybe<String>;
+  title_lte?: Maybe<String>;
+  title_gt?: Maybe<String>;
+  title_gte?: Maybe<String>;
+  title_contains?: Maybe<String>;
+  title_not_contains?: Maybe<String>;
+  title_starts_with?: Maybe<String>;
+  title_not_starts_with?: Maybe<String>;
+  title_ends_with?: Maybe<String>;
+  title_not_ends_with?: Maybe<String>;
+  content?: Maybe<String>;
+  content_not?: Maybe<String>;
+  content_in?: Maybe<String[] | String>;
+  content_not_in?: Maybe<String[] | String>;
+  content_lt?: Maybe<String>;
+  content_lte?: Maybe<String>;
+  content_gt?: Maybe<String>;
+  content_gte?: Maybe<String>;
+  content_contains?: Maybe<String>;
+  content_not_contains?: Maybe<String>;
+  content_starts_with?: Maybe<String>;
+  content_not_starts_with?: Maybe<String>;
+  content_ends_with?: Maybe<String>;
+  content_not_ends_with?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
+  publishedStatus_not?: Maybe<Boolean>;
+  AND?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
+  OR?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
+  NOT?: Maybe<ReviewWhereInput[] | ReviewWhereInput>;
 }
 
 export interface OrderLineCreateManyWithoutOrderInput {
@@ -3552,9 +3676,25 @@ export interface OrderLineCreateManyWithoutOrderInput {
   connect?: Maybe<OrderLineWhereUniqueInput[] | OrderLineWhereUniqueInput>;
 }
 
-export interface CategoryUpdateDataInput {
-  products?: Maybe<ProductUpdateOneRequiredWithoutCategoriesInput>;
-  category?: Maybe<String>;
+export interface RegionUpdateManyInput {
+  create?: Maybe<RegionCreateInput[] | RegionCreateInput>;
+  update?: Maybe<
+    | RegionUpdateWithWhereUniqueNestedInput[]
+    | RegionUpdateWithWhereUniqueNestedInput
+  >;
+  upsert?: Maybe<
+    | RegionUpsertWithWhereUniqueNestedInput[]
+    | RegionUpsertWithWhereUniqueNestedInput
+  >;
+  delete?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  connect?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  set?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  disconnect?: Maybe<RegionWhereUniqueInput[] | RegionWhereUniqueInput>;
+  deleteMany?: Maybe<RegionScalarWhereInput[] | RegionScalarWhereInput>;
+  updateMany?: Maybe<
+    | RegionUpdateManyWithWhereNestedInput[]
+    | RegionUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface OrderLineCreateWithoutOrderInput {
@@ -3566,34 +3706,38 @@ export interface OrderLineCreateWithoutOrderInput {
   orderPrice: Float;
 }
 
-export interface RegionUpdateManyMutationInput {
-  name?: Maybe<String>;
-}
+export type UserWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+  phone?: Maybe<Int>;
+}>;
 
 export interface SKUCreateOneInput {
   create?: Maybe<SKUCreateInput>;
   connect?: Maybe<SKUWhereUniqueInput>;
 }
 
-export interface ProductImageUpdateManyMutationInput {
-  image?: Maybe<String>;
+export interface OrderCreateWithoutOrderLinesInput {
+  id?: Maybe<ID_Input>;
+  customer: CustomerCreateOneInput;
+  vendor: VendorCreateOneInput;
+  deliveryStatus?: Maybe<String>;
+  orderData: DateTimeInput;
+  orderNote?: Maybe<String>;
+  deliveryAddress: String;
 }
 
 export interface SKUCreateInput {
   id?: Maybe<ID_Input>;
   product: ProductCreateOneWithoutSkusInput;
-  grinded?: Maybe<Boolean>;
-  weight: Int;
-  Price: Float;
+  grindOptions?: Maybe<GrindCreateOneInput>;
+  weight: String;
+  price: String;
 }
 
-export interface OrderUpdateWithoutOrderLinesDataInput {
-  customer?: Maybe<CustomerUpdateOneRequiredInput>;
-  vendor?: Maybe<VendorUpdateOneRequiredInput>;
-  deliveryStatus?: Maybe<String>;
-  orderData?: Maybe<DateTimeInput>;
-  orderNote?: Maybe<String>;
-  deliveryAddress?: Maybe<String>;
+export interface UserCreateOneWithoutVendorInput {
+  create?: Maybe<UserCreateWithoutVendorInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface ProductCreateOneWithoutSkusInput {
@@ -3601,23 +3745,23 @@ export interface ProductCreateOneWithoutSkusInput {
   connect?: Maybe<ProductWhereUniqueInput>;
 }
 
-export interface VendorSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<VendorWhereInput>;
-  AND?: Maybe<VendorSubscriptionWhereInput[] | VendorSubscriptionWhereInput>;
-  OR?: Maybe<VendorSubscriptionWhereInput[] | VendorSubscriptionWhereInput>;
-  NOT?: Maybe<VendorSubscriptionWhereInput[] | VendorSubscriptionWhereInput>;
+export interface ProductImageCreateManyWithoutProductInput {
+  create?: Maybe<
+    | ProductImageCreateWithoutProductInput[]
+    | ProductImageCreateWithoutProductInput
+  >;
+  connect?: Maybe<
+    ProductImageWhereUniqueInput[] | ProductImageWhereUniqueInput
+  >;
 }
 
 export interface ProductCreateWithoutSkusInput {
   id?: Maybe<ID_Input>;
-  title: String;
+  title?: Maybe<String>;
   flavorProfile?: Maybe<String>;
-  description: String;
-  info?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
   published?: Maybe<Boolean>;
   vendor?: Maybe<VendorCreateOneWithoutProductsInput>;
   country?: Maybe<CountryCreateOneWithoutProductsInput>;
@@ -3625,9 +3769,15 @@ export interface ProductCreateWithoutSkusInput {
   categories?: Maybe<CategoryCreateManyWithoutProductsInput>;
 }
 
-export interface UserUpdateManyMutationInput {
-  email?: Maybe<String>;
-  phone?: Maybe<Int>;
+export interface ReviewSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<ReviewWhereInput>;
+  AND?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+  OR?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
+  NOT?: Maybe<ReviewSubscriptionWhereInput[] | ReviewSubscriptionWhereInput>;
 }
 
 export interface OrderUpdateInput {
@@ -3640,9 +3790,15 @@ export interface OrderUpdateInput {
   orderLines?: Maybe<OrderLineUpdateManyWithoutOrderInput>;
 }
 
-export interface CountryUpdateWithWhereUniqueWithoutRegionInput {
-  where: CountryWhereUniqueInput;
-  data: CountryUpdateWithoutRegionDataInput;
+export interface CountrySubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<CountryWhereInput>;
+  AND?: Maybe<CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput>;
+  OR?: Maybe<CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput>;
+  NOT?: Maybe<CountrySubscriptionWhereInput[] | CountrySubscriptionWhereInput>;
 }
 
 export interface CustomerUpdateOneRequiredInput {
@@ -3652,16 +3808,45 @@ export interface CustomerUpdateOneRequiredInput {
   connect?: Maybe<CustomerWhereUniqueInput>;
 }
 
-export interface OrderUpdateManyMutationInput {
-  deliveryStatus?: Maybe<String>;
-  orderData?: Maybe<DateTimeInput>;
-  orderNote?: Maybe<String>;
-  deliveryAddress?: Maybe<String>;
+export interface CategoryUpsertNestedInput {
+  update: CategoryUpdateDataInput;
+  create: CategoryCreateInput;
 }
 
-export interface OrderLineUpdateWithWhereUniqueWithoutOrderInput {
-  where: OrderLineWhereUniqueInput;
-  data: OrderLineUpdateWithoutOrderDataInput;
+export interface CustomerUpdateDataInput {
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  address?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutCustomerInput>;
+}
+
+export interface ReviewCreateInput {
+  id?: Maybe<ID_Input>;
+  customer: CustomerCreateOneInput;
+  product: ProductCreateOneInput;
+  rating: Int;
+  title?: Maybe<String>;
+  content?: Maybe<String>;
+  publishedStatus?: Maybe<Boolean>;
+}
+
+export interface CustomerUpsertNestedInput {
+  update: CustomerUpdateDataInput;
+  create: CustomerCreateInput;
+}
+
+export interface ProductUpdateInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
+  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
+  skus?: Maybe<SKUUpdateManyWithoutProductInput>;
 }
 
 export interface OrderLineUpdateManyWithoutOrderInput {
@@ -3687,41 +3872,204 @@ export interface OrderLineUpdateManyWithoutOrderInput {
   >;
 }
 
-export interface CustomerUpsertNestedInput {
-  update: CustomerUpdateDataInput;
-  create: CustomerCreateInput;
+export interface CountryUpdateManyWithoutRegionInput {
+  create?: Maybe<
+    CountryCreateWithoutRegionInput[] | CountryCreateWithoutRegionInput
+  >;
+  delete?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
+  connect?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
+  set?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
+  disconnect?: Maybe<CountryWhereUniqueInput[] | CountryWhereUniqueInput>;
+  update?: Maybe<
+    | CountryUpdateWithWhereUniqueWithoutRegionInput[]
+    | CountryUpdateWithWhereUniqueWithoutRegionInput
+  >;
+  upsert?: Maybe<
+    | CountryUpsertWithWhereUniqueWithoutRegionInput[]
+    | CountryUpsertWithWhereUniqueWithoutRegionInput
+  >;
+  deleteMany?: Maybe<CountryScalarWhereInput[] | CountryScalarWhereInput>;
+  updateMany?: Maybe<
+    | CountryUpdateManyWithWhereNestedInput[]
+    | CountryUpdateManyWithWhereNestedInput
+  >;
 }
 
-export interface CustomerUpdateDataInput {
-  firstName?: Maybe<String>;
-  lastName?: Maybe<String>;
-  address?: Maybe<String>;
-  user?: Maybe<UserUpdateOneRequiredWithoutCustomerInput>;
+export interface OrderLineUpdateWithWhereUniqueWithoutOrderInput {
+  where: OrderLineWhereUniqueInput;
+  data: OrderLineUpdateWithoutOrderDataInput;
 }
 
-export interface CustomerCreateOneWithoutUserInput {
-  create?: Maybe<CustomerCreateWithoutUserInput>;
-  connect?: Maybe<CustomerWhereUniqueInput>;
+export interface OrderUpdateWithoutOrderLinesDataInput {
+  customer?: Maybe<CustomerUpdateOneRequiredInput>;
+  vendor?: Maybe<VendorUpdateOneRequiredInput>;
+  deliveryStatus?: Maybe<String>;
+  orderData?: Maybe<DateTimeInput>;
+  orderNote?: Maybe<String>;
+  deliveryAddress?: Maybe<String>;
 }
 
-export interface ProductCreateOneWithoutProductImagesInput {
-  create?: Maybe<ProductCreateWithoutProductImagesInput>;
-  connect?: Maybe<ProductWhereUniqueInput>;
+export interface OrderLineUpdateWithoutOrderDataInput {
+  sku?: Maybe<SKUUpdateOneRequiredInput>;
+  productName?: Maybe<String>;
+  grindOption?: Maybe<String>;
+  quantity?: Maybe<Int>;
+  orderPrice?: Maybe<Float>;
 }
 
-export type OrderWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
+export interface CountryCreateOneWithoutProductsInput {
+  create?: Maybe<CountryCreateWithoutProductsInput>;
+  connect?: Maybe<CountryWhereUniqueInput>;
+}
 
-export interface OrderSubscriptionWhereInput {
+export interface SKUUpdateOneRequiredInput {
+  create?: Maybe<SKUCreateInput>;
+  update?: Maybe<SKUUpdateDataInput>;
+  upsert?: Maybe<SKUUpsertNestedInput>;
+  connect?: Maybe<SKUWhereUniqueInput>;
+}
+
+export interface OrderLineSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<OrderWhereInput>;
-  AND?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
-  OR?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
-  NOT?: Maybe<OrderSubscriptionWhereInput[] | OrderSubscriptionWhereInput>;
+  node?: Maybe<OrderLineWhereInput>;
+  AND?: Maybe<
+    OrderLineSubscriptionWhereInput[] | OrderLineSubscriptionWhereInput
+  >;
+  OR?: Maybe<
+    OrderLineSubscriptionWhereInput[] | OrderLineSubscriptionWhereInput
+  >;
+  NOT?: Maybe<
+    OrderLineSubscriptionWhereInput[] | OrderLineSubscriptionWhereInput
+  >;
+}
+
+export interface SKUUpdateDataInput {
+  product?: Maybe<ProductUpdateOneRequiredWithoutSkusInput>;
+  grindOptions?: Maybe<GrindUpdateOneInput>;
+  weight?: Maybe<String>;
+  price?: Maybe<String>;
+}
+
+export interface SubCategoryCreateInput {
+  id?: Maybe<ID_Input>;
+  category: CategoryCreateOneInput;
+  subCategory: String;
+}
+
+export interface ProductUpdateOneRequiredWithoutSkusInput {
+  create?: Maybe<ProductCreateWithoutSkusInput>;
+  update?: Maybe<ProductUpdateWithoutSkusDataInput>;
+  upsert?: Maybe<ProductUpsertWithoutSkusInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
+}
+
+export interface CountryUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface OrderLineUpsertWithWhereUniqueWithoutOrderInput {
+  where: OrderLineWhereUniqueInput;
+  update: OrderLineUpdateWithoutOrderDataInput;
+  create: OrderLineCreateWithoutOrderInput;
+}
+
+export interface SKUUpsertNestedInput {
+  update: SKUUpdateDataInput;
+  create: SKUCreateInput;
+}
+
+export interface ProductUpsertWithoutSkusInput {
+  update: ProductUpdateWithoutSkusDataInput;
+  create: ProductCreateWithoutSkusInput;
+}
+
+export interface ProductUpdateWithoutSkusDataInput {
+  title?: Maybe<String>;
+  flavorProfile?: Maybe<String>;
+  descriptionShort?: Maybe<String>;
+  descriptionLong?: Maybe<String>;
+  brewText?: Maybe<String>;
+  published?: Maybe<Boolean>;
+  vendor?: Maybe<VendorUpdateOneWithoutProductsInput>;
+  country?: Maybe<CountryUpdateOneWithoutProductsInput>;
+  productImages?: Maybe<ProductImageUpdateManyWithoutProductInput>;
+  categories?: Maybe<CategoryUpdateManyWithoutProductsInput>;
+}
+
+export interface CountryCreateWithoutRegionInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  products?: Maybe<ProductCreateManyWithoutCountryInput>;
+}
+
+export interface ProductUpdateOneWithoutProductImagesInput {
+  create?: Maybe<ProductCreateWithoutProductImagesInput>;
+  update?: Maybe<ProductUpdateWithoutProductImagesDataInput>;
+  upsert?: Maybe<ProductUpsertWithoutProductImagesInput>;
+  delete?: Maybe<Boolean>;
+  disconnect?: Maybe<Boolean>;
+  connect?: Maybe<ProductWhereUniqueInput>;
+}
+
+export interface VendorUpdateInput {
+  stripeId?: Maybe<String>;
+  organizationNumber?: Maybe<Int>;
+  displayName?: Maybe<String>;
+  address?: Maybe<String>;
+  bankAccount?: Maybe<String>;
+  logoImage?: Maybe<String>;
+  facebookPageURL?: Maybe<String>;
+  contactPerson?: Maybe<String>;
+  user?: Maybe<UserUpdateOneRequiredWithoutVendorInput>;
+  products?: Maybe<ProductUpdateManyWithoutVendorInput>;
+}
+
+export interface GrindWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  Ja?: Maybe<Boolean>;
+  Ja_not?: Maybe<Boolean>;
+  Nei?: Maybe<Boolean>;
+  Nei_not?: Maybe<Boolean>;
+  Espressomaskin?: Maybe<Boolean>;
+  Espressomaskin_not?: Maybe<Boolean>;
+  Espressokanne?: Maybe<Boolean>;
+  Espressokanne_not?: Maybe<Boolean>;
+  Aeropress?: Maybe<Boolean>;
+  Aeropress_not?: Maybe<Boolean>;
+  DryppV60?: Maybe<Boolean>;
+  DryppV60_not?: Maybe<Boolean>;
+  Filtermalt?: Maybe<Boolean>;
+  Filtermalt_not?: Maybe<Boolean>;
+  Presskanne?: Maybe<Boolean>;
+  Presskanne_not?: Maybe<Boolean>;
+  Chemex?: Maybe<Boolean>;
+  Chemex_not?: Maybe<Boolean>;
+  Kokmalt?: Maybe<Boolean>;
+  Kokmalt_not?: Maybe<Boolean>;
+  AND?: Maybe<GrindWhereInput[] | GrindWhereInput>;
+  OR?: Maybe<GrindWhereInput[] | GrindWhereInput>;
+  NOT?: Maybe<GrindWhereInput[] | GrindWhereInput>;
+}
+
+export interface ProductCreateOneWithoutCategoriesInput {
+  create?: Maybe<ProductCreateWithoutCategoriesInput>;
+  connect?: Maybe<ProductWhereUniqueInput>;
 }
 
 export interface NodeNode {
@@ -3730,6 +4078,7 @@ export interface NodeNode {
 
 export interface VendorPreviousValues {
   id: ID_Output;
+  stripeId?: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -3743,6 +4092,7 @@ export interface VendorPreviousValuesPromise
   extends Promise<VendorPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -3756,6 +4106,7 @@ export interface VendorPreviousValuesSubscription
   extends Promise<AsyncIterator<VendorPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -3765,23 +4116,20 @@ export interface VendorPreviousValuesSubscription
   contactPerson: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CustomerEdge {
-  node: Customer;
-  cursor: String;
+export interface AggregateCustomer {
+  count: Int;
 }
 
-export interface CustomerEdgePromise
-  extends Promise<CustomerEdge>,
+export interface AggregateCustomerPromise
+  extends Promise<AggregateCustomer>,
     Fragmentable {
-  node: <T = CustomerPromise>() => T;
-  cursor: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface CustomerEdgeSubscription
-  extends Promise<AsyncIterator<CustomerEdge>>,
+export interface AggregateCustomerSubscription
+  extends Promise<AsyncIterator<AggregateCustomer>>,
     Fragmentable {
-  node: <T = CustomerSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Country {
@@ -3838,66 +4186,74 @@ export interface CountryNullablePromise
   }) => T;
 }
 
-export interface Grind {
+export interface CustomerEdge {
+  node: Customer;
+  cursor: String;
+}
+
+export interface CustomerEdgePromise
+  extends Promise<CustomerEdge>,
+    Fragmentable {
+  node: <T = CustomerPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CustomerEdgeSubscription
+  extends Promise<AsyncIterator<CustomerEdge>>,
+    Fragmentable {
+  node: <T = CustomerSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface Region {
   id: ID_Output;
-  grindOption: String;
+  name: String;
 }
 
-export interface GrindPromise extends Promise<Grind>, Fragmentable {
+export interface RegionPromise extends Promise<Region>, Fragmentable {
   id: () => Promise<ID_Output>;
-  grindOption: () => Promise<String>;
-  grindOptions: <T = GrindPromise>() => T;
+  name: () => Promise<String>;
+  countries: <T = FragmentableArray<Country>>(args?: {
+    where?: CountryWhereInput;
+    orderBy?: CountryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface GrindSubscription
-  extends Promise<AsyncIterator<Grind>>,
+export interface RegionSubscription
+  extends Promise<AsyncIterator<Region>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  grindOption: () => Promise<AsyncIterator<String>>;
-  grindOptions: <T = GrindSubscription>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  countries: <T = Promise<AsyncIterator<CountrySubscription>>>(args?: {
+    where?: CountryWhereInput;
+    orderBy?: CountryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface GrindNullablePromise
-  extends Promise<Grind | null>,
+export interface RegionNullablePromise
+  extends Promise<Region | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  grindOption: () => Promise<String>;
-  grindOptions: <T = GrindPromise>() => T;
-}
-
-export interface SubCategoryPreviousValues {
-  id: ID_Output;
-  subCategory: String;
-}
-
-export interface SubCategoryPreviousValuesPromise
-  extends Promise<SubCategoryPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  subCategory: () => Promise<String>;
-}
-
-export interface SubCategoryPreviousValuesSubscription
-  extends Promise<AsyncIterator<SubCategoryPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  subCategory: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateCustomer {
-  count: Int;
-}
-
-export interface AggregateCustomerPromise
-  extends Promise<AggregateCustomer>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCustomerSubscription
-  extends Promise<AsyncIterator<AggregateCustomer>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  name: () => Promise<String>;
+  countries: <T = FragmentableArray<Country>>(args?: {
+    where?: CountryWhereInput;
+    orderBy?: CountryOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface CustomerConnection {
@@ -3921,29 +4277,92 @@ export interface CustomerConnectionSubscription
   aggregate: <T = AggregateCustomerSubscription>() => T;
 }
 
-export interface UserSubscriptionPayload {
-  mutation: MutationType;
-  node: User;
-  updatedFields: String[];
-  previousValues: UserPreviousValues;
+export interface AggregateVendor {
+  count: Int;
 }
 
-export interface UserSubscriptionPayloadPromise
-  extends Promise<UserSubscriptionPayload>,
+export interface AggregateVendorPromise
+  extends Promise<AggregateVendor>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = UserPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = UserPreviousValuesPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface UserSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+export interface AggregateVendorSubscription
+  extends Promise<AsyncIterator<AggregateVendor>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = UserSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = UserPreviousValuesSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateCountry {
+  count: Int;
+}
+
+export interface AggregateCountryPromise
+  extends Promise<AggregateCountry>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateCountrySubscription
+  extends Promise<AsyncIterator<AggregateCountry>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface VendorConnection {
+  pageInfo: PageInfo;
+  edges: VendorEdge[];
+}
+
+export interface VendorConnectionPromise
+  extends Promise<VendorConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VendorEdge>>() => T;
+  aggregate: <T = AggregateVendorPromise>() => T;
+}
+
+export interface VendorConnectionSubscription
+  extends Promise<AsyncIterator<VendorConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<VendorEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateVendorSubscription>() => T;
+}
+
+export interface BatchPayload {
+  count: Long;
+}
+
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
+    Fragmentable {
+  count: () => Promise<Long>;
+}
+
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface SubCategoryPreviousValues {
+  id: ID_Output;
+  subCategory: String;
+}
+
+export interface SubCategoryPreviousValuesPromise
+  extends Promise<SubCategoryPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  subCategory: () => Promise<String>;
+}
+
+export interface SubCategoryPreviousValuesSubscription
+  extends Promise<AsyncIterator<SubCategoryPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  subCategory: () => Promise<AsyncIterator<String>>;
 }
 
 export interface VendorEdge {
@@ -3963,20 +4382,20 @@ export interface VendorEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface BatchPayload {
-  count: Long;
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  count: () => Promise<Long>;
+  count: () => Promise<Int>;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Category {
@@ -4006,62 +4425,13 @@ export interface CategoryNullablePromise
   category: () => Promise<String>;
 }
 
-export interface AggregateCountry {
-  count: Int;
-}
-
-export interface AggregateCountryPromise
-  extends Promise<AggregateCountry>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCountrySubscription
-  extends Promise<AsyncIterator<AggregateCountry>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserEdge {
-  node: User;
-  cursor: String;
-}
-
-export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface UserEdgeSubscription
-  extends Promise<AsyncIterator<UserEdge>>,
-    Fragmentable {
-  node: <T = UserSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface CountryEdge {
-  node: Country;
-  cursor: String;
-}
-
-export interface CountryEdgePromise extends Promise<CountryEdge>, Fragmentable {
-  node: <T = CountryPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CountryEdgeSubscription
-  extends Promise<AsyncIterator<CountryEdge>>,
-    Fragmentable {
-  node: <T = CountrySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface Product {
   id: ID_Output;
-  title: String;
+  title?: String;
   flavorProfile?: String;
-  description: String;
-  info?: String;
+  descriptionShort?: String;
+  descriptionLong?: String;
+  brewText?: String;
   published: Boolean;
 }
 
@@ -4069,8 +4439,9 @@ export interface ProductPromise extends Promise<Product>, Fragmentable {
   id: () => Promise<ID_Output>;
   title: () => Promise<String>;
   flavorProfile: () => Promise<String>;
-  description: () => Promise<String>;
-  info: () => Promise<String>;
+  descriptionShort: () => Promise<String>;
+  descriptionLong: () => Promise<String>;
+  brewText: () => Promise<String>;
   published: () => Promise<Boolean>;
   vendor: <T = VendorPromise>() => T;
   country: <T = CountryPromise>() => T;
@@ -4109,8 +4480,9 @@ export interface ProductSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   title: () => Promise<AsyncIterator<String>>;
   flavorProfile: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  info: () => Promise<AsyncIterator<String>>;
+  descriptionShort: () => Promise<AsyncIterator<String>>;
+  descriptionLong: () => Promise<AsyncIterator<String>>;
+  brewText: () => Promise<AsyncIterator<String>>;
   published: () => Promise<AsyncIterator<Boolean>>;
   vendor: <T = VendorSubscription>() => T;
   country: <T = CountrySubscription>() => T;
@@ -4149,8 +4521,9 @@ export interface ProductNullablePromise
   id: () => Promise<ID_Output>;
   title: () => Promise<String>;
   flavorProfile: () => Promise<String>;
-  description: () => Promise<String>;
-  info: () => Promise<String>;
+  descriptionShort: () => Promise<String>;
+  descriptionLong: () => Promise<String>;
+  brewText: () => Promise<String>;
   published: () => Promise<Boolean>;
   vendor: <T = VendorPromise>() => T;
   country: <T = CountryPromise>() => T;
@@ -4183,33 +4556,21 @@ export interface ProductNullablePromise
   }) => T;
 }
 
-export interface ProductImage {
-  id: ID_Output;
-  image: String;
+export interface UserEdge {
+  node: User;
+  cursor: String;
 }
 
-export interface ProductImagePromise
-  extends Promise<ProductImage>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  image: () => Promise<String>;
-  product: <T = ProductPromise>() => T;
+export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface ProductImageSubscription
-  extends Promise<AsyncIterator<ProductImage>>,
+export interface UserEdgeSubscription
+  extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  image: () => Promise<AsyncIterator<String>>;
-  product: <T = ProductSubscription>() => T;
-}
-
-export interface ProductImageNullablePromise
-  extends Promise<ProductImage | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  image: () => Promise<String>;
-  product: <T = ProductPromise>() => T;
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SubCategoryEdge {
@@ -4316,25 +4677,21 @@ export interface AggregateSKUSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface CountryConnection {
-  pageInfo: PageInfo;
-  edges: CountryEdge[];
+export interface CountryEdge {
+  node: Country;
+  cursor: String;
 }
 
-export interface CountryConnectionPromise
-  extends Promise<CountryConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CountryEdge>>() => T;
-  aggregate: <T = AggregateCountryPromise>() => T;
+export interface CountryEdgePromise extends Promise<CountryEdge>, Fragmentable {
+  node: <T = CountryPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface CountryConnectionSubscription
-  extends Promise<AsyncIterator<CountryConnection>>,
+export interface CountryEdgeSubscription
+  extends Promise<AsyncIterator<CountryEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CountryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCountrySubscription>() => T;
+  node: <T = CountrySubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SKUConnection {
@@ -4421,6 +4778,7 @@ export interface ContentAreaPreviousValuesSubscription
 
 export interface Vendor {
   id: ID_Output;
+  stripeId?: String;
   organizationNumber: Int;
   displayName: String;
   address: String;
@@ -4432,6 +4790,7 @@ export interface Vendor {
 
 export interface VendorPromise extends Promise<Vendor>, Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -4455,6 +4814,7 @@ export interface VendorSubscription
   extends Promise<AsyncIterator<Vendor>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  stripeId: () => Promise<AsyncIterator<String>>;
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -4478,6 +4838,7 @@ export interface VendorNullablePromise
   extends Promise<Vendor | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  stripeId: () => Promise<String>;
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
@@ -4497,20 +4858,25 @@ export interface VendorNullablePromise
   }) => T;
 }
 
-export interface AggregateContentText {
-  count: Int;
+export interface CountryConnection {
+  pageInfo: PageInfo;
+  edges: CountryEdge[];
 }
 
-export interface AggregateContentTextPromise
-  extends Promise<AggregateContentText>,
+export interface CountryConnectionPromise
+  extends Promise<CountryConnection>,
     Fragmentable {
-  count: () => Promise<Int>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CountryEdge>>() => T;
+  aggregate: <T = AggregateCountryPromise>() => T;
 }
 
-export interface AggregateContentTextSubscription
-  extends Promise<AsyncIterator<AggregateContentText>>,
+export interface CountryConnectionSubscription
+  extends Promise<AsyncIterator<CountryConnection>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CountryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCountrySubscription>() => T;
 }
 
 export interface AggregateRegion {
@@ -4597,60 +4963,55 @@ export interface ContentTextPreviousValuesSubscription
   publishedStatus: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface AggregateProductImage {
+export interface ProductImageEdge {
+  node: ProductImage;
+  cursor: String;
+}
+
+export interface ProductImageEdgePromise
+  extends Promise<ProductImageEdge>,
+    Fragmentable {
+  node: <T = ProductImagePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ProductImageEdgeSubscription
+  extends Promise<AsyncIterator<ProductImageEdge>>,
+    Fragmentable {
+  node: <T = ProductImageSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateContentText {
   count: Int;
 }
 
-export interface AggregateProductImagePromise
-  extends Promise<AggregateProductImage>,
+export interface AggregateContentTextPromise
+  extends Promise<AggregateContentText>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateProductImageSubscription
-  extends Promise<AsyncIterator<AggregateProductImage>>,
+export interface AggregateContentTextSubscription
+  extends Promise<AsyncIterator<AggregateContentText>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ContentTextEdge {
-  node: ContentText;
-  cursor: String;
+export interface AggregateProduct {
+  count: Int;
 }
 
-export interface ContentTextEdgePromise
-  extends Promise<ContentTextEdge>,
+export interface AggregateProductPromise
+  extends Promise<AggregateProduct>,
     Fragmentable {
-  node: <T = ContentTextPromise>() => T;
-  cursor: () => Promise<String>;
+  count: () => Promise<Int>;
 }
 
-export interface ContentTextEdgeSubscription
-  extends Promise<AsyncIterator<ContentTextEdge>>,
+export interface AggregateProductSubscription
+  extends Promise<AsyncIterator<AggregateProduct>>,
     Fragmentable {
-  node: <T = ContentTextSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ProductImageConnection {
-  pageInfo: PageInfo;
-  edges: ProductImageEdge[];
-}
-
-export interface ProductImageConnectionPromise
-  extends Promise<ProductImageConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProductImageEdge>>() => T;
-  aggregate: <T = AggregateProductImagePromise>() => T;
-}
-
-export interface ProductImageConnectionSubscription
-  extends Promise<AsyncIterator<ProductImageConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProductImageEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProductImageSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface CountrySubscriptionPayload {
@@ -4678,21 +5039,25 @@ export interface CountrySubscriptionPayloadSubscription
   previousValues: <T = CountryPreviousValuesSubscription>() => T;
 }
 
-export interface ProductEdge {
-  node: Product;
-  cursor: String;
+export interface ProductConnection {
+  pageInfo: PageInfo;
+  edges: ProductEdge[];
 }
 
-export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
-  node: <T = ProductPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ProductEdgeSubscription
-  extends Promise<AsyncIterator<ProductEdge>>,
+export interface ProductConnectionPromise
+  extends Promise<ProductConnection>,
     Fragmentable {
-  node: <T = ProductSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProductEdge>>() => T;
+  aggregate: <T = AggregateProductPromise>() => T;
+}
+
+export interface ProductConnectionSubscription
+  extends Promise<AsyncIterator<ProductConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProductSubscription>() => T;
 }
 
 export interface CountryPreviousValues {
@@ -4714,62 +5079,69 @@ export interface CountryPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateOrderLine {
-  count: Int;
+export interface OriginEdge {
+  node: Origin;
+  cursor: String;
 }
 
-export interface AggregateOrderLinePromise
-  extends Promise<AggregateOrderLine>,
+export interface OriginEdgePromise extends Promise<OriginEdge>, Fragmentable {
+  node: <T = OriginPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface OriginEdgeSubscription
+  extends Promise<AsyncIterator<OriginEdge>>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = OriginSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateOrderLineSubscription
-  extends Promise<AsyncIterator<AggregateOrderLine>>,
+export interface ContentTextEdge {
+  node: ContentText;
+  cursor: String;
+}
+
+export interface ContentTextEdgePromise
+  extends Promise<ContentTextEdge>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = ContentTextPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface ContentTextConnection {
-  pageInfo: PageInfo;
-  edges: ContentTextEdge[];
-}
-
-export interface ContentTextConnectionPromise
-  extends Promise<ContentTextConnection>,
+export interface ContentTextEdgeSubscription
+  extends Promise<AsyncIterator<ContentTextEdge>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ContentTextEdge>>() => T;
-  aggregate: <T = AggregateContentTextPromise>() => T;
+  node: <T = ContentTextSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ContentTextConnectionSubscription
-  extends Promise<AsyncIterator<ContentTextConnection>>,
+export interface ProductImage {
+  id: ID_Output;
+  image: String;
+}
+
+export interface ProductImagePromise
+  extends Promise<ProductImage>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ContentTextEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateContentTextSubscription>() => T;
+  id: () => Promise<ID_Output>;
+  image: () => Promise<String>;
+  product: <T = ProductPromise>() => T;
 }
 
-export interface OrderLineConnection {
-  pageInfo: PageInfo;
-  edges: OrderLineEdge[];
-}
-
-export interface OrderLineConnectionPromise
-  extends Promise<OrderLineConnection>,
+export interface ProductImageSubscription
+  extends Promise<AsyncIterator<ProductImage>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<OrderLineEdge>>() => T;
-  aggregate: <T = AggregateOrderLinePromise>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  image: () => Promise<AsyncIterator<String>>;
+  product: <T = ProductSubscription>() => T;
 }
 
-export interface OrderLineConnectionSubscription
-  extends Promise<AsyncIterator<OrderLineConnection>>,
+export interface ProductImageNullablePromise
+  extends Promise<ProductImage | null>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<OrderLineEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateOrderLineSubscription>() => T;
+  id: () => Promise<ID_Output>;
+  image: () => Promise<String>;
+  product: <T = ProductPromise>() => T;
 }
 
 export interface CustomerSubscriptionPayload {
@@ -4797,21 +5169,55 @@ export interface CustomerSubscriptionPayloadSubscription
   previousValues: <T = CustomerPreviousValuesSubscription>() => T;
 }
 
-export interface OrderEdge {
-  node: Order;
-  cursor: String;
+export interface Origin {
+  id: ID_Output;
+  name: String;
 }
 
-export interface OrderEdgePromise extends Promise<OrderEdge>, Fragmentable {
-  node: <T = OrderPromise>() => T;
-  cursor: () => Promise<String>;
+export interface OriginPromise extends Promise<Origin>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  regions: <T = FragmentableArray<Region>>(args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
-export interface OrderEdgeSubscription
-  extends Promise<AsyncIterator<OrderEdge>>,
+export interface OriginSubscription
+  extends Promise<AsyncIterator<Origin>>,
     Fragmentable {
-  node: <T = OrderSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+  regions: <T = Promise<AsyncIterator<RegionSubscription>>>(args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
+}
+
+export interface OriginNullablePromise
+  extends Promise<Origin | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+  regions: <T = FragmentableArray<Region>>(args?: {
+    where?: RegionWhereInput;
+    orderBy?: RegionOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface CustomerPreviousValues {
@@ -4837,6 +5243,734 @@ export interface CustomerPreviousValuesSubscription
   firstName: () => Promise<AsyncIterator<String>>;
   lastName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+}
+
+export interface OrderLineEdge {
+  node: OrderLine;
+  cursor: String;
+}
+
+export interface OrderLineEdgePromise
+  extends Promise<OrderLineEdge>,
+    Fragmentable {
+  node: <T = OrderLinePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface OrderLineEdgeSubscription
+  extends Promise<AsyncIterator<OrderLineEdge>>,
+    Fragmentable {
+  node: <T = OrderLineSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ContentTextConnection {
+  pageInfo: PageInfo;
+  edges: ContentTextEdge[];
+}
+
+export interface ContentTextConnectionPromise
+  extends Promise<ContentTextConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ContentTextEdge>>() => T;
+  aggregate: <T = AggregateContentTextPromise>() => T;
+}
+
+export interface ContentTextConnectionSubscription
+  extends Promise<AsyncIterator<ContentTextConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ContentTextEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateContentTextSubscription>() => T;
+}
+
+export interface AggregateOrder {
+  count: Int;
+}
+
+export interface AggregateOrderPromise
+  extends Promise<AggregateOrder>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateOrderSubscription
+  extends Promise<AsyncIterator<AggregateOrder>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface GrindSubscriptionPayload {
+  mutation: MutationType;
+  node: Grind;
+  updatedFields: String[];
+  previousValues: GrindPreviousValues;
+}
+
+export interface GrindSubscriptionPayloadPromise
+  extends Promise<GrindSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = GrindPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = GrindPreviousValuesPromise>() => T;
+}
+
+export interface GrindSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<GrindSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = GrindSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = GrindPreviousValuesSubscription>() => T;
+}
+
+export interface OrderConnection {
+  pageInfo: PageInfo;
+  edges: OrderEdge[];
+}
+
+export interface OrderConnectionPromise
+  extends Promise<OrderConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<OrderEdge>>() => T;
+  aggregate: <T = AggregateOrderPromise>() => T;
+}
+
+export interface OrderConnectionSubscription
+  extends Promise<AsyncIterator<OrderConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<OrderEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateOrderSubscription>() => T;
+}
+
+export interface GrindPreviousValues {
+  id: ID_Output;
+  Ja?: Boolean;
+  Nei?: Boolean;
+  Espressomaskin?: Boolean;
+  Espressokanne?: Boolean;
+  Aeropress?: Boolean;
+  DryppV60?: Boolean;
+  Filtermalt?: Boolean;
+  Presskanne?: Boolean;
+  Chemex?: Boolean;
+  Kokmalt?: Boolean;
+}
+
+export interface GrindPreviousValuesPromise
+  extends Promise<GrindPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  Ja: () => Promise<Boolean>;
+  Nei: () => Promise<Boolean>;
+  Espressomaskin: () => Promise<Boolean>;
+  Espressokanne: () => Promise<Boolean>;
+  Aeropress: () => Promise<Boolean>;
+  DryppV60: () => Promise<Boolean>;
+  Filtermalt: () => Promise<Boolean>;
+  Presskanne: () => Promise<Boolean>;
+  Chemex: () => Promise<Boolean>;
+  Kokmalt: () => Promise<Boolean>;
+}
+
+export interface GrindPreviousValuesSubscription
+  extends Promise<AsyncIterator<GrindPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  Ja: () => Promise<AsyncIterator<Boolean>>;
+  Nei: () => Promise<AsyncIterator<Boolean>>;
+  Espressomaskin: () => Promise<AsyncIterator<Boolean>>;
+  Espressokanne: () => Promise<AsyncIterator<Boolean>>;
+  Aeropress: () => Promise<AsyncIterator<Boolean>>;
+  DryppV60: () => Promise<AsyncIterator<Boolean>>;
+  Filtermalt: () => Promise<AsyncIterator<Boolean>>;
+  Presskanne: () => Promise<AsyncIterator<Boolean>>;
+  Chemex: () => Promise<AsyncIterator<Boolean>>;
+  Kokmalt: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface OrderLine {
+  id: ID_Output;
+  productName: String;
+  grindOption: String;
+  quantity: Int;
+  orderPrice: Float;
+}
+
+export interface OrderLinePromise extends Promise<OrderLine>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  order: <T = OrderPromise>() => T;
+  sku: <T = SKUPromise>() => T;
+  productName: () => Promise<String>;
+  grindOption: () => Promise<String>;
+  quantity: () => Promise<Int>;
+  orderPrice: () => Promise<Float>;
+}
+
+export interface OrderLineSubscription
+  extends Promise<AsyncIterator<OrderLine>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  order: <T = OrderSubscription>() => T;
+  sku: <T = SKUSubscription>() => T;
+  productName: () => Promise<AsyncIterator<String>>;
+  grindOption: () => Promise<AsyncIterator<String>>;
+  quantity: () => Promise<AsyncIterator<Int>>;
+  orderPrice: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface OrderLineNullablePromise
+  extends Promise<OrderLine | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  order: <T = OrderPromise>() => T;
+  sku: <T = SKUPromise>() => T;
+  productName: () => Promise<String>;
+  grindOption: () => Promise<String>;
+  quantity: () => Promise<Int>;
+  orderPrice: () => Promise<Float>;
+}
+
+export interface ContentText {
+  id: ID_Output;
+  content: String;
+  publishedStatus: Boolean;
+}
+
+export interface ContentTextPromise extends Promise<ContentText>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  vendor: <T = VendorPromise>() => T;
+  contentArea: <T = ContentAreaPromise>() => T;
+  content: () => Promise<String>;
+  publishedStatus: () => Promise<Boolean>;
+}
+
+export interface ContentTextSubscription
+  extends Promise<AsyncIterator<ContentText>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  vendor: <T = VendorSubscription>() => T;
+  contentArea: <T = ContentAreaSubscription>() => T;
+  content: () => Promise<AsyncIterator<String>>;
+  publishedStatus: () => Promise<AsyncIterator<Boolean>>;
+}
+
+export interface ContentTextNullablePromise
+  extends Promise<ContentText | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  vendor: <T = VendorPromise>() => T;
+  contentArea: <T = ContentAreaPromise>() => T;
+  content: () => Promise<String>;
+  publishedStatus: () => Promise<Boolean>;
+}
+
+export interface UserSubscriptionPayload {
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
+}
+
+export interface UserSubscriptionPayloadPromise
+  extends Promise<UserSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
+}
+
+export interface UserSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<UserSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
+}
+
+export interface GrindOptionSubscriptionPayload {
+  mutation: MutationType;
+  node: GrindOption;
+  updatedFields: String[];
+  previousValues: GrindOptionPreviousValues;
+}
+
+export interface GrindOptionSubscriptionPayloadPromise
+  extends Promise<GrindOptionSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = GrindOptionPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = GrindOptionPreviousValuesPromise>() => T;
+}
+
+export interface GrindOptionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<GrindOptionSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = GrindOptionSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = GrindOptionPreviousValuesSubscription>() => T;
+}
+
+export interface AggregateGrindOption {
+  count: Int;
+}
+
+export interface AggregateGrindOptionPromise
+  extends Promise<AggregateGrindOption>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateGrindOptionSubscription
+  extends Promise<AsyncIterator<AggregateGrindOption>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface GrindOptionPreviousValues {
+  id: ID_Output;
+}
+
+export interface GrindOptionPreviousValuesPromise
+  extends Promise<GrindOptionPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+}
+
+export interface GrindOptionPreviousValuesSubscription
+  extends Promise<AsyncIterator<GrindOptionPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+}
+
+export interface GrindOptionConnection {
+  pageInfo: PageInfo;
+  edges: GrindOptionEdge[];
+}
+
+export interface GrindOptionConnectionPromise
+  extends Promise<GrindOptionConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<GrindOptionEdge>>() => T;
+  aggregate: <T = AggregateGrindOptionPromise>() => T;
+}
+
+export interface GrindOptionConnectionSubscription
+  extends Promise<AsyncIterator<GrindOptionConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<GrindOptionEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateGrindOptionSubscription>() => T;
+}
+
+export interface AggregateContentArea {
+  count: Int;
+}
+
+export interface AggregateContentAreaPromise
+  extends Promise<AggregateContentArea>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateContentAreaSubscription
+  extends Promise<AsyncIterator<AggregateContentArea>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface AggregateGrind {
+  count: Int;
+}
+
+export interface AggregateGrindPromise
+  extends Promise<AggregateGrind>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateGrindSubscription
+  extends Promise<AsyncIterator<AggregateGrind>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface OrderSubscriptionPayload {
+  mutation: MutationType;
+  node: Order;
+  updatedFields: String[];
+  previousValues: OrderPreviousValues;
+}
+
+export interface OrderSubscriptionPayloadPromise
+  extends Promise<OrderSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = OrderPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = OrderPreviousValuesPromise>() => T;
+}
+
+export interface OrderSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<OrderSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = OrderSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = OrderPreviousValuesSubscription>() => T;
+}
+
+export interface GrindConnection {
+  pageInfo: PageInfo;
+  edges: GrindEdge[];
+}
+
+export interface GrindConnectionPromise
+  extends Promise<GrindConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<GrindEdge>>() => T;
+  aggregate: <T = AggregateGrindPromise>() => T;
+}
+
+export interface GrindConnectionSubscription
+  extends Promise<AsyncIterator<GrindConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<GrindEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateGrindSubscription>() => T;
+}
+
+export interface OrderPreviousValues {
+  id: ID_Output;
+  deliveryStatus?: String;
+  orderData: DateTimeOutput;
+  orderNote?: String;
+  deliveryAddress: String;
+}
+
+export interface OrderPreviousValuesPromise
+  extends Promise<OrderPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  deliveryStatus: () => Promise<String>;
+  orderData: () => Promise<DateTimeOutput>;
+  orderNote: () => Promise<String>;
+  deliveryAddress: () => Promise<String>;
+}
+
+export interface OrderPreviousValuesSubscription
+  extends Promise<AsyncIterator<OrderPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  deliveryStatus: () => Promise<AsyncIterator<String>>;
+  orderData: () => Promise<AsyncIterator<DateTimeOutput>>;
+  orderNote: () => Promise<AsyncIterator<String>>;
+  deliveryAddress: () => Promise<AsyncIterator<String>>;
+}
+
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
+}
+
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
+}
+
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
+}
+
+export interface ContentAreaEdge {
+  node: ContentArea;
+  cursor: String;
+}
+
+export interface ContentAreaEdgePromise
+  extends Promise<ContentAreaEdge>,
+    Fragmentable {
+  node: <T = ContentAreaPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface ContentAreaEdgeSubscription
+  extends Promise<AsyncIterator<ContentAreaEdge>>,
+    Fragmentable {
+  node: <T = ContentAreaSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SubCategoryConnection {
+  pageInfo: PageInfo;
+  edges: SubCategoryEdge[];
+}
+
+export interface SubCategoryConnectionPromise
+  extends Promise<SubCategoryConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<SubCategoryEdge>>() => T;
+  aggregate: <T = AggregateSubCategoryPromise>() => T;
+}
+
+export interface SubCategoryConnectionSubscription
+  extends Promise<AsyncIterator<SubCategoryConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<SubCategoryEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSubCategorySubscription>() => T;
+}
+
+export interface OrderLineSubscriptionPayload {
+  mutation: MutationType;
+  node: OrderLine;
+  updatedFields: String[];
+  previousValues: OrderLinePreviousValues;
+}
+
+export interface OrderLineSubscriptionPayloadPromise
+  extends Promise<OrderLineSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = OrderLinePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = OrderLinePreviousValuesPromise>() => T;
+}
+
+export interface OrderLineSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<OrderLineSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = OrderLineSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = OrderLinePreviousValuesSubscription>() => T;
+}
+
+export interface SKUEdge {
+  node: SKU;
+  cursor: String;
+}
+
+export interface SKUEdgePromise extends Promise<SKUEdge>, Fragmentable {
+  node: <T = SKUPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface SKUEdgeSubscription
+  extends Promise<AsyncIterator<SKUEdge>>,
+    Fragmentable {
+  node: <T = SKUSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface OrderLinePreviousValues {
+  id: ID_Output;
+  productName: String;
+  grindOption: String;
+  quantity: Int;
+  orderPrice: Float;
+}
+
+export interface OrderLinePreviousValuesPromise
+  extends Promise<OrderLinePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  productName: () => Promise<String>;
+  grindOption: () => Promise<String>;
+  quantity: () => Promise<Int>;
+  orderPrice: () => Promise<Float>;
+}
+
+export interface OrderLinePreviousValuesSubscription
+  extends Promise<AsyncIterator<OrderLinePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  productName: () => Promise<AsyncIterator<String>>;
+  grindOption: () => Promise<AsyncIterator<String>>;
+  quantity: () => Promise<AsyncIterator<Int>>;
+  orderPrice: () => Promise<AsyncIterator<Float>>;
+}
+
+export interface ReviewConnection {
+  pageInfo: PageInfo;
+  edges: ReviewEdge[];
+}
+
+export interface ReviewConnectionPromise
+  extends Promise<ReviewConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ReviewEdge>>() => T;
+  aggregate: <T = AggregateReviewPromise>() => T;
+}
+
+export interface ReviewConnectionSubscription
+  extends Promise<AsyncIterator<ReviewConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ReviewEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateReviewSubscription>() => T;
+}
+
+export interface ContentAreaConnection {
+  pageInfo: PageInfo;
+  edges: ContentAreaEdge[];
+}
+
+export interface ContentAreaConnectionPromise
+  extends Promise<ContentAreaConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ContentAreaEdge>>() => T;
+  aggregate: <T = AggregateContentAreaPromise>() => T;
+}
+
+export interface ContentAreaConnectionSubscription
+  extends Promise<AsyncIterator<ContentAreaConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ContentAreaEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateContentAreaSubscription>() => T;
+}
+
+export interface RegionEdge {
+  node: Region;
+  cursor: String;
+}
+
+export interface RegionEdgePromise extends Promise<RegionEdge>, Fragmentable {
+  node: <T = RegionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface RegionEdgeSubscription
+  extends Promise<AsyncIterator<RegionEdge>>,
+    Fragmentable {
+  node: <T = RegionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface OriginSubscriptionPayload {
+  mutation: MutationType;
+  node: Origin;
+  updatedFields: String[];
+  previousValues: OriginPreviousValues;
+}
+
+export interface OriginSubscriptionPayloadPromise
+  extends Promise<OriginSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = OriginPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = OriginPreviousValuesPromise>() => T;
+}
+
+export interface OriginSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<OriginSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = OriginSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = OriginPreviousValuesSubscription>() => T;
+}
+
+export interface ProductImageConnection {
+  pageInfo: PageInfo;
+  edges: ProductImageEdge[];
+}
+
+export interface ProductImageConnectionPromise
+  extends Promise<ProductImageConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<ProductImageEdge>>() => T;
+  aggregate: <T = AggregateProductImagePromise>() => T;
+}
+
+export interface ProductImageConnectionSubscription
+  extends Promise<AsyncIterator<ProductImageConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<ProductImageEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateProductImageSubscription>() => T;
+}
+
+export interface OriginPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface OriginPreviousValuesPromise
+  extends Promise<OriginPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface OriginPreviousValuesSubscription
+  extends Promise<AsyncIterator<OriginPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateOrigin {
+  count: Int;
+}
+
+export interface AggregateOriginPromise
+  extends Promise<AggregateOrigin>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateOriginSubscription
+  extends Promise<AsyncIterator<AggregateOrigin>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface ContentArea {
+  id: ID_Output;
+  name: String;
+}
+
+export interface ContentAreaPromise extends Promise<ContentArea>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface ContentAreaSubscription
+  extends Promise<AsyncIterator<ContentArea>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
+}
+
+export interface ContentAreaNullablePromise
+  extends Promise<ContentArea | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
 }
 
 export interface User {
@@ -4873,38 +6007,84 @@ export interface UserNullablePromise
   vendor: <T = VendorPromise>() => T;
 }
 
-export interface ContentText {
+export interface ProductSubscriptionPayload {
+  mutation: MutationType;
+  node: Product;
+  updatedFields: String[];
+  previousValues: ProductPreviousValues;
+}
+
+export interface ProductSubscriptionPayloadPromise
+  extends Promise<ProductSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = ProductPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ProductPreviousValuesPromise>() => T;
+}
+
+export interface ProductSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ProductSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ProductSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ProductPreviousValuesSubscription>() => T;
+}
+
+export interface OrderLineConnection {
+  pageInfo: PageInfo;
+  edges: OrderLineEdge[];
+}
+
+export interface OrderLineConnectionPromise
+  extends Promise<OrderLineConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<OrderLineEdge>>() => T;
+  aggregate: <T = AggregateOrderLinePromise>() => T;
+}
+
+export interface OrderLineConnectionSubscription
+  extends Promise<AsyncIterator<OrderLineConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<OrderLineEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateOrderLineSubscription>() => T;
+}
+
+export interface ProductPreviousValues {
   id: ID_Output;
-  content: String;
-  publishedStatus: Boolean;
+  title?: String;
+  flavorProfile?: String;
+  descriptionShort?: String;
+  descriptionLong?: String;
+  brewText?: String;
+  published: Boolean;
 }
 
-export interface ContentTextPromise extends Promise<ContentText>, Fragmentable {
+export interface ProductPreviousValuesPromise
+  extends Promise<ProductPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  vendor: <T = VendorPromise>() => T;
-  contentArea: <T = ContentAreaPromise>() => T;
-  content: () => Promise<String>;
-  publishedStatus: () => Promise<Boolean>;
+  title: () => Promise<String>;
+  flavorProfile: () => Promise<String>;
+  descriptionShort: () => Promise<String>;
+  descriptionLong: () => Promise<String>;
+  brewText: () => Promise<String>;
+  published: () => Promise<Boolean>;
 }
 
-export interface ContentTextSubscription
-  extends Promise<AsyncIterator<ContentText>>,
+export interface ProductPreviousValuesSubscription
+  extends Promise<AsyncIterator<ProductPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  vendor: <T = VendorSubscription>() => T;
-  contentArea: <T = ContentAreaSubscription>() => T;
-  content: () => Promise<AsyncIterator<String>>;
-  publishedStatus: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface ContentTextNullablePromise
-  extends Promise<ContentText | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  vendor: <T = VendorPromise>() => T;
-  contentArea: <T = ContentAreaPromise>() => T;
-  content: () => Promise<String>;
-  publishedStatus: () => Promise<Boolean>;
+  title: () => Promise<AsyncIterator<String>>;
+  flavorProfile: () => Promise<AsyncIterator<String>>;
+  descriptionShort: () => Promise<AsyncIterator<String>>;
+  descriptionLong: () => Promise<AsyncIterator<String>>;
+  brewText: () => Promise<AsyncIterator<String>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
 }
 
 export interface Customer {
@@ -4942,29 +6122,20 @@ export interface CustomerNullablePromise
   user: <T = UserPromise>() => T;
 }
 
-export interface GrindSubscriptionPayload {
-  mutation: MutationType;
-  node: Grind;
-  updatedFields: String[];
-  previousValues: GrindPreviousValues;
+export interface AggregateCategory {
+  count: Int;
 }
 
-export interface GrindSubscriptionPayloadPromise
-  extends Promise<GrindSubscriptionPayload>,
+export interface AggregateCategoryPromise
+  extends Promise<AggregateCategory>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = GrindPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = GrindPreviousValuesPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface GrindSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<GrindSubscriptionPayload>>,
+export interface AggregateCategorySubscription
+  extends Promise<AsyncIterator<AggregateCategory>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = GrindSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = GrindPreviousValuesSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface Order {
@@ -5036,58 +6207,29 @@ export interface OrderNullablePromise
   }) => T;
 }
 
-export interface GrindPreviousValues {
-  id: ID_Output;
-  grindOption: String;
+export interface ProductImageSubscriptionPayload {
+  mutation: MutationType;
+  node: ProductImage;
+  updatedFields: String[];
+  previousValues: ProductImagePreviousValues;
 }
 
-export interface GrindPreviousValuesPromise
-  extends Promise<GrindPreviousValues>,
+export interface ProductImageSubscriptionPayloadPromise
+  extends Promise<ProductImageSubscriptionPayload>,
     Fragmentable {
-  id: () => Promise<ID_Output>;
-  grindOption: () => Promise<String>;
+  mutation: () => Promise<MutationType>;
+  node: <T = ProductImagePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = ProductImagePreviousValuesPromise>() => T;
 }
 
-export interface GrindPreviousValuesSubscription
-  extends Promise<AsyncIterator<GrindPreviousValues>>,
+export interface ProductImageSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<ProductImageSubscriptionPayload>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  grindOption: () => Promise<AsyncIterator<String>>;
-}
-
-export interface GrindOptionEdge {
-  node: GrindOption;
-  cursor: String;
-}
-
-export interface GrindOptionEdgePromise
-  extends Promise<GrindOptionEdge>,
-    Fragmentable {
-  node: <T = GrindOptionPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface GrindOptionEdgeSubscription
-  extends Promise<AsyncIterator<GrindOptionEdge>>,
-    Fragmentable {
-  node: <T = GrindOptionSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateContentArea {
-  count: Int;
-}
-
-export interface AggregateContentAreaPromise
-  extends Promise<AggregateContentArea>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateContentAreaSubscription
-  extends Promise<AsyncIterator<AggregateContentArea>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = ProductImageSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = ProductImagePreviousValuesSubscription>() => T;
 }
 
 export interface GrindOption {
@@ -5116,182 +6258,74 @@ export interface GrindOptionNullablePromise
   grind: <T = GrindPromise>() => T;
 }
 
-export interface GrindOptionSubscriptionPayload {
-  mutation: MutationType;
-  node: GrindOption;
-  updatedFields: String[];
-  previousValues: GrindOptionPreviousValues;
+export interface ProductImagePreviousValues {
+  id: ID_Output;
+  image: String;
 }
 
-export interface GrindOptionSubscriptionPayloadPromise
-  extends Promise<GrindOptionSubscriptionPayload>,
+export interface ProductImagePreviousValuesPromise
+  extends Promise<ProductImagePreviousValues>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = GrindOptionPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = GrindOptionPreviousValuesPromise>() => T;
+  id: () => Promise<ID_Output>;
+  image: () => Promise<String>;
 }
 
-export interface GrindOptionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<GrindOptionSubscriptionPayload>>,
+export interface ProductImagePreviousValuesSubscription
+  extends Promise<AsyncIterator<ProductImagePreviousValues>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = GrindOptionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = GrindOptionPreviousValuesSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  image: () => Promise<AsyncIterator<String>>;
 }
 
-export interface GrindEdge {
-  node: Grind;
+export interface SKU {
+  id: ID_Output;
+  weight: String;
+  price: String;
+}
+
+export interface SKUPromise extends Promise<SKU>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  product: <T = ProductPromise>() => T;
+  grindOptions: <T = GrindPromise>() => T;
+  weight: () => Promise<String>;
+  price: () => Promise<String>;
+}
+
+export interface SKUSubscription
+  extends Promise<AsyncIterator<SKU>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  product: <T = ProductSubscription>() => T;
+  grindOptions: <T = GrindSubscription>() => T;
+  weight: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<String>>;
+}
+
+export interface SKUNullablePromise extends Promise<SKU | null>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  product: <T = ProductPromise>() => T;
+  grindOptions: <T = GrindPromise>() => T;
+  weight: () => Promise<String>;
+  price: () => Promise<String>;
+}
+
+export interface CategoryEdge {
+  node: Category;
   cursor: String;
 }
 
-export interface GrindEdgePromise extends Promise<GrindEdge>, Fragmentable {
-  node: <T = GrindPromise>() => T;
+export interface CategoryEdgePromise
+  extends Promise<CategoryEdge>,
+    Fragmentable {
+  node: <T = CategoryPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface GrindEdgeSubscription
-  extends Promise<AsyncIterator<GrindEdge>>,
+export interface CategoryEdgeSubscription
+  extends Promise<AsyncIterator<CategoryEdge>>,
     Fragmentable {
-  node: <T = GrindSubscription>() => T;
+  node: <T = CategorySubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface GrindOptionPreviousValues {
-  id: ID_Output;
-}
-
-export interface GrindOptionPreviousValuesPromise
-  extends Promise<GrindOptionPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-}
-
-export interface GrindOptionPreviousValuesSubscription
-  extends Promise<AsyncIterator<GrindOptionPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-}
-
-export interface AggregateVendor {
-  count: Int;
-}
-
-export interface AggregateVendorPromise
-  extends Promise<AggregateVendor>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateVendorSubscription
-  extends Promise<AsyncIterator<AggregateVendor>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ContentAreaEdge {
-  node: ContentArea;
-  cursor: String;
-}
-
-export interface ContentAreaEdgePromise
-  extends Promise<ContentAreaEdge>,
-    Fragmentable {
-  node: <T = ContentAreaPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ContentAreaEdgeSubscription
-  extends Promise<AsyncIterator<ContentAreaEdge>>,
-    Fragmentable {
-  node: <T = ContentAreaSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface OrderSubscriptionPayload {
-  mutation: MutationType;
-  node: Order;
-  updatedFields: String[];
-  previousValues: OrderPreviousValues;
-}
-
-export interface OrderSubscriptionPayloadPromise
-  extends Promise<OrderSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = OrderPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = OrderPreviousValuesPromise>() => T;
-}
-
-export interface OrderSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<OrderSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = OrderSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = OrderPreviousValuesSubscription>() => T;
-}
-
-export interface AggregateSubCategory {
-  count: Int;
-}
-
-export interface AggregateSubCategoryPromise
-  extends Promise<AggregateSubCategory>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateSubCategorySubscription
-  extends Promise<AsyncIterator<AggregateSubCategory>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface OrderPreviousValues {
-  id: ID_Output;
-  deliveryStatus?: String;
-  orderData: DateTimeOutput;
-  orderNote?: String;
-  deliveryAddress: String;
-}
-
-export interface OrderPreviousValuesPromise
-  extends Promise<OrderPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  deliveryStatus: () => Promise<String>;
-  orderData: () => Promise<DateTimeOutput>;
-  orderNote: () => Promise<String>;
-  deliveryAddress: () => Promise<String>;
-}
-
-export interface OrderPreviousValuesSubscription
-  extends Promise<AsyncIterator<OrderPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  deliveryStatus: () => Promise<AsyncIterator<String>>;
-  orderData: () => Promise<AsyncIterator<DateTimeOutput>>;
-  orderNote: () => Promise<AsyncIterator<String>>;
-  deliveryAddress: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SubCategory {
@@ -5321,66 +6355,29 @@ export interface SubCategoryNullablePromise
   subCategory: () => Promise<String>;
 }
 
-export interface ContentAreaConnection {
-  pageInfo: PageInfo;
-  edges: ContentAreaEdge[];
-}
-
-export interface ContentAreaConnectionPromise
-  extends Promise<ContentAreaConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ContentAreaEdge>>() => T;
-  aggregate: <T = AggregateContentAreaPromise>() => T;
-}
-
-export interface ContentAreaConnectionSubscription
-  extends Promise<AsyncIterator<ContentAreaConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ContentAreaEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateContentAreaSubscription>() => T;
-}
-
-export interface AggregateReview {
-  count: Int;
-}
-
-export interface AggregateReviewPromise
-  extends Promise<AggregateReview>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateReviewSubscription
-  extends Promise<AsyncIterator<AggregateReview>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface OrderLineSubscriptionPayload {
+export interface RegionSubscriptionPayload {
   mutation: MutationType;
-  node: OrderLine;
+  node: Region;
   updatedFields: String[];
-  previousValues: OrderLinePreviousValues;
+  previousValues: RegionPreviousValues;
 }
 
-export interface OrderLineSubscriptionPayloadPromise
-  extends Promise<OrderLineSubscriptionPayload>,
+export interface RegionSubscriptionPayloadPromise
+  extends Promise<RegionSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = OrderLinePromise>() => T;
+  node: <T = RegionPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = OrderLinePreviousValuesPromise>() => T;
+  previousValues: <T = RegionPreviousValuesPromise>() => T;
 }
 
-export interface OrderLineSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<OrderLineSubscriptionPayload>>,
+export interface RegionSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<RegionSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = OrderLineSubscription>() => T;
+  node: <T = RegionSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = OrderLinePreviousValuesSubscription>() => T;
+  previousValues: <T = RegionPreviousValuesSubscription>() => T;
 }
 
 export interface Review {
@@ -5425,427 +6422,6 @@ export interface ReviewNullablePromise
   publishedStatus: () => Promise<Boolean>;
 }
 
-export interface OrderLinePreviousValues {
-  id: ID_Output;
-  productName: String;
-  grindOption: String;
-  quantity: Int;
-  orderPrice: Float;
-}
-
-export interface OrderLinePreviousValuesPromise
-  extends Promise<OrderLinePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  productName: () => Promise<String>;
-  grindOption: () => Promise<String>;
-  quantity: () => Promise<Int>;
-  orderPrice: () => Promise<Float>;
-}
-
-export interface OrderLinePreviousValuesSubscription
-  extends Promise<AsyncIterator<OrderLinePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  productName: () => Promise<AsyncIterator<String>>;
-  grindOption: () => Promise<AsyncIterator<String>>;
-  quantity: () => Promise<AsyncIterator<Int>>;
-  orderPrice: () => Promise<AsyncIterator<Float>>;
-}
-
-export interface Region {
-  id: ID_Output;
-  name: String;
-}
-
-export interface RegionPromise extends Promise<Region>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  countries: <T = FragmentableArray<Country>>(args?: {
-    where?: CountryWhereInput;
-    orderBy?: CountryOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface RegionSubscription
-  extends Promise<AsyncIterator<Region>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-  countries: <T = Promise<AsyncIterator<CountrySubscription>>>(args?: {
-    where?: CountryWhereInput;
-    orderBy?: CountryOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface RegionNullablePromise
-  extends Promise<Region | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-  countries: <T = FragmentableArray<Country>>(args?: {
-    where?: CountryWhereInput;
-    orderBy?: CountryOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-}
-
-export interface ContentArea {
-  id: ID_Output;
-  name: String;
-}
-
-export interface ContentAreaPromise extends Promise<ContentArea>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface ContentAreaSubscription
-  extends Promise<AsyncIterator<ContentArea>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ContentAreaNullablePromise
-  extends Promise<ContentArea | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  name: () => Promise<String>;
-}
-
-export interface AggregateProduct {
-  count: Int;
-}
-
-export interface AggregateProductPromise
-  extends Promise<AggregateProduct>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateProductSubscription
-  extends Promise<AsyncIterator<AggregateProduct>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ProductSubscriptionPayload {
-  mutation: MutationType;
-  node: Product;
-  updatedFields: String[];
-  previousValues: ProductPreviousValues;
-}
-
-export interface ProductSubscriptionPayloadPromise
-  extends Promise<ProductSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ProductPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ProductPreviousValuesPromise>() => T;
-}
-
-export interface ProductSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ProductSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ProductSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ProductPreviousValuesSubscription>() => T;
-}
-
-export interface OrderLineEdge {
-  node: OrderLine;
-  cursor: String;
-}
-
-export interface OrderLineEdgePromise
-  extends Promise<OrderLineEdge>,
-    Fragmentable {
-  node: <T = OrderLinePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface OrderLineEdgeSubscription
-  extends Promise<AsyncIterator<OrderLineEdge>>,
-    Fragmentable {
-  node: <T = OrderLineSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface ProductPreviousValues {
-  id: ID_Output;
-  title: String;
-  flavorProfile?: String;
-  description: String;
-  info?: String;
-  published: Boolean;
-}
-
-export interface ProductPreviousValuesPromise
-  extends Promise<ProductPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  title: () => Promise<String>;
-  flavorProfile: () => Promise<String>;
-  description: () => Promise<String>;
-  info: () => Promise<String>;
-  published: () => Promise<Boolean>;
-}
-
-export interface ProductPreviousValuesSubscription
-  extends Promise<AsyncIterator<ProductPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  title: () => Promise<AsyncIterator<String>>;
-  flavorProfile: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
-  info: () => Promise<AsyncIterator<String>>;
-  published: () => Promise<AsyncIterator<Boolean>>;
-}
-
-export interface OrderConnection {
-  pageInfo: PageInfo;
-  edges: OrderEdge[];
-}
-
-export interface OrderConnectionPromise
-  extends Promise<OrderConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<OrderEdge>>() => T;
-  aggregate: <T = AggregateOrderPromise>() => T;
-}
-
-export interface OrderConnectionSubscription
-  extends Promise<AsyncIterator<OrderConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<OrderEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateOrderSubscription>() => T;
-}
-
-export interface AggregateCategory {
-  count: Int;
-}
-
-export interface AggregateCategoryPromise
-  extends Promise<AggregateCategory>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateCategorySubscription
-  extends Promise<AsyncIterator<AggregateCategory>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface UserPreviousValues {
-  id: ID_Output;
-  email: String;
-  phone?: Int;
-}
-
-export interface UserPreviousValuesPromise
-  extends Promise<UserPreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  email: () => Promise<String>;
-  phone: () => Promise<Int>;
-}
-
-export interface UserPreviousValuesSubscription
-  extends Promise<AsyncIterator<UserPreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  email: () => Promise<AsyncIterator<String>>;
-  phone: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface ProductImageSubscriptionPayload {
-  mutation: MutationType;
-  node: ProductImage;
-  updatedFields: String[];
-  previousValues: ProductImagePreviousValues;
-}
-
-export interface ProductImageSubscriptionPayloadPromise
-  extends Promise<ProductImageSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = ProductImagePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = ProductImagePreviousValuesPromise>() => T;
-}
-
-export interface ProductImageSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<ProductImageSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = ProductImageSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = ProductImagePreviousValuesSubscription>() => T;
-}
-
-export interface GrindOptionConnection {
-  pageInfo: PageInfo;
-  edges: GrindOptionEdge[];
-}
-
-export interface GrindOptionConnectionPromise
-  extends Promise<GrindOptionConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GrindOptionEdge>>() => T;
-  aggregate: <T = AggregateGrindOptionPromise>() => T;
-}
-
-export interface GrindOptionConnectionSubscription
-  extends Promise<AsyncIterator<GrindOptionConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GrindOptionEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGrindOptionSubscription>() => T;
-}
-
-export interface ProductImagePreviousValues {
-  id: ID_Output;
-  image: String;
-}
-
-export interface ProductImagePreviousValuesPromise
-  extends Promise<ProductImagePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  image: () => Promise<String>;
-}
-
-export interface ProductImagePreviousValuesSubscription
-  extends Promise<AsyncIterator<ProductImagePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  image: () => Promise<AsyncIterator<String>>;
-}
-
-export interface GrindConnection {
-  pageInfo: PageInfo;
-  edges: GrindEdge[];
-}
-
-export interface GrindConnectionPromise
-  extends Promise<GrindConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<GrindEdge>>() => T;
-  aggregate: <T = AggregateGrindPromise>() => T;
-}
-
-export interface GrindConnectionSubscription
-  extends Promise<AsyncIterator<GrindConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<GrindEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateGrindSubscription>() => T;
-}
-
-export interface CategoryEdge {
-  node: Category;
-  cursor: String;
-}
-
-export interface CategoryEdgePromise
-  extends Promise<CategoryEdge>,
-    Fragmentable {
-  node: <T = CategoryPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CategoryEdgeSubscription
-  extends Promise<AsyncIterator<CategoryEdge>>,
-    Fragmentable {
-  node: <T = CategorySubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
-}
-
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface RegionSubscriptionPayload {
-  mutation: MutationType;
-  node: Region;
-  updatedFields: String[];
-  previousValues: RegionPreviousValues;
-}
-
-export interface RegionSubscriptionPayloadPromise
-  extends Promise<RegionSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = RegionPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = RegionPreviousValuesPromise>() => T;
-}
-
-export interface RegionSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<RegionSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = RegionSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = RegionPreviousValuesSubscription>() => T;
-}
-
-export interface SKUEdge {
-  node: SKU;
-  cursor: String;
-}
-
-export interface SKUEdgePromise extends Promise<SKUEdge>, Fragmentable {
-  node: <T = SKUPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface SKUEdgeSubscription
-  extends Promise<AsyncIterator<SKUEdge>>,
-    Fragmentable {
-  node: <T = SKUSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
 export interface RegionPreviousValues {
   id: ID_Output;
   name: String;
@@ -5865,20 +6441,20 @@ export interface RegionPreviousValuesSubscription
   name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface RegionEdge {
-  node: Region;
+export interface ProductEdge {
+  node: Product;
   cursor: String;
 }
 
-export interface RegionEdgePromise extends Promise<RegionEdge>, Fragmentable {
-  node: <T = RegionPromise>() => T;
+export interface ProductEdgePromise extends Promise<ProductEdge>, Fragmentable {
+  node: <T = ProductPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface RegionEdgeSubscription
-  extends Promise<AsyncIterator<RegionEdge>>,
+export interface ProductEdgeSubscription
+  extends Promise<AsyncIterator<ProductEdge>>,
     Fragmentable {
-  node: <T = RegionSubscription>() => T;
+  node: <T = ProductSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
@@ -5905,25 +6481,20 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface ProductConnection {
-  pageInfo: PageInfo;
-  edges: ProductEdge[];
+export interface AggregateOrderLine {
+  count: Int;
 }
 
-export interface ProductConnectionPromise
-  extends Promise<ProductConnection>,
+export interface AggregateOrderLinePromise
+  extends Promise<AggregateOrderLine>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ProductEdge>>() => T;
-  aggregate: <T = AggregateProductPromise>() => T;
+  count: () => Promise<Int>;
 }
 
-export interface ProductConnectionSubscription
-  extends Promise<AsyncIterator<ProductConnection>>,
+export interface AggregateOrderLineSubscription
+  extends Promise<AsyncIterator<AggregateOrderLine>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ProductEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateProductSubscription>() => T;
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ReviewSubscriptionPayload {
@@ -5951,46 +6522,26 @@ export interface ReviewSubscriptionPayloadSubscription
   previousValues: <T = ReviewPreviousValuesSubscription>() => T;
 }
 
-export interface OrderLine {
+export interface UserPreviousValues {
   id: ID_Output;
-  productName: String;
-  grindOption: String;
-  quantity: Int;
-  orderPrice: Float;
+  email: String;
+  phone?: Int;
 }
 
-export interface OrderLinePromise extends Promise<OrderLine>, Fragmentable {
+export interface UserPreviousValuesPromise
+  extends Promise<UserPreviousValues>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  order: <T = OrderPromise>() => T;
-  sku: <T = SKUPromise>() => T;
-  productName: () => Promise<String>;
-  grindOption: () => Promise<String>;
-  quantity: () => Promise<Int>;
-  orderPrice: () => Promise<Float>;
+  email: () => Promise<String>;
+  phone: () => Promise<Int>;
 }
 
-export interface OrderLineSubscription
-  extends Promise<AsyncIterator<OrderLine>>,
+export interface UserPreviousValuesSubscription
+  extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  order: <T = OrderSubscription>() => T;
-  sku: <T = SKUSubscription>() => T;
-  productName: () => Promise<AsyncIterator<String>>;
-  grindOption: () => Promise<AsyncIterator<String>>;
-  quantity: () => Promise<AsyncIterator<Int>>;
-  orderPrice: () => Promise<AsyncIterator<Float>>;
-}
-
-export interface OrderLineNullablePromise
-  extends Promise<OrderLine | null>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  order: <T = OrderPromise>() => T;
-  sku: <T = SKUPromise>() => T;
-  productName: () => Promise<String>;
-  grindOption: () => Promise<String>;
-  quantity: () => Promise<Int>;
-  orderPrice: () => Promise<Float>;
+  email: () => Promise<AsyncIterator<String>>;
+  phone: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface ReviewPreviousValues {
@@ -6021,20 +6572,21 @@ export interface ReviewPreviousValuesSubscription
   publishedStatus: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface AggregateGrind {
-  count: Int;
+export interface GrindEdge {
+  node: Grind;
+  cursor: String;
 }
 
-export interface AggregateGrindPromise
-  extends Promise<AggregateGrind>,
-    Fragmentable {
-  count: () => Promise<Int>;
+export interface GrindEdgePromise extends Promise<GrindEdge>, Fragmentable {
+  node: <T = GrindPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateGrindSubscription
-  extends Promise<AsyncIterator<AggregateGrind>>,
+export interface GrindEdgeSubscription
+  extends Promise<AsyncIterator<GrindEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = GrindSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CategoryConnection {
@@ -6058,44 +6610,41 @@ export interface CategoryConnectionSubscription
   aggregate: <T = AggregateCategorySubscription>() => T;
 }
 
-export interface SubCategoryConnection {
-  pageInfo: PageInfo;
-  edges: SubCategoryEdge[];
+export interface AggregateReview {
+  count: Int;
 }
 
-export interface SubCategoryConnectionPromise
-  extends Promise<SubCategoryConnection>,
+export interface AggregateReviewPromise
+  extends Promise<AggregateReview>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateReviewSubscription
+  extends Promise<AsyncIterator<AggregateReview>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface OriginConnection {
+  pageInfo: PageInfo;
+  edges: OriginEdge[];
+}
+
+export interface OriginConnectionPromise
+  extends Promise<OriginConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<SubCategoryEdge>>() => T;
-  aggregate: <T = AggregateSubCategoryPromise>() => T;
+  edges: <T = FragmentableArray<OriginEdge>>() => T;
+  aggregate: <T = AggregateOriginPromise>() => T;
 }
 
-export interface SubCategoryConnectionSubscription
-  extends Promise<AsyncIterator<SubCategoryConnection>>,
+export interface OriginConnectionSubscription
+  extends Promise<AsyncIterator<OriginConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<SubCategoryEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSubCategorySubscription>() => T;
-}
-
-export interface ProductImageEdge {
-  node: ProductImage;
-  cursor: String;
-}
-
-export interface ProductImageEdgePromise
-  extends Promise<ProductImageEdge>,
-    Fragmentable {
-  node: <T = ProductImagePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface ProductImageEdgeSubscription
-  extends Promise<AsyncIterator<ProductImageEdge>>,
-    Fragmentable {
-  node: <T = ProductImageSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  edges: <T = Promise<AsyncIterator<OriginEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateOriginSubscription>() => T;
 }
 
 export interface SubCategorySubscriptionPayload {
@@ -6123,62 +6672,86 @@ export interface SubCategorySubscriptionPayloadSubscription
   previousValues: <T = SubCategoryPreviousValuesSubscription>() => T;
 }
 
-export interface SKU {
+export interface Grind {
   id: ID_Output;
-  grinded: Boolean;
-  weight: Int;
-  Price: Float;
+  Ja?: Boolean;
+  Nei?: Boolean;
+  Espressomaskin?: Boolean;
+  Espressokanne?: Boolean;
+  Aeropress?: Boolean;
+  DryppV60?: Boolean;
+  Filtermalt?: Boolean;
+  Presskanne?: Boolean;
+  Chemex?: Boolean;
+  Kokmalt?: Boolean;
 }
 
-export interface SKUPromise extends Promise<SKU>, Fragmentable {
+export interface GrindPromise extends Promise<Grind>, Fragmentable {
   id: () => Promise<ID_Output>;
-  product: <T = ProductPromise>() => T;
-  grinded: () => Promise<Boolean>;
-  weight: () => Promise<Int>;
-  Price: () => Promise<Float>;
+  Ja: () => Promise<Boolean>;
+  Nei: () => Promise<Boolean>;
+  Espressomaskin: () => Promise<Boolean>;
+  Espressokanne: () => Promise<Boolean>;
+  Aeropress: () => Promise<Boolean>;
+  DryppV60: () => Promise<Boolean>;
+  Filtermalt: () => Promise<Boolean>;
+  Presskanne: () => Promise<Boolean>;
+  Chemex: () => Promise<Boolean>;
+  Kokmalt: () => Promise<Boolean>;
 }
 
-export interface SKUSubscription
-  extends Promise<AsyncIterator<SKU>>,
+export interface GrindSubscription
+  extends Promise<AsyncIterator<Grind>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  product: <T = ProductSubscription>() => T;
-  grinded: () => Promise<AsyncIterator<Boolean>>;
-  weight: () => Promise<AsyncIterator<Int>>;
-  Price: () => Promise<AsyncIterator<Float>>;
+  Ja: () => Promise<AsyncIterator<Boolean>>;
+  Nei: () => Promise<AsyncIterator<Boolean>>;
+  Espressomaskin: () => Promise<AsyncIterator<Boolean>>;
+  Espressokanne: () => Promise<AsyncIterator<Boolean>>;
+  Aeropress: () => Promise<AsyncIterator<Boolean>>;
+  DryppV60: () => Promise<AsyncIterator<Boolean>>;
+  Filtermalt: () => Promise<AsyncIterator<Boolean>>;
+  Presskanne: () => Promise<AsyncIterator<Boolean>>;
+  Chemex: () => Promise<AsyncIterator<Boolean>>;
+  Kokmalt: () => Promise<AsyncIterator<Boolean>>;
 }
 
-export interface SKUNullablePromise extends Promise<SKU | null>, Fragmentable {
+export interface GrindNullablePromise
+  extends Promise<Grind | null>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
-  product: <T = ProductPromise>() => T;
-  grinded: () => Promise<Boolean>;
-  weight: () => Promise<Int>;
-  Price: () => Promise<Float>;
+  Ja: () => Promise<Boolean>;
+  Nei: () => Promise<Boolean>;
+  Espressomaskin: () => Promise<Boolean>;
+  Espressokanne: () => Promise<Boolean>;
+  Aeropress: () => Promise<Boolean>;
+  DryppV60: () => Promise<Boolean>;
+  Filtermalt: () => Promise<Boolean>;
+  Presskanne: () => Promise<Boolean>;
+  Chemex: () => Promise<Boolean>;
+  Kokmalt: () => Promise<Boolean>;
 }
 
 export interface SKUPreviousValues {
   id: ID_Output;
-  grinded: Boolean;
-  weight: Int;
-  Price: Float;
+  weight: String;
+  price: String;
 }
 
 export interface SKUPreviousValuesPromise
   extends Promise<SKUPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  grinded: () => Promise<Boolean>;
-  weight: () => Promise<Int>;
-  Price: () => Promise<Float>;
+  weight: () => Promise<String>;
+  price: () => Promise<String>;
 }
 
 export interface SKUPreviousValuesSubscription
   extends Promise<AsyncIterator<SKUPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  grinded: () => Promise<AsyncIterator<Boolean>>;
-  weight: () => Promise<AsyncIterator<Int>>;
-  Price: () => Promise<AsyncIterator<Float>>;
+  weight: () => Promise<AsyncIterator<String>>;
+  price: () => Promise<AsyncIterator<String>>;
 }
 
 export interface SKUSubscriptionPayload {
@@ -6206,84 +6779,78 @@ export interface SKUSubscriptionPayloadSubscription
   previousValues: <T = SKUPreviousValuesSubscription>() => T;
 }
 
-export interface AggregateOrder {
+export interface OrderEdge {
+  node: Order;
+  cursor: String;
+}
+
+export interface OrderEdgePromise extends Promise<OrderEdge>, Fragmentable {
+  node: <T = OrderPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface OrderEdgeSubscription
+  extends Promise<AsyncIterator<OrderEdge>>,
+    Fragmentable {
+  node: <T = OrderSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateProductImage {
   count: Int;
 }
 
-export interface AggregateOrderPromise
-  extends Promise<AggregateOrder>,
+export interface AggregateProductImagePromise
+  extends Promise<AggregateProductImage>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateOrderSubscription
-  extends Promise<AsyncIterator<AggregateOrder>>,
+export interface AggregateProductImageSubscription
+  extends Promise<AsyncIterator<AggregateProductImage>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface ReviewConnection {
-  pageInfo: PageInfo;
-  edges: ReviewEdge[];
-}
-
-export interface ReviewConnectionPromise
-  extends Promise<ReviewConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<ReviewEdge>>() => T;
-  aggregate: <T = AggregateReviewPromise>() => T;
-}
-
-export interface ReviewConnectionSubscription
-  extends Promise<AsyncIterator<ReviewConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<ReviewEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateReviewSubscription>() => T;
-}
-
-export interface VendorConnection {
-  pageInfo: PageInfo;
-  edges: VendorEdge[];
-}
-
-export interface VendorConnectionPromise
-  extends Promise<VendorConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<VendorEdge>>() => T;
-  aggregate: <T = AggregateVendorPromise>() => T;
-}
-
-export interface VendorConnectionSubscription
-  extends Promise<AsyncIterator<VendorConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<VendorEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateVendorSubscription>() => T;
-}
-
-export interface AggregateGrindOption {
+export interface AggregateSubCategory {
   count: Int;
 }
 
-export interface AggregateGrindOptionPromise
-  extends Promise<AggregateGrindOption>,
+export interface AggregateSubCategoryPromise
+  extends Promise<AggregateSubCategory>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateGrindOptionSubscription
-  extends Promise<AsyncIterator<AggregateGrindOption>>,
+export interface AggregateSubCategorySubscription
+  extends Promise<AsyncIterator<AggregateSubCategory>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface GrindOptionEdge {
+  node: GrindOption;
+  cursor: String;
+}
+
+export interface GrindOptionEdgePromise
+  extends Promise<GrindOptionEdge>,
+    Fragmentable {
+  node: <T = GrindOptionPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface GrindOptionEdgeSubscription
+  extends Promise<AsyncIterator<GrindOptionEdge>>,
+    Fragmentable {
+  node: <T = GrindOptionSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 /*
-The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type Float = number;
+export type String = string;
 
 export type Long = string;
 
@@ -6296,6 +6863,11 @@ export type Boolean = boolean;
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. 
 */
 export type Int = number;
+
+/*
+The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). 
+*/
+export type Float = number;
 
 /*
 DateTime scalar input type, allowing Date
@@ -6312,11 +6884,6 @@ The `ID` scalar type represents a unique identifier, often used to refetch an ob
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /**
  * Model Metadata
@@ -6357,6 +6924,10 @@ export const models: Model[] = [
   },
   {
     name: "OrderLine",
+    embedded: false
+  },
+  {
+    name: "Origin",
     embedded: false
   },
   {

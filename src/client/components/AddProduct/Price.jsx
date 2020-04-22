@@ -1,30 +1,33 @@
 import React, {useState} from 'react';
 import FormInput from "../Forms/FormInput";
 import {Col, Row} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 const Price = props => {
     const [numberOfPriceOptions, setNumberOfPriceOptions] = useState(1);
 
-    const handleChange = (event) => {
+    const handleChange = (event, index) => {
         const target = event.target;
         const value = target.value;
         const name = target.name;
 
-        props.setProduct(prevValue => {
-            const targetObject = props.priceOptions.filter(priceOption => priceOption.id === Number(name.slice(-1)));
-            console.log(targetObject);
+        const options = props.priceOptions;
+        options[index][name] = value;
 
+        props.setProduct(prevValue => {
             return {
-                ...prevValue,
-                priceOptions: [
-                    ...prevValue.priceOptions,
-                    {
-                        ...prevValue.priceOptions[name.slice(-1)],
-                        [name]: value
-                    }
-                ]
+                ...prevValue, // Beholder previous values i hele state objektet
+                priceOptions: options
             };
         });
+        if (name !== '') {
+            props.setError(prevValue => {
+                return {
+                    ...prevValue,
+                    [name + 'Error']: false
+                }
+            })
+        }
     };
 
     const addPriceOption = () => {
@@ -33,12 +36,12 @@ const Price = props => {
             options.push(
                 <Row key={i}>
                     <Col sm={2}>
-                        <FormInput name={'grams' + i} value={props.priceOptions.grams} className="price-form" placeholder="0"
-                                   handleChange={handleChange} suffix={"gr"} maxLength="4"/>
+                        <FormInput name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" className="price-form" placeholder="0"
+                                   handleChange={(event) => handleChange(event, i)} suffix={"gr"} maxLength={"4"}/>
                     </Col>
                     <Col sm={2}>
-                        <FormInput name={'price' + i} value={props.priceOptions.price} className="price-form" placeholder="0"
-                                   handleChange={handleChange} suffix={"kr"} maxLength="4"/>
+                        <FormInput name={'price' + i} value={props.priceOptions[i]?.price} data-index="0" className="price-form" placeholder="0"
+                                   handleChange={(event) => handleChange(event, i)} suffix={"kr"} maxLength={"4"}/>
                     </Col>
                 </Row>
             );
@@ -47,7 +50,7 @@ const Price = props => {
     };
 
     const increment = () => {
-        if (numberOfPriceOptions < 4) {
+        if (numberOfPriceOptions < 3) {
             setNumberOfPriceOptions(numberOfPriceOptions + 1)
         }
     };
@@ -60,14 +63,19 @@ const Price = props => {
 
     return (
         <div className="container mt-4 mb-4 ml-4">
-            <Row>
+            
                 <h3>Størrelse og pris</h3>
-                <button onClick={decrement}>-</button>
-                <button onClick={increment}>+</button>
-            </Row>
+      
 
             {addPriceOption()}
 
+            <Row className="extra-alternative">
+                <p>Legg til ekstra alternativ</p>
+                <div className="price-btns" id="priceButtons">
+                <Button variant="outline-info" size="sm" className="size-amount" onClick={decrement}>-</Button>
+                <Button variant="outline-info" size="sm" className="size-amount" onClick={increment}>+</Button>
+                </div>
+            </Row>
         </div>
     )
 };
