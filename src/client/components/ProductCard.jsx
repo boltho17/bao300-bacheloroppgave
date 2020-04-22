@@ -12,9 +12,9 @@ const ProductCard = ({product}) => {
                     <Card.Body>
                         <Card.Subtitle className="vendor mb-2 text-muted">{product.vendor.displayName}</Card.Subtitle>
                         <Card.Title className="product-title">{product.title}</Card.Title>
-                        <Card.Text className="short-description">Fantastisk kaffe med smak av himmel og et hint av grønne blader..</Card.Text>
+                        <Card.Text className="short-description">{product.descriptionShort}</Card.Text>
                         <Card.Subtitle className="price">
-                         140Kr
+                         Fra {product.skus[0]?.price},-
                         </Card.Subtitle>
                         
 
@@ -26,21 +26,3 @@ const ProductCard = ({product}) => {
 };
 
 export default ProductCard
-
-/*
-<div key={product.id} value={product.title}>
-<h3>{product.vendor.displayName}</h3>
-<h5>{product.title}</h5>
-<ul>
-<li>
-{product.description}
-</li>
-<li>
-{product.flavorProfile}
-</li>
-</ul>
-</div>
-*
- */
-   /*Pris: product.SKU[0].price
-   product.saleText**/

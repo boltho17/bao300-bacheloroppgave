@@ -7,7 +7,7 @@ const FormInput = props => {
         <div className={props.className}>
             <label htmlFor={props.label}>{props.label}</label>
             <Row>
-                <input style={{width: '300px'}}
+                <input
                     className="form-input"
                     id={props.name}
                     name={props.name}
@@ -16,6 +16,8 @@ const FormInput = props => {
                     onChange={props.handleChange}
                     placeholder={props.placeholder}
                     disabled={props.disabled}
+                    min={props.min}
+                    max={props.max}
                     maxLength={props.maxLength}
                 />
                 <div>{props.suffix}</div>

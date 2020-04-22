@@ -78,7 +78,7 @@ mutation CreateVendor ($displayName: String!, $orgnr: Int!, $bankAccount: String
 
 CREATE PRODUCT:
 
-mutation CreateProduct ($title: String!, $flavorProfile: String!, $description: String!, $info: String!, $vendorId: ID!, $countryId: ID!) {
+mutation CreateProduct ($title: String, $flavorProfile: String, $description: String, $info: String, $weight: String!, $price: String!, $grinded: Boolean $id: ID) {
     createProduct(data: {
       title: $title,
       flavorProfile: $flavorProfile,
@@ -87,21 +87,27 @@ mutation CreateProduct ($title: String!, $flavorProfile: String!, $description: 
       published: true,
       vendor: {
         connect: {
-          id: $vendorId
+          id: $id
         }
       },
       country: {
         connect: {
-          id: $countryId
+          name: "Burundi"
         }
-      }
+      },
+      skus: {
+        create: [
+          {
+            weight: $weight,
+            price: $price,
+            grinded: $grinded
+          }
+        ]
+      },
       productImages: {
         create: [
           {image: "img_01.jpg"},
           {image: "img_02.jpg"},
-          {image: "img_03.jpg"},
-          {image: "img_04.jpg"},
-          {image: "img_05.jpg"},
         ]
       }
     }) {
@@ -113,13 +119,15 @@ mutation CreateProduct ($title: String!, $flavorProfile: String!, $description: 
   QUERY:
 
   {
-    "title": "Jaava Supreme",
-    "flavorProfile": "Søt og rundt med hint av jordbær",
-    "description": "Fantastisk kaffe med bla bla bbla bla bla bla bla",
-    "info": "Bryggeguide for fantastisk smak jada jada",
-    "vendorId": "ck6i1ll4m007h0726n3cujwit",
-    "countryId": "ck6i1tdej008y0726fkxxygqo"
-  }
+      "title": "Jaava Supreme9090",
+      "flavorProfile": "Søt og rundt med hint av jordbær",
+      "description": "Fantastisk kaffe med bla bla bbla bla bla bla bla",
+      "info": "Bryggeguide for fantastisk smak jada jada",
+      "weight": "300g",
+      "price": "200kr",
+      "grinded": true,
+      "id": "ck8sk11sn00ab07745emsdpnk"
+    }
 
 
 CREATE REGION WITH COUNTRIES:
