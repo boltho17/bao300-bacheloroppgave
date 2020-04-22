@@ -80,6 +80,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://socialcoffee-heroku-ef34f637c9.herokuapp.com/socialcoffee-prisma-heroku/dev`
+  endpoint: `https://socialcoffee2-ce965cba2c.herokuapp.com/socialcoffee2/dev`
 });
 exports.prisma = new exports.Prisma();

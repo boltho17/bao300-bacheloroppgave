@@ -1,4 +1,4 @@
-endpoint: https://socialcoffee2-ce965cba2c.herokuapp.com/socialcoffee2/dev
+ endpoint: https://socialcoffee-heroku-ef34f637c9.herokuapp.com/socialcoffee-prisma-heroku/dev
 datamodel: 
   - entities/category.prisma
   - entities/contentArea.prisma

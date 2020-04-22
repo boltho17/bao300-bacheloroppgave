@@ -1,5 +1,5 @@
 endpoint: https://socialcoffee2-ce965cba2c.herokuapp.com/socialcoffee2/dev
-datamodel: 
+datamodel:
   - entities/category.prisma
   - entities/contentArea.prisma
   - entities/contentText.prisma
@@ -21,4 +21,4 @@ datamodel:
 
 generate:
   - generator: javascript-client
-    output: ./generated/prisma-client/
+    output: ./generated/prisma-client/ient/

@@ -4,7 +4,6 @@ interface Node {
 
 type Grind implements Node {
   id: ID! @id @unique
-  product: Product! @relation(link: INLINE)
   Ja: Boolean
   Nei: Boolean
   Espressomaskin: Boolean

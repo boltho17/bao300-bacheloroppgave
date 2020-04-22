@@ -1,0 +1,9 @@
+interface Node {
+  id: ID!
+}
+
+type Category implements Node {
+  id: ID! @id @unique
+  products: Product!  @relation(link: INLINE)
+  category: String! @unique
+}
