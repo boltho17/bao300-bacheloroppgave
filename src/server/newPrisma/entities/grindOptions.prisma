@@ -1,0 +1,19 @@
+interface Node {
+  id: ID!
+}
+
+type  implements Node {
+  id: ID! @id @unique
+  product: Product! @relation(link: INLINE)
+  grinded: Boolean! @default(value: false)
+  espressoMaskin: Boolean
+  espressoKanne: Boolean
+  aeroPress: Boolean
+  dryppV60: Boolean
+  filterMalt: Boolean
+  pressKanne: Boolean
+  chemex: Boolean
+  kokMalt: Boolean
+  weight: String!
+  price: String!
+}

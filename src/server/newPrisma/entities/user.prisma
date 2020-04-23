@@ -1,0 +1,11 @@
+interface Node {
+  id: ID!
+}
+
+type User implements Node {
+  id: ID! @id
+  email: String! @unique
+  phone: Int @unique
+  customer: Customer @relation(link: INLINE)
+  vendor: Vendor @relation(link: INLINE)
+}

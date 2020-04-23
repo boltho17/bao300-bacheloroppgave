@@ -15,5 +15,5 @@ type Product implements Node {
   productImages: [ProductImage!]
   categories: [Category!]
   skus: [SKU]
-  grindOptions: [String] @scalarList(strategy: RELATION)
+
 }

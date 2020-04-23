@@ -1,0 +1,8 @@
+interface Node {
+  id: ID!
+}
+
+type ContentArea implements Node {
+  id: ID! @id @unique
+  name: String! 
+}
