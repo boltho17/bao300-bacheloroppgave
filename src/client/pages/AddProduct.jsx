@@ -37,6 +37,7 @@ const AddProduct = () => {
         publishedStatus: true,
         grindOptions: [],
         pictures: [],
+        test: ""
     };
 
     const [product, setProduct] = useState(initialState);
