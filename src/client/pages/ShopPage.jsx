@@ -1,14 +1,12 @@
 import React from 'react';
 import ProductList from "../components/ProductList";
 
-class ShopPage extends React.Component {
-    render() {
+const ShopPage = ({onSelect}) => {
         return (
             <div>
-                <ProductList/>
+                <ProductList onSelect={onSelect}/>
             </div>
         );
-    }
 }
 
 export default ShopPage

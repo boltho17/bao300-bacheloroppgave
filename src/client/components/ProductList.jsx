@@ -7,7 +7,7 @@ import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
 
 
-const ProductList = () => {
+const ProductList = ({onSelect}) => {
     let productList;
     let totalProducts = 0;
 
@@ -20,7 +20,7 @@ const ProductList = () => {
     if (data) {
         productList = data.products.map(product => {
             totalProducts++;
-            return <ProductCard product={product} key={product.id}/>
+            return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
         });
     }
 
