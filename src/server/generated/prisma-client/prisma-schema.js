@@ -938,6 +938,7 @@ scalar DateTime
 
 type Grind {
   id: ID!
+  product: Product!
   Ja: Boolean
   Nei: Boolean
   Espressomaskin: Boolean
@@ -958,6 +959,7 @@ type GrindConnection {
 
 input GrindCreateInput {
   id: ID
+  product: ProductCreateOneInput!
   Ja: Boolean
   Nei: Boolean
   Espressomaskin: Boolean
@@ -1119,6 +1121,7 @@ input GrindSubscriptionWhereInput {
 }
 
 input GrindUpdateDataInput {
+  product: ProductUpdateOneRequiredInput
   Ja: Boolean
   Nei: Boolean
   Espressomaskin: Boolean
@@ -1132,6 +1135,7 @@ input GrindUpdateDataInput {
 }
 
 input GrindUpdateInput {
+  product: ProductUpdateOneRequiredInput
   Ja: Boolean
   Nei: Boolean
   Espressomaskin: Boolean
@@ -1155,15 +1159,6 @@ input GrindUpdateManyMutationInput {
   Presskanne: Boolean
   Chemex: Boolean
   Kokmalt: Boolean
-}
-
-input GrindUpdateOneInput {
-  create: GrindCreateInput
-  update: GrindUpdateDataInput
-  upsert: GrindUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: GrindWhereUniqueInput
 }
 
 input GrindUpdateOneRequiredInput {
@@ -1193,6 +1188,7 @@ input GrindWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  product: ProductWhereInput
   Ja: Boolean
   Ja_not: Boolean
   Nei: Boolean
@@ -1949,12 +1945,17 @@ type Product {
   productImages(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductImage!]
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
   skus(where: SKUWhereInput, orderBy: SKUOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SKU!]
+  grindOptions: [String!]!
 }
 
 type ProductConnection {
   pageInfo: PageInfo!
   edges: [ProductEdge]!
   aggregate: AggregateProduct!
+}
+
+input ProductCreategrindOptionsInput {
+  set: [String!]
 }
 
 input ProductCreateInput {
@@ -1970,6 +1971,7 @@ input ProductCreateInput {
   productImages: ProductImageCreateManyWithoutProductInput
   categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
+  grindOptions: ProductCreategrindOptionsInput
 }
 
 input ProductCreateManyWithoutCountryInput {
@@ -2014,6 +2016,7 @@ input ProductCreateWithoutCategoriesInput {
   country: CountryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
   skus: SKUCreateManyWithoutProductInput
+  grindOptions: ProductCreategrindOptionsInput
 }
 
 input ProductCreateWithoutCountryInput {
@@ -2028,6 +2031,7 @@ input ProductCreateWithoutCountryInput {
   productImages: ProductImageCreateManyWithoutProductInput
   categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
+  grindOptions: ProductCreategrindOptionsInput
 }
 
 input ProductCreateWithoutProductImagesInput {
@@ -2042,6 +2046,7 @@ input ProductCreateWithoutProductImagesInput {
   country: CountryCreateOneWithoutProductsInput
   categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
+  grindOptions: ProductCreategrindOptionsInput
 }
 
 input ProductCreateWithoutSkusInput {
@@ -2056,6 +2061,7 @@ input ProductCreateWithoutSkusInput {
   country: CountryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
   categories: CategoryCreateManyWithoutProductsInput
+  grindOptions: ProductCreategrindOptionsInput
 }
 
 input ProductCreateWithoutVendorInput {
@@ -2070,6 +2076,7 @@ input ProductCreateWithoutVendorInput {
   productImages: ProductImageCreateManyWithoutProductInput
   categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
+  grindOptions: ProductCreategrindOptionsInput
 }
 
 type ProductEdge {
@@ -2283,6 +2290,7 @@ type ProductPreviousValues {
   descriptionLong: String
   brewText: String
   published: Boolean!
+  grindOptions: [String!]!
 }
 
 input ProductScalarWhereInput {
@@ -2407,6 +2415,11 @@ input ProductUpdateDataInput {
   productImages: ProductImageUpdateManyWithoutProductInput
   categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
+  grindOptions: ProductUpdategrindOptionsInput
+}
+
+input ProductUpdategrindOptionsInput {
+  set: [String!]
 }
 
 input ProductUpdateInput {
@@ -2421,6 +2434,7 @@ input ProductUpdateInput {
   productImages: ProductImageUpdateManyWithoutProductInput
   categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateManyDataInput {
@@ -2430,6 +2444,7 @@ input ProductUpdateManyDataInput {
   descriptionLong: String
   brewText: String
   published: Boolean
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateManyMutationInput {
@@ -2439,6 +2454,7 @@ input ProductUpdateManyMutationInput {
   descriptionLong: String
   brewText: String
   published: Boolean
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateManyWithoutCountryInput {
@@ -2511,6 +2527,7 @@ input ProductUpdateWithoutCategoriesDataInput {
   country: CountryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
   skus: SKUUpdateManyWithoutProductInput
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutCountryDataInput {
@@ -2524,6 +2541,7 @@ input ProductUpdateWithoutCountryDataInput {
   productImages: ProductImageUpdateManyWithoutProductInput
   categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutProductImagesDataInput {
@@ -2537,6 +2555,7 @@ input ProductUpdateWithoutProductImagesDataInput {
   country: CountryUpdateOneWithoutProductsInput
   categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutSkusDataInput {
@@ -2550,6 +2569,7 @@ input ProductUpdateWithoutSkusDataInput {
   country: CountryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
   categories: CategoryUpdateManyWithoutProductsInput
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutVendorDataInput {
@@ -2563,6 +2583,7 @@ input ProductUpdateWithoutVendorDataInput {
   productImages: ProductImageUpdateManyWithoutProductInput
   categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
+  grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithWhereUniqueWithoutCountryInput {
@@ -3133,7 +3154,6 @@ input ReviewWhereUniqueInput {
 type SKU {
   id: ID!
   product: Product!
-  grindOptions: Grind
   weight: String!
   price: String!
 }
@@ -3147,7 +3167,6 @@ type SKUConnection {
 input SKUCreateInput {
   id: ID
   product: ProductCreateOneWithoutSkusInput!
-  grindOptions: GrindCreateOneInput
   weight: String!
   price: String!
 }
@@ -3164,7 +3183,6 @@ input SKUCreateOneInput {
 
 input SKUCreateWithoutProductInput {
   id: ID
-  grindOptions: GrindCreateInput
   weight: String!
   price: String!
 }
@@ -3257,14 +3275,12 @@ input SKUSubscriptionWhereInput {
 
 input SKUUpdateDataInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
-  grindOptions: GrindUpdateOneInput
   weight: String
   price: String
 }
 
 input SKUUpdateInput {
   product: ProductUpdateOneRequiredWithoutSkusInput
-  grindOptions: GrindUpdateOneInput
   weight: String
   price: String
 }
@@ -3304,7 +3320,6 @@ input SKUUpdateOneRequiredInput {
 }
 
 input SKUUpdateWithoutProductDataInput {
-  grindOptions: GrindUpdateOneInput
   weight: String
   price: String
 }
@@ -3341,7 +3356,6 @@ input SKUWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   product: ProductWhereInput
-  grindOptions: GrindWhereInput
   weight: String
   weight_not: String
   weight_in: [String!]
@@ -4051,3 +4065,4 @@ input VendorWhereUniqueInput {
 }
 `
       }
+    

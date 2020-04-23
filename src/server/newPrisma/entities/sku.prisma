@@ -5,6 +5,7 @@ interface Node {
 type SKU implements Node {
   id: ID! @id @unique
   product: Product! @relation(link: INLINE)
+  grindOptions: [String!]! @scalarList(strategy: RELATION)
   weight: String!
   price: String!
 }

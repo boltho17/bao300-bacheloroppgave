@@ -1,0 +1,17 @@
+interface Node {
+  id: ID!
+}
+
+type Vendor implements Node {
+  id: ID! @id
+  stripeId: String
+  organizationNumber: Int!
+  displayName: String!
+  address: String!
+  bankAccount: String @unique
+  logoImage: String
+  facebookPageURL: String
+  contactPerson: String
+  user: User!
+  products: [Product!]
+}

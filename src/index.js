@@ -8,7 +8,7 @@ import ApolloClient from 'apollo-boost';
 import {AuthProvider} from "./client/components/Firebase/AuthContext";
 
 const client = new ApolloClient({
-    uri: 'https://socialcoffee-heroku-ef34f637c9.herokuapp.com/socialcoffee-prisma-heroku/dev',
+    uri: 'https://socialcoffee2-ce965cba2c.herokuapp.com/socialcoffee2/dev',
 });
 
 ReactDOM.render(

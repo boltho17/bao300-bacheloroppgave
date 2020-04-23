@@ -2,9 +2,8 @@ interface Node {
   id: ID!
 }
 
-type SKU implements Node {
+type GrindOption implements Node {
   id: ID! @id @unique
   product: Product! @relation(link: INLINE)
-  weight: String!
-  price: String!
+  grind: Grind! @relation(link: INLINE)
 }

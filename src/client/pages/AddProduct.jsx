@@ -35,8 +35,9 @@ const AddProduct = () => {
         ],
         grinded: true,
         publishedStatus: true,
+        grindOptions: [],
         pictures: [],
-        checkedItems: {},
+        test: ""
     };
 
     const [product, setProduct] = useState(initialState);
@@ -52,7 +53,7 @@ const AddProduct = () => {
 
         // For the select options:
         let options = event.target.options;
-        if(options) {
+        if (options) {
             for (let i = 0, l = options.length; i < l; i++) {
                 if (options[i].selected) {
                     value = options[i].value;
@@ -69,37 +70,68 @@ const AddProduct = () => {
         });
     };
 
+    /* HandleChange for checkboxes hvis det skal puttes inn i et objekt
     const handleCheckBoxChange = event => {
         const item = event.target.name;
         const isChecked = event.target.checked;
 
-        setProduct(prevValue => {
+        setProduct(prevState => {
             return {
-                ...prevValue, // Beholder previous values i hele state objektet
-                checkedItems: {
-                    ...prevValue.checkedItems,
-                    [item]: isChecked
-                }
-            };
-        });
+                ...prevState, // Beholder previous values i hele state objektet
+                grindOptions: [
+                    //...prevState.grindOptions,
+                    {
+                        ...prevState.grindOptions[0],
+                        [item]: isChecked
+                    }
+                ]
+            }
+        })
+    }
+     */
+
+    // HandleChange for checkboxes hvis det skal leses inn i et array som Strings.
+    const handleCheckBoxChange = event => {
+        const item = event.target.name;
+        const isChecked = event.target.checked;
+
+        if(isChecked) {
+            setProduct(prevValue => {
+                return {
+                    ...prevValue, // Beholder previous values i hele state objektet
+                    grindOptions: [
+                        ...prevValue.grindOptions, item // Legger til selected item i grindOptions array
+                    ]
+                };
+            });
+        }
+        if(!isChecked) {
+            setProduct(prevValue => {
+                return {
+                    ...prevValue, // Beholder previous values i hele state objektet
+                    grindOptions: [
+                        ...prevValue.grindOptions.filter(element => element !== item) // Fjerner selected item fra grindOption array
+                    ]
+                };
+            });
+        }
     }
 
     const getSkus = () => {
-        if(product.priceOptions[2].grams2 && product.priceOptions[2].price2) {
+        if (product.priceOptions[2].grams2 && product.priceOptions[2].price2) {
             return [
-                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grindOptions: product.checkedItems},
-                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price1, grindOptions: product.checkedItems},
-                {weight: product.priceOptions[2].grams2, price: product.priceOptions[2].price2, grindOptions: product.checkedItems}
+                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0},
+                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price1},
+                {weight: product.priceOptions[2].grams2, price: product.priceOptions[2].price2}
             ]
-        }
-        else if(product.priceOptions[1].grams1 && product.priceOptions[1].price1) {
+        } else if (product.priceOptions[1].grams1 && product.priceOptions[1].price1) {
             return [
-                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grindOptions: product.checkedItems},
-                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price0, grindOptions: product.checkedItems}
+                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0},
+                {weight: product.priceOptions[1].grams1, price: product.priceOptions[1].price0}
             ]
         } else {
             return [
-                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0, grindOptions: product.checkedItems}
+                {weight: product.priceOptions[0].grams0, price: product.priceOptions[0].price0}
             ]
         }
     };
@@ -109,7 +141,7 @@ const AddProduct = () => {
     const onSubmit = () => {
         console.log(product);
 
-        if(product.region === "Velg.." && product.country === "Velg..") {
+        if (product.region === "Velg.." && product.country === "Velg..") {
             console.log("Ikke lagret! Vennligst fyll inn alle obligatoriske felt!");
         }
         if (product.productName === '') {
@@ -132,16 +164,18 @@ const AddProduct = () => {
                     title: product.productName,
                     descriptionShort: product.descriptionShort,
                     descriptionLong: product.descriptionLong,
+                    brewText: product.brewText,
                     flavorProfile: product.tasteProfile,
                     id: signedInVendor.id,
                     published: product.publishedStatus,
                     region: product.region,
                     countryName: product.country,
-                    skus: getSkus()
+                    grindOptions: product.grindOptions,
+                    skus: getSkus(),
                 }
             });
-        setProduct(initialState);
-        //setRedirect(true)
+            setProduct(initialState);
+            //setRedirect(true)
         }
     };
 
@@ -153,22 +187,40 @@ const AddProduct = () => {
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>
                 </Col>
                 <Col sm={3}>
-                    <CheckBoxes title={'Hele Bønner'} labels={['Ja', 'Nei']} inLine={true} handleChange={handleCheckBoxChange}/>
+                    <CheckBoxes title={'Hele Bønner'} labels={['Ja', 'Nei']} inLine={true}
+                                handleChange={handleCheckBoxChange}/>
                 </Col>
                 <Col sm={3}>
-                    <CheckBoxes title={'Kverningsgrader'} labels={['Espressomaskin', 'Espressokanne', 'Aeropress', 'DryppV60', 'Filtermalt', 'Presskanne', 'Chemex', 'Kokmalt']} inLine={false} handleChange={handleCheckBoxChange}/>
+                    <CheckBoxes title={'Kverningsgrader'}
+                                labels={['Espressomaskin', 'Espressokanne', 'Aeropress', 'DryppV60', 'Filtermalt', 'Presskanne', 'Chemex', 'Kokmalt']}
+                                inLine={false} handleChange={handleCheckBoxChange}/>
                 </Col>
             </Row>
             <Row>
                 <Col sm={6}>
-                    <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions} error={error} setError={setError}/>
+                    <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions} error={error}
+                           setError={setError}/>
                 </Col>
                 <Col sm={6}>
-                    <TextAreaInput label={'Bryggeritips'} handleChange={handleChange} product={product} value={product.brewText} config={{name: 'brewText', rows: '5', cols: '50', maxLength: '70', placeholder: 'Bryggeritips her..'}}/>
+                    <TextAreaInput label={'Bryggeritips'} handleChange={handleChange} product={product}
+                                   value={product.brewText} config={{
+                        name: 'brewText',
+                        rows: '5',
+                        cols: '50',
+                        maxLength: '70',
+                        placeholder: 'Bryggeritips her..'
+                    }}/>
                 </Col>
             </Row>
-            <TextAreaInput label={'Beskrivelse'} handleChange={handleChange} product={product} value={product.descriptionLong} config={{name: 'descriptionLong', rows: '5', cols: '50', maxLength: '70', placeholder: 'Beskrivelse her..'}}/>
-            <ImageUpload product={product} setProduct={setProduct} />
+            <TextAreaInput label={'Beskrivelse'} handleChange={handleChange} product={product}
+                           value={product.descriptionLong} config={{
+                name: 'descriptionLong',
+                rows: '5',
+                cols: '50',
+                maxLength: '70',
+                placeholder: 'Beskrivelse her..'
+            }}/>
+            <ImageUpload product={product} setProduct={setProduct}/>
             <button onClick={onSubmit}>Opprett produkt</button>
         </div>
     );
