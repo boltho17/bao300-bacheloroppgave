@@ -33,11 +33,10 @@ const ProductList = ({onSelect}) => {
                 </Col>
                 <Col>
                     <Row>{productList.reverse()}</Row>
-            <div className="text-center">
-                <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
-            </div>
-            <br/>
-            <div className="text-center">FOOTER</div>
+                    <div className="text-center">
+                        <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
+                    </div>
+                    <br/>
                 </Col>
             </Row>
         </div>

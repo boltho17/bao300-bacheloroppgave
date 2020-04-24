@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Navbar} from 'react-bootstrap';
 import Nav from "react-bootstrap/Nav";
 import {Link} from 'react-router-dom';
@@ -21,6 +21,12 @@ const Navigation = () => {
     let userType = useContext(AuthContext)?.userType;
     // console.log("Navigation.js: User type = " + userType);
 
+    const [reload, setReload] = useState(false)
+
+    const setReloading = (bool) => {
+        setReload(bool);
+    }
+
     // LOG OUT USER:
     const logoutUser = () => {
         firebase.auth().signOut().then(function () {
@@ -29,6 +35,16 @@ const Navigation = () => {
             console.log(error)
         });
     };
+
+    // Reloads the page after user is authenticated:
+    useEffect(() => {
+        if(reload) {
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        }
+    }, [reload]);
+
 
     return (
         <Navbar className="top-navbar" expand="md">
@@ -46,7 +62,10 @@ const Navigation = () => {
             <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             <Navbar.Collapse>
                 <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
-                    {!userType && <Link className="links" to={ROUTES.VENDOR_SIGNUP}>Bli selger</Link>}
+                    {!userType && <Link className="links" to={{
+                        pathname: ROUTES.VENDOR_SIGNUP,
+                        param: setReloading
+                    }}>Bli selger</Link>}
                     {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link>}
                     <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
                     <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
@@ -67,7 +86,7 @@ const Navigation = () => {
                     </button>
                 </Link>}
 
-                <IconContext.Provider value={{color: "coral", size: "1.5em"}}>
+                <IconContext.Provider value={{color: "white", size: "1.5em"}}>
                     <div className="icon-group">
                         <FiSearch/>
 

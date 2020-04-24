@@ -10,7 +10,7 @@ const ProductCard = ({product, onSelect}) => {
 
     return (
         <div className="pr-0 col-12 col-md-6 col-lg-4 col-xl-3">
-            <Link to={id} onClick={() => onSelect(product)}>
+            <Link to={id} onClick={() => onSelect(product)} style={{ textDecoration: 'none', color: 'black' }}>
                 <Card className="product-card">
                     <Card.Img className="card-image" variant="top"
                               src="https://cdn4.mystore4.no/thumb/401_600/stavangerkaff/72805_Kenya_AA_Mount_Kenya_Selection_LYSBRENT__1kg_1.png"/>
