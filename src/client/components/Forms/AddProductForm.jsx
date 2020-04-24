@@ -18,11 +18,11 @@ const AddProductForm = props => {
                     <Col className="prod-name no-gutters" > 
                         <FormInput id="productName" label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange}  />
                         <TextAreaInput id="sale-text-input" label={'Salgstekst'} handleChange={props.handleChange} product={props.product} value={props.product.descriptionShort} config={{name: 'descriptionShort', rows: '2', maxLength: '70', placeholder: 'Fantastisk kaffe med smak av himmel og et hint av grønne blader..'}}/> 
-                        <Row className="no-gutters">
-                            <Col sm={6} className="control-select">
+                        <Row className="no-gutters justify-content-between">
+                            <Col sm={5} className="control-select">
                                 <FormSelect navn="Region" name="region" value={props.product.region} selectionList={CONSTANT_REGIONS} handleChange={props.handleChange}/>
                             </Col>
-                            <Col className="control-select" sm={6}>
+                            <Col className="control-select" sm={5}>
                                 {props.product.region === "Afrika" &&
                                 <FormSelect navn="Land" name="country" value={props.product.country}
                                             selectionList={CONSTANT_COUNTRIES_AFRICA} handleChange={props.handleChange}/>
@@ -37,11 +37,11 @@ const AddProductForm = props => {
                                 }
                             </Col>
                         </Row>
-                        <Row className="no-gutters">
-                            <Col sm={6} className="control-select">
+                        <Row className="no-gutters justify-content-between">
+                            <Col sm={5} className="control-select">
                                 <FormSelect navn="Bønnetype" name="beanType" value={props.product.beanType} selectionList={CONSTANT_BEAN_TYPES} handleChange={props.handleChange}/>
                             </Col>
-                            <Col sm={6}>
+                            <Col sm={5}>
                                 <FormSelect navn="Brennegrad"  name="roastDegree" value={props.product.roastDegree} selectionList={CONSTANT_ROAST_DEGREES} handleChange={props.handleChange}/>
                             </Col>
                         </Row>
