@@ -13,17 +13,16 @@ import TextAreaInput from "./TextAreaInput";
 const AddProductForm = props => {
 
     return (
-        <div className="container">
+        <div className="first-col">
             <form className="mt-3">
-                <div>
-                    <Col sm={6}>
-                        <FormInput label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange}  />
-                        <TextAreaInput label={'Salgstekst'} handleChange={props.handleChange} product={props.product} value={props.product.descriptionShort} config={{name: 'descriptionShort', rows: '2', cols: '35', maxLength: '70', placeholder: 'Fantastisk kaffe med smak av himmel og et hint av grønne blader..'}}/>
-                        <Row>
-                            <Col sm={6}>
+                    <Col className="prod-name no-gutters" > 
+                        <FormInput id="productName" label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange}  />
+                        <TextAreaInput id="sale-text-input" label={'Salgstekst'} handleChange={props.handleChange} product={props.product} value={props.product.descriptionShort} config={{name: 'descriptionShort', rows: '2', maxLength: '70', placeholder: 'Fantastisk kaffe med smak av himmel og et hint av grønne blader..'}}/> 
+                        <Row className="no-gutters">
+                            <Col sm={6} className="control-select">
                                 <FormSelect navn="Region" name="region" value={props.product.region} selectionList={CONSTANT_REGIONS} handleChange={props.handleChange}/>
                             </Col>
-                            <Col sm={6}>
+                            <Col className="control-select" sm={6}>
                                 {props.product.region === "Afrika" &&
                                 <FormSelect navn="Land" name="country" value={props.product.country}
                                             selectionList={CONSTANT_COUNTRIES_AFRICA} handleChange={props.handleChange}/>
@@ -38,19 +37,17 @@ const AddProductForm = props => {
                                 }
                             </Col>
                         </Row>
-                        <Row>
-                            <Col sm={6}>
+                        <Row className="no-gutters">
+                            <Col sm={6} className="control-select">
                                 <FormSelect navn="Bønnetype" name="beanType" value={props.product.beanType} selectionList={CONSTANT_BEAN_TYPES} handleChange={props.handleChange}/>
                             </Col>
                             <Col sm={6}>
-                                <FormSelect navn="Brennegrad" name="roastDegree" value={props.product.roastDegree} selectionList={CONSTANT_ROAST_DEGREES} handleChange={props.handleChange}/>
+                                <FormSelect navn="Brennegrad"  name="roastDegree" value={props.product.roastDegree} selectionList={CONSTANT_ROAST_DEGREES} handleChange={props.handleChange}/>
                             </Col>
                         </Row>
                         <FormInput label="Smaksprofil" name="tasteProfile" value={props.product.tasteProfile} placeholder="Nam nam" handleChange={props.handleChange} />
                         <FormInput label="Sertifisering" name="certification" value={props.product.certification} placeholder="Fair Trade.." handleChange={props.handleChange} />
                     </Col>
-                </div>
-
             </form>
         </div>
     )
