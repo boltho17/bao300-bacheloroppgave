@@ -36,7 +36,14 @@ $text-spacing: 1em
         background: transparent
         border-color: #fff
         padding: .5em 2em
-        //text-transform: uppercase
+  .scrollIndicator
+    clear: both
+    position: absolute
+    bottom: 2rem
+    left: 50%
+    font-size: 2rem
+    animation: pulse 2s infinite
+
 .shadow
   box-shadow:
   0 14px 28px rgba(0,0,0,0.25), 
@@ -59,25 +66,7 @@ $text-spacing: 1em
     position: absolute
     top: -16px
 
-.header
-  &::before
-    //content: 'HEADER'
-
-.title
-  &::before
-    //content: 'TITLE'
-
-.button
-  &::before
-    //content: 'BUTTON'
-
-.main
-  &::before
-    //content: 'MAIN'
-
 .contentSection
-  &::before
-    //content: 'CONTENT SECTION'
   .intro
     padding: 5em 1em
     .text
@@ -86,16 +75,7 @@ $text-spacing: 1em
     .image
       width: 100%
 
-.section
-  &::before
-    //content: 'SECTION'
-
-.bodyText
-  &::before
-    //content: 'BODYTEXT'
-
 .featureSection
-  //background: rgba(#eee,.25)
   padding: 4rem 0
   &::before
     content: ''
@@ -107,19 +87,21 @@ $text-spacing: 1em
     background: #fff
 
 .featureTEMP
-  &::before
-    //content: 'FEATURE'
   &.middle
     border: 2px solid rgba(#333,.05)
     border-top: 0
     border-bottom: 0
 
-
 .spacer
   height: 100vh
-/**   background-image: radial-gradient(#21212171 20%, transparent 20%),radial-gradient(#b9b9b986 20%, transparent 20%)
-  background-color: #dbdbdb
-  background-position: 0 0, 50px 50px
-  background-size: 100px 100px
-  border: 1px solid grey
-  opacity: .5 **/
+
+
+  // animations
+
+  @keyframes pulse
+    0%
+      transform: translateY(-8px) scale(.8)
+    100%
+      opacity: 0
+    
+      

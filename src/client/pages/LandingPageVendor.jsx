@@ -31,7 +31,7 @@ const LandingPageVendor = props => {
             </div>
           </Link>
         </div>
-
+        <div className="scrollIndicator">&#xfe40;</div>
       </div>
 
       <div className="main mainContent">
