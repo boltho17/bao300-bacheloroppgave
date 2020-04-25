@@ -8,9 +8,9 @@ const LandingPageVendor = props => {
     <div className="landingpagevendor">
 
       <div className="header">
-        <div className="headerContent">
+        <div className="headerContent float-md-right">
           <div className="headerTitle title">
-            <h1>Title / Slogan</h1>
+            <h1>Bli selger!</h1>
           </div>
           <div className="headerSubtitle subTitle title">
             <h2>Undertittel</h2>
@@ -20,7 +20,7 @@ const LandingPageVendor = props => {
           </div>
           <div className="headerButton button">
             <button type="button" className="btn btn-primary">
-              Klikk her
+              Registrer bedrift
             </button>
 
           </div>

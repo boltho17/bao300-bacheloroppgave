@@ -1,40 +1,53 @@
+$break-small: 320px
+$break-large: 1200px
+
 .landingpagevendor
-  //background: blue
-  p
+//background: blue
+p
 
-  .header
-    width: 100%
-    height: 40vh
-    background-position: center center
-    background: url('/landing-vendor-header.jpg')
-    background-size: cover
-    background-repeat: no-repeat
-    background-attachment: fixed
-    color: white
-    .headerContent
-      padding: 60px 1rem
-      text-align: center
-      .title
-        color: white
-        &.headerTitle > *
-          font-size: 8rem
-        &.subTitle > *
-          font-size: 4rem
-      .bodyText
-        font-size: 2rem
-
-  .shadow
-    box-shadow:
-    0 14px 28px rgba(0,0,0,0.25), 
-    0 10px 10px rgba(0,0,0,0.22) 
-    border-radius: 5px
-
-  .featureTEMP
-    margin: 1em
+.header
+  width: 100%
+  height: 100vh
+  background-position: center center
+  background: url('/landing-vendor-header-2.jpg')
+  background-size: cover
+  background-repeat: no-repeat
+  background-attachment: fixed
+  color: white
+  .headerContent
+    padding: 60px 1rem
     text-align: center
-    padding: 1rem
-    .symbol
-      font-size: 2rem
+    top: 50%
+    transform: translateY(-50%)
+    padding-right: 10rem
+    .title
+      color: white
+      &.headerTitle > *
+        font-size: 6rem
+        @media screen and (max-width: $break-small)
+          font-size: unset
+      &.subTitle > *
+        font-size: 3rem
+    .bodyText
+      font-size: 1.5rem
+    .headerButton
+      .btn
+        background: transparent
+        border-color: #fff
+        padding: .5em 2em
+        text-transform: uppercase
+.shadow
+  box-shadow:
+  0 14px 28px rgba(0,0,0,0.25), 
+  0 10px 10px rgba(0,0,0,0.22) 
+  border-radius: 5px
+
+.featureTEMP
+  margin: 1em
+  text-align: center
+  padding: 1rem
+  .symbol
+    font-size: 2rem
 
 // TEMP - PLACEHOLDERS
 *
