@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import * as ROUTES from '../constants/routes'
 
 //TODO: Get / Save text in db
 
@@ -18,12 +20,16 @@ const LandingPageVendor = props => {
           <div className="headerBodyText bodyText">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
+       <Link to={ROUTES.VENDOR_SIGNUP}>
           <div className="headerButton button">
             <button type="button" className="btn btn-primary text-uppercase">
-              Registrer bedrift
+       
+
+             Registrer bedrift
             </button>
 
           </div>
+           </Link>
         </div>
 
       </div>
@@ -89,7 +95,7 @@ const LandingPageVendor = props => {
                 nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
     eget lacinia mi. </p>
               </div>
-              
+
             </div>
 
             <div className="featureTEMP  col">
@@ -104,7 +110,7 @@ const LandingPageVendor = props => {
                 nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
     eget lacinia mi. </p>
               </div>
-              
+
             </div>
           </div>
 
