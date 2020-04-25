@@ -118,7 +118,8 @@ const LandingPageVendor = props => {
 
         </div>
         <div className="contentSection content section container">
-          <div className="spacer">SPACER</div>
+          <div className="spacer">
+          </div>
 
         </div>
 
