@@ -4,11 +4,13 @@ $break-large: 1200px
 
 $text-spacing: 1em
 
+$navbar-height: 40px
+
 .landingpagevendor
 
 .header
   width: 100%
-  height: 100vh
+  height: calc(100vh - #{$navbar-height})
   background-position: center center
   background: url('/landing-vendor-header-2.jpg')
   background-size: cover
@@ -39,7 +41,7 @@ $text-spacing: 1em
   .scrollIndicator
     clear: both
     position: absolute
-    bottom: 2rem
+    bottom: .5rem
     left: 50%
     font-size: 2rem
     animation: pulse 2s infinite
@@ -95,7 +97,6 @@ $text-spacing: 1em
 .spacer
   height: 100vh
 
-
   // animations
 
   @keyframes pulse
@@ -103,5 +104,3 @@ $text-spacing: 1em
       transform: translateY(-8px) scale(.8)
     100%
       opacity: 0
-    
-      
