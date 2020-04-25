@@ -93,17 +93,24 @@ $text-spacing: 1em
     content: 'BODYTEXT'
 
 .featureSection
-  background: url('/Rainy-Coffee.jpeg') no-repeat center/cover fixed
+  //background: rgba(#eee,.25)
   padding: 4rem 0
-  .featuresContent
-    background: #fff
-    
   &::before
     content: 'FEATURE SECTION'
+    background: url('/Rainy-Coffee.jpeg') no-repeat center/cover fixed
+    background-size: cover
+    height: 100%
+    width: 100%
+  .featuresContent
+    background: #fff
 
 .featureTEMP
   &::before
     content: 'FEATURE'
+.middle
+  border: 2px solid rgba(#333,.1)
+  border-top: 0
+  border-bottom: 0
 
 .colorblockTEMP
   background: #333

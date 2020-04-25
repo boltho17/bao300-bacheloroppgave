@@ -77,7 +77,7 @@ const LandingPageVendor = props => {
 
             </div>
 
-            <div className="featureTEMP  col">
+            <div className="featureTEMP  col middle">
 
               <div className="featureSymbol symbol">
                 &#x2605;
