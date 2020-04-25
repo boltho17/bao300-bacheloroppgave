@@ -20,16 +20,16 @@ const LandingPageVendor = props => {
           <div className="headerBodyText bodyText">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
-       <Link to={ROUTES.VENDOR_SIGNUP}>
-          <div className="headerButton button">
-            <button type="button" className="btn btn-primary text-uppercase">
-       
+          <Link to={ROUTES.VENDOR_SIGNUP}>
+            <div className="headerButton button">
+              <button type="button" className="btn btn-primary text-uppercase">
 
-             Registrer bedrift
+
+                Registrer bedrift
             </button>
 
-          </div>
-           </Link>
+            </div>
+          </Link>
         </div>
 
       </div>
@@ -52,11 +52,8 @@ const LandingPageVendor = props => {
                     nec.</p>
               </div>
             </div>
-            <div className="col">
-              <div className="colorblockTEMP">
-
-              </div>
-
+            <div className="col image">
+              <img className="img-fluid" src="/pour.png" />
             </div>
 
 
