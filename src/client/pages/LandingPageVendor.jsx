@@ -7,7 +7,7 @@ const LandingPageVendor = props => {
   return (
     <div className="landingpagevendor">
 
-      <div className="header">
+      <div className="header overflow-hidden">
         <div className="headerContent float-md-right">
           <div className="headerTitle title">
             <h1>Bli selger!</h1>
@@ -19,7 +19,7 @@ const LandingPageVendor = props => {
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
           <div className="headerButton button">
-            <button type="button" className="btn btn-primary">
+            <button type="button" className="btn btn-primary text-uppercase">
               Registrer bedrift
             </button>
 
@@ -30,30 +30,41 @@ const LandingPageVendor = props => {
 
       <div className="main mainContent">
 
-
         <div className="contentSection content section container">
 
-          <div className="">
+          <div className="split intro row">
 
-            <div className="title">
-              <h2>Quisque eu interdum</h2>
+            <div className="col text">
+              <div className="title">
+                <h2>Quisque eu interdum</h2>
+
+              </div>
+              <div className="bodyText">
+                <p>Duis nec nulla in nulla convallis auctor eget ac tortor.
+                Cras vel libero tempus, pharetra mi et, egestas nulla.
+                Vestibulum elementum nisl nulla, eget mattis eros hendrerit
+                    nec.</p>
+              </div>
+            </div>
+            <div className="col">
+              <div className="colorblockTEMP">
+
+              </div>
 
             </div>
-            <div className="bodyText">
-              <p>Duis nec nulla in nulla convallis auctor eget ac tortor.
-              Cras vel libero tempus, pharetra mi et, egestas nulla.
-              Vestibulum elementum nisl nulla, eget mattis eros hendrerit
-              nec.</p>
-            </div>
+
+
+
           </div>
+        </div>
+        <div className="featureSection featuresTEMP section">
 
-          <div className="featureSection featuresTEMP section row">
-
-            <div className="featureTEMP shadow col">
+          <div className="featuresContent row w-75 mx-auto shadow">
+            <div className="featureTEMP  col">
 
               <div className="featureSymbol symbol">
                 &#x2605;
-              </div>
+  </div>
 
               <div>
                 <h3 className="featureTitle title">Feature title</h3>
@@ -61,57 +72,51 @@ const LandingPageVendor = props => {
               <div>
                 <p className="bodyText featureText">Curabitur hendrerit mi
                 nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
-                eget lacinia mi. </p>
+    eget lacinia mi. </p>
               </div>
-              <div className="featureButton button">
-                <button type="button" className="btn btn-primary">
-                  Klikk her
-            </button>
-              </div>
+
             </div>
 
-            <div className="featureTEMP shadow col">
+            <div className="featureTEMP  col">
 
               <div className="featureSymbol symbol">
                 &#x2605;
-              </div>
+  </div>
 
               <h3 className="featureTitle title">Feature title</h3>
               <div>
                 <p className="bodyText featureText">Curabitur hendrerit mi
                 nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
-                eget lacinia mi. </p>
+    eget lacinia mi. </p>
               </div>
-              <div className="featureButton button">
-                <button type="button" className="btn btn-primary">
-                  Klikk her
-            </button>
-              </div>
+              
             </div>
 
-            <div className="featureTEMP shadow col">
+            <div className="featureTEMP  col">
 
               <div className="featureSymbol symbol">
                 &#x2605;
-              </div>
+  </div>
 
               <h3 className="featureTitle title">Feature title</h3>
               <div className="featureText">
                 <p className="bodyText featureText">Curabitur hendrerit mi
                 nisl, ut interdum dui posuere a. Aenean vel lacinia nulla,
-                eget lacinia mi. </p>
+    eget lacinia mi. </p>
               </div>
-              <div className="featureButton button">
-                <button type="button" className="btn btn-primary">
-                  Klikk her
-            </button>
-              </div>
+              
             </div>
-
           </div>
 
-          <div className="spacer">SPACER</div>
+
+
         </div>
+        <div className="contentSection content section container">
+          <div className="spacer">SPACER</div>
+
+        </div>
+
+
 
 
       </div>
