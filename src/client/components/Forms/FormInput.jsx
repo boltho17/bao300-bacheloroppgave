@@ -4,7 +4,7 @@ import {Row} from "react-bootstrap";
 const FormInput = props => {
 
     return (
-        <div className="mt-4 mb-4">
+        <div className="mt-2 mb-2">
             <label htmlFor={props.label}>{props.label}</label>
             <Row>
                 <input

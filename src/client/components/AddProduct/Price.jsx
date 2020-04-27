@@ -34,13 +34,13 @@ const Price = props => {
         let options = [];
         for (let i = 0; i < numberOfPriceOptions; i++) {
             options.push(
-                <Row key={i}>
-                    <Col sm={2}>
-                        <FormInput name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" className="price-form" placeholder="0"
+                <Row key={i} className="priceLine">
+                    <Col className="priceElement">
+                        <FormInput name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"gr"} maxLength={"4"}/>
                     </Col>
-                    <Col sm={2}>
-                        <FormInput name={'price' + i} value={props.priceOptions[i]?.price} data-index="0" className="price-form" placeholder="0"
+                    <Col className="priceElement">
+                        <FormInput name={'price' + i} value={props.priceOptions[i]?.price} data-index="0"  placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"kr"} maxLength={"4"}/>
                     </Col>
                 </Row>
@@ -62,7 +62,7 @@ const Price = props => {
     };
 
     return (
-        <div className="container mt-4 mb-4 ml-4">
+        <div className="mt-4 mb-4 ml-4">
             
                 <h3>Størrelse og pris</h3>
       
@@ -70,10 +70,10 @@ const Price = props => {
             {addPriceOption()}
 
             <Row className="extra-alternative">
-                <p>Legg til ekstra alternativ</p>
+                <label>Legg til ekstra alternativ</label>
                 <div className="price-btns" id="priceButtons">
-                <Button variant="outline-info" size="sm" className="size-amount" onClick={decrement}>-</Button>
-                <Button variant="outline-info" size="sm" className="size-amount" onClick={increment}>+</Button>
+                       <Col><Button variant="outline-secondary" size="sm" className="size-amount" onClick={decrement}>-</Button></Col>
+                       <Col><Button variant="outline-secondary" size="sm" className="size-amount" onClick={increment}>+</Button></Col> 
                 </div>
             </Row>
         </div>
