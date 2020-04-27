@@ -181,8 +181,8 @@ const AddProduct = () => {
 
     return (
         <div className="container create-prod-container">
-            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>
-            <Row>
+            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>        
+            <Row className="no-gutters upper-container">
                 <Col sm={6}>
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>
                 </Col>
@@ -196,7 +196,7 @@ const AddProduct = () => {
                                 inLine={false} handleChange={handleCheckBoxChange}/>
                 </Col>
             </Row>
-            <Row>
+            <Row className="no-gutters lower-container">
                 <Col sm={6}>
                     <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions} error={error}
                            setError={setError}/>
@@ -212,7 +212,7 @@ const AddProduct = () => {
                     }}/>
                 </Col>
             </Row>
-            <TextAreaInput label={'Beskrivelse'} handleChange={handleChange} product={product}
+            <TextAreaInput className="description-container" label={'Beskrivelse'} handleChange={handleChange} product={product}
                            value={product.descriptionLong} config={{
                 name: 'descriptionLong',
                 rows: '5',
