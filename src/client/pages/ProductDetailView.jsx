@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {TiMinus, TiPlus} from "react-icons/all";
 import {Redirect} from "react-router-dom";
 
-const DetailView = ({product}) => {
+const ProductDetailView = ({product}) => {
 
     const [quantityAmountSelectorValue, setQuantityAmountSelectorValue] = useState(1);
     const [redirect, setRedirect] = useState(false);
@@ -166,4 +166,4 @@ const DetailView = ({product}) => {
     }
 }
 
-export default DetailView;
+export default ProductDetailView;

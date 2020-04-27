@@ -9,3 +9,4 @@ export const ADMIN = '/admin';
 export const PRODUCTS = '/products';
 export const ADD_PRODUCT = '/new_product';
 export const LANDING_VENDOR = '/landing-vendor';
+export const VENDORS_PAGE = '/vendors';

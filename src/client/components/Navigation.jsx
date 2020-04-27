@@ -68,7 +68,7 @@ const Navigation = () => {
                     }}>Bli selger</Link>}
                     {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link>}
                     <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
-                    <Link className="links" to={ROUTES.ACCOUNT}>Om oss</Link>
+                    <Link className="links" to={ROUTES.VENDORS_PAGE}>Om oss</Link>
                     {!userType && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
                 </Nav>
 
