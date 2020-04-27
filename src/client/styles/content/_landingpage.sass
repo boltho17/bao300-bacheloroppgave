@@ -1,81 +1,141 @@
+$break-small: 320px
+$break-medium: 767px 
+$break-large: 1200px
+  
+$navbar-height: 40px
+
+
+@mixin marginY($value)
+  margin-bottom: $value
+  margin-top: $value
+@mixin paddingY($value)
+  padding-bottom: $value
+  padding-top: $value
+
+
+.header
+  height: calc(100vh - #{$navbar-height})
+  &-content-wrap
+    @include paddingY(5rem)
+  &-title
+    @media screen and (min-width: $break-large) 
+      font-size: 4rem
+  &-subtitle
+    @media screen and (min-width: $break-large) 
+      font-size: 1.25rem
+    @include marginY(1rem)
+  &-button
+    @include marginY($value: 2rem)
+    background: $yellow
+    border-radius: 10px
+    padding: 1rem 2rem
+    border: none
+    font-size: 1rem
+
+  .scrollIndicator
+    clear: both
+    position: absolute
+    bottom: .5rem
+    left: 50%
+    font-size: 2rem
+    animation: pulse 2s infinite
+
 .image-container
-    width: 100%
-    height: 100vh
-    background-image: url("/LandingPage_Mainimg.jpeg")
-    display: flex
-    flex-direction: column
-    align-items: center
-    background-repeat: no-repeat
-    background-size: cover
-    background-position: center 
-    justify-content: cover
-    font-family: 'Open Sans'
-    font-size: 1.4rem
-    padding-top: 7%
+  width: 100%
+  //height: 100vh
+  background: url("/landing-header.jpg") no-repeat bottom/cover
+  display: flex
+  flex-direction: column
+  align-items: center
+  justify-content: cover
+  font-family: 'Open Sans'
+  color: #fff
+  font-size: 1.4rem
+  padding-top: 7%
 
-.rowBottomHeight                                    
-    margin-top: 48vh
+.rowBottomHeight
+  margin-top: 48vh
 
-.features
-    width: 100%
-    height: 600px
-    background-image: url("/Rainy-Coffee.jpeg")
-    display: flex
-    flex-direction: column
-    align-items: center
-    background-repeat: no-repeat
-    background-size: cover
-    background-position: center 
-    justify-content: cover
-    opacity: 70%
-    padding: 10%
-
-.featurebox 
+/** .features
+  width: 100%
+  height: 600px
+  background-image: url("/Rainy-Coffee.jpeg")
+  display: flex
+  flex-direction: column
+  align-items: center
+  background-repeat: no-repeat
+  background-size: cover
+  background-position: center
+  justify-content: cover
+  opacity: 70%
+  padding: 10%
+  .featurebox
     padding: 5%
     text-align: center
+    background: #ffffff
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset
+ **/
+  
+// features NY
+.shadow
+  box-shadow:
+  0 14px 28px rgba(0,0,0,0.25), 
+  0 10px 10px rgba(0,0,0,0.22) 
+  border-radius: 5px
+
+.featureTEMP
+  margin: 1em
+  text-align: center
+  padding: 1rem
+  .symbol
+    font-size: 2rem
+
+.featureSection
+  //padding: 4rem 0
+  position: relative
+  @include paddingY($value: 10rem)
+
+  &::before
+    content: ''
+    background: url('/Rainy-Coffee.jpeg') no-repeat center/cover fixed
+    //background-size: cover
     height: 100%
     width: 100%
-    background: #ffffff
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset
+    top: 0
+    position: absolute
+    opacity: .5
+    z-index: -1
+  .featuresContent
+    background: #fff
+
+.featureTEMP
+  &.middle
+    border: 2px solid rgba(#333,.05)
+    @media screen and (max-width: $break-medium)
+      border-left: 0
+      border-right: 0
+    @media screen and (min-width: $break-medium)
+      border-top: 0
+      border-bottom: 0
+// .features NY
 
 .artikkel-container
-    padding: 4% 20%
-    width: 100%
-    height: 660px
-    background-color: #caccc1
-    display: flex
-    flex-direction: column
+  @include paddingY($value: 5rem)
+  width: 100%
+  background-color: #caccc1
+  &-content-wrap
+    @include marginY(5rem)
+  &-col-text
+    display: inline-flex
     align-items: center
-    background-repeat: no-repeat
-    background-size: cover
-    background-position: center 
-    justify-content: cover
-
-.artikkel-box
-    padding: 10%
-    height: 275px
-    width: 350px
+    justify-content: center
     background: #ffffff
-    background-repeat: no-repeat
-    background-size: cover
-    background-position: center 
-    align-items: center
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset
     text-align: center
+    &-content
+      padding: 2rem
+      @media screen and (min-width: $break-large) 
+        font-size: 2rem
 
-.artikkel-img
-    height: 275px
-    width: 480px
-    background-image: url("/Kaffe-Trakter.jpeg")
-    flex-direction: column
-    align-items: center
-    background-repeat: no-repeat
-    background-size: cover
-    background-position: center 
-    justify-content: cover
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset
-
-
-    
-   
-
+//TEMP
+.landingsside
+  overflow: hidden //fordi handlekurven går utenfor viewport
