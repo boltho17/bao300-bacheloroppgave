@@ -8,8 +8,7 @@ import {ADD_VENDOR} from "../components/GraphQL/vendor/mutations";
 const uniqid = require('uniqid');
 
 
-
-const VendorSignUp = ({history}) => {
+const VendorSignUp = (props) => {
 
     const [isFirebaseUserCreated, setIsFirebaseUserCreated] = useState(false);
     const [redirect, setRedirect] = useState(false);
@@ -22,6 +21,7 @@ const VendorSignUp = ({history}) => {
         email: "",
         password: ''
     });
+
 
     // SETTER VISNINGSNAVN TIL VERDIEN AV FIRMA NAVN
     useEffect(() => {
@@ -49,7 +49,10 @@ const VendorSignUp = ({history}) => {
                 }
             });
             console.log(vendorData);
-            setRedirect(true)
+            // Callback from Navigation, sets reload state as true:
+            props.location.param(true);
+            // ----
+            setRedirect(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[isFirebaseUserCreated]);
@@ -58,6 +61,7 @@ const VendorSignUp = ({history}) => {
         setStep(prevState => prevState - 1);
         setVendor({})
     };
+
 
     // OPPRETTER BRUKER I FIREBASE:
     const submitVendorSignUp = useCallback(async event => {
@@ -73,9 +77,11 @@ const VendorSignUp = ({history}) => {
             alert(error);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [history, vendorInfo.email, vendorInfo.password]);
+    }, [props.history, vendorInfo.email, vendorInfo.password]);
 
-        if(redirect) return <Redirect to='/' />;
+        if(redirect) {
+            return <Redirect to='/' />;
+        }
         else return (
             <div className="container">
                 <h1>VENDOR SIGN UP</h1>

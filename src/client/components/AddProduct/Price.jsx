@@ -40,7 +40,14 @@ const Price = props => {
                                    handleChange={(event) => handleChange(event, i)} suffix={"gr"} maxLength={"4"}/>
                     </Col>
                     <Col className="priceElement">
-                        <FormInput name={'price' + i} value={props.priceOptions[i]?.price} data-index="0"  placeholder="0"
+                        <FormInput name={'price' + i} value={props.priceOptions[i]?.price} data-index="0"  placeholder="0"/>
+                </Col>
+                    <Col>
+                        <FormInput label="Størrelse (vekt)" name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" className="price-form" placeholder="0"
+                                   handleChange={(event) => handleChange(event, i)} suffix={"gr"} maxLength={"4"}/>
+                    </Col>
+                    <Col>
+                        <FormInput label="Pris" name={'price' + i} value={props.priceOptions[i]?.price} data-index="0" className="price-form" placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"kr"} maxLength={"4"}/>
                     </Col>
                 </Row>
@@ -64,7 +71,7 @@ const Price = props => {
     return (
         <div className="mt-4 mb-4 ml-4">
             
-                <h3>Størrelse og pris</h3>
+                <h3>Størrelser og priser*</h3>
       
 
             {addPriceOption()}

@@ -15,7 +15,7 @@ const ShopHeader = ({totalProducts}) => {
 
             <Row className="mt-5">
                 <Col sm={3}>
-                    <p className="ml-2" style={{fontSize: '12px'}}>Filter</p>
+                    <p className="ml-2" style={{fontSize: '12px'}}>Kategorier</p>
                 </Col>
                 <Col sm={7}>
                     {totalProducts > 0 ?
