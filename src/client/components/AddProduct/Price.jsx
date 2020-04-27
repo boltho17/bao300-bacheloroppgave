@@ -34,12 +34,12 @@ const Price = props => {
         let options = [];
         for (let i = 0; i < numberOfPriceOptions; i++) {
             options.push(
-                <Row key={i}>
-                    <Col>
+                <Row key={i} className="priceLine">
+                    <Col className="priceElement">
                         <FormInput label="Størrelse (vekt)" name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" className="price-form" placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"gr"} maxLength={"4"}/>
                     </Col>
-                    <Col>
+                    <Col className="priceElement">
                         <FormInput label="Pris" name={'price' + i} value={props.priceOptions[i]?.price} data-index="0" className="price-form" placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"kr"} maxLength={"4"}/>
                     </Col>
@@ -62,18 +62,18 @@ const Price = props => {
     };
 
     return (
-        <div className="container mt-4 mb-4 ml-4">
+        <div className="mt-4 mb-4 ml-4">
             
-                <h3>Størrelser og priser*</h3>
+                <h5 className="price-title">Størrelser og priser*</h5>
       
 
             {addPriceOption()}
 
             <Row className="extra-alternative">
-                <p>Legg til ekstra alternativ</p>
-                <div className="price-btns" id="priceButtons">
-                <Button variant="outline-info" size="sm" className="size-amount" onClick={decrement}>-</Button>
-                <Button variant="outline-info" size="sm" className="size-amount" onClick={increment}>+</Button>
+                <label>Legg til ekstra alternativ</label>
+                <div className="price-btns">
+                <Button variant="outline-secondary" size="sm" className="size-amount" onClick={decrement}>-</Button>
+                <Button variant="outline-secondary" size="sm" className="size-amount" onClick={increment}>+</Button>
                 </div>
             </Row>
         </div>

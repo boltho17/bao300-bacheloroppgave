@@ -1,4 +1,5 @@
 import React, {useContext, useState} from 'react';
+import Container from 'react-bootstrap/Container'
 import AddProductForm from "../components/Forms/AddProductForm";
 import Price from '../components/AddProduct/Price'
 import {Col, Row} from "react-bootstrap";
@@ -8,6 +9,7 @@ import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
 import {AuthContext} from "../components/Firebase/AuthContext";
 import ImageUpload from "../components/AddProduct/ImageUpload";
 import TextAreaInput from "../components/Forms/TextAreaInput";
+import Button from 'react-bootstrap/Button';
 
 const AddProduct = () => {
 
@@ -186,17 +188,19 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="container create-prod-container">
+        <Container fluid="md">
             <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>        
             <Row className="no-gutters upper-container">
                 <Col sm={6}>
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>
                 </Col>
-                <Col sm={3}>
-                    <CheckBoxes title={'Hele Bønner'} labels={['Ja', 'Nei']} inLine={true}
+                <Col sm={3} className="beans-cont">
+                    <CheckBoxes title={'Hele Bønner'}
+                                labels={['Ja', 'Nei']} 
+                                inLine={false}
                                 handleChange={handleCheckBoxChange}/>
                 </Col>
-                <Col sm={3}>
+                <Col sm={3} className="grind-cont">
                     <CheckBoxes title={'Kverningsgrader'}
                                 labels={['Espressomaskin', 'Espressokanne', 'Aeropress', 'DryppV60', 'Filtermalt', 'Presskanne', 'Chemex', 'Kokmalt']}
                                 inLine={false} handleChange={handleCheckBoxChange}/>
@@ -227,8 +231,8 @@ const AddProduct = () => {
                 placeholder: 'Beskrivelse her..'
             }}/>
             <ImageUpload product={product} setProduct={setProduct}/>
-            <button onClick={onSubmit}>Opprett produkt</button>
-        </div>
+            <button className="save-prod-btn" onClick={onSubmit}>Opprett produkt</button>
+        </Container>
     );
 };
 
