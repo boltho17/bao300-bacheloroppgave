@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import FormInput from "../Forms/FormInput";
 import {Col, Row} from 'react-bootstrap';
+import Button from 'react-bootstrap/Button';
 
 const Price = props => {
     const [numberOfPriceOptions, setNumberOfPriceOptions] = useState(1);
@@ -62,14 +63,19 @@ const Price = props => {
 
     return (
         <div className="container mt-4 mb-4 ml-4">
-            <Row>
+            
                 <h3>Størrelse og pris</h3>
-                <button onClick={decrement}>-</button>
-                <button onClick={increment}>+</button>
-            </Row>
+      
 
             {addPriceOption()}
 
+            <Row className="extra-alternative">
+                <p>Legg til ekstra alternativ</p>
+                <div className="price-btns" id="priceButtons">
+                <Button variant="outline-info" size="sm" className="size-amount" onClick={decrement}>-</Button>
+                <Button variant="outline-info" size="sm" className="size-amount" onClick={increment}>+</Button>
+                </div>
+            </Row>
         </div>
     )
 };

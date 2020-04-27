@@ -180,8 +180,8 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="container-fluid">
-            <h1 className="mt-4">Opprett et nytt produkt</h1>
+        <div className="container create-prod-container">
+            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>
             <Row>
                 <Col sm={6}>
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>

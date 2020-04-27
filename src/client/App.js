@@ -13,6 +13,7 @@ import VendorSignUp from "./pages/VendorSignUp";
 import DetailView from './pages/DetailView';
 import Footer from "./components/Footer";
 import SignUpPage from "./pages/CustomerSignUp";
+import LandingPageVendor from './pages/LandingPageVendor';
 
 
 const App = () => {
@@ -40,6 +41,7 @@ const App = () => {
                     <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
                     <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
                     <Route path="/product/:id" exact render={() => <DetailView product={selectedProduct}/>} />
+                    <Route path={ROUTES.LANDING_VENDOR} component={LandingPageVendor}/>
                     <Footer/>
                 </React.Fragment>
             </Switch>
