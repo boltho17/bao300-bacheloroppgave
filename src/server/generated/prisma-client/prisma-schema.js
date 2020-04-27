@@ -3,7 +3,11 @@ module.exports = {
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-/* GraphQL */ `type AggregateCategory {
+/* GraphQL */ `type AggregateAllCategories {
+  count: Int!
+}
+
+type AggregateCategory {
   count: Int!
 }
 
@@ -75,14 +79,117 @@ type AggregateVendor {
   count: Int!
 }
 
+type AllCategories {
+  id: ID!
+  name: String
+  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
+}
+
+type AllCategoriesConnection {
+  pageInfo: PageInfo!
+  edges: [AllCategoriesEdge]!
+  aggregate: AggregateAllCategories!
+}
+
+input AllCategoriesCreateInput {
+  id: ID
+  name: String
+  categories: CategoryCreateManyInput
+}
+
+type AllCategoriesEdge {
+  node: AllCategories!
+  cursor: String!
+}
+
+enum AllCategoriesOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+}
+
+type AllCategoriesPreviousValues {
+  id: ID!
+  name: String
+}
+
+type AllCategoriesSubscriptionPayload {
+  mutation: MutationType!
+  node: AllCategories
+  updatedFields: [String!]
+  previousValues: AllCategoriesPreviousValues
+}
+
+input AllCategoriesSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AllCategoriesWhereInput
+  AND: [AllCategoriesSubscriptionWhereInput!]
+  OR: [AllCategoriesSubscriptionWhereInput!]
+  NOT: [AllCategoriesSubscriptionWhereInput!]
+}
+
+input AllCategoriesUpdateInput {
+  name: String
+  categories: CategoryUpdateManyInput
+}
+
+input AllCategoriesUpdateManyMutationInput {
+  name: String
+}
+
+input AllCategoriesWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  categories_every: CategoryWhereInput
+  categories_some: CategoryWhereInput
+  categories_none: CategoryWhereInput
+  AND: [AllCategoriesWhereInput!]
+  OR: [AllCategoriesWhereInput!]
+  NOT: [AllCategoriesWhereInput!]
+}
+
+input AllCategoriesWhereUniqueInput {
+  id: ID
+}
+
 type BatchPayload {
   count: Long!
 }
 
 type Category {
   id: ID!
-  products: Product!
-  category: String!
+  name: String!
+  products(where: ProductWhereInput, orderBy: ProductOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Product!]
 }
 
 type CategoryConnection {
@@ -93,12 +200,12 @@ type CategoryConnection {
 
 input CategoryCreateInput {
   id: ID
-  products: ProductCreateOneWithoutCategoriesInput!
-  category: String!
+  name: String!
+  products: ProductCreateManyWithoutCategoryInput
 }
 
-input CategoryCreateManyWithoutProductsInput {
-  create: [CategoryCreateWithoutProductsInput!]
+input CategoryCreateManyInput {
+  create: [CategoryCreateInput!]
   connect: [CategoryWhereUniqueInput!]
 }
 
@@ -107,9 +214,14 @@ input CategoryCreateOneInput {
   connect: CategoryWhereUniqueInput
 }
 
+input CategoryCreateOneWithoutProductsInput {
+  create: CategoryCreateWithoutProductsInput
+  connect: CategoryWhereUniqueInput
+}
+
 input CategoryCreateWithoutProductsInput {
   id: ID
-  category: String!
+  name: String!
 }
 
 type CategoryEdge {
@@ -120,13 +232,13 @@ type CategoryEdge {
 enum CategoryOrderByInput {
   id_ASC
   id_DESC
-  category_ASC
-  category_DESC
+  name_ASC
+  name_DESC
 }
 
 type CategoryPreviousValues {
   id: ID!
-  category: String!
+  name: String!
 }
 
 input CategoryScalarWhereInput {
@@ -144,20 +256,20 @@ input CategoryScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   AND: [CategoryScalarWhereInput!]
   OR: [CategoryScalarWhereInput!]
   NOT: [CategoryScalarWhereInput!]
@@ -182,33 +294,33 @@ input CategorySubscriptionWhereInput {
 }
 
 input CategoryUpdateDataInput {
-  products: ProductUpdateOneRequiredWithoutCategoriesInput
-  category: String
+  name: String
+  products: ProductUpdateManyWithoutCategoryInput
 }
 
 input CategoryUpdateInput {
-  products: ProductUpdateOneRequiredWithoutCategoriesInput
-  category: String
+  name: String
+  products: ProductUpdateManyWithoutCategoryInput
 }
 
 input CategoryUpdateManyDataInput {
-  category: String
+  name: String
 }
 
-input CategoryUpdateManyMutationInput {
-  category: String
-}
-
-input CategoryUpdateManyWithoutProductsInput {
-  create: [CategoryCreateWithoutProductsInput!]
+input CategoryUpdateManyInput {
+  create: [CategoryCreateInput!]
+  update: [CategoryUpdateWithWhereUniqueNestedInput!]
+  upsert: [CategoryUpsertWithWhereUniqueNestedInput!]
   delete: [CategoryWhereUniqueInput!]
   connect: [CategoryWhereUniqueInput!]
   set: [CategoryWhereUniqueInput!]
   disconnect: [CategoryWhereUniqueInput!]
-  update: [CategoryUpdateWithWhereUniqueWithoutProductsInput!]
-  upsert: [CategoryUpsertWithWhereUniqueWithoutProductsInput!]
   deleteMany: [CategoryScalarWhereInput!]
   updateMany: [CategoryUpdateManyWithWhereNestedInput!]
+}
+
+input CategoryUpdateManyMutationInput {
+  name: String
 }
 
 input CategoryUpdateManyWithWhereNestedInput {
@@ -223,13 +335,22 @@ input CategoryUpdateOneRequiredInput {
   connect: CategoryWhereUniqueInput
 }
 
-input CategoryUpdateWithoutProductsDataInput {
-  category: String
+input CategoryUpdateOneWithoutProductsInput {
+  create: CategoryCreateWithoutProductsInput
+  update: CategoryUpdateWithoutProductsDataInput
+  upsert: CategoryUpsertWithoutProductsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CategoryWhereUniqueInput
 }
 
-input CategoryUpdateWithWhereUniqueWithoutProductsInput {
+input CategoryUpdateWithoutProductsDataInput {
+  name: String
+}
+
+input CategoryUpdateWithWhereUniqueNestedInput {
   where: CategoryWhereUniqueInput!
-  data: CategoryUpdateWithoutProductsDataInput!
+  data: CategoryUpdateDataInput!
 }
 
 input CategoryUpsertNestedInput {
@@ -237,10 +358,15 @@ input CategoryUpsertNestedInput {
   create: CategoryCreateInput!
 }
 
-input CategoryUpsertWithWhereUniqueWithoutProductsInput {
-  where: CategoryWhereUniqueInput!
+input CategoryUpsertWithoutProductsInput {
   update: CategoryUpdateWithoutProductsDataInput!
   create: CategoryCreateWithoutProductsInput!
+}
+
+input CategoryUpsertWithWhereUniqueNestedInput {
+  where: CategoryWhereUniqueInput!
+  update: CategoryUpdateDataInput!
+  create: CategoryCreateInput!
 }
 
 input CategoryWhereInput {
@@ -258,21 +384,23 @@ input CategoryWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  products: ProductWhereInput
-  category: String
-  category_not: String
-  category_in: [String!]
-  category_not_in: [String!]
-  category_lt: String
-  category_lte: String
-  category_gt: String
-  category_gte: String
-  category_contains: String
-  category_not_contains: String
-  category_starts_with: String
-  category_not_starts_with: String
-  category_ends_with: String
-  category_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  products_every: ProductWhereInput
+  products_some: ProductWhereInput
+  products_none: ProductWhereInput
   AND: [CategoryWhereInput!]
   OR: [CategoryWhereInput!]
   NOT: [CategoryWhereInput!]
@@ -280,7 +408,7 @@ input CategoryWhereInput {
 
 input CategoryWhereUniqueInput {
   id: ID
-  category: String
+  name: String
 }
 
 type ContentArea {
@@ -1221,6 +1349,12 @@ input GrindWhereUniqueInput {
 scalar Long
 
 type Mutation {
+  createAllCategories(data: AllCategoriesCreateInput!): AllCategories!
+  updateAllCategories(data: AllCategoriesUpdateInput!, where: AllCategoriesWhereUniqueInput!): AllCategories
+  updateManyAllCategorieses(data: AllCategoriesUpdateManyMutationInput!, where: AllCategoriesWhereInput): BatchPayload!
+  upsertAllCategories(where: AllCategoriesWhereUniqueInput!, create: AllCategoriesCreateInput!, update: AllCategoriesUpdateInput!): AllCategories!
+  deleteAllCategories(where: AllCategoriesWhereUniqueInput!): AllCategories
+  deleteManyAllCategorieses(where: AllCategoriesWhereInput): BatchPayload!
   createCategory(data: CategoryCreateInput!): Category!
   updateCategory(data: CategoryUpdateInput!, where: CategoryWhereUniqueInput!): Category
   updateManyCategories(data: CategoryUpdateManyMutationInput!, where: CategoryWhereInput): BatchPayload!
@@ -1935,15 +2069,19 @@ type PageInfo {
 type Product {
   id: ID!
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean!
   vendor: Vendor
   country: Country
+  category: Category
   productImages(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductImage!]
-  categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category!]
   skus(where: SKUWhereInput, orderBy: SKUOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SKU!]
   grindOptions: [String!]!
 }
@@ -1961,17 +2099,26 @@ input ProductCreategrindOptionsInput {
 input ProductCreateInput {
   id: ID
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
+  category: CategoryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
-  categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
   grindOptions: ProductCreategrindOptionsInput
+}
+
+input ProductCreateManyWithoutCategoryInput {
+  create: [ProductCreateWithoutCategoryInput!]
+  connect: [ProductWhereUniqueInput!]
 }
 
 input ProductCreateManyWithoutCountryInput {
@@ -1989,11 +2136,6 @@ input ProductCreateOneInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductCreateOneWithoutCategoriesInput {
-  create: ProductCreateWithoutCategoriesInput
-  connect: ProductWhereUniqueInput
-}
-
 input ProductCreateOneWithoutProductImagesInput {
   create: ProductCreateWithoutProductImagesInput
   connect: ProductWhereUniqueInput
@@ -2004,13 +2146,17 @@ input ProductCreateOneWithoutSkusInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductCreateWithoutCategoriesInput {
+input ProductCreateWithoutCategoryInput {
   id: ID
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
@@ -2022,14 +2168,18 @@ input ProductCreateWithoutCategoriesInput {
 input ProductCreateWithoutCountryInput {
   id: ID
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
+  category: CategoryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
-  categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
   grindOptions: ProductCreategrindOptionsInput
 }
@@ -2037,14 +2187,18 @@ input ProductCreateWithoutCountryInput {
 input ProductCreateWithoutProductImagesInput {
   id: ID
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
-  categories: CategoryCreateManyWithoutProductsInput
+  category: CategoryCreateOneWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
   grindOptions: ProductCreategrindOptionsInput
 }
@@ -2052,29 +2206,37 @@ input ProductCreateWithoutProductImagesInput {
 input ProductCreateWithoutSkusInput {
   id: ID
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
+  category: CategoryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
-  categories: CategoryCreateManyWithoutProductsInput
   grindOptions: ProductCreategrindOptionsInput
 }
 
 input ProductCreateWithoutVendorInput {
   id: ID
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   country: CountryCreateOneWithoutProductsInput
+  category: CategoryCreateOneWithoutProductsInput
   productImages: ProductImageCreateManyWithoutProductInput
-  categories: CategoryCreateManyWithoutProductsInput
   skus: SKUCreateManyWithoutProductInput
   grindOptions: ProductCreategrindOptionsInput
 }
@@ -2270,14 +2432,22 @@ enum ProductOrderByInput {
   id_DESC
   title_ASC
   title_DESC
-  flavorProfile_ASC
-  flavorProfile_DESC
   descriptionShort_ASC
   descriptionShort_DESC
   descriptionLong_ASC
   descriptionLong_DESC
   brewText_ASC
   brewText_DESC
+  beanType_ASC
+  beanType_DESC
+  elevation_ASC
+  elevation_DESC
+  roastDegree_ASC
+  roastDegree_DESC
+  certification_ASC
+  certification_DESC
+  process_ASC
+  process_DESC
   published_ASC
   published_DESC
 }
@@ -2285,10 +2455,14 @@ enum ProductOrderByInput {
 type ProductPreviousValues {
   id: ID!
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean!
   grindOptions: [String!]!
 }
@@ -2322,20 +2496,6 @@ input ProductScalarWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  flavorProfile: String
-  flavorProfile_not: String
-  flavorProfile_in: [String!]
-  flavorProfile_not_in: [String!]
-  flavorProfile_lt: String
-  flavorProfile_lte: String
-  flavorProfile_gt: String
-  flavorProfile_gte: String
-  flavorProfile_contains: String
-  flavorProfile_not_contains: String
-  flavorProfile_starts_with: String
-  flavorProfile_not_starts_with: String
-  flavorProfile_ends_with: String
-  flavorProfile_not_ends_with: String
   descriptionShort: String
   descriptionShort_not: String
   descriptionShort_in: [String!]
@@ -2378,6 +2538,76 @@ input ProductScalarWhereInput {
   brewText_not_starts_with: String
   brewText_ends_with: String
   brewText_not_ends_with: String
+  beanType: String
+  beanType_not: String
+  beanType_in: [String!]
+  beanType_not_in: [String!]
+  beanType_lt: String
+  beanType_lte: String
+  beanType_gt: String
+  beanType_gte: String
+  beanType_contains: String
+  beanType_not_contains: String
+  beanType_starts_with: String
+  beanType_not_starts_with: String
+  beanType_ends_with: String
+  beanType_not_ends_with: String
+  elevation: String
+  elevation_not: String
+  elevation_in: [String!]
+  elevation_not_in: [String!]
+  elevation_lt: String
+  elevation_lte: String
+  elevation_gt: String
+  elevation_gte: String
+  elevation_contains: String
+  elevation_not_contains: String
+  elevation_starts_with: String
+  elevation_not_starts_with: String
+  elevation_ends_with: String
+  elevation_not_ends_with: String
+  roastDegree: String
+  roastDegree_not: String
+  roastDegree_in: [String!]
+  roastDegree_not_in: [String!]
+  roastDegree_lt: String
+  roastDegree_lte: String
+  roastDegree_gt: String
+  roastDegree_gte: String
+  roastDegree_contains: String
+  roastDegree_not_contains: String
+  roastDegree_starts_with: String
+  roastDegree_not_starts_with: String
+  roastDegree_ends_with: String
+  roastDegree_not_ends_with: String
+  certification: String
+  certification_not: String
+  certification_in: [String!]
+  certification_not_in: [String!]
+  certification_lt: String
+  certification_lte: String
+  certification_gt: String
+  certification_gte: String
+  certification_contains: String
+  certification_not_contains: String
+  certification_starts_with: String
+  certification_not_starts_with: String
+  certification_ends_with: String
+  certification_not_ends_with: String
+  process: String
+  process_not: String
+  process_in: [String!]
+  process_not_in: [String!]
+  process_lt: String
+  process_lte: String
+  process_gt: String
+  process_gte: String
+  process_contains: String
+  process_not_contains: String
+  process_starts_with: String
+  process_not_starts_with: String
+  process_ends_with: String
+  process_not_ends_with: String
   published: Boolean
   published_not: Boolean
   AND: [ProductScalarWhereInput!]
@@ -2405,15 +2635,19 @@ input ProductSubscriptionWhereInput {
 
 input ProductUpdateDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
+  category: CategoryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
-  categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
   grindOptions: ProductUpdategrindOptionsInput
 }
@@ -2424,37 +2658,61 @@ input ProductUpdategrindOptionsInput {
 
 input ProductUpdateInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
+  category: CategoryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
-  categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateManyDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateManyMutationInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   grindOptions: ProductUpdategrindOptionsInput
+}
+
+input ProductUpdateManyWithoutCategoryInput {
+  create: [ProductCreateWithoutCategoryInput!]
+  delete: [ProductWhereUniqueInput!]
+  connect: [ProductWhereUniqueInput!]
+  set: [ProductWhereUniqueInput!]
+  disconnect: [ProductWhereUniqueInput!]
+  update: [ProductUpdateWithWhereUniqueWithoutCategoryInput!]
+  upsert: [ProductUpsertWithWhereUniqueWithoutCategoryInput!]
+  deleteMany: [ProductScalarWhereInput!]
+  updateMany: [ProductUpdateManyWithWhereNestedInput!]
 }
 
 input ProductUpdateManyWithoutCountryInput {
@@ -2493,13 +2751,6 @@ input ProductUpdateOneRequiredInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductUpdateOneRequiredWithoutCategoriesInput {
-  create: ProductCreateWithoutCategoriesInput
-  update: ProductUpdateWithoutCategoriesDataInput
-  upsert: ProductUpsertWithoutCategoriesInput
-  connect: ProductWhereUniqueInput
-}
-
 input ProductUpdateOneRequiredWithoutSkusInput {
   create: ProductCreateWithoutSkusInput
   update: ProductUpdateWithoutSkusDataInput
@@ -2516,12 +2767,16 @@ input ProductUpdateOneWithoutProductImagesInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductUpdateWithoutCategoriesDataInput {
+input ProductUpdateWithoutCategoryDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
@@ -2532,58 +2787,79 @@ input ProductUpdateWithoutCategoriesDataInput {
 
 input ProductUpdateWithoutCountryDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
+  category: CategoryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
-  categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutProductImagesDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
-  categories: CategoryUpdateManyWithoutProductsInput
+  category: CategoryUpdateOneWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutSkusDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
+  category: CategoryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
-  categories: CategoryUpdateManyWithoutProductsInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
 input ProductUpdateWithoutVendorDataInput {
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
   published: Boolean
   country: CountryUpdateOneWithoutProductsInput
+  category: CategoryUpdateOneWithoutProductsInput
   productImages: ProductImageUpdateManyWithoutProductInput
-  categories: CategoryUpdateManyWithoutProductsInput
   skus: SKUUpdateManyWithoutProductInput
   grindOptions: ProductUpdategrindOptionsInput
+}
+
+input ProductUpdateWithWhereUniqueWithoutCategoryInput {
+  where: ProductWhereUniqueInput!
+  data: ProductUpdateWithoutCategoryDataInput!
 }
 
 input ProductUpdateWithWhereUniqueWithoutCountryInput {
@@ -2601,11 +2877,6 @@ input ProductUpsertNestedInput {
   create: ProductCreateInput!
 }
 
-input ProductUpsertWithoutCategoriesInput {
-  update: ProductUpdateWithoutCategoriesDataInput!
-  create: ProductCreateWithoutCategoriesInput!
-}
-
 input ProductUpsertWithoutProductImagesInput {
   update: ProductUpdateWithoutProductImagesDataInput!
   create: ProductCreateWithoutProductImagesInput!
@@ -2614,6 +2885,12 @@ input ProductUpsertWithoutProductImagesInput {
 input ProductUpsertWithoutSkusInput {
   update: ProductUpdateWithoutSkusDataInput!
   create: ProductCreateWithoutSkusInput!
+}
+
+input ProductUpsertWithWhereUniqueWithoutCategoryInput {
+  where: ProductWhereUniqueInput!
+  update: ProductUpdateWithoutCategoryDataInput!
+  create: ProductCreateWithoutCategoryInput!
 }
 
 input ProductUpsertWithWhereUniqueWithoutCountryInput {
@@ -2657,20 +2934,6 @@ input ProductWhereInput {
   title_not_starts_with: String
   title_ends_with: String
   title_not_ends_with: String
-  flavorProfile: String
-  flavorProfile_not: String
-  flavorProfile_in: [String!]
-  flavorProfile_not_in: [String!]
-  flavorProfile_lt: String
-  flavorProfile_lte: String
-  flavorProfile_gt: String
-  flavorProfile_gte: String
-  flavorProfile_contains: String
-  flavorProfile_not_contains: String
-  flavorProfile_starts_with: String
-  flavorProfile_not_starts_with: String
-  flavorProfile_ends_with: String
-  flavorProfile_not_ends_with: String
   descriptionShort: String
   descriptionShort_not: String
   descriptionShort_in: [String!]
@@ -2713,16 +2976,84 @@ input ProductWhereInput {
   brewText_not_starts_with: String
   brewText_ends_with: String
   brewText_not_ends_with: String
+  beanType: String
+  beanType_not: String
+  beanType_in: [String!]
+  beanType_not_in: [String!]
+  beanType_lt: String
+  beanType_lte: String
+  beanType_gt: String
+  beanType_gte: String
+  beanType_contains: String
+  beanType_not_contains: String
+  beanType_starts_with: String
+  beanType_not_starts_with: String
+  beanType_ends_with: String
+  beanType_not_ends_with: String
+  elevation: String
+  elevation_not: String
+  elevation_in: [String!]
+  elevation_not_in: [String!]
+  elevation_lt: String
+  elevation_lte: String
+  elevation_gt: String
+  elevation_gte: String
+  elevation_contains: String
+  elevation_not_contains: String
+  elevation_starts_with: String
+  elevation_not_starts_with: String
+  elevation_ends_with: String
+  elevation_not_ends_with: String
+  roastDegree: String
+  roastDegree_not: String
+  roastDegree_in: [String!]
+  roastDegree_not_in: [String!]
+  roastDegree_lt: String
+  roastDegree_lte: String
+  roastDegree_gt: String
+  roastDegree_gte: String
+  roastDegree_contains: String
+  roastDegree_not_contains: String
+  roastDegree_starts_with: String
+  roastDegree_not_starts_with: String
+  roastDegree_ends_with: String
+  roastDegree_not_ends_with: String
+  certification: String
+  certification_not: String
+  certification_in: [String!]
+  certification_not_in: [String!]
+  certification_lt: String
+  certification_lte: String
+  certification_gt: String
+  certification_gte: String
+  certification_contains: String
+  certification_not_contains: String
+  certification_starts_with: String
+  certification_not_starts_with: String
+  certification_ends_with: String
+  certification_not_ends_with: String
+  process: String
+  process_not: String
+  process_in: [String!]
+  process_not_in: [String!]
+  process_lt: String
+  process_lte: String
+  process_gt: String
+  process_gte: String
+  process_contains: String
+  process_not_contains: String
+  process_starts_with: String
+  process_not_starts_with: String
+  process_ends_with: String
+  process_not_ends_with: String
   published: Boolean
   published_not: Boolean
   vendor: VendorWhereInput
   country: CountryWhereInput
+  category: CategoryWhereInput
   productImages_every: ProductImageWhereInput
   productImages_some: ProductImageWhereInput
   productImages_none: ProductImageWhereInput
-  categories_every: CategoryWhereInput
-  categories_some: CategoryWhereInput
-  categories_none: CategoryWhereInput
   skus_every: SKUWhereInput
   skus_some: SKUWhereInput
   skus_none: SKUWhereInput
@@ -2736,6 +3067,9 @@ input ProductWhereUniqueInput {
 }
 
 type Query {
+  allCategories(where: AllCategoriesWhereUniqueInput!): AllCategories
+  allCategorieses(where: AllCategoriesWhereInput, orderBy: AllCategoriesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [AllCategories]!
+  allCategoriesesConnection(where: AllCategoriesWhereInput, orderBy: AllCategoriesOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AllCategoriesConnection!
   category(where: CategoryWhereUniqueInput!): Category
   categories(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Category]!
   categoriesConnection(where: CategoryWhereInput, orderBy: CategoryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): CategoryConnection!
@@ -3495,6 +3829,7 @@ input SubCategoryWhereUniqueInput {
 }
 
 type Subscription {
+  allCategories(where: AllCategoriesSubscriptionWhereInput): AllCategoriesSubscriptionPayload
   category(where: CategorySubscriptionWhereInput): CategorySubscriptionPayload
   contentArea(where: ContentAreaSubscriptionWhereInput): ContentAreaSubscriptionPayload
   contentText(where: ContentTextSubscriptionWhereInput): ContentTextSubscriptionPayload

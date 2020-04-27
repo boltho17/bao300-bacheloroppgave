@@ -24,9 +24,11 @@ const AddProduct = () => {
         region: "Velg..",
         country: "Velg..",
         beanType: "",
+        elevation: "",
+        category: "",
         roastDegree: "",
-        tasteProfile: "",
         certification: "",
+        process: "",
         brewText: "",
         priceOptions: [
             {grams0: null, price0: null},
@@ -37,7 +39,6 @@ const AddProduct = () => {
         publishedStatus: true,
         grindOptions: [],
         pictures: [],
-        test: ""
     };
 
     const [product, setProduct] = useState(initialState);
@@ -161,12 +162,17 @@ const AddProduct = () => {
             alert('Lagret');
             addProduct({
                 variables: {
+                    id: signedInVendor.id,
                     title: product.productName,
                     descriptionShort: product.descriptionShort,
                     descriptionLong: product.descriptionLong,
                     brewText: product.brewText,
-                    flavorProfile: product.tasteProfile,
-                    id: signedInVendor.id,
+                    beanType: product.beanType,
+                    elevation: product.elevation,
+                    category: product.category,
+                    roastDegree: product.roastDegree,
+                    certification: product.certification,
+                    process: product.process,
                     published: product.publishedStatus,
                     region: product.region,
                     countryName: product.country,

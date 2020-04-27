@@ -1,11 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes'
 
 //TODO: Get / Save text in db
 
-const LandingPageVendor = props => {
+const LandingPageVendor = () => {
   return (
     <div className="landingpagevendor">
 
@@ -53,7 +52,7 @@ const LandingPageVendor = props => {
               </div>
             </div>
             <div className="col image">
-              <img className="img-fluid" src="/pour.png" />
+              <img className="img-fluid" src="/pour.png" alt="pour.png"/>
             </div>
 
 

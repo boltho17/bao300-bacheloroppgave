@@ -35,12 +35,12 @@ const Price = props => {
         for (let i = 0; i < numberOfPriceOptions; i++) {
             options.push(
                 <Row key={i}>
-                    <Col sm={2}>
-                        <FormInput name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" className="price-form" placeholder="0"
+                    <Col>
+                        <FormInput label="Størrelse (vekt)" name={'grams' + i} value={props.priceOptions[i]?.grams} data-index="0" className="price-form" placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"gr"} maxLength={"4"}/>
                     </Col>
-                    <Col sm={2}>
-                        <FormInput name={'price' + i} value={props.priceOptions[i]?.price} data-index="0" className="price-form" placeholder="0"
+                    <Col>
+                        <FormInput label="Pris" name={'price' + i} value={props.priceOptions[i]?.price} data-index="0" className="price-form" placeholder="0"
                                    handleChange={(event) => handleChange(event, i)} suffix={"kr"} maxLength={"4"}/>
                     </Col>
                 </Row>
@@ -64,7 +64,7 @@ const Price = props => {
     return (
         <div className="container mt-4 mb-4 ml-4">
             
-                <h3>Størrelse og pris</h3>
+                <h3>Størrelser og priser*</h3>
       
 
             {addPriceOption()}
