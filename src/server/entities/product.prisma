@@ -5,15 +5,19 @@ interface Node {
 type Product implements Node {
   id: ID! @id
   title: String
-  flavorProfile: String
   descriptionShort: String
   descriptionLong: String
   brewText: String
-  published: Boolean! @default(value: false)
-  vendor: Vendor @relation(link: INLINE)
+  beanType: String
+  elevation: String
+  roastDegree: String
+  certification: String
+  process: String
+  published: Boolean! @default(value:false)
+  vendor: Vendor @relation(link:INLINE)
   country: Country @relation(link:INLINE)
+  category: Category @relation(link:INLINE)
   productImages: [ProductImage!]
-  categories: [Category!]
   skus: [SKU]
   grindOptions: [String] @scalarList(strategy: RELATION)
 }

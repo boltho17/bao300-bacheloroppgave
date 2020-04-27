@@ -19,7 +19,7 @@ const Navigation = () => {
 
     // Access the user type globally from AuthContext (Customer or Vendor):
     let userType = useContext(AuthContext)?.userType;
-    console.log("Navigation.js: User type = " + userType);
+    // console.log("Navigation.js: User type = " + userType);
 
     const [reload, setReload] = useState(false)
 

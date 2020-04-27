@@ -1,15 +1,24 @@
 import gql from 'graphql-tag';
 
 export const ADD_PRODUCT = gql`
-    mutation CreateProduct ($title: String, $flavorProfile: String, $descriptionShort: String, $descriptionLong: String, $brewText: String, $id: ID, $countryName: String!, 
-        $skus: [SKUCreateWithoutProductInput!], $grindOptions: [String!]) {
+    mutation CreateProduct ($id: ID, $title: String, $descriptionShort: String, $descriptionLong: String, $brewText: String, $beanType: String, $countryName: String!, $category: String,
+        $certification: String, $elevation: String, $process: String, $roastDegree: String, $skus: [SKUCreateWithoutProductInput!], $grindOptions: [String!]) {
         createProduct(data: {
             title: $title,
-            flavorProfile: $flavorProfile,
             descriptionShort: $descriptionShort,
             descriptionLong: $descriptionLong,
             brewText: $brewText,
+            beanType: $beanType,
+            certification: $certification,
+            elevation: $elevation,
+            process: $process,
+            roastDegree: $roastDegree,
             published: true,
+            category: {
+                connect: {
+                    name: $category
+                }
+            }
             vendor: {
                 connect: {
                     id: $id
