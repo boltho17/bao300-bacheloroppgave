@@ -28,14 +28,14 @@ export const CONSTANT_COUNTRIES_ASIA = [
  */
 
 export const CONSTANT_REGIONS = [
-    "Velg..",
+    "",
     "Afrika",
     "Asia",
     "Sør-Amerika",
 ];
 
 export const CONSTANT_COUNTRIES_AFRICA = [
-    "Velg..",
+    "",
     "Burundi",
     "Etiopia",
     "Kenya",
@@ -46,7 +46,7 @@ export const CONSTANT_COUNTRIES_AFRICA = [
 ];
 
 export const CONSTANT_COUNTRIES_ASIA = [
-    "Velg..",
+    "",
     "India",
     "Indonesia",
     "Kina",
@@ -55,7 +55,7 @@ export const CONSTANT_COUNTRIES_ASIA = [
 ];
 
 export const CONSTANT_COUNTRIES_AMERICA = [
-    "Velg..",
+    "",
     "Brasil",
     "Columbia",
     "Costa Rica",
@@ -69,20 +69,37 @@ export const CONSTANT_COUNTRIES_AMERICA = [
 ];
 
 
-export const CONSTANT_BEAN_TYPES = [
-    "Arabica",
-    "Robusta",
-    "Liberica",
-    "Annen type"
+export const CONSTANT_CATEGORIES = [
+    "",
+    "Sweet & Inviting",
+    "Sweet & Smooth",
+    "Sweet & Fruity",
+    "Sweet & Floral",
+    "Balanced & Sweet",
+    "Uplifting & Fruity",
+    "Comforting & Warming",
+    "Spicy & Smokey",
+    "Dark & Balanced"
+
 ];
+
 export const CONSTANT_ROAST_DEGREES = [
-    "Lys",
-    "Lys/Medium",
+    "",
+    "Light",
+    "Light/Medium",
     "Medium",
-    "Medium/Mørk",
-    "Roast",
+    "Medium/Strong",
+    "Strong",
     "Espresso"
 ];
 
-//
+export const CONSTANT_CERTIFICATIONS = [
+    "",
+    "Fair Trade",
+    "Smithsonian Bird Friendly",
+    "Utz",
+    "USDA Organic",
+    "Rainforest Alliance"
+];
+
 

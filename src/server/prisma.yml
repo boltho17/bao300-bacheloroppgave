@@ -1,6 +1,7 @@
 endpoint: https://socialcoffee2-ce965cba2c.herokuapp.com/socialcoffee2/dev
 datamodel: 
   - entities/category.prisma
+  - entities/AllCategories.prisma
   - entities/contentArea.prisma
   - entities/contentText.prisma
   - entities/country.prisma

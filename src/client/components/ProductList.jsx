@@ -7,7 +7,7 @@ import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
 
 
-const ProductList = () => {
+const ProductList = ({onSelect}) => {
     let productList;
     let totalProducts = 0;
 
@@ -20,7 +20,7 @@ const ProductList = () => {
     if (data) {
         productList = data.products.map(product => {
             totalProducts++;
-            return <ProductCard product={product} key={product.id}/>
+            return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
         });
     }
 
@@ -33,11 +33,10 @@ const ProductList = () => {
                 </Col>
                 <Col>
                     <Row>{productList.reverse()}</Row>
-            <div className="text-center">
-                <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
-            </div>
-            <br/>
-            <div className="text-center">FOOTER</div>
+                    <div className="text-center">
+                        <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
+                    </div>
+                    <br/>
                 </Col>
             </Row>
         </div>

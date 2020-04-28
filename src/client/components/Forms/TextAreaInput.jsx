@@ -3,7 +3,7 @@ import React from 'react';
 const TextAreaInput = (props) => {
 
     return(
-        <div className="container mt-4 mb-4 ml-0">
+        <div className="mt-4 mb-4">
             <label>{props.label}</label>
             <br/>
             <textarea

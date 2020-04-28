@@ -1,4 +1,5 @@
 import React, {useContext, useState} from 'react';
+import Container from 'react-bootstrap/Container'
 import AddProductForm from "../components/Forms/AddProductForm";
 import Price from '../components/AddProduct/Price'
 import {Col, Row} from "react-bootstrap";
@@ -8,6 +9,7 @@ import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
 import {AuthContext} from "../components/Firebase/AuthContext";
 import ImageUpload from "../components/AddProduct/ImageUpload";
 import TextAreaInput from "../components/Forms/TextAreaInput";
+import Button from 'react-bootstrap/Button';
 
 const AddProduct = () => {
 
@@ -24,9 +26,11 @@ const AddProduct = () => {
         region: "Velg..",
         country: "Velg..",
         beanType: "",
+        elevation: "",
+        category: "",
         roastDegree: "",
-        tasteProfile: "",
         certification: "",
+        process: "",
         brewText: "",
         priceOptions: [
             {grams0: null, price0: null},
@@ -37,7 +41,6 @@ const AddProduct = () => {
         publishedStatus: true,
         grindOptions: [],
         pictures: [],
-        test: ""
     };
 
     const [product, setProduct] = useState(initialState);
@@ -161,12 +164,17 @@ const AddProduct = () => {
             alert('Lagret');
             addProduct({
                 variables: {
+                    id: signedInVendor.id,
                     title: product.productName,
                     descriptionShort: product.descriptionShort,
                     descriptionLong: product.descriptionLong,
                     brewText: product.brewText,
-                    flavorProfile: product.tasteProfile,
-                    id: signedInVendor.id,
+                    beanType: product.beanType,
+                    elevation: product.elevation,
+                    category: product.category,
+                    roastDegree: product.roastDegree,
+                    certification: product.certification,
+                    process: product.process,
                     published: product.publishedStatus,
                     region: product.region,
                     countryName: product.country,
@@ -180,23 +188,25 @@ const AddProduct = () => {
     };
 
     return (
-        <div className="container create-prod-container">
-            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>
-            <Row>
+        <Container fluid="md">
+            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>        
+            <Row className="no-gutters upper-container">
                 <Col sm={6}>
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>
                 </Col>
-                <Col sm={3}>
-                    <CheckBoxes title={'Hele Bønner'} labels={['Ja', 'Nei']} inLine={true}
+                <Col sm={3} className="beans-cont">
+                    <CheckBoxes title={'Hele Bønner'}
+                                labels={['Ja', 'Nei']} 
+                                inLine={false}
                                 handleChange={handleCheckBoxChange}/>
                 </Col>
-                <Col sm={3}>
+                <Col sm={3} className="grind-cont">
                     <CheckBoxes title={'Kverningsgrader'}
                                 labels={['Espressomaskin', 'Espressokanne', 'Aeropress', 'DryppV60', 'Filtermalt', 'Presskanne', 'Chemex', 'Kokmalt']}
                                 inLine={false} handleChange={handleCheckBoxChange}/>
                 </Col>
             </Row>
-            <Row>
+            <Row className="no-gutters lower-container">
                 <Col sm={6}>
                     <Price product={product} setProduct={setProduct} priceOptions={product.priceOptions} error={error}
                            setError={setError}/>
@@ -212,7 +222,7 @@ const AddProduct = () => {
                     }}/>
                 </Col>
             </Row>
-            <TextAreaInput label={'Beskrivelse'} handleChange={handleChange} product={product}
+            <TextAreaInput className="description-container" label={'Beskrivelse'} handleChange={handleChange} product={product}
                            value={product.descriptionLong} config={{
                 name: 'descriptionLong',
                 rows: '5',
@@ -221,8 +231,8 @@ const AddProduct = () => {
                 placeholder: 'Beskrivelse her..'
             }}/>
             <ImageUpload product={product} setProduct={setProduct}/>
-            <button onClick={onSubmit}>Opprett produkt</button>
-        </div>
+            <button className="save-prod-btn" onClick={onSubmit}>Opprett produkt</button>
+        </Container>
     );
 };
 
