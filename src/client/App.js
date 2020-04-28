@@ -13,6 +13,7 @@ import VendorSignUp from "./pages/VendorSignUp";
 import Footer from "./components/Footer"
 import SignUpPage from "./pages/CustomerSignUp";
 import LandingPageVendor from './pages/LandingPageVendor';
+import VendorDashboard from './pages/VendorDashboard/VendorDashboard';
 
 
 
@@ -30,7 +31,8 @@ const App = () => {
                 <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
                 <Route path={ROUTES.ADD_PRODUCT} component={AddProduct} />
                 <Route path={ROUTES.LANDING_VENDOR} component={LandingPageVendor}/>
-                <Footer />
+                <Route path={ROUTES.VENDOR_DASHBOARD} component={VendorDashboard} />      
+          <Footer />
             </div>
 
         </Router>
