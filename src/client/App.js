@@ -14,7 +14,7 @@ import DetailView from './pages/DetailView';
 import Footer from "./components/Footer";
 import SignUpPage from "./pages/CustomerSignUp";
 import LandingPageVendor from './pages/LandingPageVendor';
-import VendorDashboard from './pages/VendorDashboard/VendorDashboard';
+import VendorDashboard from './pages/VendorDashboard';
 
 
 const App = () => {

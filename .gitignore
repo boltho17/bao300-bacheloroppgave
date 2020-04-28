@@ -1,10 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# IDE spesific
-.vscode/
-.idea/
-*.code-workspace
-
 # dependencies
 /node_modules
 /.pnp
@@ -15,7 +10,6 @@
 
 # production
 /build
-/src/server/generated/
 
 # misc
 .DS_Store
@@ -29,3 +23,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/src/server/generated
