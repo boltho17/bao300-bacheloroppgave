@@ -7,10 +7,7 @@ import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
 
 
-const ProductList = (props) => {
-
-    //const [selected, setSelected] = useState([]);
-
+const ProductList = ({onSelect, setCartItems, cartItems}) => {
     let productList;
     let totalProducts = 0;
 
@@ -20,7 +17,7 @@ const ProductList = (props) => {
     if (error) return `Error! ${error.message}`;
     //console.log(data);
 
-    const onSelect = selectedProduct => {
+    const onSelected = selectedProduct => {
         console.log(selectedProduct); // Printer ut det produkt objektet man trykker på!
 
         //setSelected([...selected, selectedProduct]);
@@ -29,13 +26,13 @@ const ProductList = (props) => {
         // Overskriver det som ligger i localStorage, må inkludere prevState
         localStorage.setItem('cart', JSON.stringify(selectedProduct))
 
-        props.setCartItems([...props.cartItems, selectedProduct])
+        setCartItems([...cartItems, selectedProduct])
     };
 
     if (data) {
         productList = data.products.map(product => {
             totalProducts++;
-            return <ProductCard product={product} key={product.id} id={product.id} onSelect={onSelect}/>
+            return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
         });
     }
 
@@ -48,11 +45,10 @@ const ProductList = (props) => {
                 </Col>
                 <Col>
                     <Row>{productList.reverse()}</Row>
-            <div className="text-center">
-                <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
-            </div>
-            <br/>
-            <div className="text-center">FOOTER</div>
+                    <div className="text-center">
+                        <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
+                    </div>
+                    <br/>
                 </Col>
             </Row>
         </div>

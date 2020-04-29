@@ -10,3 +10,4 @@ export const PRODUCTS = '/products';
 export const PRODUCT = '/product';
 export const ADD_PRODUCT = '/new_product';
 export const PRODUCT_DETAIL_VIEW = '/productdetailview';
+export const LANDING_VENDOR = '/landing-vendor';

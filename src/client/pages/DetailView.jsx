@@ -1,33 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {TiMinus, TiPlus} from "react-icons/all";
 
-const DetailView = ({product}) => {
+const DetailView = (props) => {
 
-    product = {
-        vendor: "Super Duper Kaffe AS",
-        productName: "Tobys speciale",
-        descriptionShort: "Fantastisk kaffe med smak av himmel og et hint av grønne blader.. Mange andre bønner og gode snacks er tillat",
-        descriptionLong: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-        region: "Asia",
-        country: "Vietnam",
-        beanType: "Arabica",
-        roastDegree: "Lys/Medium",
-        tasteProfile: "Sursøt",
-        certification: "Fair Trade",
-        brewText: "Delevis bæretørket",
-        priceOptions: [
-            {grams0: "1337", price0: "299"},
-            {grams1: "111", price1: "399"},
-            {grams2: "222", price2: "499"},
-        ],
-        grinded: true,
-        publishedStatus: true,
-        grindOptions: ["Espressokanne", "Filtermalt", "Chemex"],
-        pictures: ["https://i.pinimg.com/736x/f6/c1/86/f6c18634aade9c5b4d06e59705e56702.jpg", 
-        "https://10619-2.s.cdn12.com/rests/original/320_506852401.jpg"],
-    };
-    
     const [quantityAmountSelectorValue, setQuantityAmountSelectorValue] = useState(1)
+    useEffect(() => {
+        console.log(props)
+    });
+
+    /*
+    const product = {
+        country: {
+            name: "Burundi"
+        },
+        descriptionLong: "Bryggeguide for fantastisk smak jada jada",
+        descriptionShort: "Fantastisk kaffe med bla bla bbla bla bla bla bla",
+        flavorProfile: "Søt og rundt med hint av jordbær",
+        grindOptions: ["Ja", "Nei", "Espresso"],
+        id: "ck9bkzlld01an07538ep7kvzh",
+        published: true,
+        title: "Jaava Latte44",
+        vendor: {
+            displayName: "KaffeGodt2 AS"
+        }
+    }
+    */
 
     const updateQuantityPlus = () => {
         setQuantityAmountSelectorValue(quantityAmountSelectorValue + 1)
@@ -41,44 +38,23 @@ const DetailView = ({product}) => {
 
     return (
         <div>
-            
             <div className="container containerProductTop">
                 <div className="row">
                         <div className="col-sm">
-                            <div className="productPicture" style={{backgroundImage: `url("${product.pictures[0]}")`}}></div>
+                            <div className="productPicture" style={{backgroundImage: `url("${"https://i.pinimg.com/736x/f6/c1/86/f6c18634aade9c5b4d06e59705e56702.jpg"}")`}}></div>
                         </div>
 
                         <div className="col-sm custom-colsm-paddin120px">
-                            <h6 className="content-custom-spaceing"><b>{product.vendor}</b></h6>
-                            <h1 className="content-custom-spaceing">{product.productName}</h1>
-                            <h8><i>{product.country}/{product.region}</i></h8>
-                            <p className="content-custom-spaceing">{product.descriptionShort}</p>
+                            <h6 className="content-custom-spaceing"><b>{props.product?.vendor?.displayName}</b></h6>
+                            <h1 className="content-custom-spaceing">{props.product?.title}</h1>
+                            <h6>
+                                {props.product?.country?.name}/{props.product?.region}
+                                </h6>
+                            <p className="content-custom-spaceing">{props.product?.descriptionShort}</p>
 
                             <p>Størrelse</p>
 
-                                <div className="row">
-                                    <div className="mr-2 ml-3 ml-md-3">
-                                        <div className="amount-btn-container-marked">
-                                            <div className="price-gram-wrapper">
-                                                <p className="custom-text-wrapper-gram-price">{product.priceOptions[0].grams0} g</p>
-                                                <b><p className="custom-text-wrapper-gram-price">{product.priceOptions[0].price0}kr</p></b>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="mr-2">
-                                        <div className="amount-btn-container-nomarked">
-                                            <p className="custom-text-wrapper-gram-price">{product.priceOptions[1].grams1} g</p>
-                                            <b><p className="custom-text-wrapper-gram-price">{product.priceOptions[1].price1}kr</p></b>
-                                        </div>
-                                    </div>
-                                    <div className="">
-                                        <div className="amount-btn-container-nomarked">
-                                            <p className="custom-text-wrapper-gram-price">{product.priceOptions[2].grams2} g</p>
-                                            <b><p className="custom-text-wrapper-gram-price">{product.priceOptions[2].price2}kr</p></b>
-                                        </div>
-                                    </div>
-                                </div>
-                            
+                             
                             <br></br>
                             
                             <p className="content-custom-spaceing">Antall</p>
@@ -90,6 +66,8 @@ const DetailView = ({product}) => {
                             </div>
 
                             <br></br>
+
+                            {props.product?.skus?.map(sku => <div>{sku.weight}</div>)}
 
                             <p className="content-custom-spaceing">Malingsgrad</p>
 
@@ -117,34 +95,34 @@ const DetailView = ({product}) => {
             
                 <h1>Detaljer</h1>
                 <div className="custom-toplane"></div>
-                <p>{product.productName}</p>
+                <p>{props.product?.productName}</p>
 
                 <div className="row">
                     <div className="col-2 mr-3 col-lg-3">
                         <div className="">
                             <p className="detaljer-box-custom"><b>Prosess</b></p>
-                            <p>{product.brewText}</p>
+                            <p>brewText</p>
                         </div>
                     </div>
 
                     <div className="col-2 mr-5 col-lg-3">
                     <div className="detaljer-box-custom">
                             <p className="detaljer-box-custom"><b>Bønnetype</b></p>
-                            <p>{product.beanType}</p>
+                            <p>beanType</p>
                         </div>
                     </div>
 
                     <div className="col-2 mr-5 col-lg-3">
                     <div className="detaljer-box-custom">
                             <p className="detaljer-box-custom"><b>Sertifisering</b></p>
-                            <p>{product.certification}</p>
+                            <p>certification</p>
                         </div>
                     </div>
 
                     <div className="">
                     <div className="detaljer-box-custom">
                             <p className="detaljer-box-custom"><b>Region</b></p>
-                            <p>{product.region}</p>
+                            <p>{props.product?.region}</p>
                         </div>
                     </div>
                 </div>
@@ -154,34 +132,34 @@ const DetailView = ({product}) => {
                     <div className="col-2 mr-3 col-lg-3">
                         <div className="">
                             <p className="detaljer-box-custom"><b>Smaksprofil</b></p>
-                            <p>{product.tasteProfile}</p>
+                            <p>{props.product?.flavorProfile}</p>
                         </div>
                     </div>
 
                     <div className="col-2 mr-5 col-lg-3">
                     <div className="detaljer-box-custom">
                             <p className="detaljer-box-custom"><b>Brennegrad</b></p>
-                            <p>{product.roastDegree}</p>
+                            <p>roastdegree</p>
                         </div>
                     </div>
 
                     <div className="col-2 mr-5 col-lg-3">
                     <div className="detaljer-box-custom">
                             <p className="detaljer-box-custom"><b>Tittel</b></p>
-                            <p>{product.certification}</p>
+                            <p>hvilken data?</p>
                         </div>
                     </div>
 
                     <div className="">
                     <div className="detaljer-box-custom">
                             <p className="detaljer-box-custom"><b>Land</b></p>
-                            <p>{product.country}</p>
+                            <p>{props.product?.country?.name}</p>
                         </div>
                     </div>
                 </div>
 
                 <h3 className="content-custom-spaceing">Litt om kaffen</h3>
-                <p>{product.descriptionLong}</p>
+                <p>{props.product?.descriptionLong}</p>
                 
                 <br></br>
 
@@ -189,6 +167,7 @@ const DetailView = ({product}) => {
                 <h3>Fra samme brenneri</h3>
             </div>
 
+            
         </div>  
     )
 }

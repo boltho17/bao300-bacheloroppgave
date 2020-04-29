@@ -1,12 +1,12 @@
 import React from 'react';
 import ProductList from "../components/ProductList";
 
-const ShopPage = (props) => {
+const ShopPage = ({onSelect}) => {
         return (
             <div>
-                <ProductList cartItems={props.cartItems} setCartItems={props.setCartItems}/>
+                <ProductList onSelect={onSelect}/>
             </div>
         );
-};
+}
 
 export default ShopPage
