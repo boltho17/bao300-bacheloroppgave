@@ -66,7 +66,7 @@ const LandingPageVendor = () => {
 
               <div className="featureSymbol symbol">
                 &#x2605;
-  </div>
+              </div>
 
               <div>
                 <h3 className="featureTitle title">Feature title</h3>
@@ -83,7 +83,7 @@ const LandingPageVendor = () => {
 
               <div className="featureSymbol symbol">
                 &#x2605;
-  </div>
+              </div>
 
               <h3 className="featureTitle title">Feature title</h3>
               <div>
@@ -98,7 +98,7 @@ const LandingPageVendor = () => {
 
               <div className="featureSymbol symbol">
                 &#x2605;
-  </div>
+              </div>
 
               <h3 className="featureTitle title">Feature title</h3>
               <div className="featureText">

@@ -1,0 +1,65 @@
+// set vertical margins with the same value
+  // Usage: @include marginY(number+unit)
+@mixin marginY($value)
+  margin-bottom: $value
+  margin-top: $value
+
+// set vertical padding with the same value
+  // Usage: @include paddingY(number+unit)
+@mixin paddingY($value)
+  padding-bottom: $value
+  padding-top: $value
+
+// set height and width of an element
+  // Usage: @include heightWidth(number+unit)
+@mixin heightWidth($value)
+  height: $value
+  width: $value
+
+// reset default list styling
+  // Usage: @include reset-list
+@mixin reset-list
+  margin: 0
+  padding: 0
+  list-style: none
+
+
+// style list horizontally
+// Usage: 
+// ul
+//    @include horizontal-list
+@mixin horizontal-list
+  @include reset-list
+  li
+    display: inline-block
+    margin:
+    left: -2px
+    right: 2em
+
+// center an element horizontally
+// used with position:absolute
+  // Usage: @include absoluteCenterX
+@mixin absoluteCenterX
+  left: 50%
+  transform: translateX(-50%)
+
+// center an element vertically
+// used with position:absolute
+// Usage: @include absoluteCenterY
+@mixin absoluteCenterY
+  top: 50%
+  transform: translateY(-50%)
+
+// center an element both horizontally and vertically
+// used with position:absolute  
+// Usage: @include absoluteCenter
+@mixin absoluteCenter
+  @include absoluteCenterX
+  @include absoluteCenterY
+  
+
+
+
+ 
+
+

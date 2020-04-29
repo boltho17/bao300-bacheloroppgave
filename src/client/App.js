@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import * as ROUTES from './constants/routes';
 import './styles/Main.sass'
@@ -16,6 +16,7 @@ import SignUpPage from "./pages/CustomerSignUp";
 import LandingPageVendor from './pages/LandingPageVendor';
 import VendorsPage from "./pages/VendorsPage";
 import VendorDetailView from "./pages/VendorDetailView";
+import VendorDashboard from './pages/VendorDashboard';
 
 
 const App = () => {
@@ -45,6 +46,7 @@ const App = () => {
                     <Route path="/vendor/:id" exact render={() => <VendorDetailView vendor={selected}/>}/>
                     <Route path={ROUTES.LANDING_VENDOR} component={LandingPageVendor}/>
                     <Route path={ROUTES.VENDORS_PAGE} render={() => <VendorsPage onSelect={onSelect}/>}/>
+                    <Route path={ROUTES.VENDOR_DASHBOARD} component={VendorDashboard} />
                     <Footer/>
                 </React.Fragment>
             </Switch>
