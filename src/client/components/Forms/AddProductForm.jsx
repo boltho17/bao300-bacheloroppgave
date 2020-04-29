@@ -18,7 +18,7 @@ const AddProductForm = props => {
             <form className="mt-3">
 
                     <Col className="prod-name no-gutters" >
-                        <FormInput id="productName" label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange}  />
+                        <FormInput id="productName" label="Produktnavn*" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange} maxLenght={'100'} />
                         <TextAreaInput id="sale-text-input" label={'Kort beskrivelse/Salgstekst*'} handleChange={props.handleChange} product={props.product} value={props.product.descriptionShort} config={{name: 'descriptionShort', rows: '2', cols: '35', maxLength: '70', placeholder: 'Fantastisk kaffe med smak av himmel og et hint av grønne blader..'}}/>
                         <Row className="no-gutters">
                             <Col sm={6} className="control-select">

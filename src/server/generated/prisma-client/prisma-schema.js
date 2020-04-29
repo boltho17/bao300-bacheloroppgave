@@ -4038,6 +4038,7 @@ type Vendor {
   organizationNumber: Int!
   displayName: String!
   address: String!
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4058,6 +4059,7 @@ input VendorCreateInput {
   organizationNumber: Int!
   displayName: String!
   address: String!
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4087,6 +4089,7 @@ input VendorCreateWithoutProductsInput {
   organizationNumber: Int!
   displayName: String!
   address: String!
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4100,6 +4103,7 @@ input VendorCreateWithoutUserInput {
   organizationNumber: Int!
   displayName: String!
   address: String!
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4123,6 +4127,8 @@ enum VendorOrderByInput {
   displayName_DESC
   address_ASC
   address_DESC
+  city_ASC
+  city_DESC
   bankAccount_ASC
   bankAccount_DESC
   logoImage_ASC
@@ -4139,6 +4145,7 @@ type VendorPreviousValues {
   organizationNumber: Int!
   displayName: String!
   address: String!
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4168,6 +4175,7 @@ input VendorUpdateDataInput {
   organizationNumber: Int
   displayName: String
   address: String
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4181,6 +4189,7 @@ input VendorUpdateInput {
   organizationNumber: Int
   displayName: String
   address: String
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4194,6 +4203,7 @@ input VendorUpdateManyMutationInput {
   organizationNumber: Int
   displayName: String
   address: String
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4230,6 +4240,7 @@ input VendorUpdateWithoutProductsDataInput {
   organizationNumber: Int
   displayName: String
   address: String
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4242,6 +4253,7 @@ input VendorUpdateWithoutUserDataInput {
   organizationNumber: Int
   displayName: String
   address: String
+  city: String
   bankAccount: String
   logoImage: String
   facebookPageURL: String
@@ -4329,6 +4341,20 @@ input VendorWhereInput {
   address_not_starts_with: String
   address_ends_with: String
   address_not_ends_with: String
+  city: String
+  city_not: String
+  city_in: [String!]
+  city_not_in: [String!]
+  city_lt: String
+  city_lte: String
+  city_gt: String
+  city_gte: String
+  city_contains: String
+  city_not_contains: String
+  city_starts_with: String
+  city_not_starts_with: String
+  city_ends_with: String
+  city_not_ends_with: String
   bankAccount: String
   bankAccount_not: String
   bankAccount_in: [String!]

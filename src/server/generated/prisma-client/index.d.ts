@@ -960,6 +960,8 @@ export type VendorOrderByInput =
   | "displayName_DESC"
   | "address_ASC"
   | "address_DESC"
+  | "city_ASC"
+  | "city_DESC"
   | "bankAccount_ASC"
   | "bankAccount_DESC"
   | "logoImage_ASC"
@@ -1316,6 +1318,7 @@ export interface VendorUpdateInput {
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -1329,6 +1332,7 @@ export interface VendorUpdateWithoutProductsDataInput {
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -2494,6 +2498,7 @@ export interface VendorCreateInput {
   organizationNumber: Int;
   displayName: String;
   address: String;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -2581,6 +2586,7 @@ export interface VendorCreateWithoutProductsInput {
   organizationNumber: Int;
   displayName: String;
   address: String;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -2632,6 +2638,7 @@ export interface VendorUpdateDataInput {
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -2763,6 +2770,7 @@ export interface VendorUpdateManyMutationInput {
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -3234,6 +3242,20 @@ export interface VendorWhereInput {
   address_not_starts_with?: Maybe<String>;
   address_ends_with?: Maybe<String>;
   address_not_ends_with?: Maybe<String>;
+  city?: Maybe<String>;
+  city_not?: Maybe<String>;
+  city_in?: Maybe<String[] | String>;
+  city_not_in?: Maybe<String[] | String>;
+  city_lt?: Maybe<String>;
+  city_lte?: Maybe<String>;
+  city_gt?: Maybe<String>;
+  city_gte?: Maybe<String>;
+  city_contains?: Maybe<String>;
+  city_not_contains?: Maybe<String>;
+  city_starts_with?: Maybe<String>;
+  city_not_starts_with?: Maybe<String>;
+  city_ends_with?: Maybe<String>;
+  city_not_ends_with?: Maybe<String>;
   bankAccount?: Maybe<String>;
   bankAccount_not?: Maybe<String>;
   bankAccount_in?: Maybe<String[] | String>;
@@ -3370,6 +3392,7 @@ export interface VendorCreateWithoutUserInput {
   organizationNumber: Int;
   displayName: String;
   address: String;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -3456,6 +3479,7 @@ export interface VendorUpdateWithoutUserDataInput {
   organizationNumber?: Maybe<Int>;
   displayName?: Maybe<String>;
   address?: Maybe<String>;
+  city?: Maybe<String>;
   bankAccount?: Maybe<String>;
   logoImage?: Maybe<String>;
   facebookPageURL?: Maybe<String>;
@@ -4472,6 +4496,7 @@ export interface VendorPreviousValues {
   organizationNumber: Int;
   displayName: String;
   address: String;
+  city?: String;
   bankAccount?: String;
   logoImage?: String;
   facebookPageURL?: String;
@@ -4486,6 +4511,7 @@ export interface VendorPreviousValuesPromise
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
+  city: () => Promise<String>;
   bankAccount: () => Promise<String>;
   logoImage: () => Promise<String>;
   facebookPageURL: () => Promise<String>;
@@ -4500,6 +4526,7 @@ export interface VendorPreviousValuesSubscription
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
   bankAccount: () => Promise<AsyncIterator<String>>;
   logoImage: () => Promise<AsyncIterator<String>>;
   facebookPageURL: () => Promise<AsyncIterator<String>>;
@@ -6570,6 +6597,7 @@ export interface Vendor {
   organizationNumber: Int;
   displayName: String;
   address: String;
+  city?: String;
   bankAccount?: String;
   logoImage?: String;
   facebookPageURL?: String;
@@ -6582,6 +6610,7 @@ export interface VendorPromise extends Promise<Vendor>, Fragmentable {
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
+  city: () => Promise<String>;
   bankAccount: () => Promise<String>;
   logoImage: () => Promise<String>;
   facebookPageURL: () => Promise<String>;
@@ -6606,6 +6635,7 @@ export interface VendorSubscription
   organizationNumber: () => Promise<AsyncIterator<Int>>;
   displayName: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
+  city: () => Promise<AsyncIterator<String>>;
   bankAccount: () => Promise<AsyncIterator<String>>;
   logoImage: () => Promise<AsyncIterator<String>>;
   facebookPageURL: () => Promise<AsyncIterator<String>>;
@@ -6630,6 +6660,7 @@ export interface VendorNullablePromise
   organizationNumber: () => Promise<Int>;
   displayName: () => Promise<String>;
   address: () => Promise<String>;
+  city: () => Promise<String>;
   bankAccount: () => Promise<String>;
   logoImage: () => Promise<String>;
   facebookPageURL: () => Promise<String>;

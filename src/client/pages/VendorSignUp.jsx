@@ -43,6 +43,7 @@ const VendorSignUp = (props) => {
                     displayName: vendorInfo.displayName,
                     organizationNumber: Number(vendor.organisasjonsnummer),
                     address: vendor.forretningsadresse.adresse[1] || "Ingen registrert adresse",
+                    city: vendor.forretningsadresse.kommune || "Ingen registrert poststed",
                     contactPerson: vendorInfo.contactPerson,
                     userEmail: vendorInfo.email,
                     stripeId: uniqid(),

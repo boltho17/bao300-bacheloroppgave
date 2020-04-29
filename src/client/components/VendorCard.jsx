@@ -16,16 +16,11 @@ const VendorCard = ({vendor, onSelect}) => {
                     <Card.Body>
                         <Card.Subtitle className="vendor mb-4 text-muted"/>
                         <Card.Title className="product-title">{vendor.displayName}</Card.Title>
-                        <Card.Text className="short-description">{vendor.address}</Card.Text>
-                        <Card.Subtitle className="price">
-                            {vendor.address}
-                        </Card.Subtitle>
-
+                        <Card.Text className="short-description">{vendor.city}</Card.Text>
                     </Card.Body>
                 </Card>
             </Link>
         </div>
-
     )
 };
 

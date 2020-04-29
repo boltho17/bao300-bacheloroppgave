@@ -21,6 +21,7 @@ export const GET_VENDORS = gql`
             organizationNumber
             displayName
             address
+            city
             user {
                 email
             }

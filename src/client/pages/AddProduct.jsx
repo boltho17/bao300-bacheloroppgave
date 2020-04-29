@@ -213,7 +213,7 @@ const AddProduct = () => {
                         name: 'brewText',
                         rows: '5',
                         cols: '50',
-                        maxLength: '70',
+                        maxLength: '500',
                         placeholder: 'Bryggeritips her..'
                     }}/>
                 </Col>
@@ -223,7 +223,7 @@ const AddProduct = () => {
                 name: 'descriptionLong',
                 rows: '5',
                 cols: '50',
-                maxLength: '70',
+                maxLength: '1000',
                 placeholder: 'Beskrivelse her..'
             }}/>
             <ImageUpload product={product} setProduct={setProduct}/>
