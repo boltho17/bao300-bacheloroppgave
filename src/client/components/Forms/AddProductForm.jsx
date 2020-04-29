@@ -3,54 +3,69 @@ import FormInput from "./FormInput";
 import {Col, Row} from "react-bootstrap";
 import FormSelect from "./FormSelect";
 import {
-    CONSTANT_BEAN_TYPES,
     CONSTANT_COUNTRIES_AFRICA, CONSTANT_COUNTRIES_AMERICA, CONSTANT_COUNTRIES_ASIA,
     CONSTANT_REGIONS,
-    CONSTANT_ROAST_DEGREES
+    CONSTANT_ROAST_DEGREES,
+    CONSTANT_CATEGORIES,
+    CONSTANT_CERTIFICATIONS,
 } from "../../constants/constantsFile";
 import TextAreaInput from "./TextAreaInput";
 
 const AddProductForm = props => {
 
     return (
-        <div className="container">
+        <div className="first-col">
             <form className="mt-3">
-                <div>
-                    <Col sm={6}>
-                        <FormInput label="Produktnavn" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange}  />
-                        <TextAreaInput label={'Salgstekst'} handleChange={props.handleChange} product={props.product} value={props.product.descriptionShort} config={{name: 'descriptionShort', rows: '2', cols: '35', maxLength: '70', placeholder: 'Fantastisk kaffe med smak av himmel og et hint av grønne blader..'}}/>
+
+                    <Col className="prod-name no-gutters" >
+                        <FormInput id="productName" label="Produktnavn*" name="productName" value={props.product.productName} placeholder="Java Supreme Dark Roast.." handleChange={props.handleChange} maxLength={'100'} />
+                        <TextAreaInput id="sale-text-input" label={'Kort beskrivelse/Salgstekst*'} handleChange={props.handleChange} product={props.product} value={props.product.descriptionShort} config={{name: 'descriptionShort', rows: '2', cols: '35', maxLength: '70', placeholder: 'Fantastisk kaffe med smak av himmel og et hint av grønne blader..'}}/>
                         <Row>
                             <Col sm={6}>
-                                <FormSelect navn="Region" name="region" value={props.product.region} selectionList={CONSTANT_REGIONS} handleChange={props.handleChange}/>
+                                <FormSelect navn="Region*" name="region" value={props.product.region} selectionList={CONSTANT_REGIONS} handleChange={props.handleChange}/>
+
                             </Col>
                             <Col sm={6}>
                                 {props.product.region === "Afrika" &&
-                                <FormSelect navn="Land" name="country" value={props.product.country}
+                                <FormSelect navn="Land*" name="country" value={props.product.country}
                                             selectionList={CONSTANT_COUNTRIES_AFRICA} handleChange={props.handleChange}/>
                                 }
                                 {props.product.region === "Asia" &&
-                                <FormSelect navn="Land" name="country" value={props.product.country}
+                                <FormSelect navn="Land*" name="country" value={props.product.country}
                                             selectionList={CONSTANT_COUNTRIES_ASIA} handleChange={props.handleChange}/>
                                 }
                                 {props.product.region === "Sør-Amerika" &&
-                                <FormSelect navn="Land" name="country" value={props.product.country}
+                                <FormSelect navn="Land*" name="country" value={props.product.country}
                                             selectionList={CONSTANT_COUNTRIES_AMERICA} handleChange={props.handleChange}/>
                                 }
                             </Col>
                         </Row>
+
                         <Row>
-                            <Col sm={6}>
-                                <FormSelect navn="Bønnetype" name="beanType" value={props.product.beanType} selectionList={CONSTANT_BEAN_TYPES} handleChange={props.handleChange}/>
+                            <Col sm={6} >
+                                <FormInput label="Bønnetype*" name="beanType" value={props.product.beanType} placeholder="F.eks Cactuai" handleChange={props.handleChange}/>
                             </Col>
                             <Col sm={6}>
-                                <FormSelect navn="Brennegrad" name="roastDegree" value={props.product.roastDegree} selectionList={CONSTANT_ROAST_DEGREES} handleChange={props.handleChange}/>
+                                <FormInput label="Elevation (moh.)" name="elevation" value={props.product.elevation} placeholder="F.eks 1.512" handleChange={props.handleChange} />
                             </Col>
                         </Row>
-                        <FormInput label="Smaksprofil" name="tasteProfile" value={props.product.tasteProfile} placeholder="Nam nam" handleChange={props.handleChange} />
-                        <FormInput label="Sertifisering" name="certification" value={props.product.certification} placeholder="Fair Trade.." handleChange={props.handleChange} />
+                        <Row>
+                            <Col sm={6}>
+                                <FormSelect navn="Smakskategori*" name="category" value={props.product.category} selectionList={CONSTANT_CATEGORIES} handleChange={props.handleChange}/>
+                            </Col>
+                            <Col sm={6}>
+                                <FormSelect navn="Brennegrad*" name="roastDegree" value={props.product.roastDegree} selectionList={CONSTANT_ROAST_DEGREES} handleChange={props.handleChange}/>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col sm={6}>
+                                <FormSelect navn="Sertifisering" name="certification" value={props.product.certification} selectionList={CONSTANT_CERTIFICATIONS} handleChange={props.handleChange} />
+                            </Col>
+                            <Col sm={6}>
+                                <FormInput label="Prosess" name="process" value={props.product.process} handleChange={props.handleChange} />
+                            </Col>
+                        </Row>
                     </Col>
-                </div>
-
             </form>
         </div>
     )

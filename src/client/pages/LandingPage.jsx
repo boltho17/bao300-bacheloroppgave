@@ -123,7 +123,7 @@ class LandingPage extends React.Component {
                 </p>
               </div>
               <div className="col-lg-6 px-0 img-box">
-                <img src="/Kaffe-Trakter.jpeg" className=" img w-100" />
+                <img src="/Kaffe-Trakter.jpeg" className=" img w-100" alt="kaffe-trakter"/>
               </div>
             </div>
 

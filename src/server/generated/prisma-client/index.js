@@ -9,6 +9,10 @@ var models = [
     embedded: false
   },
   {
+    name: "AllCategories",
+    embedded: false
+  },
+  {
     name: "ContentArea",
     embedded: false
   },

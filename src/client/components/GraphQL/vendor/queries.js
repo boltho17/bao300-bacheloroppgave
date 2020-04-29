@@ -14,3 +14,18 @@ export const GET_VENDOR_WITH_EMAIL = gql`
     }
 `;
 
+export const GET_VENDORS = gql`
+    query GetVendors {
+        vendors {
+            id
+            organizationNumber
+            displayName
+            address
+            city
+            user {
+                email
+            }
+        }
+    }
+`;
+

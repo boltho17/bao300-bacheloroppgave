@@ -1,0 +1,133 @@
+.vendorDashboard
+
+  .dashboard
+    margin: 5rem auto
+    .pageTitle
+      @include marginY(1.5rem)
+    &-wrap
+      background: #fff
+      box-shadow: 0 14px 28px rgba(black,.2),0 10px 10px rgba(black,.18)
+      border-radius: 20px
+      //height: 75vh
+      min-height: 600px
+      overflow: hidden
+    &-sidebar
+      color: #fff
+      background: #1b3338
+      &-vendor
+        margin: 3rem auto
+        &-image
+          @include heightWidth(80px)
+          background: #eee
+          border-radius: 50%
+      &-list
+        nav ul
+          @include reset-list
+        .menu
+          &-item
+            @include paddingY(.5rem)
+      &-create-product
+        .bottom
+          bottom: 5rem
+          position: absolute
+          margin-bottom: -1px
+          white-space: nowrap
+          @include absoluteCenterX
+          text-decoration: underline
+          text-decoration-color: $light-blue
+          color: #fff
+
+    &-main-content
+      &-edit-profile
+        margin-top: 1rem
+        color: $light-blue
+        text-decoration: underline
+      &-vendor
+        @include paddingY(3rem)
+        &-image
+          @include heightWidth(80px)
+          background: #eee
+          border-radius: 50%
+        &-name
+          font-size: 1.5rem
+        &-address
+          @include marginY(2rem)
+          p
+            margin: 0
+        &-bank-account-wrap
+          .noAccount
+            background-color: #ffd8cc
+          .account
+            background-color: #c9dd91
+          .bankAccount
+            border-radius: 5px
+            padding: .25rem 1rem
+            margin: 0 auto
+            width: max-content
+            p
+              margin: 0
+        &-social-media
+          ul 
+            @include horizontal-list
+          .item
+            @include heightWidth(50px)
+            background: #eee
+            border-radius: 50%
+            margin: 1rem
+        &-presentation
+          &-content
+            margin: 1rem auto
+            padding: 1rem
+            border-radius: 5px
+            border: 1px solid #ddd
+            text-align: left
+            p
+              color: rgba(black,.5)
+            .readMore  
+              text-decoration: underline 
+              color: $light-blue           
+          .images
+            @include marginY(2rem)
+            .image
+              @include heightWidth(100px)
+              background: #eee
+              border-radius: 5px
+              display: block
+
+.active
+  color: #1b3338
+  position: relative
+  z-index: 1
+  &::after
+    content: ''
+    z-index: -1
+    position: absolute
+    width: 90%
+    height: 100%
+    background-color: #fff
+    right: 0
+    top: 0
+    border-radius: 1.5rem 0 0 1.5rem
+
+.modal-vendor-presentation
+  & .modal
+    &-content
+      padding: 2rem
+      border-radius: 1rem
+      border: none
+    &-dialog
+      max-width: 50vw
+    &-header
+      .close 
+        margin-left: 0
+    &-close
+      text-decoration: underline
+      text-align: center 
+    &-header 
+      border: none
+    &-footer
+      border: none
+      justify-content: center
+    &-body
+      padding: 1rem 3rem
+

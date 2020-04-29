@@ -8,9 +8,9 @@ export const GET_PRODUCTS = gql`
                 displayName
             }
             title
-            flavorProfile
             descriptionShort
             descriptionLong
+            brewText
             productImages {
                 image
             }
@@ -18,9 +18,15 @@ export const GET_PRODUCTS = gql`
                 weight
                 price
             }
+            productImages {
+                image
+            }
             grindOptions
             country {
                 name
+                region {
+                    name
+                }
             }
             published
         }

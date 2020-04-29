@@ -8,6 +8,7 @@ type Vendor implements Node {
   organizationNumber: Int!
   displayName: String!
   address: String!
+  city: String
   bankAccount: String @unique
   logoImage: String
   facebookPageURL: String
