@@ -1,12 +1,16 @@
 import ProductCard from "../components/ProductCard";
+<<<<<<< HEAD
 import {useQuery} from '@apollo/react-hooks';
 import React from 'react';
 import {GET_PRODUCTS} from "../components/GraphQL/product/queries";
+=======
+>>>>>>> master
 import {Col, Row} from "react-bootstrap";
 import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
 
 
+<<<<<<< HEAD
 const ProductList = ({onSelect, setCartItems, cartItems}) => {
     let productList;
     let totalProducts = 0;
@@ -29,22 +33,29 @@ const ProductList = ({onSelect, setCartItems, cartItems}) => {
         setCartItems([...cartItems, selectedProduct])
     };
 
+=======
+const ProductList = ({onSelect, data}) => {
+    let productList;
+    let totalProducts = 0;
+
+>>>>>>> master
     if (data) {
-        productList = data.products.map(product => {
+        productList = data.map(product => {
             totalProducts++;
             return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
         });
     }
+
 
     return (
         <div className="container">
             <ShopHeader totalProducts={totalProducts}/>
             <Row>
                 <Col sm={3}>
-                    <ProductFilter totalProducts={totalProducts}/>
+                    <ProductFilter products={data} totalProducts={totalProducts}/>
                 </Col>
                 <Col>
-                    <Row>{productList.reverse()}</Row>
+                    <Row>{productList?.reverse()}</Row>
                     <div className="text-center">
                         <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
                     </div>

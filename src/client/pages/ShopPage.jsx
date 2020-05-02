@@ -1,10 +1,10 @@
 import React from 'react';
 import ProductList from "../components/ProductList";
 
-const ShopPage = ({onSelect}) => {
+const ShopPage = ({onSelect, data}) => {
         return (
             <div>
-                <ProductList onSelect={onSelect}/>
+                <ProductList onSelect={onSelect} data={data}/>
             </div>
         );
 }

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal} from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 const VendorDashboard = props => {
@@ -85,7 +84,7 @@ const VendorDashboard = props => {
           {/* content */}
           <div className="col dashboard-main-content">
             <div className="dashboard-main-content-edit-profile float-right">
-              <a>Rediger profil</a>
+              <p>Rediger profil</p>
             </div>
 
             <div className="dashboard-main-content-vendor text-center">

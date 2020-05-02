@@ -9,7 +9,7 @@ import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
 import {AuthContext} from "../components/Firebase/AuthContext";
 import ImageUpload from "../components/AddProduct/ImageUpload";
 import TextAreaInput from "../components/Forms/TextAreaInput";
-import Button from 'react-bootstrap/Button';
+
 
 const AddProduct = () => {
 

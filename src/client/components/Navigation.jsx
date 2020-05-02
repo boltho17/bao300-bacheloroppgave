@@ -89,7 +89,9 @@ const Navigation = () => {
 
                 <IconContext.Provider value={{color: "white", size: "1.5em"}}>
                     <div className="icon-group">
-                        <FiSearch/>
+                        <Link to={ROUTES.SEARCH}>
+                            <FiSearch />
+                        </Link>
 
                         <Cart>
                           <TiShoppingCart/>
