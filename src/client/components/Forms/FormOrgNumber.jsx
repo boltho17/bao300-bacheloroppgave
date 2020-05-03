@@ -33,19 +33,20 @@ const FormOrgNumber = props => {
     };
 
     return (
-        <div className="steg1-cont">
+        <div className="step1-cont">
             <h4>Angi organisasjonsnummer</h4>
             <p className="eksempel">F.eks 913571398</p>
             <form className="container">
 
-                <Row className="reg-form">
+                <Row className="reg-form1">
                     <FormInput label="Organisasjonsnummer" value={orgNumber} handleChange={handleChange} placeholder={"Org.nummer"} /> {/* Org Number */}
                 </Row>
                     <button className="vend-reg-btn" onClick={handleFormSubmit}>Fortsett</button>
-                    
+                <div className="reg-form1 extrainfo">  
                     { props.vendor?.navn && <FormInput label="Firmanavn" placeholder={props.vendor.navn} disabled={true} /> /* Org Number */}
                     { props.vendor?.forretningsadresse?.adresse[1] && <FormInput label="Adresse" placeholder={props.vendor.forretningsadresse.adresse[1]} disabled={true} /> }
                     { props.vendor?.forretningsadresse?.poststed && <FormInput label="Poststed" placeholder={props.vendor.forretningsadresse.poststed} disabled={true} /> /* Org Number */}
+                </div>  
             </form>
         </div>
     )

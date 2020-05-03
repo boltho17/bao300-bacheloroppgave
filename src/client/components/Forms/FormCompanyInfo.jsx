@@ -19,19 +19,19 @@ const FormCompanyInfo = props => {
     };
 
     return (
-        <div>
-            <h3>Steg 2</h3>
+        <div className="step2-cont">
+            <h4>Angi ekstra informasjon</h4>
             <form className="container">
 
                 <Row>
-                    <Col sm={6}>
+                    <Col className="reg-form1">
                         <FormInput label="Org nr" placeholder={props.vendor.organisasjonsnummer} disabled={true} />
                         <FormInput label="Firmanavn" placeholder={props.vendor.navn} disabled={true} />
                         <FormInput label="Adresse" placeholder={props.vendor.forretningsadresse.adresse[1]} disabled={true} />
                         <FormInput label="Poststed" placeholder={props.vendor.forretningsadresse.poststed} disabled={true} />
                     </Col>
 
-                    <Col>
+                    <Col className="reg-form1">
                         <FormInput label="Visningsnavn" name="displayName" value={props.vendorInfo.displayName} handleChange={handleChange}  />
                         <FormInput label="Kontaktperson" name="contactPerson" value={props.vendorInfo.contactPerson} placeholder="Ola Nordmann" handleChange={handleChange} />
                         <FormInput label="Epost" name="email" value={props.vendorInfo.email} placeholder="ola@kaffeslottet.no" handleChange={handleChange} />
