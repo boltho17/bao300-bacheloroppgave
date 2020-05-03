@@ -84,8 +84,8 @@ const VendorSignUp = (props) => {
             return <Redirect to='/' />;
         }
         else return (
-            <div className="container">
-                <h1>VENDOR SIGN UP</h1>
+            <div className="container vendor-reg-cont">
+                <h1 className="vendor-sign-up-title">Opprett bedriftskonto</h1>
 
                 {step === 1 && <FormOrgNumber vendor={vendor} setVendor={setVendor} setVendorInfo={setVendorInfo}/>}
                 {step === 2 && <FormCompanyInfo vendor={vendor} vendorInfo={vendorInfo} setVendorInfo={setVendorInfo}/>}

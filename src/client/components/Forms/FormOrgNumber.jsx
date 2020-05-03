@@ -33,14 +33,16 @@ const FormOrgNumber = props => {
     };
 
     return (
-        <div>
-            <h3>Steg 1</h3>
+        <div className="steg1-cont">
+            <h4>Angi organisasjonsnummer</h4>
+            <p className="eksempel">F.eks 913571398</p>
             <form className="container">
 
-                <Row>
-                    <FormInput label="F.eks 913571398" value={orgNumber} handleChange={handleChange} placeholder={"Org.nummer"} /> {/* Org Number */}
-                    <button onClick={handleFormSubmit}>Søk</button>
+                <Row className="reg-form">
+                    <FormInput label="Organisasjonsnummer" value={orgNumber} handleChange={handleChange} placeholder={"Org.nummer"} /> {/* Org Number */}
                 </Row>
+                    <button className="vend-reg-btn" onClick={handleFormSubmit}>Fortsett</button>
+                    
                     { props.vendor?.navn && <FormInput label="Firmanavn" placeholder={props.vendor.navn} disabled={true} /> /* Org Number */}
                     { props.vendor?.forretningsadresse?.adresse[1] && <FormInput label="Adresse" placeholder={props.vendor.forretningsadresse.adresse[1]} disabled={true} /> }
                     { props.vendor?.forretningsadresse?.poststed && <FormInput label="Poststed" placeholder={props.vendor.forretningsadresse.poststed} disabled={true} /> /* Org Number */}
