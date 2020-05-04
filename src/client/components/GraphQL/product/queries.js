@@ -17,6 +17,9 @@ export const GET_PRODUCTS = gql`
             elevation
             process
             roastDegree
+            category {
+                name
+            }
             productImages {
                 image
             }
