@@ -12,6 +12,11 @@ export const GET_PRODUCTS = gql`
             descriptionShort
             descriptionLong
             brewText
+            beanType
+            certification
+            elevation
+            process
+            roastDegree
             productImages {
                 image
             }
