@@ -6,6 +6,7 @@ const FormOrgNumber = props => {
 
     // State
     const [orgNumber, setOrgNumber] = useState('');
+    const [showSearchButton, setShowSearchButton] = useState(true)
 
     const handleChange = event => {
         setOrgNumber(event.target.value);
@@ -13,8 +14,11 @@ const FormOrgNumber = props => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        if(orgNumber.length === 9) {
+            setShowSearchButton(false);
+        }
         fetchData();
-        console.log(orgNumber);
+        // console.log(orgNumber);
     };
 
     const fetchData = async () => {
@@ -40,8 +44,8 @@ const FormOrgNumber = props => {
 
                 <Row className="reg-form1">
                     <FormInput label="Organisasjonsnummer" value={orgNumber} handleChange={handleChange} placeholder={"Org.nummer"} /> {/* Org Number */}
+                    { showSearchButton && <button className="vend-reg-btn" onClick={handleFormSubmit}>Fortsett</button> }
                 </Row>
-                    <button className="vend-reg-btn" onClick={handleFormSubmit}>Fortsett</button>
                 <div className="reg-form1 extrainfo">  
                     { props.vendor?.navn && <FormInput label="Firmanavn" placeholder={props.vendor.navn} disabled={true} /> /* Org Number */}
                     { props.vendor?.forretningsadresse?.adresse[1] && <FormInput label="Adresse" placeholder={props.vendor.forretningsadresse.adresse[1]} disabled={true} /> }

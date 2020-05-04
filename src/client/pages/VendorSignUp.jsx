@@ -91,8 +91,8 @@ const VendorSignUp = (props) => {
                 {step === 2 && <FormCompanyInfo vendor={vendor} vendorInfo={vendorInfo} setVendorInfo={setVendorInfo}/>}
 
                 <div className="row">
-                    {step > 1 && <button onClick={previous}>Forrige</button>}
-                    {vendor?.navn && step === 1 && <button className="vend-reg-btn" onClick={() => setStep(prevState => prevState + 1)}>Neste</button>}
+                    {step > 1 && <button onClick={previous}>Avbryt</button>}
+                    {vendor?.navn && step === 1 && <button onClick={() => setStep(prevState => prevState + 1)}>Neste</button>}
                     {step === 2 && <button onClick={submitVendorSignUp}>Ferdig</button>}
                 </div>
             </div>

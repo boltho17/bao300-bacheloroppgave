@@ -1,8 +1,7 @@
 import React from 'react';
 import {Col, Dropdown, DropdownButton, Row} from "react-bootstrap";
 
-
-const ShopHeader = ({totalProducts}) => {
+const ShopHeader = ({totalProducts, onReverse}) => {
 
     return (
         <div>
@@ -18,15 +17,12 @@ const ShopHeader = ({totalProducts}) => {
                     <p className="ml-2" style={{fontSize: '12px'}}>Kategorier</p>
                 </Col>
                 <Col sm={7}>
-                    {totalProducts > 0 ?
-                        <p style={{fontSize: '10px'}}>{totalProducts} produkter</p> : <div></div>
-                    }
+                    {totalProducts > 0 && <p style={{fontSize: '10px'}}>{totalProducts} produkter</p>}
                 </Col>
-
                 <Col>
                     <div className="sort-btn">
                         <DropdownButton variant="secondary-outline" id="dropdown-basic-button" title="Sorter" size="sm">
-                            <Dropdown.Item href="#/action-1">Mest populare</Dropdown.Item>
+                            <Dropdown.Item onClick={onReverse}>Mest populare</Dropdown.Item>
                             <Dropdown.Item href="#/action-2">Høyest pris</Dropdown.Item>
                             <Dropdown.Item href="#/action-3">Lavest pris</Dropdown.Item>
                         </DropdownButton>

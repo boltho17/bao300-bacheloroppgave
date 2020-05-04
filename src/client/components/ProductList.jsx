@@ -1,40 +1,55 @@
-import React from 'react';
+import React, {useState} from 'react';
 import ProductCard from "../components/ProductCard";
-import {useQuery} from '@apollo/react-hooks';
-import {GET_PRODUCTS} from "../components/GraphQL/product/queries";
 import {Col, Row} from "react-bootstrap";
 import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
+import FilterBadge from "./FilterBadge";
 
 
-const ProductList = ({onSelect}) => {
+const ProductList = ({onSelect, data, filterData, onFilter}) => {
     let productList;
     let totalProducts = 0;
 
-    const {loading, error, data} = useQuery(GET_PRODUCTS);
+    let showBadge = false;
+    let filters = ['fitler1', 'filter2', 'filter3'];
+    let filterBadges;
 
-    if (loading) return 'Loading...';
-    if (error) return `Error! ${error.message}`;
-    //console.log(data);
+    const [reload, setReload] = useState()
 
     if (data) {
-        productList = data.products.map(product => {
+        productList = data.map(product => {
             totalProducts++;
             return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
         });
     }
 
+    const reverseList = () => {
+        productList.sort();
+        console.log("reverse")
+        setReload(true)
+    }
+
+    if (showBadge) {
+        filterBadges = filters.map((filter, index) => {
+            // console.log(filter)
+            return <FilterBadge filterName={filter} key={index}/>
+        })
+    }
+
     return (
         <div className="container">
-            <ShopHeader totalProducts={totalProducts}/>
+            <ShopHeader totalProducts={totalProducts} onReverse={reverseList}/>
             <Row>
                 <Col sm={3}>
-                    <ProductFilter totalProducts={totalProducts}/>
+                    <ProductFilter products={filterData} totalProducts={totalProducts} onFilter={onFilter}/>
                 </Col>
                 <Col>
-                    <Row>{productList.reverse()}</Row>
+                    <Row>
+                        {filterBadges}
+                    </Row>
+                    <Row>{productList?.reverse()}</Row>
                     <div className="text-center">
-                        <button id="singlebutton" name="singlebutton" className="btn btn-info">Last mer</button>
+
                     </div>
                     <br/>
                 </Col>
