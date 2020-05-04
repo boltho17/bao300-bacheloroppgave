@@ -80,7 +80,6 @@ export const CONSTANT_CATEGORIES = [
     "Comforting & Warming",
     "Spicy & Smokey",
     "Dark & Balanced"
-
 ];
 
 export const CONSTANT_ROAST_DEGREES = [

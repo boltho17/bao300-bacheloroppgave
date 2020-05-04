@@ -3,7 +3,7 @@ import {Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 const ProductCard = ({product, onSelect}) => {
-    // console.log(product);
+    //console.log(product);
 
     // Parses "ID" to the PostItem url path:
     let id = "/product/" + product.id;
@@ -15,11 +15,11 @@ const ProductCard = ({product, onSelect}) => {
                     <Card.Img className="card-image" variant="top"
                               src="https://cdn4.mystore4.no/thumb/401_600/stavangerkaff/72805_Kenya_AA_Mount_Kenya_Selection_LYSBRENT__1kg_1.png"/>
                     <Card.Body>
-                        <Card.Subtitle className="vendor mb-2 text-muted">{product.vendor.displayName}</Card.Subtitle>
-                        <Card.Title className="product-title">{product.title}</Card.Title>
-                        <Card.Text className="short-description">{product.descriptionShort}</Card.Text>
+                        <Card.Subtitle className="vendor mb-2 text-muted">{product?.vendor?.displayName}</Card.Subtitle>
+                        <Card.Title className="product-title">{product?.title || "hei"}</Card.Title>
+                        <Card.Text className="short-description">{product?.descriptionShort}</Card.Text>
                         <Card.Subtitle className="price">
-                         Fra {product.skus[0]?.price},-
+                         Fra {product?.skus[0]?.price},-
                         </Card.Subtitle>
 
                     </Card.Body>
