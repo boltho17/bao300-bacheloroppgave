@@ -131,3 +131,20 @@
     &-body
       padding: 1rem 3rem
 
+
+// /components/OrderList.jsx
+.order
+  &-item
+    background-color: #fffded
+    box-shadow: 0 3px 6px rgba(black,.16), 0 3px 6px rgba(black,.23)
+    padding: 1rem
+    @include marginY(2rem)
+    border-radius: 5px
+    &-text
+      display: inline-block
+      .orderNumber
+        text-transform: uppercase
+    .btn
+      & .cancel
+      & .approve  
+      & .expand

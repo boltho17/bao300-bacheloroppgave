@@ -63,7 +63,7 @@ const Navigation = () => {
             <Navbar.Collapse>
                 <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
                     {!userType && <Link className="links" to={{
-                        pathname: ROUTES.VENDOR_SIGNUP,
+                        pathname: ROUTES.LANDING_VENDOR,
                         param: setReloading
                     }}>Bli selger</Link>}
                     {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link>}
