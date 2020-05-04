@@ -10,6 +10,7 @@ import {FiSearch, TiShoppingCart} from "react-icons/all";
 import firebase from "firebase/app";
 import {AuthContext} from "./Firebase/AuthContext";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Cart from './Cart';
 
 
 const Navigation = () => {
@@ -91,6 +92,10 @@ const Navigation = () => {
                         <Link to={ROUTES.SEARCH}>
                             <FiSearch />
                         </Link>
+
+                        <Cart>
+                          <TiShoppingCart/>
+                        </Cart>
 
                         <button className="btn" type="button">
                             <TiShoppingCart/>

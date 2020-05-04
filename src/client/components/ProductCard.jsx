@@ -1,4 +1,5 @@
 import React from 'react';
+// import {Redirect} from 'react-router-dom';
 import {Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
@@ -21,7 +22,6 @@ const ProductCard = ({product, onSelect}) => {
                         <Card.Subtitle className="price">
                          Fra {product?.skus[0]?.price},-
                         </Card.Subtitle>
-
                     </Card.Body>
                 </Card>
             </Link>
