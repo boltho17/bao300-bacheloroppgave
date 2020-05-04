@@ -3,6 +3,7 @@ import { Collapse, CardBody, Card } from 'reactstrap';
 import {ListGroup} from "react-bootstrap";
 
 const CollapseList = (props) => {
+
     const [isOpen, setIsOpen] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
@@ -14,7 +15,7 @@ const CollapseList = (props) => {
                 <Card>
                     <CardBody>
                         {props.list?.map((item, index) => {
-                                return <div key={index} style={{fontSize: '12px'}}>{item}</div>
+                                return <div className="collapse-list-item" onClick={() => props.onFilter(item)} key={index}>{item}</div>
                             })
                         }
                     </CardBody>
