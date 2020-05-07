@@ -19,7 +19,7 @@ const ProductList = ({onSelect, data, filterData, onFilter}) => {
     if (data) {
         productList = data.map(product => {
             totalProducts++;
-            return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
+            return <ProductCard product={product} onSelect={onSelect} key={product.id} />
         });
     }
 
@@ -47,7 +47,7 @@ const ProductList = ({onSelect, data, filterData, onFilter}) => {
                     <Row>
                         {filterBadges}
                     </Row>
-                    <Row>{productList?.reverse()}</Row>
+                    <Row>{productList}</Row>
                     <div className="text-center">
 
                     </div>

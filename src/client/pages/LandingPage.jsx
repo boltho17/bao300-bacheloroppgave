@@ -7,6 +7,10 @@ import { Link } from 'react-router-dom';
 
 class LandingPage extends React.Component {
 
+  constructor(props){
+    super(props)
+  }
+
   render() {
 
     return (
@@ -108,8 +112,8 @@ class LandingPage extends React.Component {
 
         </div>
         {/* .features  */}
-
-        <RecommendedProducts />
+        <h2 className="recommended-product-heading">Nytt og spennende</h2>
+        <RecommendedProducts products={this.props.products} onSelect={this.props.onSelect}/>
 
         <section className="artikkel-container">
           <h2 className="text-center">
