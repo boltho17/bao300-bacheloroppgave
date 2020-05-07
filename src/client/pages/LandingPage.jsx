@@ -1,7 +1,5 @@
 import React from 'react';
-
 import RecommendedProducts from '../components/RecommendedProducts'
-
 import Cart from '../components/Cart'
 import { Link } from 'react-router-dom';
 

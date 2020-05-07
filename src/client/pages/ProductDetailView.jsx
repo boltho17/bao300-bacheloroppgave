@@ -17,6 +17,10 @@ const ProductDetailView = ({products, product, onSelect}) => {
         }
     }, [product]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
 
     const updateQuantityPlus = () => {
         setQuantityAmountSelectorValue(quantityAmountSelectorValue + 1)

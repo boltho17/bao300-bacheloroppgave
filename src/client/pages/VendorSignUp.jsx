@@ -27,6 +27,7 @@ const VendorSignUp = (props) => {
 
     // SETTER VISNINGSNAVN TIL VERDIEN AV FIRMA NAVN
     useEffect(() => {
+        //console.log(props)
         if(vendor.navn) {
             setVendorInfo(prevValue => {
                 return {
