@@ -14,6 +14,7 @@ const ProductList = ({onSelect, data, filterData, onFilter}) => {
     let filters = ['fitler1', 'filter2', 'filter3'];
     let filterBadges;
 
+    // eslint-disable-next-line
     const [reload, setReload] = useState()
 
     if (data) {

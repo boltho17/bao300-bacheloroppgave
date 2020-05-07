@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import * as ROUTES from './constants/routes';
 import './styles/Main.sass'
@@ -40,33 +40,39 @@ const App = () => {
     const {loading, error, data} = useQuery(GET_PRODUCTS);
     if (loading) return 'Loading...';
     if (error) return `Error! ${error.message}`;
-    if(data) {
+    if (data) {
         products = data.products
     }
     // console.log(data);
 
 
     return (
-        <Router>
-            <Switch>
-                <React.Fragment>
-                    <Navigation/>
-                    <Route exact path={ROUTES.LANDING} render={() => <LandingPage products={products} onSelect={onSelect}/>} />
-                    <Route path={ROUTES.SIGN_UP} component={SignUpPage}/>
-                    <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
-                    <Route path={ROUTES.SEARCH} render={() => <SearchPage products={products} onSelect={onSelect}/>}/>
-                    <Route path={ROUTES.PRODUCTS} render={() => <ShopPage data={products} onSelect={onSelect}/>} />
-                    <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
-                    <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
-                    <Route path="/product/:id" exact render={() => <ProductDetailView product={selected} products={products} onSelect={onSelect} />}/>
-                    <Route path="/vendor/:id" exact render={() => <VendorDetailView vendor={selected}/>}/>
-                    <Route path={ROUTES.LANDING_VENDOR} component={LandingPageVendor}/>
-                    <Route path={ROUTES.VENDORS_PAGE} render={() => <VendorsPage onSelect={onSelect}/>}/>
-                    <Route path={ROUTES.VENDOR_DASHBOARD} component={VendorDashboard} />
-                    <Footer />
-                </React.Fragment>
-            </Switch>
-        </Router>
+        <div className="app">
+            <div className="site-content">
+                <Router>
+                    <Switch>
+                        <React.Fragment>
+                            <Navigation/>
+                            <Route exact path={ROUTES.LANDING} component={LandingPage}/>
+                            <Route path={ROUTES.SIGN_UP} component={SignUpPage}/>
+                            <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
+                            <Route path={ROUTES.SEARCH}
+                                   render={() => <SearchPage products={products} onSelect={onSelect}/>}/>
+                            <Route path={ROUTES.PRODUCTS}
+                                   render={() => <ShopPage data={products} onSelect={onSelect}/>}/>
+                            <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
+                            <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
+                            <Route path="/product/:id" exact render={() => <ProductDetailView product={selected}/>}/>
+                            <Route path="/vendor/:id" exact render={() => <VendorDetailView vendor={selected}/>}/>
+                            <Route path={ROUTES.LANDING_VENDOR} component={LandingPageVendor}/>
+                            <Route path={ROUTES.VENDORS_PAGE} render={() => <VendorsPage onSelect={onSelect}/>}/>
+                            <Route path={ROUTES.VENDOR_DASHBOARD} component={VendorDashboard}/>
+                        </React.Fragment>
+                    </Switch>
+                </Router>
+            </div>
+            <Footer/>
+        </div>
     );
 };
 

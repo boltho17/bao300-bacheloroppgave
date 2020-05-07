@@ -27,6 +27,7 @@ class SearchBar extends React.Component {
             text: ''
         }
 
+        // eslint-disable-next-line
         this.state.products.map(item => {
             if(!this.keywords.includes(item.title)) {
                 this.keywords.push(item.title)
