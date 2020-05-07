@@ -56,10 +56,8 @@ const App = () => {
                             <Route exact path={ROUTES.LANDING} component={LandingPage}/>
                             <Route path={ROUTES.SIGN_UP} component={SignUpPage}/>
                             <Route path={ROUTES.SIGN_IN} component={LoginPage}/>
-                            <Route path={ROUTES.SEARCH}
-                                   render={() => <SearchPage products={products} onSelect={onSelect}/>}/>
-                            <Route path={ROUTES.PRODUCTS}
-                                   render={() => <ShopPage data={products} onSelect={onSelect}/>}/>
+                            <Route path={ROUTES.SEARCH} render={() => <SearchPage products={products} onSelect={onSelect}/>}/>
+                            <Route path={ROUTES.PRODUCTS} render={() => <ShopPage data={products} onSelect={onSelect}/>}/>
                             <Route path={ROUTES.VENDOR_SIGNUP} component={VendorSignUp}/>
                             <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
                             <Route path="/product/:id" exact render={() => <ProductDetailView product={selected}/>}/>
