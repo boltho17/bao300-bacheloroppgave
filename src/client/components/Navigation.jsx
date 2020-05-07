@@ -10,6 +10,7 @@ import {FiSearch, TiShoppingCart} from "react-icons/all";
 import firebase from "firebase/app";
 import {AuthContext} from "./Firebase/AuthContext";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Cart from './Cart';
 
 
 const Navigation = () => {
@@ -63,7 +64,7 @@ const Navigation = () => {
             <Navbar.Collapse>
                 <Nav className="d-md-flex d-block flex-row mx-md-auto mx-0">
                     {!userType && <Link className="links" to={{
-                        pathname: ROUTES.VENDOR_SIGNUP,
+                        pathname: ROUTES.LANDING_VENDOR,
                         param: setReloading
                     }}>Bli selger</Link>}
                     {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link>}
@@ -91,6 +92,10 @@ const Navigation = () => {
                         <Link to={ROUTES.SEARCH}>
                             <FiSearch />
                         </Link>
+
+                        <Cart>
+                          <TiShoppingCart/>
+                        </Cart>
 
                         <button className="btn" type="button">
                             <TiShoppingCart/>

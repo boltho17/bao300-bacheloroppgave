@@ -10,7 +10,6 @@ import {AuthContext} from "../components/Firebase/AuthContext";
 import ImageUpload from "../components/AddProduct/ImageUpload";
 import TextAreaInput from "../components/Forms/TextAreaInput";
 
-
 const AddProduct = () => {
 
     // Access the vendor object globally from AuthContext:

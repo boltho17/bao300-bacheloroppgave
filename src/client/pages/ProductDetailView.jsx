@@ -26,11 +26,21 @@ const ProductDetailView = ({product}) => {
         }
     }
 
+    const test = product?.skus?.map((elem, index) => {
+        return (
+            <div className="amount-btn-container-nomarked" key={index}>
+                <p>{elem.weight} g</p>
+                <p className="størrelse-bottom-price">{elem.price} kr</p>
+            </div>
+        )
+    })
+
     if(redirect) {
         return <Redirect to='/products' />;
     } else {
         return (
             <div>
+
                 <div className="container containerProductTop">
                     <div className="row">
                         <div className="col-sm">
@@ -47,6 +57,9 @@ const ProductDetailView = ({product}) => {
 
                             <p>Størrelse</p>
 
+                            <div className="row">
+                                {test}
+                            </div>
 
                             <br></br>
 
@@ -59,8 +72,6 @@ const ProductDetailView = ({product}) => {
                             </div>
 
                             <br></br>
-
-                            {product?.skus?.map((sku, index) => <div key={index}>{sku.weight}</div>)}
 
                             <p className="content-custom-spaceing">Malingsgrad</p>
 
@@ -94,28 +105,28 @@ const ProductDetailView = ({product}) => {
                         <div className="col-2 mr-3 col-lg-3">
                             <div className="">
                                 <p className="detaljer-box-custom"><b>Prosess</b></p>
-                                <p>brewText</p>
+                                <p>{product?.process}</p>
                             </div>
                         </div>
 
                         <div className="col-2 mr-5 col-lg-3">
                             <div className="detaljer-box-custom">
                                 <p className="detaljer-box-custom"><b>Bønnetype</b></p>
-                                <p>beanType</p>
+                                <p>{product?.beanType}</p>
                             </div>
                         </div>
 
                         <div className="col-2 mr-5 col-lg-3">
                             <div className="detaljer-box-custom">
                                 <p className="detaljer-box-custom"><b>Sertifisering</b></p>
-                                <p>certification</p>
+                                <p>{product?.certification}</p>
                             </div>
                         </div>
 
                         <div className="">
                             <div className="detaljer-box-custom">
                                 <p className="detaljer-box-custom"><b>Region</b></p>
-                                <p>{product?.region}</p>
+                                <p>{product?.country?.region?.name}</p>
                             </div>
                         </div>
                     </div>
@@ -124,29 +135,29 @@ const ProductDetailView = ({product}) => {
                     <div className="row">
                         <div className="col-2 mr-3 col-lg-3">
                             <div className="">
-                                <p className="detaljer-box-custom"><b>Smaksprofil</b></p>
-                                <p>{product?.flavorProfile}</p>
+                                <p className="detaljer-box-custom"><b>Elevation</b></p>
+                                <p>{product?.elevation} moh.</p>
                             </div>
                         </div>
 
                         <div className="col-2 mr-5 col-lg-3">
                             <div className="detaljer-box-custom">
                                 <p className="detaljer-box-custom"><b>Brennegrad</b></p>
-                                <p>roastdegree</p>
+                                <p>{product?.roastDegree}</p>
                             </div>
                         </div>
 
                         <div className="col-2 mr-5 col-lg-3">
                             <div className="detaljer-box-custom">
-                                <p className="detaljer-box-custom"><b>Tittel</b></p>
-                                <p>hvilken data?</p>
+                                <p className="detaljer-box-custom"><b></b></p>
+                                <p></p>
                             </div>
                         </div>
 
                         <div className="">
                             <div className="detaljer-box-custom">
-                                <p className="detaljer-box-custom"><b>Land</b></p>
-                                <p>{product?.country?.name}</p>
+                                <p className="detaljer-box-custom"><b></b></p>
+                                <p></p>
                             </div>
                         </div>
                     </div>

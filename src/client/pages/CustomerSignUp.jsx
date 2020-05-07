@@ -55,9 +55,9 @@ const CustomerSignUp = ({ history }) => {
     if(redirect) return <Redirect to='/' />;
     return (
         <div>
-            <h1>Kunde registrering</h1>
+            <h1 className="log-in-title">Kunde registrering</h1>
             <FormCustomerInfo customer={customer} setCustomer={setCustomer}/>
-            <button onClick={submitCustomerSignUp}>Registrer</button>
+            <button className="reg-btn" onClick={submitCustomerSignUp}>Registrer</button>
         </div>
     );
 };

@@ -16,6 +16,7 @@ export const GET_PRODUCTS = gql`
             certification
             elevation
             process
+            roastDegree
             category {
                 name
             }
