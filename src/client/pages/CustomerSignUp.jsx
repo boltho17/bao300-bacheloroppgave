@@ -58,6 +58,7 @@ const CustomerSignUp = ({ history }) => {
             <h1 className="log-in-title">Kunde registrering</h1>
             <FormCustomerInfo customer={customer} setCustomer={setCustomer}/>
             <button className="reg-btn" onClick={submitCustomerSignUp}>Registrer</button>
+            <p style={{fontSize: '12px', textAlign: 'center'}}>Har du allerede en bruker? <a href="/signin">Logg inn her</a></p>
         </div>
     );
 };
