@@ -1,6 +1,4 @@
 import React from 'react';
-// import {Redirect} from 'react-router-dom';
-import {Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 const RecommendedCard = ({product, onSelect}) => {

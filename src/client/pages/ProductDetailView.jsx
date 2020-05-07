@@ -7,11 +7,11 @@ const ProductDetailView = ({products, product, onSelect}) => {
 
     const [quantityAmountSelectorValue, setQuantityAmountSelectorValue] = useState(1);
     const [redirect, setRedirect] = useState(false);
+    // eslint-disable-next-line
     const [vendorProducts, setVendorProducts] = useState(products?.filter(item => item.vendor?.displayName === product?.vendor?.displayName && item.title !== product.title));
 
     // Printer ut produkt objektet man har valgt i Nettbutikk, navigerer tilbake til produktoversikt hvis ingen produkt er valgt.
     useEffect(() => {
-        console.log(product)
         if(product === undefined) {
             setRedirect(true)
         }
