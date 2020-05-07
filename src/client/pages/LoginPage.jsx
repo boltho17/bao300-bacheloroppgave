@@ -2,6 +2,8 @@ import React, {useCallback, useContext} from "react";
 import {Redirect, withRouter} from "react-router";
 import app from "../components/Firebase/firebase";
 import {AuthContext} from "../components/Firebase/AuthContext";
+import {Link} from 'react-router-dom';
+import * as ROUTES from '../constants/routes'
 
 const LoginPage = ({history}) => {
 
@@ -45,6 +47,9 @@ const LoginPage = ({history}) => {
                 </label>
                 <input name="password" type="password" placeholder="Password"/>
                 </div>
+                <Link className="link-to-reg" to={ROUTES.SIGN_UP}>
+                    <p>Registrer deg som privatperson</p>
+                </Link>
                 <button className="reg-btn" type="submit">Log in</button>
             </form>
         </div>

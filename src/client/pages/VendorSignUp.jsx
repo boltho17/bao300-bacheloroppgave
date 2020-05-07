@@ -5,6 +5,8 @@ import FormOrgNumber from "../components/Forms/FormOrgNumber";
 import FormCompanyInfo from "../components/Forms/FormCompanyInfo";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_VENDOR} from "../components/GraphQL/vendor/mutations";
+import {Link} from 'react-router-dom';
+import * as ROUTES from '../constants/routes'
 const uniqid = require('uniqid');
 
 
@@ -91,11 +93,15 @@ const VendorSignUp = (props) => {
                 {step === 2 && <FormCompanyInfo vendor={vendor} vendorInfo={vendorInfo} setVendorInfo={setVendorInfo}/>}
 
                 <div className="">
+                <div className="two-btns-reg">
+                    <Link className="links" to={ROUTES.VENDORS_PAGE}>
+                    {vendor?.navn && step === 1 && <button className="vend-reg-btn">Avbryt</button>}</Link>
                     {vendor?.navn && step === 1 && <button className="vend-reg-btn" onClick={() => setStep(prevState => prevState + 1)}>Neste</button>}
-                    <div className="two-btns-reg">
-                    {step > 1 && <button className="vend-reg-btn" onClick={previous}>Avbryt</button>}
+                </div>
+                <div className="two-btns-reg">
+                    <Link className="links" to={ROUTES.VENDORS_PAGE}>{step > 1 && <button className="vend-reg-btn" onClick={previous}>Avbryt</button>}</Link>
                     {step === 2 && <button className="vend-reg-btn" onClick={submitVendorSignUp}>Ferdig</button>}
-                    </div>
+                </div>
                 </div>
             </div>
         )
