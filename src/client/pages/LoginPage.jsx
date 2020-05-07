@@ -1,4 +1,5 @@
 import React, {useCallback, useContext} from "react";
+import {Link} from "react-router-dom";
 import {Redirect, withRouter} from "react-router";
 import app from "../components/Firebase/firebase";
 import {AuthContext} from "../components/Firebase/AuthContext";
@@ -47,7 +48,7 @@ const LoginPage = ({history}) => {
                 </div>
                 <button className="reg-btn" type="submit">Logg inn</button>
             </form>
-            <p style={{fontSize: '12px', textAlign: 'center'}}>Har du ingen bruker? <a href="/signup">Registrer deg her</a></p>
+            <p style={{fontSize: '12px', textAlign: 'center'}}>Har du ingen bruker? <Link to="/signup">Registrer deg her</Link></p>
         </div>
     );
 };

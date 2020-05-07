@@ -19,7 +19,6 @@ const Cart = (props) => {
             <CartContext.Consumer>
                 {cart => (
                 <div>
-                    {console.log(cart)}
                     <Dropdown className="dropdownentry" aria-labelledby="dropdownMenuOffset" alignRight>
                         <Dropdown.Toggle id="dropdown-toggle"></Dropdown.Toggle>
                         <Dropdown.Menu className="drop-down-custom-menu">
