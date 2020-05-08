@@ -95,12 +95,12 @@ const VendorSignUp = (props) => {
 
                 <div className="">
                 <div className="two-btns-reg">
-                    <Link className="links" to={ROUTES.VENDORS_PAGE}>
+                    <Link className="links" to={ROUTES.LANDING_VENDOR}>
                     {vendor?.navn && step === 1 && <button className="vend-reg-btn">Avbryt</button>}</Link>
                     {vendor?.navn && step === 1 && <button className="vend-reg-btn" onClick={() => setStep(prevState => prevState + 1)}>Neste</button>}
                 </div>
                 <div className="two-btns-reg">
-                    <Link className="links" to={ROUTES.VENDORS_PAGE}>{step > 1 && <button className="vend-reg-btn" onClick={previous}>Avbryt</button>}</Link>
+                    <Link className="links" to={ROUTES.LANDING_VENDOR}>{step > 1 && <button className="vend-reg-btn" onClick={previous}>Avbryt</button>}</Link>
                     {step === 2 && <button className="vend-reg-btn" onClick={submitVendorSignUp}>Ferdig</button>}
                 </div>
                 </div>
