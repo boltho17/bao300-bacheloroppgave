@@ -21,7 +21,7 @@ const VendorDetailView = ({vendor}) => {
             <div>
                 <div className="conteiner containerProductTop">
                     <div className="row">
-                        <div className="col-sm">
+                        <div className="col-sm-4">
                             <div className="vendorProductPicture" style={{backgroundImage: `url("${"https://i.vimeocdn.com/portrait/9853084_640x640"}")`}}/>
                         </div>
                    
