@@ -26,7 +26,6 @@ const ProductCard = ({product, onSelect}) => {
                 </Card>
             </Link>
         </div>
-
     )
 };
 

@@ -19,7 +19,7 @@ const FormCustomerInfo = props => {
 
     return (
         <div>
-            <form className="container">
+            <form className="reg-form">
 
                 <FormInput label="Fornavn" name="firstName" value={props.customer.firstName}
                            placeholder="Ola" handleChange={handleChange}/>

@@ -29,19 +29,25 @@ const LoginPage = ({history}) => {
         return <Redirect to="/"/>;
 
     } else return (
-        <div>
-            <h1>Sign In Page</h1>
-            <form onSubmit={handleLogin}>
+        <div className="log-in-cont">
+            <h1 className="log-in-title">Velkommen!</h1>
+            <form className="log-in-form" onSubmit={handleLogin}>
+                <div className="form-group">
                 <label>
                     Email
-                    <input name="email" type="email" placeholder="Email"/>
                 </label>
+                <input name="email" type="email" placeholder="Email"/>
+                
+                </div>
+                <div className="form-group">
                 <label>
                     Password
-                    <input name="password" type="password" placeholder="Password"/>
                 </label>
-                <button type="submit">Log in</button>
+                <input name="password" type="password" placeholder="Password"/>
+                </div>
+                <button className="reg-btn" type="submit">Logg inn</button>
             </form>
+            <p style={{fontSize: '12px', textAlign: 'center'}}>Har du ingen bruker? <a href="/signup">Registrer deg her</a></p>
         </div>
     );
 };

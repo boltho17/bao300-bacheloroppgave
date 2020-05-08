@@ -1,16 +1,12 @@
 import React from 'react';
-
 import RecommendedProducts from '../components/RecommendedProducts'
-
 import Cart from '../components/Cart'
 import { Link } from 'react-router-dom';
 
 class LandingPage extends React.Component {
 
   render() {
-
     return (
-
       <div className="landingsside">
 
         <div className="image-container header" >
@@ -39,41 +35,11 @@ class LandingPage extends React.Component {
         </div>
         <Cart />
 
-        {/*
-        <section className="features">
-
-          <div className="container">
-            <div className="row">
-              <div className="featurebox col-lg-4">
-                <h3>Kaffe Filler Her</h3>
-                <p>Her kommer det tekst som forteller om hvordan kaffen sprer seg fra regnet til
-                                fjellene i kypros</p>
-              </div>
-              <div className="featurebox col-lg-4">
-                <h3>Kaffe Filler Her</h3>
-                <p>Her kommer det tekst som forteller om hvordan kaffen sprer seg fra regnet til
-                                fjellene i kypros</p>
-              </div>
-              <div className="featurebox col-lg-4">
-                <h3>Kaffe Filler Her</h3>
-                <p>Her kommer det tekst som forteller om hvordan kaffen sprer seg fra regnet til
-                                fjellene i kypros</p>
-              </div>
-            </div>
-
-          </div>
-        </section>
-         /*}
-
-
-
     {/* features */}
         <div className="featureSection featuresTEMP section">
 
           <div className="featuresContent row w-75 mx-auto shadow">
             <div className="featureTEMP  col">
-
-
 
               <div>
                 <h3 className="featureTitle title">Feature title</h3>
@@ -104,12 +70,10 @@ class LandingPage extends React.Component {
             </div>
           </div>
 
-
-
         </div>
         {/* .features  */}
-
-        <RecommendedProducts />
+        <h2 className="recommended-product-heading">Nytt og spennende</h2>
+        <RecommendedProducts products={this.props.products} onSelect={this.props.onSelect}/>
 
         <section className="artikkel-container">
           <h2 className="text-center">

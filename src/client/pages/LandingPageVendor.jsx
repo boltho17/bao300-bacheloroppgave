@@ -4,7 +4,9 @@ import * as ROUTES from '../constants/routes'
 
 //TODO: Get / Save text in db
 
-const LandingPageVendor = () => {
+const LandingPageVendor = (props) => {
+  //console.log(props)
+
   return (
     <div className="landingpagevendor">
 
@@ -19,7 +21,10 @@ const LandingPageVendor = () => {
           <div className="headerBodyText bodyText">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
           </div>
-          <Link to={ROUTES.VENDOR_SIGNUP}>
+            <Link className="links" to={{
+              pathname: ROUTES.VENDOR_SIGNUP,
+              param: props.location.param
+            }}>
             <div className="headerButton button">
               <button type="button" className="btn btn-primary text-uppercase">
 

@@ -4,6 +4,7 @@ import ProductList from "../components/ProductList";
 const ShopPage = ({onSelect, data}) => {
 
     const [products, setProducts] = useState(data)
+    const productsList = products;
 
     // Søkefunksjon som søker etter et nøkkelord og deretter filtrerer produktene som blir brukt globalt i appen.
     // Hvis produktets tittel, selgernavn, beskrivelse, land eller region inneholder søkeordet så viser produktet.
@@ -16,7 +17,7 @@ const ShopPage = ({onSelect, data}) => {
 
     return (
         <div>
-            <ProductList onSelect={onSelect} data={products} filterData={data} onFilter={onFilter}/>
+            <ProductList onSelect={onSelect} data={productsList} filterData={data} onFilter={onFilter}/>
         </div>
     );
 }

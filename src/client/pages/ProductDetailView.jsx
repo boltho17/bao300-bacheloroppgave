@@ -1,19 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import {TiMinus, TiPlus} from "react-icons/all";
 import {Redirect} from "react-router-dom";
+import RecommendedProducts from '../components/RecommendedProducts'
 
-const ProductDetailView = ({product}) => {
+const ProductDetailView = ({products, product, onSelect}) => {
 
     const [quantityAmountSelectorValue, setQuantityAmountSelectorValue] = useState(1);
     const [redirect, setRedirect] = useState(false);
+    // eslint-disable-next-line
+    const [vendorProducts, setVendorProducts] = useState(products?.filter(item => item.vendor?.displayName === product?.vendor?.displayName && item.title !== product.title));
 
     // Printer ut produkt objektet man har valgt i Nettbutikk, navigerer tilbake til produktoversikt hvis ingen produkt er valgt.
     useEffect(() => {
-        console.log(product)
         if(product === undefined) {
             setRedirect(true)
         }
     }, [product]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
 
     const updateQuantityPlus = () => {
@@ -169,6 +175,9 @@ const ProductDetailView = ({product}) => {
 
                     <div className="custom-bottomlane"></div>
                     <h3>Fra samme brenneri</h3>
+
+                    <RecommendedProducts products={vendorProducts} onSelect={onSelect}/>
+                    <br></br>
                 </div>
 
 

@@ -69,11 +69,15 @@ const VendorDashboard = props => {
 
                 {/* conditional */}
                 <div className="bankAccount noAccount">
-                  <p><span className="font-weight-bold">Bankkonto: </span><span className="text-danger">ikke registrert</span> ❌</p>
+                  {
+                    // eslint-disable-next-line
+                  }<p><span className="font-weight-bold">Bankkonto: </span><span className="text-danger">ikke registrert</span> ❌</p>
                 </div>
 
                 <div className="bankAccount account">
-                  <p><span className="font-weight-bold">Bankkonto: </span>1111 22 33334 ✔️</p>
+                  {
+                    // eslint-disable-next-line
+                  }<p><span className="font-weight-bold">Bankkonto: </span>1111 22 33334 ✔️</p>
                 </div>
                 {/* .conditional */}
 

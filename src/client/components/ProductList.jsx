@@ -14,12 +14,13 @@ const ProductList = ({onSelect, data, filterData, onFilter}) => {
     let filters = ['fitler1', 'filter2', 'filter3'];
     let filterBadges;
 
+    // eslint-disable-next-line
     const [reload, setReload] = useState()
 
     if (data) {
         productList = data.map(product => {
             totalProducts++;
-            return <ProductCard product={product} onSelect={onSelect} key={product.id}/>
+            return <ProductCard product={product} onSelect={onSelect} key={product.id} />
         });
     }
 
@@ -47,7 +48,7 @@ const ProductList = ({onSelect, data, filterData, onFilter}) => {
                     <Row>
                         {filterBadges}
                     </Row>
-                    <Row>{productList?.reverse()}</Row>
+                    <Row>{productList}</Row>
                     <div className="text-center">
 
                     </div>

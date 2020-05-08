@@ -3,40 +3,41 @@ import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import RecommendedCard from './RecommendedCard';
 
-export default class RecommendedProducts extends React.Component { 
+export default class RecommendedProducts extends React.Component {
+
+    recommendedList = [];
 
         render(){
 
             const settings = {
                 dots: true,
-                infinite: true,
+                infinite: false,
                 speed: 500,
-                slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToShow: 3,
+                slidesToScroll: 3
               };
+
+
+            if (this.props.products) {
+                this.recommendedList = this.props.products.reverse().map((product, index) => {
+                    if(index < 9) {
+                        return <div className="" key={index}><RecommendedCard product={product} onSelect={this.props.onSelect}/></div>
+                    } else {
+                        return null
+                    }
+                    
+                });
+            }
         return (
-            <div className="rp-container">
-                <h2 style={{textAlign: 'center'}}>Nytt og spennende</h2>
+            <div className="container rp-container">
         <Slider {...settings}>
-        <div>
-            <h3>Dette skal liksom vere en slider med flere produkter</h3>
-          </div>
-          <div>
-            <h3>her er det enda mere produkter</h3>
-          </div>
-          <div>
-            <h3>masse flere kommer men det burde vere samlet</h3>
-          </div>
-          <div>
-            <h3>produkter produkter produkter</h3>
-          </div>
-          <div>
-            <h3>produkter produkter produkter</h3>
-          </div>
-          <div>
-            <h3>produkter produkter produkter</h3>
-          </div>
+        
+            
+            {this.recommendedList}
+           
+          
         </Slider>
             </div>
         )

@@ -8,6 +8,7 @@ const Cart = (props) => {
     
     //const [products, setProducts] = useState([]);
 
+    // eslint-disable-next-line
     const onDelete = id => {
         const updatedProducts = props.setCartItems(props.cartItems.filter(item => item.productId !== id));
         localStorage.setItem('updatedProducts', JSON.stringify(updatedProducts))

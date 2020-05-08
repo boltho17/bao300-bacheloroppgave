@@ -5,6 +5,8 @@ import FormOrgNumber from "../components/Forms/FormOrgNumber";
 import FormCompanyInfo from "../components/Forms/FormCompanyInfo";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_VENDOR} from "../components/GraphQL/vendor/mutations";
+import {Link} from 'react-router-dom';
+import * as ROUTES from '../constants/routes'
 const uniqid = require('uniqid');
 
 
@@ -25,6 +27,7 @@ const VendorSignUp = (props) => {
 
     // SETTER VISNINGSNAVN TIL VERDIEN AV FIRMA NAVN
     useEffect(() => {
+        //console.log(props)
         if(vendor.navn) {
             setVendorInfo(prevValue => {
                 return {
@@ -84,16 +87,22 @@ const VendorSignUp = (props) => {
             return <Redirect to='/' />;
         }
         else return (
-            <div className="container">
-                <h1>VENDOR SIGN UP</h1>
+            <div className="container vendor-reg-cont">
+                <h1 className="vendor-sign-up-title">Opprett bedriftskonto</h1>
 
                 {step === 1 && <FormOrgNumber vendor={vendor} setVendor={setVendor} setVendorInfo={setVendorInfo}/>}
                 {step === 2 && <FormCompanyInfo vendor={vendor} vendorInfo={vendorInfo} setVendorInfo={setVendorInfo}/>}
 
-                <div className="row">
-                    {step > 1 && <button onClick={previous}>Avbryt</button>}
-                    {vendor?.navn && step === 1 && <button onClick={() => setStep(prevState => prevState + 1)}>Neste</button>}
-                    {step === 2 && <button onClick={submitVendorSignUp}>Ferdig</button>}
+                <div className="">
+                <div className="two-btns-reg">
+                    <Link className="links" to={ROUTES.VENDORS_PAGE}>
+                    {vendor?.navn && step === 1 && <button className="vend-reg-btn">Avbryt</button>}</Link>
+                    {vendor?.navn && step === 1 && <button className="vend-reg-btn" onClick={() => setStep(prevState => prevState + 1)}>Neste</button>}
+                </div>
+                <div className="two-btns-reg">
+                    <Link className="links" to={ROUTES.VENDORS_PAGE}>{step > 1 && <button className="vend-reg-btn" onClick={previous}>Avbryt</button>}</Link>
+                    {step === 2 && <button className="vend-reg-btn" onClick={submitVendorSignUp}>Ferdig</button>}
+                </div>
                 </div>
             </div>
         )

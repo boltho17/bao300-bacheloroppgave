@@ -70,13 +70,12 @@ const Navigation = () => {
                     {userType === "vendor" && <Link className="links" to={ROUTES.VENDOR_DASHBOARD}>Dashboard</Link>}
                     <Link className="links new" to={ROUTES.PRODUCTS}>Nettbutikk</Link>
                     <Link className="links" to={ROUTES.VENDORS_PAGE}>Om oss</Link>
-                    {!userType && <Link className="links" to={ROUTES.SIGN_IN}>Logg inn</Link>}
                 </Nav>
 
                 {!userType &&
-                <Link className="links" to={ROUTES.SIGN_UP}>
+                <Link className="links" to={ROUTES.SIGN_IN}>
                     <button type="button" className="register-btn btn btn-outline btn-sm"
-                            style={{fontSize: '11px'}}>Registrer
+                            style={{fontSize: '11px'}}>Logg Inn
                     </button>
                 </Link>}
 
