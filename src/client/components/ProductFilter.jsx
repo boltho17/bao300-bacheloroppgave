@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {ListGroup} from "react-bootstrap";
 import CollapseList from "./CollapseList";
 
@@ -6,7 +6,8 @@ import CollapseList from "./CollapseList";
 const ProductFilter = ({products, onFilter}) => {
     // console.log(countries.sort())
 
-    const regions = [];
+    const [close, setClose] = useState(false)
+
     const countries = [
         /*
         "Burundi",
@@ -33,6 +34,7 @@ const ProductFilter = ({products, onFilter}) => {
         "Peru"
          */
     ];
+    const regions = [];
     const roastDegrees = [
         "Light",
         "Light/Medium",
@@ -41,8 +43,10 @@ const ProductFilter = ({products, onFilter}) => {
         "Strong",
         "Espresso"
     ];
+    const beanTypes = ["Bønnetype 1", "Bønnetype 2", "Bønnetype 3"]
+    const coffeeType = ["Type 1", "Type 2", "Type 3"];
     const vendors = [''];
-    const flavors = [
+    const flavors = [''
         /*
         "Sweet & Inviting",
         "Sweet & Smooth",
@@ -55,6 +59,36 @@ const ProductFilter = ({products, onFilter}) => {
         "Dark & Balanced"
          */
     ];
+
+    const filters = [
+        {
+            name: "Land",
+            list: countries.sort()
+        },
+        {
+            name: "Region",
+            list: regions.sort()
+        },
+        {
+            name: "Brennegrad",
+            list: roastDegrees
+        },
+        {
+            name: "Bønnetype",
+            list: beanTypes
+        },
+        {
+            name: "Type kaffe",
+            list: coffeeType
+        },
+        {
+            name: "Leverandør",
+            list: vendors
+        },
+        {
+            name: "Smak",
+            list: flavors.sort()
+        }]
 
     // Legger alle registrerte filtere til et array, fjerner duplikater.
     if(products) {
@@ -78,13 +112,10 @@ const ProductFilter = ({products, onFilter}) => {
     return (
         <div>
             <ListGroup style={{fontSize: '12', cursor: 'pointer'}}>
-                <CollapseList onFilter={onFilter} filterName={'Land'} list={countries.sort()}/>
-                <CollapseList onFilter={onFilter} filterName={'Region'} list={regions.sort()}/>
-                <CollapseList onFilter={onFilter} filterName={'Brennegrad'} list={roastDegrees}/>
-                <ListGroup.Item>Bønnetype</ListGroup.Item>
-                <ListGroup.Item>Type kaffe</ListGroup.Item>
-                <CollapseList onFilter={onFilter} filterName={'Leverandører'} list={vendors}/>
-                <CollapseList onFilter={onFilter} filterName={'Smak'} list={flavors.sort()}/>
+                <ListGroup.Item onClick={() => {setClose(true); onFilter(null)}}>Alle produkter</ListGroup.Item>
+                {filters.map((filter, index) => {
+                    return <CollapseList close={close} setClose={setClose} onFilter={onFilter} filterName={filter.name} list={filter.list} key={index} />
+                })}
             </ListGroup>
         </div>
     )

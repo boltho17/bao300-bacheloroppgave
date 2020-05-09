@@ -7,13 +7,21 @@ import CheckBoxes from "../components/AddProduct/CheckBoxes";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
 import {AuthContext} from "../components/Firebase/AuthContext";
-import ImageUpload from "../components/AddProduct/ImageUpload";
+import ImageUpload from "../components/ImageUpload";
 import TextAreaInput from "../components/Forms/TextAreaInput";
 
 const AddProduct = () => {
 
     // Access the vendor object globally from AuthContext:
     let signedInVendor = useContext(AuthContext)?.vendor;
+
+    // FIREBASE STORAGE:
+    let storage = useContext(AuthContext)?.storage;
+    // eslint-disable-next-line
+    const [imageAsObject, setImageAsObject] = useState('')
+    // eslint-disable-next-line
+    const [imageAsUrl, setImageAsUrl] = useState()
+
 
     // GraphQL mutation to add product to DB:
     const [addProduct, {productData}] = useMutation(ADD_PRODUCT);
@@ -40,6 +48,7 @@ const AddProduct = () => {
         publishedStatus: true,
         grindOptions: [],
         pictures: [],
+        imageUrls: [],
     };
 
     const [product, setProduct] = useState(initialState);
@@ -47,6 +56,34 @@ const AddProduct = () => {
         productNameError: true,
         priceOptionsError: true
     })
+
+    // Lagrer opplastede bilder fra product state til Firebase Storage, blir kalt på når man oppretter produkt.
+    const handleFireBaseUpload = imagesAsObjects => {
+        // eslint-disable-next-line
+        imagesAsObjects.map(imageAsObject => {
+            if (!imageAsObject.file) {
+                console.error(`not an image, the image file is a ${typeof (imageAsObject.file)}`)
+            }
+            const uploadTask = storage.ref(`/images/${imageAsObject.file.name}`).put(imageAsObject.file)
+            //initiates the firebase side uploading
+            uploadTask.on('state_changed',
+                (snapShot) => {
+                    //takes a snap shot of the process as it is happening
+                    console.log(snapShot)
+                }, (err) => {
+                    //catches the errors
+                    console.log(err)
+                }, () => {
+                    // gets the functions from storage refences the image storage in firebase by the children
+                    // gets the download url then sets the image from firebase as the value for the imgUrl key:
+                    storage.ref('images').child(imageAsObject.file.name).getDownloadURL()
+                        .then(fireBaseUrl => {
+                            setProduct(prevObject => ({...prevObject, imageUrls: [...prevObject.imageUrls, fireBaseUrl]}))
+                        })
+                })
+        })
+        console.log("Bilde lagret!")
+    }
 
     const handleChange = event => {
         const target = event.target;
@@ -97,7 +134,7 @@ const AddProduct = () => {
         const item = event.target.name;
         const isChecked = event.target.checked;
 
-        if(isChecked) {
+        if (isChecked) {
             setProduct(prevValue => {
                 return {
                     ...prevValue, // Beholder previous values i hele state objektet
@@ -107,7 +144,7 @@ const AddProduct = () => {
                 };
             });
         }
-        if(!isChecked) {
+        if (!isChecked) {
             setProduct(prevValue => {
                 return {
                     ...prevValue, // Beholder previous values i hele state objektet
@@ -141,8 +178,7 @@ const AddProduct = () => {
 
     // OPPRETTER PRODUCT I DB:
     const onSubmit = () => {
-        console.log(product);
-
+        console.log(product)
         if (product.region === "Velg.." && product.country === "Velg..") {
             console.log("Ikke lagret! Vennligst fyll inn alle obligatoriske felt!");
         }
@@ -179,6 +215,7 @@ const AddProduct = () => {
                     countryName: product.country,
                     grindOptions: product.grindOptions,
                     skus: getSkus(),
+                    productImages: product.imageUrls
                 }
             });
             setProduct(initialState);
@@ -188,14 +225,14 @@ const AddProduct = () => {
 
     return (
         <Container fluid="md">
-            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>        
+            <h1 className="mt-4 ml-3">Opprett et nytt produkt</h1>
             <Row className="no-gutters upper-container">
                 <Col sm={6}>
                     <AddProductForm product={product} setProduct={setProduct} handleChange={handleChange}/>
                 </Col>
                 <Col sm={3} className="beans-cont">
                     <CheckBoxes title={'Hele Bønner'}
-                                labels={['Ja', 'Nei']} 
+                                labels={['Ja', 'Nei']}
                                 inLine={false}
                                 handleChange={handleCheckBoxChange}/>
                 </Col>
@@ -221,7 +258,8 @@ const AddProduct = () => {
                     }}/>
                 </Col>
             </Row>
-            <TextAreaInput className="description-container" label={'Beskrivelse'} handleChange={handleChange} product={product}
+            <TextAreaInput className="description-container" label={'Beskrivelse'} handleChange={handleChange}
+                           product={product}
                            value={product.descriptionLong} config={{
                 name: 'descriptionLong',
                 rows: '5',
@@ -229,8 +267,12 @@ const AddProduct = () => {
                 maxLength: '1000',
                 placeholder: 'Beskrivelse her..'
             }}/>
-            <ImageUpload product={product} setProduct={setProduct}/>
-            <button className="save-prod-btn" onClick={onSubmit}>Opprett produkt</button>
+            <ImageUpload product={product} setProduct={setProduct} handleUpload={handleFireBaseUpload}/>
+            <button className="save-prod-btn" onClick={() => {
+                onSubmit();
+                //handleFireBaseUpload(product.pictures)
+            }}>Opprett produkt
+            </button>
         </Container>
     );
 };

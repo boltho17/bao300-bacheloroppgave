@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const ADD_PRODUCT = gql`
     mutation CreateProduct ($id: ID, $title: String, $descriptionShort: String, $descriptionLong: String, $brewText: String, $beanType: String, $countryName: String!, $category: String,
-        $certification: String, $elevation: String, $process: String, $roastDegree: String, $skus: [SKUCreateWithoutProductInput!], $grindOptions: [String!]) {
+        $certification: String, $elevation: String, $process: String, $roastDegree: String, $skus: [SKUCreateWithoutProductInput!], $grindOptions: [String!], $productImages: [String!]) {
         createProduct(data: {
             title: $title,
             descriptionShort: $descriptionShort,
@@ -36,10 +36,7 @@ export const ADD_PRODUCT = gql`
                 set: $grindOptions
             },
             productImages: {
-                create: [
-                    {image: "img_01.jpg"},
-                    {image: "img_02.jpg"},
-                ]
+                set: $productImages
             }
         }) {
             id

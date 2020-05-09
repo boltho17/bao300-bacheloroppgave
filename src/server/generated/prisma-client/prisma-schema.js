@@ -2081,8 +2081,8 @@ type Product {
   vendor: Vendor
   country: Country
   category: Category
-  productImages(where: ProductImageWhereInput, orderBy: ProductImageOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ProductImage!]
   skus(where: SKUWhereInput, orderBy: SKUOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SKU!]
+  productImages: [String!]!
   grindOptions: [String!]!
 }
 
@@ -2111,8 +2111,8 @@ input ProductCreateInput {
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
-  productImages: ProductImageCreateManyWithoutProductInput
   skus: SKUCreateManyWithoutProductInput
+  productImages: ProductCreateproductImagesInput
   grindOptions: ProductCreategrindOptionsInput
 }
 
@@ -2136,14 +2136,13 @@ input ProductCreateOneInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductCreateOneWithoutProductImagesInput {
-  create: ProductCreateWithoutProductImagesInput
-  connect: ProductWhereUniqueInput
-}
-
 input ProductCreateOneWithoutSkusInput {
   create: ProductCreateWithoutSkusInput
   connect: ProductWhereUniqueInput
+}
+
+input ProductCreateproductImagesInput {
+  set: [String!]
 }
 
 input ProductCreateWithoutCategoryInput {
@@ -2160,8 +2159,8 @@ input ProductCreateWithoutCategoryInput {
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
-  productImages: ProductImageCreateManyWithoutProductInput
   skus: SKUCreateManyWithoutProductInput
+  productImages: ProductCreateproductImagesInput
   grindOptions: ProductCreategrindOptionsInput
 }
 
@@ -2179,27 +2178,8 @@ input ProductCreateWithoutCountryInput {
   published: Boolean
   vendor: VendorCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
-  productImages: ProductImageCreateManyWithoutProductInput
   skus: SKUCreateManyWithoutProductInput
-  grindOptions: ProductCreategrindOptionsInput
-}
-
-input ProductCreateWithoutProductImagesInput {
-  id: ID
-  title: String
-  descriptionShort: String
-  descriptionLong: String
-  brewText: String
-  beanType: String
-  elevation: String
-  roastDegree: String
-  certification: String
-  process: String
-  published: Boolean
-  vendor: VendorCreateOneWithoutProductsInput
-  country: CountryCreateOneWithoutProductsInput
-  category: CategoryCreateOneWithoutProductsInput
-  skus: SKUCreateManyWithoutProductInput
+  productImages: ProductCreateproductImagesInput
   grindOptions: ProductCreategrindOptionsInput
 }
 
@@ -2218,7 +2198,7 @@ input ProductCreateWithoutSkusInput {
   vendor: VendorCreateOneWithoutProductsInput
   country: CountryCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
-  productImages: ProductImageCreateManyWithoutProductInput
+  productImages: ProductCreateproductImagesInput
   grindOptions: ProductCreategrindOptionsInput
 }
 
@@ -2236,8 +2216,8 @@ input ProductCreateWithoutVendorInput {
   published: Boolean
   country: CountryCreateOneWithoutProductsInput
   category: CategoryCreateOneWithoutProductsInput
-  productImages: ProductImageCreateManyWithoutProductInput
   skus: SKUCreateManyWithoutProductInput
+  productImages: ProductCreateproductImagesInput
   grindOptions: ProductCreategrindOptionsInput
 }
 
@@ -2261,17 +2241,7 @@ type ProductImageConnection {
 input ProductImageCreateInput {
   id: ID
   image: String!
-  product: ProductCreateOneWithoutProductImagesInput
-}
-
-input ProductImageCreateManyWithoutProductInput {
-  create: [ProductImageCreateWithoutProductInput!]
-  connect: [ProductImageWhereUniqueInput!]
-}
-
-input ProductImageCreateWithoutProductInput {
-  id: ID
-  image: String!
+  product: ProductCreateOneInput
 }
 
 type ProductImageEdge {
@@ -2289,40 +2259,6 @@ enum ProductImageOrderByInput {
 type ProductImagePreviousValues {
   id: ID!
   image: String!
-}
-
-input ProductImageScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  image: String
-  image_not: String
-  image_in: [String!]
-  image_not_in: [String!]
-  image_lt: String
-  image_lte: String
-  image_gt: String
-  image_gte: String
-  image_contains: String
-  image_not_contains: String
-  image_starts_with: String
-  image_not_starts_with: String
-  image_ends_with: String
-  image_not_ends_with: String
-  AND: [ProductImageScalarWhereInput!]
-  OR: [ProductImageScalarWhereInput!]
-  NOT: [ProductImageScalarWhereInput!]
 }
 
 type ProductImageSubscriptionPayload {
@@ -2345,47 +2281,11 @@ input ProductImageSubscriptionWhereInput {
 
 input ProductImageUpdateInput {
   image: String
-  product: ProductUpdateOneWithoutProductImagesInput
-}
-
-input ProductImageUpdateManyDataInput {
-  image: String
+  product: ProductUpdateOneInput
 }
 
 input ProductImageUpdateManyMutationInput {
   image: String
-}
-
-input ProductImageUpdateManyWithoutProductInput {
-  create: [ProductImageCreateWithoutProductInput!]
-  delete: [ProductImageWhereUniqueInput!]
-  connect: [ProductImageWhereUniqueInput!]
-  set: [ProductImageWhereUniqueInput!]
-  disconnect: [ProductImageWhereUniqueInput!]
-  update: [ProductImageUpdateWithWhereUniqueWithoutProductInput!]
-  upsert: [ProductImageUpsertWithWhereUniqueWithoutProductInput!]
-  deleteMany: [ProductImageScalarWhereInput!]
-  updateMany: [ProductImageUpdateManyWithWhereNestedInput!]
-}
-
-input ProductImageUpdateManyWithWhereNestedInput {
-  where: ProductImageScalarWhereInput!
-  data: ProductImageUpdateManyDataInput!
-}
-
-input ProductImageUpdateWithoutProductDataInput {
-  image: String
-}
-
-input ProductImageUpdateWithWhereUniqueWithoutProductInput {
-  where: ProductImageWhereUniqueInput!
-  data: ProductImageUpdateWithoutProductDataInput!
-}
-
-input ProductImageUpsertWithWhereUniqueWithoutProductInput {
-  where: ProductImageWhereUniqueInput!
-  update: ProductImageUpdateWithoutProductDataInput!
-  create: ProductImageCreateWithoutProductInput!
 }
 
 input ProductImageWhereInput {
@@ -2464,6 +2364,7 @@ type ProductPreviousValues {
   certification: String
   process: String
   published: Boolean!
+  productImages: [String!]!
   grindOptions: [String!]!
 }
 
@@ -2647,8 +2548,8 @@ input ProductUpdateDataInput {
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
   category: CategoryUpdateOneWithoutProductsInput
-  productImages: ProductImageUpdateManyWithoutProductInput
   skus: SKUUpdateManyWithoutProductInput
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2670,8 +2571,8 @@ input ProductUpdateInput {
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
   category: CategoryUpdateOneWithoutProductsInput
-  productImages: ProductImageUpdateManyWithoutProductInput
   skus: SKUUpdateManyWithoutProductInput
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2686,6 +2587,7 @@ input ProductUpdateManyDataInput {
   certification: String
   process: String
   published: Boolean
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2700,6 +2602,7 @@ input ProductUpdateManyMutationInput {
   certification: String
   process: String
   published: Boolean
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2744,6 +2647,15 @@ input ProductUpdateManyWithWhereNestedInput {
   data: ProductUpdateManyDataInput!
 }
 
+input ProductUpdateOneInput {
+  create: ProductCreateInput
+  update: ProductUpdateDataInput
+  upsert: ProductUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: ProductWhereUniqueInput
+}
+
 input ProductUpdateOneRequiredInput {
   create: ProductCreateInput
   update: ProductUpdateDataInput
@@ -2758,13 +2670,8 @@ input ProductUpdateOneRequiredWithoutSkusInput {
   connect: ProductWhereUniqueInput
 }
 
-input ProductUpdateOneWithoutProductImagesInput {
-  create: ProductCreateWithoutProductImagesInput
-  update: ProductUpdateWithoutProductImagesDataInput
-  upsert: ProductUpsertWithoutProductImagesInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: ProductWhereUniqueInput
+input ProductUpdateproductImagesInput {
+  set: [String!]
 }
 
 input ProductUpdateWithoutCategoryDataInput {
@@ -2780,8 +2687,8 @@ input ProductUpdateWithoutCategoryDataInput {
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
-  productImages: ProductImageUpdateManyWithoutProductInput
   skus: SKUUpdateManyWithoutProductInput
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2798,26 +2705,8 @@ input ProductUpdateWithoutCountryDataInput {
   published: Boolean
   vendor: VendorUpdateOneWithoutProductsInput
   category: CategoryUpdateOneWithoutProductsInput
-  productImages: ProductImageUpdateManyWithoutProductInput
   skus: SKUUpdateManyWithoutProductInput
-  grindOptions: ProductUpdategrindOptionsInput
-}
-
-input ProductUpdateWithoutProductImagesDataInput {
-  title: String
-  descriptionShort: String
-  descriptionLong: String
-  brewText: String
-  beanType: String
-  elevation: String
-  roastDegree: String
-  certification: String
-  process: String
-  published: Boolean
-  vendor: VendorUpdateOneWithoutProductsInput
-  country: CountryUpdateOneWithoutProductsInput
-  category: CategoryUpdateOneWithoutProductsInput
-  skus: SKUUpdateManyWithoutProductInput
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2835,7 +2724,7 @@ input ProductUpdateWithoutSkusDataInput {
   vendor: VendorUpdateOneWithoutProductsInput
   country: CountryUpdateOneWithoutProductsInput
   category: CategoryUpdateOneWithoutProductsInput
-  productImages: ProductImageUpdateManyWithoutProductInput
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2852,8 +2741,8 @@ input ProductUpdateWithoutVendorDataInput {
   published: Boolean
   country: CountryUpdateOneWithoutProductsInput
   category: CategoryUpdateOneWithoutProductsInput
-  productImages: ProductImageUpdateManyWithoutProductInput
   skus: SKUUpdateManyWithoutProductInput
+  productImages: ProductUpdateproductImagesInput
   grindOptions: ProductUpdategrindOptionsInput
 }
 
@@ -2875,11 +2764,6 @@ input ProductUpdateWithWhereUniqueWithoutVendorInput {
 input ProductUpsertNestedInput {
   update: ProductUpdateDataInput!
   create: ProductCreateInput!
-}
-
-input ProductUpsertWithoutProductImagesInput {
-  update: ProductUpdateWithoutProductImagesDataInput!
-  create: ProductCreateWithoutProductImagesInput!
 }
 
 input ProductUpsertWithoutSkusInput {
@@ -3051,9 +2935,6 @@ input ProductWhereInput {
   vendor: VendorWhereInput
   country: CountryWhereInput
   category: CategoryWhereInput
-  productImages_every: ProductImageWhereInput
-  productImages_some: ProductImageWhereInput
-  productImages_none: ProductImageWhereInput
   skus_every: SKUWhereInput
   skus_some: SKUWhereInput
   skus_none: SKUWhereInput
