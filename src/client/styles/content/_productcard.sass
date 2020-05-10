@@ -4,19 +4,18 @@
   margin-bottom: 2rem
   border-radius: 0 !important
   cursor: pointer
-  &:hover > .card-image
-    visibility: visible
-    animation: highlight 170ms linear forwards
-    transition-delay: 0s
+  &:hover
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.12)
+    border: none
 
 .card-image
-  left: 5%
-  top: 5%
-  height: 200px
-  width: 150px !important
-  position: relative
-  animation: highlight-revert 170ms linear forwards
+  margin: auto
+  max-height: 50%
+  max-width: 100% !important
+  object-fit: contain
 
+.card-body
+  max-height: 50%
 
 .product-title
   font-size: 18px !important

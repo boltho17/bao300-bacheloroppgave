@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import firebase from "./firebase";
+import {storage} from "./firebase";
 import GetUser from "../GraphQL/user/GetUser";
 import GetVendor from "../GraphQL/vendor/GetVendor";
 
@@ -28,7 +29,7 @@ export const AuthProvider = ({children}) => {
     return (
         <AuthContext.Provider
             value={{
-                vendor, currentUser, userType
+                vendor, currentUser, userType, storage
             }}
         >
             {children}

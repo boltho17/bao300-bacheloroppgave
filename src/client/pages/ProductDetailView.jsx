@@ -50,7 +50,7 @@ const ProductDetailView = ({products, product, onSelect}) => {
                 <div className="container containerProductTop">
                     <div className="row">
                         <div className="col-sm">
-                            <div className="productPicture" style={{backgroundImage: `url("${"https://i.pinimg.com/736x/f6/c1/86/f6c18634aade9c5b4d06e59705e56702.jpg"}")`}}/>
+                            <img alt="kaffe" className="productPicture" src={product?.productImages[0] || "https://i.pinimg.com/736x/f6/c1/86/f6c18634aade9c5b4d06e59705e56702.jpg"}/>
                         </div>
 
                         <div className="col-sm custom-colsm-paddin120px">

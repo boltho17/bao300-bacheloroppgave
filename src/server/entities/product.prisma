@@ -17,7 +17,7 @@ type Product implements Node {
   vendor: Vendor @relation(link:INLINE)
   country: Country @relation(link:INLINE)
   category: Category @relation(link:INLINE)
-  productImages: [ProductImage!]
-  skus: [SKU]
+  skus: [SKU] @relation(name: "ProductSKU", onDelete: CASCADE)
+  productImages: [String] @scalarList(strategy: RELATION)
   grindOptions: [String] @scalarList(strategy: RELATION)
 }

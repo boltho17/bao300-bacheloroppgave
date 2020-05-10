@@ -4,7 +4,7 @@ interface Node {
 
 type SKU implements Node {
   id: ID! @id @unique
-  product: Product! @relation(link: INLINE)
+  product: Product! @relation(name: "ProductSKU" onDelete: SET_NULL)
   weight: String!
   price: String!
 }
