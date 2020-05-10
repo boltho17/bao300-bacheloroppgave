@@ -20,6 +20,7 @@ import VendorDashboard from './pages/VendorDashboard';
 import SearchPage from "./pages/SearchPage";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_PRODUCTS} from "./components/GraphQL/product/queries";
+import { Spinner } from 'reactstrap';
 
 
 const App = () => {
@@ -38,7 +39,11 @@ const App = () => {
 
     // Henter alle produkter fra Database:
     const {loading, error, data} = useQuery(GET_PRODUCTS);
-    if (loading) return 'Loading...';
+    if (loading) return (
+        <div>
+            Henter varer fra databasen..<Spinner color="info" />
+        </div>
+    );
     if (error) return `Error! ${error.message}`;
     if (data) {
         products = data.products
