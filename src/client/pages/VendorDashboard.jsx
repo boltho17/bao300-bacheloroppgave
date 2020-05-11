@@ -14,7 +14,7 @@ const VendorDashboard = props => {
     <div className="vendorDashboard">
       {/* main */}
       <div className="container dashboard">
-        <h1 className="pageTitle">Kontrollpanel</h1>
+        {/* <h1 className="pageTitle">Kontrollpanel</h1> */}
         <div className="dashboard-wrap row">
           {/* sidebar */}
           {/* TODO: Move sidebar to component */}
@@ -38,8 +38,12 @@ const VendorDashboard = props => {
                   <Link to="/new_product">
                     <p className="bottom">+ Opprett produkt</p>
                   </Link>
-
+                  <p className="dashboard-logout">
+                  {/* flytt til bunnen */}
+                  logg ut
+                </p>
                 </div>
+
               </div>
             </div>
           </div>
