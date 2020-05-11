@@ -83,7 +83,7 @@ const Navigation = (props) => {
                             <DropdownToggle nav className="links">
                                 Om oss
                             </DropdownToggle>
-                            <DropdownMenu left>
+                            <DropdownMenu>
                                 <DropdownItem>
                                     <NavLink tag={Link} to={ROUTES.VENDORS_PAGE}>Våre
                                         selgere</NavLink>
@@ -105,7 +105,7 @@ const Navigation = (props) => {
                         <NavItem>
                             {userType === "vendor" &&
                             <NavLink tag={Link} className="links" to={ROUTES.ADD_PRODUCT}>
-                                <button type="button" className="btn btn-primary btn-sm" style={{fontSize: '11px'}}>Nytt
+                                <button type="button" className="register-btn btn btn-outline btn-sm" style={{fontSize: '11px'}}>Nytt
                                     produkt
                                 </button>
                             </NavLink>}
@@ -114,13 +114,13 @@ const Navigation = (props) => {
                     <IconContext.Provider value={{ color: "white", size: "1.5em" }}>
                         <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav className="links">
-                                    <DropdownMenu left>
+                                    <DropdownMenu>
                                         <DropdownItem>
-                                            <NavLink>???</NavLink>
+                                            <div>???</div>
                                         </DropdownItem>
                                         <DropdownItem divider/>
                                         <DropdownItem>
-                                            <NavLink onClick={() => logoutUser()}>Logg ut</NavLink>
+                                            <div onClick={() => logoutUser()}>Logg ut</div>
                                         </DropdownItem>
                                     </DropdownMenu>
                                     <FaRegUserCircle />
@@ -134,9 +134,11 @@ const Navigation = (props) => {
                             </NavLink>
                         </NavItem>
 
-                        <Cart>
-                            <TiShoppingCart />
-                        </Cart>
+                        <NavItem className="links">
+                            <Cart>
+                                <TiShoppingCart />
+                            </Cart>
+                        </NavItem>
                     </IconContext.Provider>
                     </Nav>
                 </Collapse>

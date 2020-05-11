@@ -20,7 +20,6 @@ import VendorDashboard from './pages/VendorDashboard';
 import SearchPage from "./pages/SearchPage";
 import {useQuery} from "@apollo/react-hooks";
 import {GET_PRODUCTS} from "./components/GraphQL/product/queries";
-import { Spinner } from 'reactstrap';
 
 
 const App = () => {
@@ -39,11 +38,6 @@ const App = () => {
 
     // Henter alle produkter fra Database:
     const {loading, error, data} = useQuery(GET_PRODUCTS);
-    if (loading) return (
-        <div>
-            Henter varer fra databasen..<Spinner color="info" />
-        </div>
-    );
     if (error) return `Error! ${error.message}`;
     if (data) {
         products = data.products
@@ -64,7 +58,7 @@ const App = () => {
                             <Route path={ROUTES.SEARCH}
                                    render={() => <SearchPage products={products} onSelect={onSelect}/>}/>
                             <Route path={ROUTES.PRODUCTS}
-                                   render={() => <ShopPage data={products} onSelect={onSelect}/>}/>
+                                   render={() => <ShopPage loading={loading} data={products} onSelect={onSelect}/>}/>
                             <Route path={ROUTES.VENDOR_SIGNUP} component={props => (<VendorSignUp {...props} />)} />
                             <Route path={ROUTES.ADD_PRODUCT} component={AddProduct}/>
                             <Route path="/product/:id" exact render={() => <ProductDetailView product={selected} products={products} onSelect={onSelect} />}/>
