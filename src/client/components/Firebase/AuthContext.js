@@ -10,6 +10,8 @@ export const AuthContext = React.createContext(null);
 export const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null);
 
+    let storageRef = firebase.storage().ref();
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged(setCurrentUser);
     }, []);
@@ -29,7 +31,7 @@ export const AuthProvider = ({children}) => {
     return (
         <AuthContext.Provider
             value={{
-                vendor, currentUser, userType, storage
+                vendor, currentUser, userType, storage, storageRef
             }}
         >
             {children}

@@ -10,7 +10,7 @@ const ShopPage = ({loading, onSelect, data}) => {
     // Hvis produktets tittel, selgernavn, beskrivelse, land eller region inneholder søkeordet så viser produktet.
     const onFilter = term => {
         if (term === null) {
-            setProducts(data)
+            setProducts(data?.reverse())
         } else {
             term = term.toLowerCase();
             setProducts(data.filter(product => product.vendor.displayName.toLowerCase().includes(term) || product.country.name.toLowerCase().includes(term) ||
@@ -19,6 +19,7 @@ const ShopPage = ({loading, onSelect, data}) => {
         }
     }
 
+    // Viser produktene etter 1 sekund hvis man reloader i nettbutikk:
     if(!products) {
         setTimeout(() => {
             onFilter(null);

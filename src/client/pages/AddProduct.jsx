@@ -9,6 +9,7 @@ import {ADD_PRODUCT} from "../components/GraphQL/product/mutations";
 import {AuthContext} from "../components/Firebase/AuthContext";
 import ImageUpload from "../components/ImageUpload";
 import TextAreaInput from "../components/Forms/TextAreaInput";
+import uniqid from 'uniqid';
 
 const AddProduct = () => {
 
@@ -17,6 +18,8 @@ const AddProduct = () => {
 
     // FIREBASE STORAGE:
     let storage = useContext(AuthContext)?.storage;
+    let storageRef = useContext(AuthContext)?.storageRef;
+
     // eslint-disable-next-line
     const [imageAsObject, setImageAsObject] = useState('')
     // eslint-disable-next-line
@@ -24,6 +27,7 @@ const AddProduct = () => {
 
 
     // GraphQL mutation to add product to DB:
+    // eslint-disable-next-line
     const [addProduct, {productData}] = useMutation(ADD_PRODUCT);
 
     const initialState = {
@@ -64,7 +68,9 @@ const AddProduct = () => {
             if (!imageAsObject.file) {
                 console.error(`not an image, the image file is a ${typeof (imageAsObject.file)}`)
             }
-            const uploadTask = storage.ref(`/images/${imageAsObject.file.name}`).put(imageAsObject.file)
+            let uniq = uniqid()
+            // const uploadTask = storage.ref.child(`images/${imageAsObject.file.name}`).put(imageAsObject.file)
+            const uploadTask = storageRef.child(`images/${uniq + '_' + imageAsObject.file.name}`).put(imageAsObject.file)
             //initiates the firebase side uploading
             uploadTask.on('state_changed',
                 (snapShot) => {
@@ -82,7 +88,7 @@ const AddProduct = () => {
                         })
                 })
         })
-        console.log("Bilde lagret!")
+        alert("Bilde lagret!")
     }
 
     const handleChange = event => {
@@ -195,7 +201,6 @@ const AddProduct = () => {
             setError({priceOptionsError: true})
             alert('Vennligst skriv inn riktig vekt og pris!');
         } else {
-            console.log(productData);
             alert('Lagret');
             addProduct({
                 variables: {

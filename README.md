@@ -2,9 +2,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Todo list:
 - Auto update nettbutikk når en ny vare blir lagt til. Foreløpig må man refreshe page.
-- Product schema må oppdateres og fields må settes tilbake til obligatorisk!
-- Nytt produkt siden må fullføres
+- AddProduct form validation
 - Når man submitter ny vare så må forms resettes
+
+## BUGS:
+- GraphQL / Prisma error når man legger til to vekter og priser på et produkt. Funker fint med 1 eller 3
 
 ## Available Scripts
 
