@@ -4,9 +4,10 @@ import {Col, Row} from "react-bootstrap";
 import ProductFilter from "./ProductFilter";
 import ShopHeader from "./ShopHeader";
 import FilterBadge from "./FilterBadge";
+import {Spinner} from "reactstrap";
 
 
-const ProductList = ({onSelect, data, filterData, onFilter}) => {
+const ProductList = ({loading, onSelect, data, filterData, onFilter}) => {
     let productList;
     let totalProducts = 0;
 
@@ -48,6 +49,7 @@ const ProductList = ({onSelect, data, filterData, onFilter}) => {
                     <Row>
                         {filterBadges}
                     </Row>
+                    {loading && <div>Henter varer fra databasen..<Spinner color="info"/></div>}
                     <Row>{productList}</Row>
                     <div className="text-center">
 

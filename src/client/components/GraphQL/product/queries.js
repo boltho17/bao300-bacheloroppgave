@@ -20,16 +20,11 @@ export const GET_PRODUCTS = gql`
             category {
                 name
             }
-            productImages {
-                image
-            }
             skus {
                 weight
                 price
             }
-            productImages {
-                image
-            }
+            productImages
             grindOptions
             country {
                 name

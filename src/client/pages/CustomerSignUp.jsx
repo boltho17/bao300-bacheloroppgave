@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useState} from "react";
 import { withRouter } from "react-router";
 import app from "../components/Firebase/firebase";
-import {Redirect} from "react-router-dom";
+import {Redirect, Link} from "react-router-dom";
 import {useMutation} from "@apollo/react-hooks";
 import {ADD_CUSTOMER} from "../components/GraphQL/customer/mutations";
 import FormCustomerInfo from "../components/Forms/FormCustomerInfo";
@@ -58,7 +58,7 @@ const CustomerSignUp = ({ history }) => {
             <h1 className="log-in-title">Kunde registrering</h1>
             <FormCustomerInfo customer={customer} setCustomer={setCustomer}/>
             <button className="reg-btn" onClick={submitCustomerSignUp}>Registrer</button>
-            <p style={{fontSize: '12px', textAlign: 'center'}}>Har du allerede en bruker? <a href="/signin">Logg inn her</a></p>
+            <p style={{fontSize: '12px', textAlign: 'center'}}>Har du allerede en bruker? <Link to="/signin">Logg inn her</Link></p>
         </div>
     );
 };
