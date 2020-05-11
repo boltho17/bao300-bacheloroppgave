@@ -24,8 +24,42 @@
         nav ul
           @include reset-list
         .menu
+          .active
+            color: #1b3338
+            position: relative
+            z-index: 1
+            display: block
+            margin: 0
+            .menu-item
+              color: #1b3338
+            &::after
+              content: ''
+              z-index: -1
+              position: absolute
+              width: 90%
+              height: 100%
+              background-color: #fff
+              right: 0
+              top: 0
+              border-radius: 1.5rem 0 0 1.5rem
           &-item
             @include paddingY(.5rem)
+            color: #fff
+            z-index: 999
+            &.active
+              color: #1b3338
+              position: relative
+              z-index: 1
+              &::after
+                content: ''
+                z-index: -1
+                position: absolute
+                width: 90%
+                height: 100%
+                background-color: #fff
+                right: 0
+                top: 0
+                border-radius: 1.5rem 0 0 1.5rem
       &-create-product
         .bottom
           bottom: 5rem
@@ -67,7 +101,7 @@
             p
               margin: 0
         &-social-media
-          ul 
+          ul
             @include horizontal-list
           .item
             @include heightWidth(50px)
@@ -83,9 +117,9 @@
             text-align: left
             p
               color: rgba(black,.5)
-            .readMore  
-              text-decoration: underline 
-              color: $light-blue           
+            .readMore
+              text-decoration: underline
+              color: $light-blue
           .images
             @include marginY(2rem)
             .image
@@ -94,20 +128,14 @@
               border-radius: 5px
               display: block
 
-.active
-  color: #1b3338
-  position: relative
-  z-index: 1
-  &::after
-    content: ''
-    z-index: -1
-    position: absolute
-    width: 90%
-    height: 100%
-    background-color: #fff
-    right: 0
-    top: 0
-    border-radius: 1.5rem 0 0 1.5rem
+// TEMP 
+.images
+  @include marginY(2rem)
+  .image
+    @include heightWidth(100px)
+    background: #eee
+    border-radius: 5px
+    display: block
 
 .modal-vendor-presentation
   & .modal
@@ -118,12 +146,12 @@
     &-dialog
       max-width: 50vw
     &-header
-      .close 
+      .close
         margin-left: 0
     &-close
       text-decoration: underline
-      text-align: center 
-    &-header 
+      text-align: center
+    &-header
       border: none
     &-footer
       border: none
@@ -131,3 +159,19 @@
     &-body
       padding: 1rem 3rem
 
+// /components/OrderList.jsx
+.order
+  &-item
+    background-color: #fffded
+    box-shadow: 0 3px 6px rgba(black,.16), 0 3px 6px rgba(black,.23)
+    padding: 1rem
+    @include marginY(2rem)
+    border-radius: 5px
+    &-text
+      display: inline-block
+      .orderNumber
+        text-transform: uppercase
+    .btn
+      & .cancel
+      & .approve
+      & .expand
