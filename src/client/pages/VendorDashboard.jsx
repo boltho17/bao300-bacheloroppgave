@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import { Modal} from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import OrderList from '../components/OrderList';
+import React, { useState, useContext } from 'react';
+import { Modal } from 'react-bootstrap';
+import { Link, NavLink } from 'react-router-dom';
+import MainOverview from '../components/VendorDashboard/MainOverview';
+import ProductOverview from '../components/VendorDashboard/ProductOverview';
+import OrderOverview from '../components/VendorDashboard/OrderOverview';
+import { AuthContext } from '../components/Firebase/AuthContext';
 
 const VendorDashboard = props => {
   const [show, setShow] = useState(false);
-
+  const [page, setPage] = useState(1);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  let vendor = useContext(AuthContext)?.vendor;
+  console.log(vendor)
+ 
 
   return (
     <div className="vendorDashboard">
@@ -17,21 +23,29 @@ const VendorDashboard = props => {
         {/* <h1 className="pageTitle">Kontrollpanel</h1> */}
         <div className="dashboard-wrap row">
           {/* sidebar */}
-          {/* TODO: Move sidebar to component */}
           <div className="col-3 dashboard-sidebar text-center pr-0">
             <div className="dashboard-sidebar-vendor">
               <div className="dashboard-sidebar-vendor-image mx-auto">
 
               </div>
               <div className="dashboard-sidebar-vendor-name text-uppercase">
-                <p>((vendor.name))</p>
-              </div>              
+                <p>{vendor?.displayName}</p>
+              </div>
               <div className="dashboard-sidebar-list text-uppercase">
                 <nav className="menu-nav">
                   <ul className="menu">
-                    <li className="active menu-item">Profil</li>
-                    <li className="menu-item">Produktoversikt</li>
-                    <li className="menu-item">Ordreoversikt <span class="badge badge-light badge-pill">2</span></li>
+                    
+                    <NavLink to={`/dashboard/main-overview`} activeClassName="active">
+                      <li className="menu-item" onClick={() => setPage(1)}>Profil</li>
+                    </NavLink>
+
+                    <NavLink to={`/dashboard/product-overview`} activeClassName="active">
+                      <li className="menu-item" onClick={() => setPage(2)}>Produktoversikt</li>
+                    </NavLink>
+
+                    <NavLink to={`/dashboard/order-overview`} activeClassName="active">
+                      <li className="menu-item" onClick={() => setPage(3)}>Ordreoversikt <span className="badge badge-light badge-pill">2</span></li>
+                    </NavLink>
                   </ul>
                 </nav>
                 <div className="dashboard-sidebar-create-product">
@@ -39,7 +53,7 @@ const VendorDashboard = props => {
                     <p className="bottom">+ Opprett produkt</p>
                   </Link>
                   <p className="dashboard-logout">
-                  {/* flytt til bunnen */}
+                    {/* flytt til bunnen */}
                   logg ut
                 </p>
                 </div>
@@ -47,114 +61,20 @@ const VendorDashboard = props => {
               </div>
             </div>
           </div>
-          {/* content */}
+          {/* main-content */}
           <div className="col dashboard-main-content">
-            <div className="dashboard-main-content-edit-profile float-right">
-              <p>Rediger profil</p>
-            </div>
-
-            <div className="dashboard-main-content-vendor text-center">
-
-
-              <div className="dashboard-main-content-vendor-image mx-auto">
-
-              </div>
-
-              <div className="dashboard-main-content-vendor-name font-weight-bold">
-                <h2>((Vendor.Name))</h2>
-              </div>
-
-              <div className="dashboard-main-content-vendor-info">
-                <p><span className="font-weight-bold">Org.nr.:</span> 123456789</p>
-                <p>epost@epost.epost</p>
-              </div>
-
-              <div className="dashboard-main-content-vendor-bank-account-wrap">
-
-                {/* conditional */}
-                <div className="bankAccount noAccount">
-                  {
-                    // eslint-disable-next-line
-                  }<p><span className="font-weight-bold">Bankkonto: </span><span className="text-danger">ikke registrert</span> ❌</p>
-                </div>
-
-                <div className="bankAccount account">
-                  {
-                    // eslint-disable-next-line
-                  }<p><span className="font-weight-bold">Bankkonto: </span>1111 22 33334 ✔️</p>
-                </div>
-                {/* .conditional */}
-
-              </div>
-
-              <div className="dashboard-main-content-vendor-address row text-left mx-auto w-50">
-                <div className="col">
-                  <p className="font-weight-bold">Adresse:</p>
-                  <p>Storgata 1</p>
-                  <p>0344 Oslo</p>
-                </div>
-                <div className="col">
-                  <p className="font-weight-bold">Kontaktinformasjon:</p>
-                  <p>epost@epost.epost</p>
-                  <p>(+47) 123 45 678</p>
-                </div>
-              </div>
-
-              <div className="dashboard-main-content-vendor-social-media">
-                <ul>
-                  <li className="item"></li>
-                  <li className="item"></li>
-                  <li className="item"></li>
-                </ul>
-              </div>
-
-              <div className="dashboard-main-content-vendor-presentation">
-                <h3>Beskrivelse av bedift:</h3>
-                {/* conditional */}
-                <div className="dashboard-main-content-vendor-presentation-add">
-                  <p className="alert-warning">Rediger profil for å legge til resterende informasjon</p>
-                </div>
-
-                <div className="dashboard-main-content-vendor-presentation-edit">
-                  <p></p>
-                </div>
-                {/* .conditional */}
-
-                <div className="dashboard-main-content-vendor-presentation-content w-75">
-                  <p>
-                    Vi skal tilby våre gjester den høyeste kvaliteten på
-                    kaffeprodukter og service i markedet, og være den
-                    foretrukne kompetanse- og informasjonsgiver for kaffe og
-                    kaffeprodukter. Med lidenskap for faget og ypperste kvalitet
-                  på våre produkter<span>... </span>
-                    <span className="readMore" onClick={handleShow}>les hele</span></p>
-                </div>
-
-                <div className="images row w-75 mx-auto">
-                  <div className="col">
-                    <span className="image"></span>
-                  </div>
-
-                  <div className="col">
-                    <span className="image"></span>
-                  </div>
-
-                  <div className="col">
-                    <span className="image"></span>
-                  </div>
-
-                  <div className="col">
-                    <span className="image"></span>
-                  </div>
-                </div>
-
-              </div>
-              <OrderList />
-
-
-            </div>
-
+            {page === 1 &&
+              <MainOverview handleShow={handleShow} vendor={vendor} />
+            }
+            {page === 2 &&
+              <ProductOverview vendor={vendor} />
+            }
+            {page === 3 &&
+              <OrderOverview vendor={vendor} />
+            }
           </div>
+
+          {/* .main-content */}
 
         </div>
 
