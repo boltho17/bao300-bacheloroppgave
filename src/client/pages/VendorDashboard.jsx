@@ -5,6 +5,7 @@ import MainOverview from '../components/VendorDashboard/MainOverview';
 import ProductOverview from '../components/VendorDashboard/ProductOverview';
 import OrderOverview from '../components/VendorDashboard/OrderOverview';
 import { AuthContext } from '../components/Firebase/AuthContext';
+import GetVendor from '../components/GraphQL/vendor/GetVendor';
 
 const VendorDashboard = props => {
   const [show, setShow] = useState(false);
@@ -13,9 +14,16 @@ const VendorDashboard = props => {
   const handleShow = () => setShow(true);
 
   let vendor = useContext(AuthContext)?.vendor;
-  console.log(vendor)
- 
-
+  let authContext = useContext(AuthContext);
+  console.log(authContext);
+  const getVendor = GetVendor(authContext.currentUser?.email)
+  console.log(getVendor)
+  //console.log(vendor)
+ //const vendorTest
+// const vendorID = getVendor.id
+// HENT ORDRE
+// HENT PRODUKTER
+  
   return (
     <div className="vendorDashboard">
       {/* main */}
