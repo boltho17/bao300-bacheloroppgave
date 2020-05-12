@@ -4,7 +4,8 @@ import {useQuery} from '@apollo/react-hooks';
 import { GET_PRODUCTS_WITH_VENDOR_ID } from '../GraphQL/product/queries';
 import ProductCard from '../ProductCard';
 
-const ProductOverview = (props,{onSelect}) => {
+const ProductOverview = (props) => {
+
   const {loading, error, data} = useQuery(GET_PRODUCTS_WITH_VENDOR_ID);
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
@@ -17,7 +18,7 @@ const ProductOverview = (props,{onSelect}) => {
   if (vendorProducts) {
     productList = vendorProducts.map(product => {
         totalProducts++;
-        return <ProductCard product={product} onSelect={onSelect} key={product.id} />
+        return <ProductCard product={product} onSelect={props.onSelect} key={product.id} />
     });
   }
   

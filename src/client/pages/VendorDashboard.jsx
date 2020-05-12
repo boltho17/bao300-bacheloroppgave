@@ -75,7 +75,7 @@ const VendorDashboard = props => {
               <MainOverview handleShow={handleShow} vendor={vendor} />
             }
             {page === 2 &&
-              <ProductOverview vendor={vendor} />
+              <ProductOverview vendor={vendor} onSelect={props.onSelect}/>
             }
             {page === 3 &&
               <OrderOverview vendor={vendor} />

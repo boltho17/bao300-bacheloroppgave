@@ -65,7 +65,7 @@ const App = () => {
               <Route path="/vendor/:id" exact render={() => <VendorDetailView vendor={selected} />} />
               <Route path={ROUTES.LANDING_VENDOR} component={LandingPageVendor} />
               <Route path={ROUTES.VENDORS_PAGE} render={() => <VendorsPage onSelect={onSelect} />} />
-              <Route path={ROUTES.VENDOR_DASHBOARD} component={VendorDashboard} />
+              <Route path={ROUTES.VENDOR_DASHBOARD} exact render={() => <VendorDashboard onSelect={onSelect} /> } />
               {/* <Route path="/dashboard/:id" exact render={() => <VendorDashboard vendor={selected} />} /> */}
             </React.Fragment>
           </Switch>
