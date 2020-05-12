@@ -36,3 +36,41 @@ export const GET_PRODUCTS = gql`
         }
     }
 `;
+
+
+export const GET_PRODUCTS_WITH_VENDOR_ID = gql`
+    {
+        products {
+            id
+            vendor {
+              id
+              displayName                
+            }
+            title
+            descriptionShort
+            descriptionLong
+            brewText
+            beanType
+            certification
+            elevation
+            process
+            roastDegree
+            category {
+                name
+            }
+            skus {
+                weight
+                price
+            }
+            productImages
+            grindOptions
+            country {
+                name
+                region {
+                    name
+                }
+            }
+            published
+        }
+    }
+`;

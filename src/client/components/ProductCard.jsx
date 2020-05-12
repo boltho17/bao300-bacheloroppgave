@@ -4,7 +4,8 @@ import {Card} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
 const ProductCard = ({product, onSelect}) => {
-    // console.log(product);
+    console.log(product);
+    console.log(onSelect);
 
     // Parses "ID" to the PostItem url path:
     let id = "/product/" + product.id;
