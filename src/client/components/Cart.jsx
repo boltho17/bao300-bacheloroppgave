@@ -3,6 +3,7 @@ import CartContext from '../contexts/CartContext';
 import CartProductCard from "./CartProductCard";
 import {Button, Dropdown, DropdownMenu, DropdownToggle} from 'reactstrap';
 import {TiShoppingCart} from "react-icons/all";
+import {Row} from "react-bootstrap";
 
 
 const Cart = (props) => {
@@ -12,6 +13,7 @@ const Cart = (props) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggle = () => setDropdownOpen(prevState => !prevState);
+    let totalSum = 0;
 
     // eslint-disable-next-line
     const onDelete = id => {
@@ -31,11 +33,19 @@ const Cart = (props) => {
                     >
                         <TiShoppingCart style={{marginTop: '10px', cursor: 'pointer'}}/>
                     </DropdownToggle>
-                    <DropdownMenu className="drop-down-custom-menu">
-                        <h4>{cart?.items?.length || "No"} items in cart </h4>
-                        {cart?.items?.map((item, index) => {
+                    <DropdownMenu className="drop-down-custom-menu" style={{marginTop: '1rem'}}>
+                        {console.log(cart)}
+                        <h6>{cart?.length || "Ingen"} varer i handlekurven </h6>
+                        {cart?.map((item, index) => {
+                            totalSum += Number(item.price)
                             return <CartProductCard key={index} {...props} product={item}/>
                         })}
+                        <div style={{marginTop: '25px'}}>
+                            <Row>
+                                <h6 className="col-6">Total</h6>
+                                <h6 className="col-6">{totalSum}.00 NOK</h6>
+                            </Row>
+                        </div>
                         <Button className="cart-button-1">TIL KASSEN</Button>
                     </DropdownMenu>
                 </Dropdown>

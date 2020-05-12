@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {Link} from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
 import {IconContext} from "react-icons";
-import {FiSearch, TiShoppingCart, FaRegUserCircle} from "react-icons/all";
+import {FiSearch, FaRegUserCircle} from "react-icons/all";
 import firebase from "firebase/app";
 import {AuthContext} from "./Firebase/AuthContext";
 import Cart from './Cart';
@@ -135,9 +135,7 @@ const Navigation = (props) => {
                         </NavItem>
 
                         <NavItem className="links">
-                            <Cart>
-                                <TiShoppingCart />
-                            </Cart>
+                            <Cart />
                         </NavItem>
                     </IconContext.Provider>
                     </Nav>

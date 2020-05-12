@@ -6,6 +6,7 @@ const DetailView = (props) => {
     const [quantityAmountSelectorValue, setQuantityAmountSelectorValue] = useState(1)
     useEffect(() => {
         console.log(props)
+        window.scrollTo(0, 0)
     });
 
     /*
